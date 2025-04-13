@@ -62,7 +62,7 @@ export default function Checkout({ isOpen, setIsOpen }) {
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
         amount: 49900,
         currency: "INR",
         name: "Web Design Mastery Pack",
