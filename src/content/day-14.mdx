@@ -1,0 +1,700 @@
+## Day 14: Arrays in JavaScript
+
+Arrays are one of the most important building blocks in JavaScript. If you're going to store, manage, and operate on groups of data — like names, scores, products, tasks, or even HTML elements — you'll be using arrays all the time.
+
+They let you hold **multiple values** inside a single variable and work with them efficiently using **built-in methods** and **powerful features**.
+
+### 🧠 What is an Array?
+
+An array is a **special variable** that can hold more than one value at a time. These values are stored in an **ordered list**, and each one is called an **element**.
+
+You can think of an array like a row of labeled boxes, where each box has a number (called an index), starting from `0`.
+
+<BrowserMockup>
+[
+  "apple", "banana", "cherry"
+]
+</BrowserMockup>
+
+In this example:
+
+- `apple` is at index 0
+- `banana` is at index 1
+- `cherry` is at index 2
+
+<Note>
+In JavaScript, arrays are **zero-indexed**, meaning the first item has index `0`, not `1`.
+</Note>
+
+<Divider />
+
+### 🧪 Declaring an Array
+
+You can create an array using square brackets `[]` and separating each value with a comma.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+console.log(fruits);`} />
+
+You can also use the `Array` constructor, though it's less common:
+
+<CodeBlock language="js">
+{`let scores = new Array(90, 85, 78);`}
+</CodeBlock>
+
+<Tip>
+Prefer using square brackets `[]` for simplicity and readability.
+</Tip>
+
+<Divider />
+
+### 📍 Accessing Array Elements
+
+You can access any value inside an array using its **index** (position).
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+
+console.log(fruits[0]); // 👉 "apple"
+console.log(fruits[2]); // 👉 "cherry"`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+console.log(fruits[0]);
+console.log(fruits[2]);`} />
+
+If you try to access an index that doesn't exist, you'll get `undefined`:
+
+<CodeBlock language="js">
+{`console.log(fruits[5]); // 👉 undefined`}
+</CodeBlock>
+
+<Note>
+Indexes must be **integers**. Using a string or float won’t work.
+</Note>
+
+<Divider />
+
+### 📝 Changing Array Values
+
+You can change any item in the array by assigning a new value to that index:
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+
+fruits[1] = "blueberry";
+
+console.log(fruits); // 👉 ["apple", "blueberry", "cherry"]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+fruits[1] = "blueberry";
+
+console.log(fruits);`} />
+
+This is called **mutating** an array — changing its contents without replacing the entire array.
+
+<Tip>
+You can store different types of values inside a single array: strings, numbers, booleans, even other arrays or functions.
+</Tip>
+
+<CodeBlock language="js">
+{`let random = [42, "hello", true, [1, 2, 3]];`}
+</CodeBlock>
+
+<Divider />
+
+### 📏 Finding the Length
+
+Use the `.length` property to find out how many items are in an array:
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+console.log(fruits.length); // 👉 3`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+console.log("Number of fruits:", fruits.length);`} />
+
+<Note>
+Array length is always one more than the highest index.
+</Note>
+
+<Divider />
+
+### ➕ Adding & Removing Elements from Arrays
+
+Now that we know how to create and access arrays, the next step is to learn how to modify them — that is, how to **add new elements** or **remove existing ones**.
+
+JavaScript provides a bunch of useful **array methods** to do this easily.
+
+<Divider />
+
+#### `push()` – Add to the End
+
+The `push()` method adds one or more elements to the **end** of the array.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana"];
+fruits.push("cherry");
+
+console.log(fruits); // 👉 ["apple", "banana", "cherry"]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana"];
+fruits.push("cherry");
+
+console.log(fruits);`} />
+
+<Note>
+`push()` changes the original array and returns the new length of the array.
+</Note>
+
+<Divider />
+
+#### `pop()` – Remove from the End
+
+The `pop()` method removes the **last element** from the array and returns it.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+let removed = fruits.pop();
+
+console.log(removed); // 👉 "cherry"
+console.log(fruits);  // 👉 ["apple", "banana"]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+let removed = fruits.pop();
+
+console.log("Removed:", removed);
+console.log("Now:", fruits);`} />
+
+<Divider />
+
+#### `unshift()` – Add to the Beginning
+
+`unshift()` adds elements to the **start** of the array.
+
+<CodeBlock language="js">
+{`let fruits = ["banana", "cherry"];
+fruits.unshift("apple");
+
+console.log(fruits); // 👉 ["apple", "banana", "cherry"]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["banana", "cherry"];
+fruits.unshift("apple");
+
+console.log(fruits);`} />
+
+<Divider />
+
+#### `shift()` – Remove from the Beginning
+
+`shift()` removes the **first element** and returns it.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+let removed = fruits.shift();
+
+console.log(removed); // 👉 "apple"
+console.log(fruits);  // 👉 ["banana", "cherry"]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+let removed = fruits.shift();
+
+console.log("Removed:", removed);
+console.log("Now:", fruits);`} />
+
+<Tip>
+Use `push()` and `pop()` when you're working with the **end** of an array. Use `unshift()` and `shift()` when you're working with the **start** of an array.
+</Tip>
+
+<Divider />
+
+### 🔁 Looping Through Arrays
+
+To do something with each item in an array, we can **loop through** it. This is useful when you want to **print**, **modify**, or **calculate** something based on each element.
+
+Let’s explore the three most common looping techniques.
+
+<Divider />
+
+#### `for` Loop
+
+The classic way: use a `for` loop with an index.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}`} />
+
+<Divider />
+
+#### `for...of` Loop (Simpler)
+
+A cleaner way to loop through array **values** directly.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+
+for (let fruit of fruits) {
+  console.log(fruit);
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+for (let fruit of fruits) {
+  console.log(fruit);
+}`} />
+
+<Divider />
+
+#### `forEach()` Method
+
+This method **calls a function** once for each item in the array.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "cherry"];
+
+fruits.forEach(function(fruit) {
+  console.log(fruit);
+});`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+fruits.forEach(function(fruit) {
+  console.log(fruit);
+});`} />
+
+<Note>
+`forEach()` is clean and expressive, but unlike `for`, you **can't use `break` or `continue`** inside it.
+</Note>
+
+<Divider />
+
+### 🧰 More Useful Array Methods
+
+Now that we can add, remove, and loop through arrays, let’s level up! JavaScript gives us a rich set of built-in methods that help us **search**, **transform**, and **manipulate** arrays easily.
+
+<Divider />
+
+#### 🔎 `indexOf()` – Find the Index of an Element
+
+This method returns the **first index** at which a given element can be found in the array, or `-1` if it's not found.
+
+<CodeBlock language="js">
+{`let colors = ["red", "green", "blue"];
+
+console.log(colors.indexOf("green")); // 👉 1
+console.log(colors.indexOf("yellow")); // 👉 -1`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let colors = ["red", "green", "blue"];
+
+console.log(colors.indexOf("green")); // 1
+console.log(colors.indexOf("yellow")); // -1`} />
+
+<Divider />
+
+#### ✅ `includes()` – Check if an Element Exists
+
+Checks if an array **contains a certain element**. It returns `true` or `false`.
+
+<CodeBlock language="js">
+{`let animals = ["cat", "dog", "elephant"];
+
+console.log(animals.includes("dog"));     // 👉 true
+console.log(animals.includes("monkey"));  // 👉 false`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let animals = ["cat", "dog", "elephant"];
+
+console.log(animals.includes("dog"));
+console.log(animals.includes("monkey"));`} />
+
+<Divider />
+
+#### 🔗 `join()` – Turn Array into a String
+
+This method **joins all elements** of an array into a single string. You can provide a separator like `,`, `-`, or even a space.
+
+<CodeBlock language="js">
+{`let words = ["I", "love", "JavaScript"];
+
+console.log(words.join(" "));     // 👉 "I love JavaScript"
+console.log(words.join("-"));     // 👉 "I-love-JavaScript"`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let words = ["I", "love", "JavaScript"];
+
+console.log(words.join(" "));
+console.log(words.join("-"));`} />
+
+<Note>
+`join()` is a great way to format arrays for display or logging.
+</Note>
+
+<Divider />
+
+#### ✂️ `slice()` – Get a Portion of the Array
+
+This method returns a **new array** by extracting a section (without modifying the original).
+
+<CodeBlock language="js">
+{`let numbers = [0, 1, 2, 3, 4, 5];
+
+let sliced = numbers.slice(2, 5); // From index 2 to 4 (not including 5)
+
+console.log(sliced); // 👉 [2, 3, 4]
+console.log(numbers); // Original is unchanged`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let numbers = [0, 1, 2, 3, 4, 5];
+
+let sliced = numbers.slice(2, 5);
+
+console.log("Sliced:", sliced);
+console.log("Original:", numbers);`} />
+
+<Divider />
+
+#### 🧨 `splice()` – Add/Remove Items (Modifies Original)
+
+Unlike `slice()`, `splice()` can **add or remove** items and changes the original array.
+
+<CodeBlock language="js">
+{`let numbers = [1, 2, 3, 4, 5];
+
+// Remove 2 elements starting from index 1
+let removed = numbers.splice(1, 2);
+
+console.log(removed); // 👉 [2, 3]
+console.log(numbers); // 👉 [1, 4, 5]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let numbers = [1, 2, 3, 4, 5];
+
+let removed = numbers.splice(1, 2);
+
+console.log("Removed:", removed);
+console.log("Now:", numbers);`} />
+
+<Tip>
+Use `slice()` when you want a copy of part of an array. Use `splice()` when you want to actually modify the original array.
+</Tip>
+
+<Divider />
+
+#### 🔀 `reverse()` – Flip the Array Order
+
+<CodeBlock language="js">
+{`let nums = [1, 2, 3];
+nums.reverse();
+
+console.log(nums); // 👉 [3, 2, 1]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let nums = [1, 2, 3];
+nums.reverse();
+
+console.log(nums);`} />
+
+<Divider />
+
+#### 🔢 `sort()` – Sort Alphabetically by Default
+
+By default, `sort()` converts elements to strings and sorts them.
+
+<CodeBlock language="js">
+{`let numbers = [30, 4, 100, 2];
+numbers.sort();
+
+console.log(numbers); // 👉 [100, 2, 30, 4] (not what you might expect!)`}
+</CodeBlock>
+
+<Note>
+This happens because `sort()` sorts elements as **strings**, not numbers.
+</Note>
+
+To fix this, pass a **compare function**:
+
+<CodeBlock language="js">
+{`let numbers = [30, 4, 100, 2];
+
+numbers.sort(function(a, b) {
+  return a - b; // Sort numerically
+});
+
+console.log(numbers); // 👉 [2, 4, 30, 100]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let numbers = [30, 4, 100, 2];
+
+numbers.sort((a, b) => a - b);
+
+console.log(numbers);`} />
+
+<Divider />
+
+### 🧪 Higher-Order Array Methods: `filter()`, `map()`, `find()`
+
+These are **callback-based methods** that loop through arrays and let you perform powerful transformations, searches, and filtering with just one line of code.
+
+Let’s explore them one-by-one 👇
+
+<Divider />
+
+#### 🔍 `filter()` – Keep Only What You Need
+
+`filter()` creates a **new array** with only the elements that match a condition. It **does not change the original array**.
+
+<CodeBlock language="js">
+{`let numbers = [10, 25, 30, 45, 50];
+
+let filtered = numbers.filter(function(num) {
+  return num >= 30;
+});
+
+console.log(filtered); // 👉 [30, 45, 50]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let numbers = [10, 25, 30, 45, 50];
+
+let filtered = numbers.filter(num => num >= 30);
+
+console.log(filtered);`} />
+
+<Note>
+Use `filter()` when you want to **select specific items** from an array based on some logic.
+</Note>
+
+<Divider />
+
+#### 🔁 `map()` – Transform Every Element
+
+`map()` creates a **new array** where each item is the result of calling a function on each original item. Think of it like “transforming” every value.
+
+<CodeBlock language="js">
+{`let numbers = [1, 2, 3];
+
+let doubled = numbers.map(function(num) {
+  return num * 2;
+});
+
+console.log(doubled); // 👉 [2, 4, 6]`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let numbers = [1, 2, 3];
+
+let doubled = numbers.map(num => num * 2);
+
+console.log(doubled);`} />
+
+<Tip>
+Use `map()` when you want to **change or format data** inside an array.
+</Tip>
+
+<Divider />
+
+#### 🔎 `find()` – Get the First Match
+
+Unlike `filter()`, which returns an array, `find()` returns just the **first element** that matches a condition.
+
+<CodeBlock language="js">
+{`let users = [
+  { id: 1, name: "Akash" },
+  { id: 2, name: "Rahul" },
+  { id: 3, name: "Priya" }
+];
+
+let user = users.find(function(u) {
+  return u.id === 2;
+});
+
+console.log(user); // 👉 { id: 2, name: "Rahul" }`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let users = [
+  { id: 1, name: "Akash" },
+  { id: 2, name: "Rahul" },
+  { id: 3, name: "Priya" }
+];
+
+let user = users.find(u => u.id === 2);
+
+console.log(user);`} />
+
+<Note>
+Use `find()` when you need to fetch a **single object** from an array based on a condition.
+</Note>
+
+<Divider />
+
+#### 📚 Summary Table
+
+<Table
+  columns={["Method", "Returns", "Mutates Original?", "Use Case"]}
+  data={[
+    ["filter()", "New filtered array", "No", "Keep items based on condition"],
+    ["map()", "New transformed array", "No", "Transform each item"],
+    ["find()", "First matched item", "No", "Find a single item"]
+  ]}
+/>
+
+<Divider />
+
+### 💡 Real-World Use Case Example
+
+Let’s say we have a list of students and want to:
+
+1. Get all students who passed.
+2. Extract just their names.
+3. Find one specific student by ID.
+
+<CodeBlock language="js">
+{`let students = [
+  { id: 1, name: "Aarav", score: 85 },
+  { id: 2, name: "Neha", score: 42 },
+  { id: 3, name: "Sanjay", score: 73 },
+  { id: 4, name: "Ritu", score: 35 }
+];
+
+let passed = students.filter(s => s.score >= 50);
+let names = passed.map(s => s.name);
+let found = students.find(s => s.id === 3);
+
+console.log(passed); // 👉 Students with score >= 50
+console.log(names);  // 👉 ["Aarav", "Sanjay"]
+console.log(found);  // 👉 { id: 3, name: "Sanjay", score: 73 }`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let students = [
+  { id: 1, name: "Aarav", score: 85 },
+  { id: 2, name: "Neha", score: 42 },
+  { id: 3, name: "Sanjay", score: 73 },
+  { id: 4, name: "Ritu", score: 35 }
+];
+
+let passed = students.filter(s => s.score >= 50);
+let names = passed.map(s => s.name);
+let found = students.find(s => s.id === 3);
+
+console.log("Passed:", passed);
+console.log("Names:", names);
+console.log("Found:", found);`} />
+
+<Divider />
+
+## 🧠 Recap: What You've Learned About Arrays
+
+You’ve covered **everything you need to master arrays** in JavaScript:
+
+- What arrays are and how to create them
+- Accessing and modifying elements using indexes
+- Common properties like `.length`
+- Mutating methods: `push()`, `pop()`, `shift()`, `unshift()`, `splice()`
+- Non-mutating methods: `slice()`, `concat()`
+- Searching with `indexOf()`, `includes()`
+- Looping using `for`, `for...of`, and `forEach()`
+- Powerful transformations using `map()`, `filter()`, `find()`
+
+<Note>
+Arrays are one of the **most important data structures** in JavaScript. Mastering them sets you up for success in real-world coding, frontend frameworks, and problem-solving interviews.
+</Note>
+
+<Divider />
+
+## 💪 Practice Exercises
+
+Try solving these to reinforce your learning:
+
+### ✅ Exercise 1: Only Even Numbers
+
+Create a function that takes an array of numbers and returns only the even ones.
+
+<CodeBlock language="js">
+{`function filterEvens(arr) {
+  return arr.filter(num => num % 2 === 0);
+}
+
+// Example:
+console.log(filterEvens([1, 2, 3, 4, 5, 6])); // 👉 [2, 4, 6]
+`}
+</CodeBlock>
+
+### ✅ Exercise 2: Double the Numbers
+
+Write a function that doubles every number in the array.
+
+<CodeBlock language="js">
+{`function doubleNumbers(arr) {
+  return arr.map(num => num * 2);
+}
+
+// Example:
+console.log(doubleNumbers([3, 5, 7])); // 👉 [6, 10, 14]
+`}
+</CodeBlock>
+
+### ✅ Exercise 3: Find the First Failing Score
+
+Given an array of scores, find the first score that is below 50.
+
+<CodeBlock language="js">
+{`function findFailing(scores) {
+  return scores.find(score => score < 50);
+}
+
+// Example:
+console.log(findFailing([85, 67, 49, 77])); // 👉 49
+`}
+</CodeBlock>
+
+<Tip>
+Use `filter()`, `map()`, or `find()` wherever possible instead of a full loop.
+</Tip>
+
+<Divider />
+
+## 🧪 MCQ Quiz on Arrays
+
+<MCQ
+  question="Which method returns a new array with only elements that match a condition?"
+  options={["map()", "find()", "filter()", "forEach()"]}
+  correctAnswer={2}
+  explanation="filter() loops through the array and returns a new one with only elements that meet the condition."
+/>
+
+<MCQ
+  question="What does the 'length' property of an array return?"
+  options={["Total number of indexes", "Highest index number", "Number of elements", "Number of characters"]}
+  correctAnswer={2}
+  explanation="The .length property returns the total number of elements in an array."
+/>
+
+<MCQ
+  question="Which method transforms every element in an array and returns a new one?"
+  options={["map()", "filter()", "splice()", "indexOf()"]}
+  correctAnswer={0}
+  explanation="map() is used to apply a transformation to every element and returns a new array."
+/>

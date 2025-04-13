@@ -1,0 +1,330 @@
+## Day 22: DOM Events & Event Listeners
+
+Welcome to **Day 22** of your JavaScript journey! Yesterday, you learned how to select and manipulate DOM elements. Today, we're going one step further — you're going to learn how to make your web pages interactive through **events**.
+
+Everything from clicking a button, typing in a text field, hovering over an image, resizing the browser window — these are all **events** in the world of the web. By the end of today, you’ll be able to respond to these actions and dynamically update your page using JavaScript.
+
+<Note>
+An event is basically a signal that something has happened — like a user action or a browser-triggered change.
+</Note>
+
+<Divider />
+
+## What Are Events?
+
+In JavaScript, an **event** is an occurrence that happens in the browser that you can listen for and respond to. These events are fired by the browser when something happens — like a user clicking a button, scrolling, pressing a key, etc.
+
+Here are a few common types of DOM events:
+
+<Table
+  columns={["Event", "Description"]}
+  data={[
+    ["click", "Fired when an element is clicked."],
+    ["mouseover", "Triggered when the mouse hovers over an element."],
+    ["mouseout", "Fired when the mouse leaves the element."],
+    ["keydown", "Triggered when any key is pressed down."],
+    ["keyup", "Fired when a key is released."],
+    ["submit", "Fired when a form is submitted."],
+    ["change", "Triggered when the value of an input changes."],
+    ["load", "Fired when the entire page is fully loaded."],
+  ]}
+/>
+
+<Tip>
+There are **dozens** of different events — not just user interaction but also things like animations, media playback, or device orientation on mobile!
+</Tip>
+
+<Divider />
+
+## The `addEventListener()` Method
+
+JavaScript gives us a built-in method to attach events to DOM elements:  
+**`element.addEventListener(eventType, callback)`**
+
+Let’s break it down:
+
+- `element`: The DOM node you want to listen on.
+- `eventType`: A string like `"click"` or `"keydown"`.
+- `callback`: A function to run when the event happens.
+
+Here’s your first example:
+
+<CodeBlock language="javascript">
+{`const button = document.querySelector("button");
+
+button.addEventListener("click", function () {
+  alert("Button was clicked!");
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+A simple button alert will pop up when clicked.
+</BrowserMockup>
+
+<Tip>
+You can also use **arrow functions** as the callback if you don’t need `this` inside the function.
+</Tip>
+
+## The `event` Object and `event.target`
+
+Whenever an event is triggered, JavaScript passes an **event object** to your callback function. This object contains all kinds of useful information like:
+
+- What element triggered the event (`event.target`)
+- What type of event occurred (`event.type`)
+- Mouse coordinates (`event.clientX`, `event.clientY`)
+- Key pressed (`event.key`, `event.code`)
+- And much more...
+
+Let’s look at an example:
+
+<CodeBlock language="javascript">
+{`document.querySelector("button").addEventListener("click", function (event) {
+  console.log("You clicked on:", event.target);
+});`}
+</CodeBlock>
+
+This will log the **actual DOM element** you clicked on.
+
+<Note>
+Using `event.target` is very useful when you're attaching the same event listener to multiple elements.
+</Note>
+
+<Divider />
+
+## Listening to Multiple Events
+
+You can attach different event listeners to different event types — even on the same element.
+
+<CodeBlock language="javascript">
+{`const button = document.querySelector("button");
+
+button.addEventListener("mouseover", () => {
+  console.log("Mouse is over the button!");
+});
+
+button.addEventListener("mouseout", () => {
+  console.log("Mouse left the button!");
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+Try hovering over the button — you'll see console logs for `mouseover` and `mouseout`.
+</BrowserMockup>
+
+<Tip>
+You can use this trick to create cool effects like hover animations or tooltips.
+</Tip>
+
+<Divider />
+
+## Keyboard Events: `keydown` and `keyup`
+
+Keyboard interaction is handled using `keydown`, `keypress` (deprecated), and `keyup`. Here's how it works:
+
+<CodeBlock language="javascript">
+{`document.addEventListener("keydown", function (e) {
+  console.log("Key pressed:", e.key);
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+Every time you press a key, the key’s name is logged — try pressing "a", "Enter", etc.
+</BrowserMockup>
+
+<Note>
+You can use `e.key` to detect which key was pressed, and `e.code` for the physical key on the keyboard.
+</Note>
+
+<Divider />
+
+## Mouse Events: `click`, `dblclick`, `mousemove`
+
+Mouse events are incredibly useful for building interactions.
+
+<CodeBlock language="javascript">
+{`document.addEventListener("mousemove", function (e) {
+  console.log(\`Mouse at (\${e.clientX}, \${e.clientY})\`);
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+Move your mouse anywhere on the page — it logs the x, y coordinates in the console.
+</BrowserMockup>
+
+<Tip>
+You can use `mousemove` events to build fun things like drawing apps, custom cursors, or UI heatmaps.
+</Tip>
+
+## Handling Form Submission
+
+Forms trigger a `submit` event when the user clicks the submit button. However, by default, submitting a form **reloads the page** — which is often not what we want in modern web apps.
+
+To prevent this behavior, we use `event.preventDefault()`.
+
+Here’s a basic example:
+
+<CodeBlock language="html">
+{`<form>
+  <input type="text" id="nameInput" placeholder="Enter your name" />
+  <button type="submit">Submit</button>
+</form>`}
+</CodeBlock>
+
+<CodeBlock language="javascript">
+{`const form = document.querySelector("form");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // Stop page reload
+  const name = document.querySelector("#nameInput").value;
+  alert(\`Hello, \${name}!\`);
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+When you submit the form, it shows a greeting instead of reloading the page.
+</BrowserMockup>
+
+<Note>
+Always call `e.preventDefault()` when you want to handle form data using JavaScript.
+</Note>
+
+<Divider />
+
+## What is Event Bubbling?
+
+JavaScript events **bubble** up from the target element to its ancestors. For example, if you click a `<button>` inside a `<div>`, both the button and the div can listen for the event.
+
+Let’s see this in action:
+
+<CodeBlock language="html">
+{`<div id="outerDiv">
+  <button id="innerButton">Click Me</button>
+</div>`}
+</CodeBlock>
+
+<CodeBlock language="javascript">
+{`document.getElementById("outerDiv").addEventListener("click", () => {
+  console.log("Div clicked!");
+});
+
+document.getElementById("innerButton").addEventListener("click", () => {
+  console.log("Button clicked!");
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+Clicking the button logs both "Button clicked!" and "Div clicked!" due to bubbling.
+</BrowserMockup>
+
+<Tip>
+You can stop the bubbling using `event.stopPropagation()`, but it's better to understand it first before blocking it.
+</Tip>
+
+<Divider />
+
+## Event Delegation
+
+**Event delegation** is a powerful pattern where you attach a single event listener to a parent element to handle events on its children.
+
+It works great when you have a list of items created dynamically:
+
+<CodeBlock language="html">
+{`<ul id="todoList">
+  <li>Buy milk</li>
+  <li>Walk the dog</li>
+  <li>Read book</li>
+</ul>`}
+</CodeBlock>
+
+<CodeBlock language="javascript">
+{`const list = document.getElementById("todoList");
+
+list.addEventListener("click", function (e) {
+  if (e.target.tagName === "LI") {
+    e.target.style.textDecoration = "line-through";
+  }
+});`}
+</CodeBlock>
+
+<BrowserMockup>
+Now, clicking on any `<li>` will strike it through.
+</BrowserMockup>
+
+<Note>
+Event delegation reduces memory usage and works even if new `<li>` elements are added later.
+</Note>
+
+## 🧠 Exercise: Build a Simple Interactive To-Do List
+
+Let’s bring everything together. Create a simple to-do list app using the following features:
+
+### Requirements:
+
+1. An input field to type tasks.
+2. A submit button to add tasks to a list.
+3. A list (`<ul>`) that displays the tasks.
+4. Clicking a task should mark it as complete (toggle line-through).
+5. Bonus: Add a delete button beside each task.
+
+Use `addEventListener()`, `preventDefault()`, `event.target`, and **event delegation** to solve it cleanly!
+
+<Tip>
+Try solving it without Googling — it's meant to reinforce what you've learned today.
+</Tip>
+
+<Divider />
+
+## ✅ Quick Recap
+
+- Events are how JavaScript responds to user actions.
+- You use `.addEventListener()` to listen for events.
+- The `event` object gives you access to detailed data about the interaction.
+- `preventDefault()` helps control form behavior.
+- Event bubbling helps events propagate upward.
+- Event delegation makes your code scalable and efficient.
+
+<Note>
+Mastering events is essential — it’s how you turn a static page into an interactive experience.
+</Note>
+
+<Divider />
+
+## 📚 MCQs: DOM Events & Listeners
+
+<MCQ
+  question="Which method is used to attach an event listener to a DOM element?"
+  options={["attachEvent()", "addEvent()", "addEventListener()", "bindEvent()"]}
+  correctAnswer={2}
+  explanation="The correct method is addEventListener(). It's the standard way to listen to events on DOM elements."
+/>
+
+<MCQ
+  question="What does event.preventDefault() do?"
+  options={[
+    "It stops the event from bubbling up the DOM",
+    "It cancels the default browser behavior",
+    "It deletes the event",
+    "It prevents the element from rendering"
+  ]}
+  correctAnswer={1}
+  explanation="event.preventDefault() stops the browser's default behavior, such as submitting a form or following a link."
+/>
+
+<MCQ
+  question="In event delegation, why do we attach the event listener to a parent element?"
+  options={[
+    "To make animations smoother",
+    "To reduce memory usage and handle dynamic elements",
+    "To catch keyboard inputs globally",
+    "To prevent CSS conflicts"
+  ]}
+  correctAnswer={1}
+  explanation="Event delegation uses a parent to handle events from children, even if they are added later. It's more efficient."
+/>
+
+<Divider />
+
+## 🚀 What's Next?
+
+In the next lesson (Day 23), we'll explore how to handle **forms in depth** using JavaScript — including extracting values, validating inputs, and enhancing UX!
+

@@ -1,0 +1,568 @@
+## Day 3: Styling the Web – CSS Fundamentals & Selectors
+
+Welcome to Day 3 of the course! Now that you’ve built a basic HTML structure, it's time to add some style to your pages and make them visually appealing using **CSS (Cascading Style Sheets)**.
+
+<Divider />
+
+### What is CSS?
+
+CSS stands for **Cascading Style Sheets**. It is a stylesheet language that lets you control the **visual appearance** of your HTML elements. You can change colors, fonts, spacing, layout, animations, and more.
+
+Think of HTML as the structure or skeleton of a web page, and CSS as the clothes and makeup that make it presentable.
+
+<Tip>
+CSS can be applied directly inside your HTML file using the `<style>` tag or linked externally via a `.css` file.
+</Tip>
+
+<HtmlCssPlayground 
+  initialHTML={`<h1>Hello, World!</h1>`}
+  initialCSS={`h1 {
+  color: blue;
+  font-size: 2rem;
+  text-align: center;
+}`}
+ />
+
+<Note>
+CSS is case-insensitive, but it's recommended to keep everything lowercase for consistency.
+</Note>
+
+<Divider />
+
+### Ways to Apply CSS
+
+There are three main ways to use CSS in your web projects:
+
+#### 1. Inline CSS
+Add the style directly to an HTML element using the `style` attribute.
+
+<CodeBlock language="html">
+{`<p style="color: red;">This is red text</p>`}
+</CodeBlock>
+
+#### 2. Internal CSS
+Define styles in a `<style>` block inside the `<head>` section.
+
+<CodeBlock language="html">
+{`<style>
+  p {
+    color: green;
+  }
+</style>`}
+</CodeBlock>
+
+#### 3. External CSS
+Link an external `.css` file using the `<link>` tag. This is the most recommended and scalable approach.
+
+<CodeBlock language="html">
+{`<link rel="stylesheet" href="styles.css">`}
+</CodeBlock>
+
+<Note>
+Always prefer **external CSS** for maintainability and reusability.
+</Note>
+
+<Divider />
+
+### CSS Syntax
+
+CSS follows a simple syntax:
+
+<CodeBlock language="css">
+{`selector {
+  property: value;
+}`}
+</CodeBlock>
+
+- **Selector**: Targets HTML elements.
+- **Property**: What you want to change.
+- **Value**: The setting for that property.
+
+Example:
+
+<CodeBlock language="css">
+{`h1 {
+  color: purple;
+  font-size: 32px;
+}`}
+</CodeBlock>
+
+This applies purple color and a 32px font size to all `<h1>` elements.
+
+### CSS Selectors: Targeting Elements
+
+CSS selectors let you **choose which HTML elements** you want to style. Mastering selectors is key to writing powerful and efficient stylesheets.
+
+<Divider />
+
+### 1. Element Selector
+
+Targets all elements of a specific type.
+
+<CodeBlock language="css">
+{`p {
+  color: blue;
+}`}
+</CodeBlock>
+
+This will turn all `<p>` elements blue.
+
+<Divider />
+
+### 2. Class Selector (`.`)
+
+Targets all elements with a specific `class`.
+
+HTML:
+
+<CodeBlock language="html">
+{`<div class="card">Hello</div>`}
+</CodeBlock>
+
+CSS:
+
+<CodeBlock language="css">
+{`.card {
+  padding: 20px;
+  background-color: #f0f0f0;
+}`}
+</CodeBlock>
+
+<Note>
+You can reuse the same class on multiple elements.
+</Note>
+
+<Divider />
+
+### 3. ID Selector (`#`)
+
+Targets an element with a specific `id`.
+
+HTML:
+
+<CodeBlock language="html">
+{`<h1 id="hero-title">Welcome</h1>`}
+</CodeBlock>
+
+CSS:
+
+<CodeBlock language="css">
+{`#hero-title {
+  font-size: 3rem;
+  color: teal;
+}`}
+</CodeBlock>
+
+<Note>
+IDs should be **unique** per page. Don’t reuse the same ID on multiple elements.
+</Note>
+
+<Divider />
+
+### 4. Universal Selector (`*`)
+
+Targets **all elements** on the page.
+
+<CodeBlock language="css">
+{`* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}`}
+</CodeBlock>
+
+Often used for CSS resets.
+
+<Divider />
+
+### 5. Grouping Selector
+
+You can style multiple elements with the same rules using commas.
+
+<CodeBlock language="css">
+{`h1, h2, h3 {
+  font-family: 'Arial', sans-serif;
+}`}
+</CodeBlock>
+
+<Divider />
+
+### 6. Descendant Selector (Space)
+
+Targets elements inside other elements.
+
+<CodeBlock language="css">
+{`.card p {
+  color: gray;
+}`}
+</CodeBlock>
+
+This will style all `<p>` tags that are **inside** elements with class `card`.
+
+<Divider />
+
+### 7. Child Selector (`>`)
+
+Targets only **direct child** elements.
+
+<CodeBlock language="css">
+{`.nav > li {
+  list-style: none;
+}`}
+</CodeBlock>
+
+This applies only to `<li>` elements that are directly inside `.nav`.
+
+<HtmlCssPlayground 
+  initialHTML={`<ul class="nav">
+  <li>Home</li>
+  <li>About</li>
+  <li>
+    Services
+    <ul>
+      <li>Web</li>
+      <li>Mobile</li>
+    </ul>
+  </li>
+</ul>`}
+  initialCSS={`.nav > li {
+  color: red;
+}`}
+ />
+
+### Advanced Selectors: Attribute, Pseudo-classes & Pseudo-elements
+
+Now that you know the basic selectors, let’s go one level deeper. These advanced selectors give you **fine control** over which elements to target based on attributes, states, or position in the DOM.
+
+<Divider />
+
+### 1. Attribute Selector
+
+Targets elements with specific attributes (like `type`, `href`, etc.)
+
+Example: Style all input fields of type text.
+
+<CodeBlock language="css">
+{`input[type="text"] {
+  border: 1px solid gray;
+  padding: 0.5rem;
+}`}
+</CodeBlock>
+
+This is extremely useful when styling forms or filtering specific elements.
+
+<Divider />
+
+### 2. Pseudo-classes (`:`)
+
+Pseudo-classes let you target elements based on their **state** or **position**.
+
+Some useful ones:
+
+#### `:hover`
+When you hover over an element.
+
+<CodeBlock language="css">
+{`button:hover {
+  background-color: orange;
+}`}
+</CodeBlock>
+
+#### `:first-child`
+Targets the first child of a parent.
+
+<CodeBlock language="css">
+{`li:first-child {
+  font-weight: bold;
+}`}
+</CodeBlock>
+
+#### `:last-child`
+Targets the last child.
+
+<CodeBlock language="css">
+{`li:last-child {
+  color: red;
+}`}
+</CodeBlock>
+
+#### `:nth-child(n)`
+Targets specific child positions.
+
+<CodeBlock language="css">
+{`li:nth-child(2) {
+  color: green;
+}`}
+</CodeBlock>
+
+<Divider />
+
+### 3. Pseudo-elements (`::`)
+
+Used to style **specific parts** of an element.
+
+#### `::before` and `::after`
+
+Add virtual elements before or after content.
+
+<CodeBlock language="css">
+{`h1::before {
+  content: "🔥 ";
+}
+h1::after {
+  content: " 🚀";
+}`}
+</CodeBlock>
+
+These are super useful for adding decorative icons, quotes, or markers.
+
+<HtmlCssPlayground 
+  initialHTML={`<h1>Web Design Mastery</h1>`}
+  initialCSS={`h1::before {
+  content: "🔥 ";
+}
+h1::after {
+  content: " 🚀";
+}
+h1 {
+  color: darkviolet;
+}`}
+ />
+
+<Note>
+Don't forget: Pseudo-classes use **one colon `:`** and pseudo-elements use **two colons `::`**.
+</Note>
+
+### Writing Clear CSS: Comments, Units & Best Practices
+
+CSS is powerful, but as your code grows, it can get messy. Let’s learn how to keep it clean and maintainable.
+
+<Divider />
+
+### 1. CSS Comments
+
+Use comments to describe sections or logic in your stylesheet.
+
+<CodeBlock language="css">
+{`/* This is a comment */
+
+h1 {
+  font-size: 2rem; /* This is an inline comment */
+}`}
+</CodeBlock>
+
+<Note>
+Good comments help you (and others) understand your CSS months later!
+</Note>
+
+<Divider />
+
+### 2. CSS Units: px, %, em, rem
+
+CSS units define the **size** of things — fonts, margins, padding, etc.
+
+#### `px` – Pixels
+
+A fixed unit. Always the same regardless of screen size.
+
+<CodeBlock language="css">
+{`p {
+  font-size: 16px;
+}`}
+</CodeBlock>
+
+#### `%` – Relative to Parent
+
+Scales based on the size of the parent element.
+
+<CodeBlock language="css">
+{`img {
+  width: 100%;
+}`}
+</CodeBlock>
+
+#### `em` – Relative to Parent's Font Size
+
+If parent font size is `16px`, then:
+
+<CodeBlock language="css">
+{`p {
+  font-size: 2em; /* = 32px */
+}`}
+</CodeBlock>
+
+#### `rem` – Relative to Root (`html`) Font Size
+
+More consistent than `em`.
+
+<CodeBlock language="css">
+{`p {
+  font-size: 1.5rem; /* = 24px if root is 16px */
+}`}
+</CodeBlock>
+
+<HtmlCssPlayground 
+  initialHTML={`<div class="wrapper">
+  <p>This is a paragraph</p>
+</div>`}
+  initialCSS={`html {
+  font-size: 16px;
+}
+
+.wrapper p {
+  font-size: 1.5rem;
+}`}
+ />
+
+<Note>
+Use `rem` or `%` for scalable and responsive design. Avoid using `px` everywhere.
+</Note>
+
+<Divider />
+
+### 3. CSS Best Practices
+
+Some important habits to follow:
+
+- Use meaningful class names (`.card`, `.hero-section`, `.btn-primary`)
+- Keep your selectors short but specific
+- Don’t overuse `id` selectors
+- Group related styles together
+- Use comments to divide sections
+- Use CSS variables (later in the course!)
+- Prefer `rem`/`em` for font sizes and spacing
+
+<Tip>
+Think like a developer. Your CSS should be clean, readable, and easy to debug.
+</Tip>
+
+<Divider />
+
+Let me know when you’re ready for the **final chunk**, where we’ll do **an Exercise**, and then test your learning with **3 MCQs using the `<MCQ>` component**.
+
+## 🧠 Exercise
+
+Let’s put your CSS knowledge to work!
+
+Create a simple pricing table using the following guidelines:
+
+<Divider />
+
+### ✅ Requirements
+
+- Use `div` elements to represent 3 plans: Basic, Pro, and Premium.
+- Each plan should have:
+  - A title
+  - A price
+  - A list of features
+  - A button
+- Use **class selectors** and style using:
+  - Background color
+  - Padding and margin
+  - Borders
+  - Hover effects
+  - Font styling
+- Try using units like `rem` and `em` instead of `px`.
+
+<HtmlCssPlayground 
+  initialHTML={`<div class="pricing">
+  <div class="plan basic">
+    <h2>Basic</h2>
+    <p>$9/mo</p>
+    <ul>
+      <li>1 Website</li>
+      <li>Email Support</li>
+    </ul>
+    <button>Select</button>
+  </div>
+</div>`}
+  initialCSS={`.pricing {
+  display: flex;
+  gap: 2rem;
+}
+
+.plan {
+  border: 2px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.plan:hover {
+  background-color: #e0f7fa;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}`}
+ />
+
+<Tip>
+Try building this in your own code editor. Then try changing fonts, colors, or spacing using CSS!
+</Tip>
+
+<Divider />
+
+## ✅ Quiz Time!
+
+<MCQ 
+  question="Which selector targets elements when the user hovers over them?"
+  options={[
+    "element:hover",
+    "element::hover",
+    "element.hover",
+    "element=>hover"
+  ]}
+  correctAnswer={0}
+  explanation="`:hover` is a pseudo-class used to target elements on hover. It uses a single colon, not double."
+/>
+
+<MCQ 
+  question="What does `rem` stand for in CSS units?"
+  options={[
+    "Relative to parent element",
+    "Relative to the element itself",
+    "Relative to root element",
+    "Relative to margin"
+  ]}
+  correctAnswer={2}
+  explanation="`rem` means 'root em'. It scales based on the root `html` font size, unlike `em` which is relative to the parent."
+/>
+
+<MCQ 
+  question="Which pseudo-element is used to add content after an element?"
+  options={[
+    "::before",
+    "::content",
+    "::after",
+    ":after"
+  ]}
+  correctAnswer={2}
+  explanation="The correct syntax is `::after` with double colons. `:after` still works in some browsers, but `::after` is the standard."
+/>
+
+<Divider />
+
+## 🔁 Recap
+
+Today you learned a **huge part** of CSS fundamentals:
+
+- How to style with selectors
+- Difference between classes, IDs, and element selectors
+- How to use pseudo-classes like `:hover`, `:first-child`
+- How pseudo-elements like `::before` and `::after` work
+- Different units (`px`, `%`, `em`, `rem`) and when to use them
+- Best practices for writing clean CSS
+
+<Divider />
+
+<Tip>
+Tomorrow we dive deep into the **Box Model** – margin, padding, border, and how layout actually works in CSS. Don’t miss it!
+</Tip>

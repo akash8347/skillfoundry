@@ -1,0 +1,373 @@
+## Day 4: Designing Layouts — Box Model, Margin, Padding & Borders
+
+Welcome to Day 4 of the Web Design Course! Today, we’ll explore how elements are laid out on a webpage using the **CSS Box Model**. This is one of the most important foundational concepts in CSS. A strong grip on how margin, padding, borders, and content interact is essential for clean layouts.
+
+<Divider />
+
+### 🔍 What is the CSS Box Model?
+
+Every HTML element is considered as a **box**. CSS uses a box model to wrap around each element, and it consists of the following four areas:
+
+1. **Content** — The actual content of the box (like text, image, or input).
+2. **Padding** — Space between the content and the border.
+3. **Border** — The visible border wrapping the element.
+4. **Margin** — The space outside the border that separates it from other elements.
+
+<BrowserMockup>
+  Box = Margin → Border → Padding → Content
+</BrowserMockup>
+
+<Tip>
+Think of it like a cardboard box: the content is the item inside, padding is the cushioning around it, the border is the box itself, and the margin is the space between this box and others.
+</Tip>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="box">Hello, Box Model!</div>`}
+  initialCSS={`.box {
+  background-color: lightblue;
+  padding: 20px;
+  border: 5px solid navy;
+  margin: 30px;
+  font-size: 20px;
+}`}
+/>
+
+<Divider />
+
+### 🧠 Box Model Breakdown
+
+Let’s look at each part of the Box Model in more detail:
+
+#### 1. **Content**
+
+This is the inner-most part of the box. It holds the actual HTML content (text, image, etc.). You control its size using `width` and `height`.
+
+#### 2. **Padding**
+
+Padding adds spacing between the content and the border. It can be uniform or applied to individual sides.
+
+<CodeBlock language="css">{`padding: 10px; /* All sides */
+padding: 10px 20px; /* Top & Bottom, Left & Right */
+padding: 10px 15px 5px 0; /* Top, Right, Bottom, Left */`}</CodeBlock>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="padding-box">Padded Box</div>`}
+  initialCSS={`.padding-box {
+  background-color: lightcoral;
+  padding: 20px;
+  color: white;
+}`}
+/>
+
+<Tip>
+Padding adds space *inside* the element. It's great for creating breathing room between content and borders.
+</Tip>
+
+#### 3. **Border**
+
+This is the edge that wraps around the padding and content. You can style it using `border-width`, `border-color`, and `border-style`.
+
+<CodeBlock language="css">{`border: 2px solid black;
+border: 3px dashed red;
+border: 5px double blue;`}</CodeBlock>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="border-box">Box with Border</div>`}
+  initialCSS={`.border-box {
+  padding: 10px;
+  border: 3px dashed green;
+  background-color: #f0f0f0;
+}`}
+/>
+
+#### 4. **Margin**
+
+Margin is the outermost layer. It separates the element from other elements on the page.
+
+<CodeBlock language="css">{`margin: 10px; /* All sides */
+margin: 10px 15px; /* Top & Bottom, Left & Right */
+margin: 10px 0 5px 20px; /* Top, Right, Bottom, Left */`}</CodeBlock>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="margin-box">Box with Margin</div>`}
+  initialCSS={`.margin-box {
+  margin: 40px;
+  background-color: peachpuff;
+  padding: 20px;
+}`}
+/>
+
+<Tip>
+Margins don’t have backgrounds and are fully transparent. They're best used to create space *between* elements.
+</Tip>
+
+<Divider />
+
+### 📐 Box Model in Action
+
+Here’s a breakdown of how these parts add up to the final space an element takes on the page:
+
+<Table
+  columns={["Property", "Affects", "Color in Demo"]}
+  data={[
+    ["Content", "The actual element", "Varies"],
+    ["Padding", "Space inside box", "Usually light color"],
+    ["Border", "Box's edge", "Outlined style"],
+    ["Margin", "Space outside", "Not visible (transparent)"],
+  ]}
+/>
+
+### 🔧 box-sizing Property
+
+By default, when you set the `width` and `height` of an element, it only applies to the **content**. Padding and borders are *added* to that size, which can break your layout if you're not careful.
+
+Let’s illustrate this with an example.
+
+<HtmlCssPlayground
+  initialHTML={`<div class="default-box">Default Box</div>
+<div class="bordered-box">Bordered Box</div>`}
+  initialCSS={`.default-box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  background-color: skyblue;
+  margin-bottom: 20px;
+}
+
+.bordered-box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  background-color: lightgreen;
+  box-sizing: border-box;
+}`}
+/>
+
+<Tip>
+Use <b>box-sizing: border-box</b> to include padding and border *inside* the total width and height of the element. It makes layouts much easier to manage.
+</Tip>
+
+#### ✅ Global Reset Using box-sizing
+
+<CodeBlock language="css">{`*, *::before, *::after {
+  box-sizing: border-box;
+}`}</CodeBlock>
+
+<Divider />
+
+### 🤯 Margin Collapse
+
+One of the weird quirks of CSS is **margin collapse**. When two vertical elements with margins touch, their margins don't add up — they collapse to the larger of the two.
+
+#### 🔁 Example
+
+<HtmlCssPlayground
+  initialHTML={`<div class="box-1">Box One</div>
+<div class="box-2">Box Two</div>`}
+  initialCSS={`.box-1, .box-2 {
+  background: #b3d9ff;
+  margin: 30px 0;
+  padding: 10px;
+}`}
+/>
+
+Here, the vertical margin between `.box-1` and `.box-2` will be **30px**, not `30px + 30px = 60px`.
+
+<Tip>
+Only **vertical** margins collapse. Horizontal ones don’t. This often trips up beginners when building stacked layouts.
+</Tip>
+
+<Divider />
+
+### 🧰 Common Layout Use-Cases
+
+Understanding the box model helps us tackle common layout tasks. Let’s go through some examples:
+
+#### 🧱 Create Spacing Between Sections
+
+Use margins to push sections apart.
+
+<CodeBlock language="css">{`.section {
+  margin-bottom: 50px;
+}`}</CodeBlock>
+
+#### 📦 Create Space Inside Cards
+
+Use padding to keep content from sticking to the edges.
+
+<CodeBlock language="css">{`.card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}`}</CodeBlock>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="card">
+  <h3>Card Title</h3>
+  <p>This card has padding inside.</p>
+</div>`}
+  initialCSS={`.card {
+  padding: 20px;
+  background: #fff8dc;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}`}
+/>
+
+#### 🔳 Nested Boxes
+
+Let’s combine margin, padding, and borders for a realistic layout.
+
+<HtmlCssPlayground
+  initialHTML={`<div class="outer-box">
+  <div class="inner-box">Inner Content</div>
+</div>`}
+  initialCSS={`.outer-box {
+  margin: 40px;
+  padding: 30px;
+  border: 5px solid #333;
+  background: #fafafa;
+}
+
+.inner-box {
+  padding: 20px;
+  border: 3px dashed #666;
+  background: #ffe;
+}`}
+/>
+
+<Divider />
+
+### 🧪 Task Time
+
+<Task>
+Create three boxes:
+1. The first with `margin` and no padding.
+2. The second with `padding` and no margin.
+3. The third with both `padding` and `margin`.
+
+Experiment with background colors and borders to visualize the differences.
+</Task>
+
+<Divider />
+
+### 📝 Exercise: Visualize the Box Model
+
+<Task>
+Build a layout that contains 4 boxes stacked vertically.
+
+Each box should demonstrate:
+- Box 1: Only content (no padding, no margin, no border)
+- Box 2: Content + padding
+- Box 3: Content + padding + border
+- Box 4: Content + padding + border + margin
+
+Use different background colors and labels to distinguish them. This will help you visually memorize how each part of the box model works.
+</Task>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="box content-only">Content Only</div>
+<div class="box padded">Padding Only</div>
+<div class="box bordered">Padding + Border</div>
+<div class="box margined">Padding + Border + Margin</div>`}
+  initialCSS={`.box {
+  background-color: #e0f7fa;
+  font-weight: bold;
+}
+
+.content-only {
+  background-color: #b2ebf2;
+}
+
+.padded {
+  background-color: #80deea;
+  padding: 20px;
+}
+
+.bordered {
+  background-color: #4dd0e1;
+  padding: 20px;
+  border: 4px solid #00838f;
+}
+
+.margined {
+  background-color: #26c6da;
+  padding: 20px;
+  border: 4px solid #006064;
+  margin: 20px;
+}`}
+/>
+
+<Divider />
+
+### ❓ Quiz Time (MCQs)
+
+Let’s see how well you understood today’s lesson.
+<MCQ
+question="What does the padding property control in the box model?"
+options={[
+  "Space between two elements",
+  "Space inside the content box and its border",
+  "The border thickness",
+  "The size of the margin"
+]}
+correctAnswer={1}
+explanation="Padding is the space between the content and the border of an element."
+/>
+
+<MCQ
+question="Which part of the box model is transparent and doesn’t have a background color?"
+options={[
+  "Padding",
+  "Content",
+  "Margin",
+  "Border"
+]}
+correctAnswer={2}
+explanation="Margin is the outermost layer and is always transparent — it doesn't have a background."
+/>
+
+<MCQ
+question="Which property ensures padding and borders don’t add extra size to an element?"
+options={[
+  "box-padding",
+  "width-fit",
+  "box-sizing: border-box",
+  "margin-collapse"
+]}
+correctAnswer={2}
+explanation="Setting box-sizing to border-box makes the total width and height include padding and borders."
+/>
+
+<MCQ
+question="What happens when two vertical margins meet?"
+options={[
+  "They get doubled",
+  "They cancel each other",
+  "They collapse to the smaller value",
+  "They collapse to the larger value"
+]}
+correctAnswer={3}
+explanation="When two vertical margins touch, the larger one takes effect — this is known as margin collapsing."
+/>
+
+
+<Divider />
+
+### 🚀 Wrapping Up Day 4
+
+Today you learned one of the most critical parts of CSS — the **Box Model**. Mastering this is key to understanding how every single element behaves on your web page.
+
+You now understand:
+- How content, padding, border, and margin work
+- How to use `box-sizing` to control sizing
+- How margin collapsing behaves
+- How to build visually spaced and structured components
+
+<Note>
+You’re now equipped to control **spacing** and **layout precision** — something even intermediate developers sometimes struggle with.
+</Note>
+
+In the next lesson, we’ll take it even further — exploring **Positioning and Display** to start moving elements exactly where we want them.
+
+<Divider />

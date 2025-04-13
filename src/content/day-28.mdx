@@ -1,0 +1,494 @@
+## Day 28: Promises and Async JavaScript
+
+JavaScript is built for asynchronous tasks — things like fetching data from a server, reading files, or setting timers. Until now, we’ve handled this using **callbacks**. But callbacks can lead to messy, unreadable code.
+
+Enter **Promises** — a cleaner, more powerful way to handle async behavior.
+
+<Divider />
+
+### 🤔 What is a Promise?
+
+A **Promise** is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
+
+Think of a Promise like ordering food at a restaurant. You place your order (start an async task), and you get a token (the Promise). You don’t know when it’ll be ready, but you’ll be notified (via `.then()` or `.catch()`) once it is.
+
+<Divider />
+
+### 🔁 Promise Lifecycle
+
+A Promise has **3 states**:
+
+1. **Pending** – Initial state, operation hasn't completed yet
+2. **Fulfilled** – Operation completed successfully
+3. **Rejected** – Operation failed
+
+<Divider />
+
+### 🔧 Creating a Promise
+
+You can create a new Promise using the `Promise` constructor:
+
+<CodeBlock language="js">
+{`const myPromise = new Promise((resolve, reject) => {
+  // some async work
+  let success = true;
+
+  if (success) {
+    resolve("Task completed successfully!");
+  } else {
+    reject("Something went wrong.");
+  }
+});`}
+</CodeBlock>
+
+This Promise either **resolves** (succeeds) or **rejects** (fails). Once it's settled, we can handle it with `.then()` and `.catch()`.
+
+<Divider />
+
+### ✅ Consuming a Promise
+
+You can "listen" to what the Promise returns using `.then()` for success and `.catch()` for errors.
+
+<CodeBlock language="js">
+{`myPromise
+  .then((result) => {
+    console.log("Success:", result);
+  })
+  .catch((error) => {
+    console.log("Error:", error);
+  });`}
+</CodeBlock>
+
+<JsPlayground>
+{`const myPromise = new Promise((resolve, reject) => {
+  let success = true;
+
+  if (success) {
+    resolve("Task completed successfully!");
+  } else {
+    reject("Something went wrong.");
+  }
+});
+
+myPromise
+  .then((result) => {
+    console.log("Success:", result);
+  })
+  .catch((error) => {
+    console.log("Error:", error);
+  });`}
+</JsPlayground>
+
+<Divider />
+
+### 🧪 Simulating Asynchronous Code
+
+You can simulate delay using `setTimeout()`:
+
+<CodeBlock language="js">
+{`const delayedPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("This took 2 seconds.");
+  }, 2000);
+});
+
+delayedPromise.then((msg) => {
+  console.log(msg);
+});`}
+</CodeBlock>
+
+<JsPlayground>
+{`const delayedPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("This took 2 seconds.");
+  }, 2000);
+});
+
+delayedPromise.then((msg) => {
+  console.log(msg);
+});`}
+</JsPlayground>
+
+<Divider />
+
+### 🧠 Key Points So Far
+
+- Promises replace callbacks for cleaner async code
+- A Promise can resolve (success) or reject (failure)
+- Use `.then()` for success and `.catch()` for error handling
+- `setTimeout` can be used to simulate async behavior
+
+<Divider />
+
+### 🔗 Chaining Promises
+
+One of the biggest benefits of Promises is **chaining** — linking `.then()` calls one after the other.
+
+This allows you to handle sequential tasks in a clean, readable way.
+
+<CodeBlock language="js">
+{`new Promise((resolve, reject) => {
+  resolve(2);
+})
+  .then((num) => {
+    console.log("First:", num); // 2
+    return num * 2;
+  })
+  .then((num) => {
+    console.log("Second:", num); // 4
+    return num * 2;
+  })
+  .then((num) => {
+    console.log("Third:", num); // 8
+  });`}
+</CodeBlock>
+
+<JsPlayground>
+{`new Promise((resolve, reject) => {
+  resolve(2);
+})
+  .then((num) => {
+    console.log("First:", num);
+    return num * 2;
+  })
+  .then((num) => {
+    console.log("Second:", num);
+    return num * 2;
+  })
+  .then((num) => {
+    console.log("Third:", num);
+  });`}
+</JsPlayground>
+
+Notice how values are passed along from one `.then()` to the next.
+
+<Divider />
+
+### 🧨 Error Handling in Chains
+
+If any step in the chain throws an error or returns a rejected promise, the `.catch()` block will handle it.
+
+<CodeBlock language="js">
+{`new Promise((resolve, reject) => {
+  resolve("Start");
+})
+  .then((val) => {
+    console.log(val);
+    throw new Error("Oops!");
+  })
+  .then(() => {
+    console.log("This won't run");
+  })
+  .catch((err) => {
+    console.log("Caught an error:", err.message);
+  });`}
+</CodeBlock>
+
+<JsPlayground>
+{`new Promise((resolve, reject) => {
+  resolve("Start");
+})
+  .then((val) => {
+    console.log(val);
+    throw new Error("Oops!");
+  })
+  .then(() => {
+    console.log("This won't run");
+  })
+  .catch((err) => {
+    console.log("Caught an error:", err.message);
+  });`}
+</JsPlayground>
+
+Once an error occurs, control jumps directly to the `.catch()` — skipping any remaining `.then()` blocks.
+
+<Divider />
+
+### 🧩 `Promise.all()` — Run in Parallel
+
+Sometimes you want to run multiple async tasks **at the same time** and wait until all are done.
+
+That’s where `Promise.all()` comes in.
+
+<CodeBlock language="js">
+{`const p1 = new Promise((resolve) => setTimeout(() => resolve("One"), 1000));
+const p2 = new Promise((resolve) => setTimeout(() => resolve("Two"), 2000));
+const p3 = new Promise((resolve) => setTimeout(() => resolve("Three"), 1500));
+
+Promise.all([p1, p2, p3]).then((results) => {
+  console.log("All results:", results);
+});`}
+</CodeBlock>
+
+<JsPlayground>
+{`const p1 = new Promise((resolve) => setTimeout(() => resolve("One"), 1000));
+const p2 = new Promise((resolve) => setTimeout(() => resolve("Two"), 2000));
+const p3 = new Promise((resolve) => setTimeout(() => resolve("Three"), 1500));
+
+Promise.all([p1, p2, p3]).then((results) => {
+  console.log("All results:", results);
+});`}
+</JsPlayground>
+
+This runs all promises simultaneously, and resolves when **all of them** are done. If **any one** fails, the entire `Promise.all()` rejects.
+
+<Divider />
+
+### 🧘‍♂️ `async` & `await` — A Smoother Way to Write Promises
+
+JavaScript introduced `async` and `await` in ES2017 to make asynchronous code feel **synchronous** and readable.
+
+#### 📌 What is `async`?
+
+When you mark a function as `async`, it **always returns a Promise**, even if you return a normal value.
+
+<CodeBlock language="js">
+{`async function greet() {
+  return "Hello!";
+}
+
+greet().then(console.log); // Logs: Hello!`}
+</CodeBlock>
+
+<JsPlayground>
+{`async function greet() {
+  return "Hello!";
+}
+
+greet().then(console.log);`}
+</JsPlayground>
+
+#### 📌 What is `await`?
+
+The `await` keyword can **only be used inside async functions**. It pauses the function execution until the Promise resolves.
+
+<CodeBlock language="js">
+{`function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function showSteps() {
+  console.log("Step 1");
+  await delay(1000); // pause for 1 second
+  console.log("Step 2");
+  await delay(1000);
+  console.log("Step 3");
+}
+
+showSteps();`}
+</CodeBlock>
+
+<JsPlayground>
+{`function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function showSteps() {
+  console.log("Step 1");
+  await delay(1000);
+  console.log("Step 2");
+  await delay(1000);
+  console.log("Step 3");
+}
+
+showSteps();`}
+</JsPlayground>
+
+By using `await`, the code behaves just like it would if it were synchronous — no more chaining `.then()` everywhere!
+
+<Divider />
+
+### ⚠️ Error Handling with `try...catch`
+
+You can handle errors in async functions just like you would in synchronous ones — with `try...catch`.
+
+<CodeBlock language="js">
+{`async function fetchData() {
+  try {
+    let response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    let data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log("Error occurred:", error.message);
+  }
+}
+
+fetchData();`}
+</CodeBlock>
+
+<JsPlayground>
+{`async function fetchData() {
+  try {
+    let response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    let data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log("Error occurred:", error.message);
+  }
+}
+
+fetchData();`}
+</JsPlayground>
+
+This is a much cleaner way to write asynchronous logic — especially when you have multiple steps that depend on each other.
+
+<Divider />
+
+### 🔄 `then/catch` vs `async/await`
+
+Both are tools to handle asynchronous operations — but `async/await` is **syntactic sugar** over Promises.
+
+Let’s compare both approaches side by side.
+
+#### ✅ Using `.then()` and `.catch()`
+
+<CodeBlock language="js">
+{`function getUser() {
+  return fetch("https://jsonplaceholder.typicode.com/users/1")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("User fetched:", data.name);
+    })
+    .catch((err) => {
+      console.log("Failed to fetch:", err.message);
+    });
+}
+
+getUser();`}
+</CodeBlock>
+
+<JsPlayground>
+{`function getUser() {
+  return fetch("https://jsonplaceholder.typicode.com/users/1")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("User fetched:", data.name);
+    })
+    .catch((err) => {
+      console.log("Failed to fetch:", err.message);
+    });
+}
+
+getUser();`}
+</JsPlayground>
+
+#### ✅ Using `async/await`
+
+<CodeBlock language="js">
+{`async function getUser() {
+  try {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+    const data = await res.json();
+    console.log("User fetched:", data.name);
+  } catch (err) {
+    console.log("Failed to fetch:", err.message);
+  }
+}
+
+getUser();`}
+</CodeBlock>
+
+<JsPlayground>
+{`async function getUser() {
+  try {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+    const data = await res.json();
+    console.log("User fetched:", data.name);
+  } catch (err) {
+    console.log("Failed to fetch:", err.message);
+  }
+}
+
+getUser();`}
+</JsPlayground>
+
+📌 In short:
+
+<Table
+  columns={["Aspect", ".then()", "async/await"]}
+  data={[
+    ["Code Style", "Chained", "Sequential & Clean"],
+    ["Error Handling", "catch()", "try...catch"],
+    ["Best For", "Simple or single calls", "Complex, multi-step flows"],
+  ]}
+/>
+
+<Divider />
+
+### 🏁 When to Use What?
+
+- Use `.then()` if you're doing simple one-off operations or working in non-async functions.
+- Prefer `async/await` for more complex logic where readability and debugging are important.
+
+<Note>
+Even when using `async/await`, the underlying mechanism is still Promises. You're just writing it in a more linear and readable format.
+</Note>
+
+<Divider />
+
+## 🧪 Exercise: Build Your Own Delayed Logger
+
+Write a function called `delayedLogger` that takes an array of messages and logs them one after another, each after a 1 second delay.
+
+### ✅ Example:
+
+Calling this:
+
+<CodeBlock language="js">
+{`delayedLogger(["One", "Two", "Three"]);`}
+</CodeBlock>
+
+Should output:
+
+One (after 1s) Two (after 2s) Three (after 3s)
+
+
+Try using `async/await` and `setTimeout` wrapped inside a Promise to make it elegant!
+
+<Divider />
+
+## ❓ MCQs on Promises & Async/Await
+
+<MCQ
+  question="What does an async function always return?"
+  options={["undefined", "Promise", "Function", "String"]}
+  correctAnswer={1}
+  explanation="An async function always returns a Promise, even if you return a regular value."
+/>
+
+<MCQ
+  question="What happens when an error occurs inside an async function but is not caught?"
+  options={[
+    "It throws a syntax error",
+    "It silently fails",
+    "The Promise is rejected",
+    "It logs a warning",
+  ]}
+  correctAnswer={2}
+  explanation="If an error occurs in an async function and it's not caught, the Promise it returns is rejected."
+/>
+
+<MCQ
+  question="Which keyword is used to pause execution in an async function until a Promise resolves?"
+  options={["then", "pause", "wait", "await"]}
+  correctAnswer={3}
+  explanation="The 'await' keyword is used to pause execution until a Promise resolves inside an async function."
+/>
+
+<MCQ
+  question="Which of the following is NOT true about Promises?"
+  options={[
+    "They represent eventual completion or failure of an async operation",
+    "They can only resolve once",
+    "They block the main thread",
+    "They help avoid callback hell",
+  ]}
+  correctAnswer={2}
+  explanation="Promises are non-blocking and do not freeze the main thread. They run asynchronously."
+/>
+
+<Divider />
+
+<Note>
+Congrats on completing Day 28! You’ve now unlocked the world of Promises, `async/await`, and asynchronous mastery in JavaScript. These tools are vital for working with APIs, user events, animations, and much more in real-world applications.
+</Note>

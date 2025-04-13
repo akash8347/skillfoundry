@@ -1,0 +1,406 @@
+## 📅 Day 15: Objects in JavaScript – The Backbone of Structured Data
+
+### What are Objects in JavaScript?
+
+JavaScript is a versatile language that supports various data types—strings, numbers, booleans, arrays—but when it comes to representing **real-world entities**, **objects** are king.
+
+Objects allow us to **store multiple values** together in a single structure, using **key-value pairs**. Think of an object as a **collection of properties**, where each property has a name (called a key) and a value.
+
+<Note>
+Objects are fundamental to JavaScript. Nearly everything in JavaScript is an object, including arrays and functions!
+</Note>
+
+### Why Do We Need Objects?
+
+Let’s say you're building a website and you want to store information about a user: their name, age, and whether they're logged in.
+
+You could use multiple variables:
+
+<CodeBlock language="js">
+{`const name = "Akash";
+const age = 24;
+const isLoggedIn = true;`}
+</CodeBlock>
+
+This works for now… but what if you need to store info for **10 users**? Or each user has **10+ pieces of data**? That’s where it starts to break down.
+
+<Divider />
+
+Objects provide a **structured and scalable** way to store such data:
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 24,
+  isLoggedIn: true
+};`}
+</CodeBlock>
+
+Now all the data related to the user is inside one neat object. You can access and manipulate it easily using dot notation or bracket notation.
+
+<Tip>
+Use objects whenever you're dealing with grouped data that belongs to a single entity like a user, a product, a car, or a blog post.
+</Tip>
+
+### Accessing Object Properties
+
+You can access properties inside an object using **dot notation** or **bracket notation**.
+
+#### ✅ Dot Notation
+
+<CodeBlock language="js">
+{`console.log(user.name); // "Akash"
+console.log(user.age);   // 24`}
+</CodeBlock>
+
+#### ✅ Bracket Notation
+
+<CodeBlock language="js">
+{`console.log(user["isLoggedIn"]); // true`}
+</CodeBlock>
+
+<Note>
+Bracket notation is especially useful when the property name is stored in a variable or contains spaces or special characters.
+</Note>
+
+<Divider />
+
+### Updating and Adding Properties
+
+You can **update** the value of an existing property or **add a new one** using assignment.
+
+<CodeBlock language="js">
+{`user.age = 25; // update
+user.email = "akash@example.com"; // add new property
+
+console.log(user);`}
+</CodeBlock>
+
+<BrowserMockup>
+{`{
+  name: "Akash",
+  age: 25,
+  isLoggedIn: true,
+  email: "akash@example.com"
+}`}
+</BrowserMockup>
+
+<Tip>
+JavaScript objects are **mutable**, which means you can change them even if they were declared with \`const\`.
+</Tip>
+
+<Divider />
+
+### Deleting Properties
+
+You can remove a property from an object using the `delete` keyword.
+
+<CodeBlock language="js">
+{`delete user.isLoggedIn;
+
+console.log(user);`}
+</CodeBlock>
+
+<BrowserMockup>
+{`{
+  name: "Akash",
+  age: 25,
+  email: "akash@example.com"
+}`}
+</BrowserMockup>
+
+<Divider />
+
+### Nested Objects
+
+Objects can also contain **other objects** as values. This is called nesting, and it’s super useful when modeling complex structures.
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 25,
+  isLoggedIn: true,
+  address: {
+    street: "MG Road",
+    city: "Mumbai",
+    country: "India"
+  }
+};`}
+</CodeBlock>
+
+You can access nested properties like this:
+
+<CodeBlock language="js">
+{`console.log(user.address.city); // "Mumbai"
+console.log(user["address"]["country"]); // "India"`}
+</CodeBlock>
+
+<Tip>
+You can nest as deep as you want, but be careful — it can get messy fast. Keep your structure readable!
+</Tip>
+
+<Divider />
+
+### Objects with Functions (aka Methods)
+
+You can define **functions inside objects**. These are called **methods**.
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 25,
+  greet: function() {
+    console.log("Hello, " + this.name + "!");
+  }
+};
+
+user.greet(); // "Hello, Akash!"`}
+</CodeBlock>
+
+<Note>
+Inside object methods, the keyword \`this\` refers to the object itself.
+</Note>
+
+<Divider />
+
+### Looping Through Objects
+
+To loop through an object’s keys and values, we use the `for...in` loop:
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 25,
+  isLoggedIn: true
+};
+
+for (let key in user) {
+  console.log(key + ": " + user[key]);
+}`}
+</CodeBlock>
+
+Output:
+
+<BrowserMockup>
+{`name: Akash
+age: 25
+isLoggedIn: true`}
+</BrowserMockup>
+
+<Note>
+The `for...in` loop gives you each key one by one, which you can use to access the value.
+</Note>
+
+<Divider />
+
+### Object Utility Methods
+
+JavaScript provides powerful utility methods to work with objects:
+
+#### 🔹 `Object.keys()`
+
+Returns an array of keys.
+
+<CodeBlock language="js">
+{`const keys = Object.keys(user);
+console.log(keys); // ["name", "age", "isLoggedIn"]`}
+</CodeBlock>
+
+#### 🔹 `Object.values()`
+
+Returns an array of values.
+
+<CodeBlock language="js">
+{`const values = Object.values(user);
+console.log(values); // ["Akash", 25, true]`}
+</CodeBlock>
+
+#### 🔹 `Object.entries()`
+
+Returns an array of key-value pair arrays.
+
+<CodeBlock language="js">
+{`const entries = Object.entries(user);
+console.log(entries);`}
+</CodeBlock>
+
+<BrowserMockup>
+{`[
+  ["name", "Akash"],
+  ["age", 25],
+  ["isLoggedIn", true]
+]`}
+</BrowserMockup>
+
+<Divider />
+
+### Object Destructuring
+
+Object destructuring lets you **extract values** from an object and assign them to variables in one step.
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 25,
+  email: "akash@example.com"
+};
+
+// Traditional way
+const name = user.name;
+const age = user.age;
+
+// Destructuring way
+const { name, age } = user;
+
+console.log(name); // "Akash"
+console.log(age);  // 25`}
+</CodeBlock>
+
+You can even rename properties while destructuring:
+
+<CodeBlock language="js">
+{`const { email: userEmail } = user;
+console.log(userEmail); // "akash@example.com"`}
+</CodeBlock>
+
+<Tip>
+Destructuring is clean, short, and makes your code more readable—especially inside functions.
+</Tip>
+
+<Divider />
+
+### Optional Chaining
+
+When working with **deeply nested objects**, it's risky to access a property that might not exist. Optional chaining (`?.`) helps avoid errors.
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  address: {
+    city: "Mumbai"
+  }
+};
+
+console.log(user.address?.city); // "Mumbai"
+console.log(user.contact?.phone); // undefined (no error!)`}
+</CodeBlock>
+
+<Note>
+If anything in the chain is undefined or null, optional chaining stops and returns undefined instead of throwing an error.
+</Note>
+
+<Divider />
+
+### Best Practices for Objects
+
+- Use **camelCase** for key names (`userName`, not `user_name`)
+- Group related data together in meaningful structures
+- Use `const` when declaring objects unless you need to reassign them
+- Use destructuring and optional chaining for cleaner access
+
+<Divider />
+
+## 📝 Exercise: Work with Real-World Objects
+
+Create an object named `book` with the following properties:
+
+- `title` (string)
+- `author` (string)
+- `year` (number)
+- `genres` (array of strings)
+- `isAvailable` (boolean)
+- `publisher` (nested object with `name` and `location`)
+- A method `getSummary()` that logs a short summary using `this.title` and `this.author`
+
+Then, do the following:
+
+1. Access and log the `author` and `genres` using dot and bracket notation.
+2. Use `Object.keys()` and `Object.values()` to print all keys and values.
+3. Use `for...in` loop to log each property and its value.
+4. Add a new property `rating` and delete the `isAvailable` property.
+5. Use destructuring to extract `title` and `year`.
+6. Use optional chaining to access `publisher.contact?.email`.
+
+<HtmlCssJsPlayground
+  initialHTML=""
+  initialCSS=""
+  initialJS={`const book = {
+  title: "30 Days of JavaScript",
+  author: "Akash",
+  year: 2025,
+  genres: ["Education", "Programming"],
+  isAvailable: true,
+  publisher: {
+    name: "Codeverse",
+    location: "India"
+  },
+  getSummary: function () {
+    console.log(\`\${this.title} by \${this.author}\`);
+  }
+};
+
+// Your code here`}
+  />
+
+## ✅ Test Your Knowledge
+
+<MCQ 
+  question="What is the correct syntax to access the 'city' from the object below?\n\nconst user = { address: { city: 'Mumbai' } }"
+  options={[
+    "user.city",
+    "user.address.city",
+    "user['city']",
+    "user->address->city"
+  ]}
+  correctAnswer={1}
+  explanation="You access nested properties using dot notation: user.address.city."
+/>
+
+<MCQ 
+  question="Which method returns an array of keys from an object?"
+  options={[
+    "Object.values()",
+    "Object.entries()",
+    "Object.keys()",
+    "Object.getKeys()"
+  ]}
+  correctAnswer={2}
+  explanation="Object.keys() returns an array of the object's own enumerable property names."
+/>
+
+<MCQ 
+  question="What does optional chaining (?.) do?"
+  options={[
+    "Throws an error if the property doesn't exist",
+    "Returns undefined if the property doesn't exist",
+    "Skips the code block",
+    "Automatically creates the property if missing"
+  ]}
+  correctAnswer={1}
+  explanation="Optional chaining returns undefined instead of throwing an error when trying to access a nested property that doesn't exist."
+/>
+
+<MCQ 
+  question="How do you define a method inside an object?"
+  options={[
+    "function greet() {}",
+    "greet: function() {}",
+    "const greet = () => {}",
+    "greet = function() {}"
+  ]}
+  correctAnswer={1}
+  explanation="Inside objects, methods are typically defined using the syntax: greet: function() {}."
+/>
+
+<MCQ 
+  question="Which of the following is NOT a valid way to access an object property?"
+  options={[
+    `object.key`,
+    `object["key"]`,
+    `object->key`,
+    `object[\`key\`]`
+  ]}
+  correctAnswer={2}
+  explanation="The '->' syntax is not valid in JavaScript. It’s used in some other languages like PHP."
+/>
+

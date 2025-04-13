@@ -1,0 +1,440 @@
+## Day 5: CSS Positioning & Display — Making Things Move
+
+CSS is not just about colors and fonts — it’s also about *where* and *how* elements appear on the page. Today is all about mastering **positioning** and the **display** property — two of the most important concepts when it comes to layout and interactivity.
+
+Let’s dig in.
+
+<Divider />
+
+### What is the `display` Property?
+
+The `display` property defines how an element is displayed in the document flow. It controls whether an element behaves like a block, inline, flex container, grid, or even disappears from the layout.
+
+Here's a table summarizing common values:
+
+<Table
+  columns={["Value", "Behavior"]}
+  data={[
+    ["block", "Takes full width, starts on a new line (e.g., <div>, <section>)"],
+    ["inline", "Takes only as much width as content, stays on same line (e.g., <span>, <a>)"],
+    ["inline-block", "Inline but allows setting width & height"],
+    ["none", "Element is not rendered at all"],
+    ["flex", "Behaves as a flex container"],
+    ["grid", "Behaves as a grid container"]
+  ]}
+/>
+
+<Task>
+Inspect some HTML elements and use `display: inline`, `block`, and `inline-block` on them. Try mixing them inside a container.
+</Task>
+
+<HtmlCssPlayground
+initialHTML={`<div class="box">Block Element</div>
+<span class="inline">Inline Element</span>
+<span class="inline-block">Inline-Block</span>`}
+initialCSS={`.box {
+  display: block;
+  background: #fef3c7;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.inline {
+  display: inline;
+  background: #bfdbfe;
+  padding: 4px;
+}
+
+.inline-block {
+  display: inline-block;
+  background: #bbf7d0;
+  padding: 8px;
+  margin-left: 10px;
+  width: 100px;
+}`}
+/>
+
+<Tip>
+Use <code>display: none</code> when you want to remove an element from the page layout entirely — not just hide it visually.
+</Tip>
+
+<Divider />
+
+### Introduction to CSS Positioning
+
+The `position` property controls how an element is placed relative to its surroundings. There are **five** values you need to know:
+
+<Table
+  columns={["Position Type", "What it Does"]}
+  data={[
+    ["static", "Default position, follows normal document flow"],
+    ["relative", "Position relative to its normal position"],
+    ["absolute", "Position relative to nearest positioned ancestor"],
+    ["fixed", "Stays fixed to the viewport (doesn't scroll)"],
+    ["sticky", "Toggles between relative and fixed based on scroll"]
+  ]}
+/>
+
+Let’s go deeper into each.
+
+<Divider />
+
+### `position: static`
+
+This is the **default**. Elements just stack one after another in the normal flow.
+
+You usually don’t set this manually.
+
+<CodeBlock language="html">
+{`<div>This is statically positioned.</div>`}
+</CodeBlock>
+
+<Divider />
+
+### `position: relative`
+
+Moves an element **relative to where it would normally be**. You can use `top`, `right`, `bottom`, and `left` to nudge it.
+
+<HtmlCssPlayground
+initialHTML={`<div class="wrapper">
+  <div class="box">I’m normal</div>
+  <div class="box relative">I’m shifted</div>
+</div>`}
+initialCSS={`.wrapper {
+  position: relative;
+}
+
+.box {
+  background: #d1fae5;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.relative {
+  position: relative;
+  top: 20px;
+  left: 30px;
+  background: #a7f3d0;
+}`}
+/>
+
+<Tip>
+When you use <code>position: relative</code>, the element still occupies its original space.
+</Tip>
+
+<Divider />
+
+### `position: absolute`
+
+An absolutely positioned element is **removed from normal flow** and placed relative to the **nearest ancestor that is positioned (not static)**.
+
+If no such ancestor exists, it's positioned relative to `<html>`.
+
+<HtmlCssPlayground
+initialHTML={`<div class="container">
+  <div class="box">Normal Box</div>
+  <div class="absolute-box">Absolutely Positioned</div>
+</div>`}
+initialCSS={`.container {
+  position: relative;
+  background: #e0f2fe;
+  height: 150px;
+  padding: 10px;
+}
+
+.box {
+  background: #fde68a;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.absolute-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #fca5a5;
+  padding: 10px;
+}`}
+/>
+
+<Tip>
+Always make sure the parent has <code>position: relative</code> if you want the child to be placed absolutely inside it.
+</Tip>
+
+<Divider />
+
+### `position: fixed`
+
+This element is placed relative to the **viewport**, and it doesn't move even when you scroll.
+
+<BrowserMockup>
+  <HtmlCssPlayground
+    initialHTML={`<div class="fixed-header">I stay on top</div>
+<p>Scroll down to see me still here!</p>
+<p style="margin-top: 2000px;">End of page</p>`}
+    initialCSS={`.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background-color: #93c5fd;
+  text-align: center;
+  font-weight: bold;
+}`}
+/>
+</BrowserMockup>
+
+<Task>
+Use <code>position: fixed</code> for navbars, chat buttons, or back-to-top widgets that should stay in place.
+</Task>
+
+<Divider />
+
+### `position: sticky`
+
+A sticky element **starts out as relative**, but becomes **fixed** when it reaches a scroll threshold.
+
+<BrowserMockup>
+  <HtmlCssPlayground
+    initialHTML={`<h2 class="sticky">I stick to the top!</h2>
+<p style="margin-top: 1000px;">Scroll to see me stick</p>`}
+    initialCSS={`.sticky {
+  position: sticky;
+  top: 0;
+  background: #fcd34d;
+  padding: 10px;
+  font-weight: bold;
+}`}
+/>
+</BrowserMockup>
+
+<Tip>
+Sticky positioning works only if the parent doesn't have <code>overflow: hidden</code> or a fixed height smaller than the element’s height.
+</Tip>
+
+<Divider />
+
+### When to Use Which?
+
+<Table
+  columns={["Use Case", "Position Type"]}
+  data={[
+    ["Static flow of elements", "static (default)"],
+    ["Slight offset within layout", "relative"],
+    ["Popup or tooltip within a card", "absolute (with parent relative)"],
+    ["Fixed header/navbar on scroll", "fixed"],
+    ["Sticky section headers or labels", "sticky"]
+  ]}
+/>
+
+<Note>
+Think of <code>relative</code> and <code>absolute</code> as a team: relative is the anchor, absolute is the floater. Together they create precise positioning.
+</Note>
+
+<Divider />
+
+## The Power of `z-index`
+
+When elements overlap (especially with `position` or `flex`), `z-index` controls which one appears **on top**.
+
+### What is `z-index`?
+
+`z-index` is a **stacking order** value. Elements with a higher `z-index` appear on top of those with a lower value.
+
+<HtmlCssPlayground
+initialHTML={`<div class="box red">Box 1 (z-index: 1)</div>
+<div class="box green">Box 2 (z-index: 2)</div>`}
+initialCSS={`.box {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  padding: 20px;
+  width: 150px;
+  color: white;
+}
+
+.red {
+  background: red;
+  z-index: 1;
+}
+
+.green {
+  background: green;
+  left: 60px;
+  z-index: 2;
+}`}
+/>
+
+<Tip>
+<code>z-index</code> only works on elements that are <code>positioned</code> (relative, absolute, fixed, or sticky).
+</Tip>
+
+<Divider />
+
+## Combining Positioning and Display
+
+By combining positioning (`absolute`, `fixed`, etc.) with `display` properties like `flex`, you can build real UI elements.
+
+### Example: Modal Overlay
+
+<HtmlCssPlayground
+initialHTML={`<div class="overlay">
+  <div class="modal">This is a Modal!</div>
+</div>`}
+initialCSS={`.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}`}
+/>
+
+<Note>
+Notice how <code>position: fixed</code> combined with <code>flexbox</code> creates a perfect full-screen centered modal.
+</Note>
+
+<Divider />
+
+## Real UI Example: Dropdown Menu
+
+Let's build a dropdown menu that opens using `absolute` positioning inside a relatively positioned button wrapper.
+
+<HtmlCssPlayground
+initialHTML={`<div class="dropdown">
+  <button class="btn">Open Menu</button>
+  <ul class="menu">
+    <li>Home</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+</div>`}
+initialCSS={`.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn {
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  list-style: none;
+  padding: 0;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  display: none;
+}
+
+.dropdown:hover .menu {
+  display: block;
+}
+
+.menu li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.menu li:hover {
+  background: #f3f4f6;
+}`}
+/>
+
+<Tip>
+Dropdowns, tooltips, and popovers are classic use cases for <code>position: absolute</code> inside a <code>relative</code> parent.
+</Tip>
+
+<Divider />
+
+## Exercise: Mastering Positioning & Display
+
+Let’s test your understanding of today’s concepts.
+
+### ✅ Tasks
+
+<Task>
+Use <code>position: absolute</code> to place a badge on the top-right corner of a card.
+</Task>
+
+<Task>
+Build a sticky navigation bar that stays at the top as you scroll.
+</Task>
+
+<Task>
+Make a modal centered in the viewport using <code>position: fixed</code> and <code>display: flex</code>.
+</Task>
+
+<Task>
+Create a dropdown menu that shows on hover using <code>position: absolute</code>.
+</Task>
+
+<Divider />
+
+## Quiz Time 🧠
+
+<MCQ
+question="Which position value removes the element from the normal document flow and positions it relative to its nearest positioned ancestor?"
+options={[
+  "relative",
+  "absolute",
+  "fixed",
+  "static"
+]}
+correctAnswer={1}
+explanation="`absolute` removes the element from normal flow and positions it relative to the closest positioned ancestor."
+/>
+
+<MCQ
+question="What happens when you apply both top and bottom to a static element?"
+options={[
+  "It moves based on the top value",
+  "It moves based on the bottom value",
+  "It ignores both",
+  "It throws an error"
+]}
+correctAnswer={2}
+explanation="Static elements don't respond to top, bottom, left, or right values. These properties only affect positioned elements."
+/>
+
+<MCQ
+question="Which property allows an element to stay fixed at the top of the screen during scroll?"
+options={[
+  "position: sticky",
+  "position: fixed",
+  "position: absolute",
+  "position: relative"
+]}
+correctAnswer={1}
+explanation="`position: fixed` keeps the element fixed to the viewport regardless of scroll."
+/>
+
+<MCQ
+question="What stacking context property helps place one overlapping element above another?"
+options={[
+  "z-layer",
+  "stack-index",
+  "z-index",
+  "priority"
+]}
+correctAnswer={2}
+explanation="`z-index` is used to define the stack order of overlapping positioned elements."
+/>

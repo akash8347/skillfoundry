@@ -1,0 +1,230 @@
+## Day 2: The Building Blocks — HTML Basics & Page Structure
+
+### What is HTML?
+
+HTML stands for **HyperText Markup Language**. It’s the **backbone** of every web page — the language that tells the browser what content to show and how to structure it.
+
+Think of HTML as the **skeleton** of a website.
+
+A basic HTML file looks like this:
+
+<CodeBlock language="html">
+{`<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Web Page</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>This is my first web page.</p>
+  </body>
+</html>`}
+</CodeBlock>
+
+<Note>
+HTML is not a programming language. It doesn’t “do” things — it just tells the browser **what is on the page**.
+</Note>
+
+<Divider />
+
+### 🧱 HTML = Tags + Elements
+
+HTML is made up of **tags**. Tags come in pairs — an opening tag and a closing tag.
+
+#### Example:
+```html
+<p>This is a paragraph.</p>
+```
+
+### Understanding the Basic Page Structure
+
+Every HTML document starts with a **boilerplate** — a standard structure that all HTML pages follow.
+
+Let’s break it down:
+
+<HtmlPlayground initialHTML={`<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Welcome!</h1>
+    <p>This is a paragraph.</p>
+  </body>
+</html>`} />
+
+
+### 🧠 What each part means:
+
+<Table
+  columns={["Part", "Description"]}
+  data={[
+    ["`<!DOCTYPE html>`", "Tells the browser you’re using HTML5"],
+    ["`<html>`", "The root element that wraps all content"],
+    ["`<head>`", "Contains metadata like title, fonts, etc. (not visible on page)"],
+    ["`<body>`", "Contains the visible content shown in the browser"],
+  ]}
+/>
+
+<Note>
+The browser reads this structure **top to bottom**, so make sure your page is structured properly!
+</Note>
+
+<Divider />
+
+### Nesting Elements
+
+In HTML, you can **nest** elements inside one another.
+
+#### Example:
+
+```html
+<div>
+  <h2>About Me</h2>
+  <p>I’m learning web design!</p>
+</div>
+```
+### Creating a Basic HTML Page
+
+Let’s now apply what we’ve learned and build a basic HTML page structure. This will include all the important parts: `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>`.
+
+<CodeBlock language="html">
+{`<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Web Page</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>This is my first web page.</p>
+  </body>
+</html>`}
+</CodeBlock>
+
+<HtmlPlayground initialHTML={`<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First Web Page</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>This is my first web page.</p>
+  </body>
+</html>`} />
+
+<Note>
+Every HTML page **must start** with a `<!DOCTYPE html>` declaration. It tells the browser that this is an HTML5 document.
+</Note>
+
+<Divider />
+
+### Your Turn!
+
+Try changing the `<h1>` and `<p>` text in the code above and see how it updates in the preview. That’s how fast HTML responds — instant results!
+
+<Task>
+Change the heading to say `"Welcome to Web Design!"` and the paragraph to say something about you. Get creative!
+</Task>
+
+### Common HTML Elements You’ll Use a Lot
+
+Here are some essential HTML tags you'll find yourself using all the time. We'll explore them more in later days, but here's a quick taste.
+
+<Table
+  columns={["Tag", "Purpose", "Example"]}
+  data={[
+    ["`<h1>` to `<h6>`", "Headings of different sizes", "`<h1>Main Heading</h1>`"],
+    ["`<p>`", "Paragraph", "`<p>This is a paragraph.</p>`"],
+    ["`<a>`", "Anchor (Link)", "`<a href='https://google.com'>Visit Google</a>`"],
+    ["`<img>`", "Image", "`<img src='logo.png' alt='My Logo' />`"],
+    ["`<ul>` / `<ol>`", "Unordered / Ordered List", "`<ul><li>Item</li></ul>`"],
+    ["`<div>`", "Generic container", "`<div>Content here</div>`"]
+  ]}
+/>
+
+<InfoBox>
+You don’t need to memorize all the tags. As you build more pages, you’ll naturally learn and remember them.
+</InfoBox>
+
+<Tip>
+Use browser DevTools (Right-click → Inspect) on any website to explore how these tags are used in real-world sites.
+</Tip>
+
+<Divider />
+
+### That's a Wrap for Day 2 🎉
+
+You now know:
+
+- How a basic HTML document is structured
+- The purpose of key HTML tags
+- How the browser uses your code to render content
+
+You're ready to move on to CSS and make things look amazing!
+
+<Task>
+Before tomorrow, create a simple HTML page about your favorite movie or hobby. Use at least:
+- One heading (`<h1>`)
+- One paragraph
+- One image (`<img>`)
+- One link (`<a>`)
+</Task>
+
+## 🧠 quize time
+
+<MCQ
+  question="Which HTML tag is used to define the main heading?"
+  options={["<head>", "<h1>", "<title>", "<main>"]}
+  correctAnswer={1}
+  explanation="The <h1> tag defines the most important heading. <head> is for metadata, <title> is for the page title, and <main> defines main content."
+/>
+
+<MCQ
+  question="What does the <!DOCTYPE html> declaration do?"
+  options={[
+    "Links the HTML file to a CSS file",
+    "Starts a JavaScript function",
+    "Declares the document type as HTML5",
+    "Defines a default div"
+  ]}
+  correctAnswer={2}
+  explanation="<!DOCTYPE html> tells the browser to interpret the page using HTML5 standards."
+/>
+
+<MCQ
+  question="Which tag is used to insert an image?"
+  options={["<img>", "<image>", "<pic>", "<src>"]}
+  correctAnswer={0}
+  explanation="The <img> tag is used to embed images in HTML. It requires at least a src and alt attribute."
+/>
+
+
+## 🧪 Exercise
+
+Try completing the following tasks using plain HTML:
+
+<Task>
+Create a simple HTML page that includes:
+- A `<title>` tag in the `<head>` section.
+- A `<h1>` tag with your name.
+- A `<p>` paragraph describing yourself.
+- An unordered list of your 3 favorite hobbies.
+- Use semantic tags like `<header>`, `<main>`, and `<footer>`.
+</Task>
+
+<Tip>
+Don't worry about CSS yet — focus only on structure and correct HTML syntax.
+</Tip>
+
+write your code in the below html code window..
+<HtmlPlayground initialHTML={`<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your Name</title>
+  </head>
+  <body>
+    <!-- Your content goes here -->
+  </body>
+</html>`} />
+
+

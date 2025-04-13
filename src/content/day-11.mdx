@@ -1,0 +1,363 @@
+## Day 11: Conditionals in JavaScript
+
+Imagine you’re at a traffic signal. If the light is green, you go. If it’s red, you stop. This is a **conditional** — a decision based on a situation. Programming is full of such decisions.
+
+In JavaScript, conditionals help you run different blocks of code depending on whether something is `true` or `false`. You can think of it like asking the computer: *"Hey, does this condition hold? If yes, do this. If not, do something else."*
+
+This is what gives **intelligence** and **dynamic behavior** to your programs. Without conditionals, your code would always follow the same path — boring and rigid.
+
+Let’s learn how JavaScript makes decisions using tools like `if`, `else`, `else if`, comparison operators, logical operators, and ternary expressions.
+
+<Divider />
+
+### 🤔 What is a Conditional?
+
+A **conditional** is a way to tell your program:  
+**"Only run this part of code if a specific condition is true."**
+
+Let’s take a real-life example:
+
+> If the weather is sunny, go outside.  
+> Else, stay indoors.
+
+This maps directly to how JavaScript conditionals work!
+
+In code:
+
+<CodeBlock language="javascript">
+{`let weather = "sunny";
+
+if (weather === "sunny") {
+  console.log("Go outside!");
+} else {
+  console.log("Stay indoors.");
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let weather = "sunny";
+
+if (weather === "sunny") {
+  console.log("Go outside!");
+} else {
+  console.log("Stay indoors.");
+}`} />
+
+
+
+<Tip>
+Conditionals are used in every interactive website — from showing/hiding buttons, handling user actions, checking form input, and much more.
+</Tip>
+
+<Note>
+The `===` checks whether both the **value and the type** are equal. We'll learn more about that soon.
+</Note>
+
+<Divider />
+
+### 🔍 The `if` Statement
+
+The `if` statement checks if a condition is `true`, and runs the block of code inside `{}` if it is.
+
+Let’s say we want to allow only users aged 18 or above to register:
+
+<CodeBlock language="javascript">
+{`let age = 20;
+
+if (age >= 18) {
+  console.log("You can register.");
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let age = 20;
+
+if (age >= 18) {
+  console.log("You can register.");
+}`} />
+
+
+
+In this case, since `age` is 20 and that is more than or equal to 18, the condition becomes `true`, and the message is printed.
+
+If the condition was false, **nothing would happen**.
+
+<Note>
+If the condition is `false` and there is no `else` block, nothing will be executed.
+</Note>
+
+<Divider />
+
+### 🔀 The `if...else` Statement
+
+What if you want something else to happen when the condition is false? That’s where `else` comes in.
+
+Let’s update our example:
+
+<CodeBlock language="javascript">
+{`let age = 16;
+
+if (age >= 18) {
+  console.log("You can register.");
+} else {
+  console.log("You are too young to register.");
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let age = 16;
+
+if (age >= 18) {
+  console.log("You can register.");
+} else {
+  console.log("You are too young to register.");
+}`} />
+
+
+Now your program behaves differently based on the age. Welcome to dynamic programming!
+
+<Tip>
+Always structure your `if...else` blocks neatly with proper indentation. It helps readability a lot, especially as your logic gets complex.
+</Tip>
+
+<Divider />
+
+### 🧩 The `if...else if...else` Ladder
+
+Sometimes, two options (`if...else`) are not enough. You may need to check for multiple conditions — that’s where `else if` comes in.
+
+Let’s say we’re grading a student:
+
+<CodeBlock language="javascript">
+{`let score = 72;
+
+if (score >= 90) {
+  console.log("Grade: A");
+} else if (score >= 75) {
+  console.log("Grade: B");
+} else if (score >= 60) {
+  console.log("Grade: C");
+} else {
+  console.log("Grade: F");
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let score = 72;
+
+if (score >= 90) {
+  console.log("Grade: A");
+} else if (score >= 75) {
+  console.log("Grade: B");
+} else if (score >= 60) {
+  console.log("Grade: C");
+} else {
+  console.log("Grade: F");
+}`} />
+
+
+Here’s what’s happening:
+- The program checks the first condition: `score >= 90` — it’s false.
+- It moves to the next one: `score >= 75` — false.
+- Then it checks `score >= 60` — this is true, so `"Grade: C"` is printed.
+- It **doesn’t check further conditions** after the first `true`.
+
+<Note>
+JavaScript runs only the **first matching condition** in an `if...else if...else` chain. So the order matters!
+</Note>
+
+<Divider />
+
+### 📊 Comparison Operators Recap
+
+All conditional logic relies on comparing values. Here are the most common **comparison operators** used in JavaScript:
+
+<Table
+  columns={["Operator", "Description", "Example", "Result"]}
+  data={[
+    ["==", "Equal to (loose)", "5 == '5'", "true"],
+    ["===", "Equal to (strict)", "5 === '5'", "false"],
+    ["!=", "Not equal to", "10 != '10'", "false"],
+    ["!==", "Strict not equal", "10 !== '10'", "true"],
+    [">", "Greater than", "8 > 3", "true"],
+    ["<", "Less than", "4 < 7", "true"],
+    [">=", "Greater than or equal to", "5 >= 5", "true"],
+    ["<=", "Less than or equal to", "9 <= 3", "false"]
+  ]}
+/>
+
+<Tip>
+Always prefer `===` and `!==` over `==` and `!=` to avoid strange bugs due to type coercion.
+</Tip>
+
+<Note>
+`==` checks only **value**, while `===` checks both **value and type**.
+</Note>
+
+<Divider />
+
+### ⚙️ Logical Operators
+
+You’ll often need to check multiple conditions together — for example:
+
+> "If the user is logged in **AND** is an admin..."
+
+That’s where **logical operators** come in:
+
+<Table
+  columns={["Operator", "Name", "Usage Example", "Meaning"]}
+  data={[
+    ["&&", "AND", "x > 5 && y < 10", "True if both are true"],
+    ["||", "OR", "x > 5 || y < 10", "True if at least one is true"],
+    ["!", "NOT", "!isLoggedIn", "True if value is false"]
+  ]}
+/>
+
+Example:
+
+<CodeBlock language="javascript">
+{`let isLoggedIn = true;
+let isAdmin = false;
+
+if (isLoggedIn && isAdmin) {
+  console.log("Welcome, Admin.");
+} else {
+  console.log("Access Denied.");
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let isLoggedIn = true;
+let isAdmin = false;
+
+if (isLoggedIn && isAdmin) {
+  console.log("Welcome, Admin.");
+} else {
+  console.log("Access Denied.");
+}`} />
+
+
+<Note>
+Logical operators let you build **complex decision rules** using simple building blocks.
+</Note>
+
+<Divider />
+
+### 🔀 Ternary Operator (Shortcut `if...else`)
+
+The **ternary operator** is a compact way to write simple `if...else`.
+
+Syntax:
+
+```js
+condition ? valueIfTrue : valueIfFalse
+```
+
+Let’s say you want to show a quick status:
+
+<CodeBlock language="javascript"> {`let age = 20;
+let status = age >= 18 ? "Adult" : "Minor"; console.log(status);`} </CodeBlock>
+
+<JsPlayground initialJs={`let age = 20;
+let status = age >= 18 ? "Adult" : "Minor"; 
+console.log(status);`} />
+
+The ternary operator is perfect when you only need to return or assign one of two values.
+
+<Tip> Only use ternaries for short conditions. For longer logic, `if...else` is clearer. </Tip>
+
+ <Divider />
+
+ ### 🧠 Summary
+
+Let’s quickly recap what you’ve learned today:
+
+- The `if` statement allows you to run code **only if** a condition is true.
+- `if...else` gives you a fallback when the condition is false.
+- `else if` helps you handle **multiple possibilities**.
+- Comparison operators (`>`, `===`, `!==`, etc.) are used to **compare values**.
+- Logical operators (`&&`, `||`, `!`) let you **combine conditions**.
+- The ternary operator is a **short-form conditional** expression — good for quick assignments.
+
+These tools allow you to make decisions in code — just like we do in real life.
+
+<Note>
+Now that you can make your code think, you’re one step closer to building smart and interactive applications!
+</Note>
+
+<Divider />
+
+### 🧪 Exercise
+
+Write a program that takes a variable `score` (0 to 100) and logs:
+
+- `"Excellent"` if score >= 90  
+- `"Good"` if score >= 75  
+- `"Average"` if score >= 50  
+- `"Fail"` otherwise
+
+Try it using `if...else if...else`.
+
+Then, modify the program to assign the result to a variable `grade` using the **ternary operator** (nested if needed).
+
+<Note>
+Try solving this in your editor first, then test it using the `<JsPlayground>` below.
+</Note>
+
+<JsPlayground initialJs={`let score = 68;
+
+// Write your logic here
+if (score >= 90) {
+  console.log("Excellent");
+} else if (score >= 75) {
+  console.log("Good");
+} else if (score >= 50) {
+  console.log("Average");
+} else {
+  console.log("Fail");
+}
+
+// Optional: Try doing this using a ternary chain
+`} />
+
+
+<Divider />
+
+### ✅ Quiz Time
+
+Let’s test your understanding with some MCQs:
+
+<MCQ
+  question="What does the `===` operator check for?"
+  options={["Value only", "Value and type", "Type only", "None of the above"]}
+  correctAnswer={1}
+  explanation="The `===` operator checks both value and type. Unlike `==`, it does not perform type coercion."
+/>
+
+<MCQ
+  question="What will this code output?\n\nlet age = 15;\nconsole.log(age >= 18 ? 'Adult' : 'Minor');"
+  options={["Adult", "Minor", "Undefined", "Error"]}
+  correctAnswer={1}
+  explanation="Since 15 is not >= 18, the condition is false, so the ternary returns 'Minor'."
+/>
+
+<MCQ
+  question="Which operator returns true if **both** conditions are true?"
+  options={["||", "&&", "!", "==="]}
+  correctAnswer={1}
+  explanation="The `&&` operator (AND) requires both conditions to be true."
+/>
+
+<MCQ
+  question="What is the output of:\n\nlet x = 5;\nlet y = '5';\nconsole.log(x == y);"
+  options={["true", "false", "Error", "undefined"]}
+  correctAnswer={0}
+  explanation="The `==` operator does type coercion, so 5 and '5' are considered equal."
+/>
+
+<Divider />
+
+### 🚀 Wrap-Up
+
+Awesome work! You’ve unlocked the power of **logic in programming**.
+
+From basic `if` statements to full `if...else if` ladders and ternary expressions — these conditionals give your JavaScript programs decision-making abilities. Up next, we’ll dive into **loops** — so your code can repeat itself smartly instead of copying and pasting.
+
+<Tip>
+In real-world projects, conditions are everywhere — in user authentication, feature toggles, theme switching, and beyond. Master this well!
+</Tip>

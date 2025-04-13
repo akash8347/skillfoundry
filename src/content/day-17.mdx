@@ -1,0 +1,349 @@
+## Day 17: String Methods
+
+Strings are everywhere in JavaScript — from website content and user input to API responses and internal messages. Whether you're working with names, sentences, or URLs, string manipulation is an essential skill.
+
+JavaScript gives us a powerful set of **string methods** that let you access, modify, and analyze text easily. In this lesson, we’ll explore those methods, starting from the basics and moving toward more advanced and practical use cases.
+
+<Divider />
+
+## What is a String?
+
+A **string** is a sequence of characters enclosed in quotes. It can be single quotes `'...'`, double quotes `"..."`, or backticks `...` for template literals.
+
+<CodeBlock language="js">
+{`let name = "Akash";
+let greeting = 'Hello, world!';
+let ageMessage = \`I am \${25} years old\`;`}
+</CodeBlock>
+
+<Note>
+Backticks allow you to **interpolate variables** inside a string using `${...}` syntax — very useful for building dynamic messages.
+</Note>
+
+<Divider />
+
+## String Properties & Length
+
+Every string in JavaScript has a built-in property called `.length` that tells you how many characters it contains.
+
+<CodeBlock language="js">
+{`let city = "Bangalore";
+console.log(city.length); // Output: 9`}
+</CodeBlock>
+
+This is useful when validating inputs, checking string sizes, or looping through characters.
+
+<HtmlCssJsPlayground 
+  initialHTML={`<button onclick="showLength()">Check Length</button>
+<span id="result"></span>`}
+  initialCSS={`button { margin: 10px; }`}
+  initialJS={`function showLength() {
+  const name = "JavaScript";
+  document.getElementById("result").innerText = "Length: " + name.length;
+}`}
+ />
+
+<Tip>
+Strings are **zero-indexed**, meaning the first character is at position 0, the second at 1, and so on.
+</Tip>
+
+<Divider />
+
+## Common String Methods (with Examples)
+
+Let's go through some of the most useful string methods with real examples.
+
+### `.toUpperCase()` and `.toLowerCase()`
+
+These methods convert strings to uppercase or lowercase.
+
+<CodeBlock language="js">
+{`let word = "Hello";
+console.log(word.toUpperCase()); // "HELLO"
+console.log(word.toLowerCase()); // "hello"`}
+</CodeBlock>
+
+Useful when comparing strings case-insensitively or formatting user inputs.
+
+<Divider />
+
+### `.trim()`
+
+Removes extra white space from both ends of a string.
+
+<CodeBlock language="js">
+{`let messy = "   clean me   ";
+console.log(messy.trim()); // "clean me"`}
+</CodeBlock>
+
+Perfect for cleaning up user-submitted forms or input fields.
+
+<Divider />
+
+### `.includes()`
+
+Checks if a substring exists within a string. Returns a boolean.
+
+<CodeBlock language="js">
+{`let sentence = "Learning JavaScript is fun!";
+console.log(sentence.includes("JavaScript")); // true
+console.log(sentence.includes("Python")); // false`}
+</CodeBlock>
+
+<Divider />
+
+### `.indexOf()` and `.lastIndexOf()`
+
+These return the **index position** of the first or last occurrence of a substring.
+
+<CodeBlock language="js">
+{`let message = "hello hello";
+console.log(message.indexOf("hello")); // 0
+console.log(message.lastIndexOf("hello")); // 6`}
+</CodeBlock>
+
+<Divider />
+
+### `.slice(start, end)`
+
+Extracts a portion of a string from `start` to `end` (not including `end`).
+
+<CodeBlock language="js">
+{`let lang = "JavaScript";
+console.log(lang.slice(0, 4)); // "Java"`}
+</CodeBlock>
+
+<Note>
+If you omit `end`, it slices till the end of the string. You can also use negative indexes to slice from the end.
+</Note>
+
+<Divider />
+
+### `.replace(old, new)`
+
+Replaces the first occurrence of a substring.
+
+<CodeBlock language="js">
+{`let bio = "I love cats!";
+console.log(bio.replace("cats", "dogs")); // "I love dogs!"`}
+</CodeBlock>
+
+For global replacement, you can use regex:
+
+<CodeBlock language="js">
+{`let messy = "spam spam spam";
+console.log(messy.replace(/spam/g, "ham")); // "ham ham ham"`}
+</CodeBlock>
+
+<Divider />
+
+### `.split(separator)` and `.join(separator)`
+
+`.split()` turns a string into an array, while `.join()` merges an array into a string.
+
+<CodeBlock language="js">
+{`let data = "red,green,blue";
+let colors = data.split(",");
+console.log(colors); // ["red", "green", "blue"]
+
+let backToString = colors.join("-");
+console.log(backToString); // "red-green-blue"`}
+</CodeBlock>
+
+<Divider />
+
+### `.charAt(index)` and `.charCodeAt(index)`
+
+- `.charAt()` returns the character at a specific position.
+- `.charCodeAt()` returns the Unicode value at that position.
+
+<CodeBlock language="js">
+{`let name = "Luka";
+console.log(name.charAt(0)); // "L"
+console.log(name.charCodeAt(0)); // 76`}
+</CodeBlock>
+
+<Divider />
+
+### `.repeat(n)`
+
+Repeats a string `n` times.
+
+<CodeBlock language="js">
+{`let wow = "ha";
+console.log(wow.repeat(3)); // "hahaha"`}
+</CodeBlock>
+
+<Divider />
+
+### `.startsWith()` and `.endsWith()`
+
+Checks if a string starts or ends with a specific substring.
+
+<CodeBlock language="js">
+{`let phrase = "Hello World!";
+console.log(phrase.startsWith("Hello")); // true
+console.log(phrase.endsWith("!")); // true`}
+</CodeBlock>
+
+<Divider />
+
+## Real-World Mini Tasks
+
+Let’s apply what we’ve learned so far with small, real-world tasks.
+
+### Task 1: Capitalize the First Letter
+
+Convert the first letter of a name to uppercase and the rest to lowercase.
+
+<CodeBlock language="js">
+{`let input = "aKaSh";
+let formatted = input[0].toUpperCase() + input.slice(1).toLowerCase();
+console.log(formatted); // "Akash"`}
+</CodeBlock>
+
+<Divider />
+
+### Task 2: Hide Email Address
+
+Mask part of an email for privacy.
+
+<CodeBlock language="js">
+{`let email = "akash@example.com";
+let hidden = email[0] + "***" + email.slice(email.indexOf("@"));
+console.log(hidden); // "a***@example.com"`}
+</CodeBlock>
+
+<Divider />
+
+### Task 3: Check for Spam
+
+Write a simple spam filter that checks if a message contains banned words.
+
+<CodeBlock language="js">
+{`let message = "You won free money!";
+let isSpam = message.toLowerCase().includes("free") || message.toLowerCase().includes("money");
+console.log(isSpam); // true`}
+</CodeBlock>
+
+<Note>
+In real projects, you'd use a list of spam words and loop through them for smarter detection.
+</Note>
+
+<Divider />
+
+### Task 4: Count Words in a Sentence
+
+<CodeBlock language="js">
+{`let sentence = "JavaScript is awesome";
+let words = sentence.split(" ");
+console.log(words.length); // 3`}
+</CodeBlock>
+
+<HtmlCssJsPlayground 
+  initialHTML={`<input id="text" placeholder="Type a sentence" />
+<button onclick="countWords()">Count</button>
+<p id="wordCount"></p>`}
+  initialCSS={`input, button { margin: 5px; padding: 6px; }
+p { font-weight: bold; }`}
+  initialJS={`function countWords() {
+  let input = document.getElementById("text").value;
+  let count = input.trim().split(/\\s+/).length;
+  document.getElementById("wordCount").innerText = "Word Count: " + count;
+}`}
+ />
+
+<Divider />
+
+## 🧠 Exercise
+
+Time to put your string skills to the test!
+
+### Task
+
+1. Create a variable `fullName = "   aDa Lovelace   "`.
+2. Clean up the string (remove extra whitespace).
+3. Convert the first letter of each word to uppercase.
+4. Output: `"Ada Lovelace"`
+
+Try it yourself before checking the answer below.
+
+<CodeBlock language="js">
+{`let fullName = "   aDa Lovelace   ";
+let clean = fullName.trim().toLowerCase();
+let parts = clean.split(" ");
+let capitalized = parts.map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+console.log(capitalized); // "Ada Lovelace"`}
+</CodeBlock>
+
+<Tip>
+Splitting strings and using `.map()` is a very common pattern for name formatting.
+</Tip>
+
+<Divider />
+
+## ✅ Recap: Most Useful String Methods
+
+<Table 
+  columns={["Method", "What it does"]} 
+  data={[
+    [".length", "Returns number of characters in the string"],
+    [".toUpperCase()", "Converts all characters to uppercase"],
+    [".toLowerCase()", "Converts all characters to lowercase"],
+    [".trim()", "Removes whitespace from both ends"],
+    [".includes()", "Checks if a substring exists"],
+    [".slice()", "Extracts a portion of the string"],
+    [".replace()", "Replaces part of the string"],
+    [".split()", "Splits string into an array"],
+    [".charAt()", "Gets character at a specific index"],
+    [".startsWith()", "Checks if string starts with a value"],
+    [".endsWith()", "Checks if string ends with a value"]
+  ]}
+/>
+
+<Divider />
+
+## 📝 MCQs
+
+<MCQ 
+  question="What does the .trim() method do?"
+  options={["Trims characters from the string", "Removes spaces from both ends", "Cuts the string in half", "Deletes all characters"]}
+  correctAnswer={1}
+  explanation="The .trim() method removes whitespace from both the beginning and end of a string."
+/>
+
+<MCQ 
+  question="Which method is used to split a sentence into words?"
+  options={["slice()", "split()", "join()", "indexOf()"]}
+  correctAnswer={1}
+  explanation="The .split() method breaks a string into an array of substrings based on a separator."
+/>
+
+<MCQ 
+  question="What will 'JavaScript'.charAt(4) return?"
+  options={["S", "c", "a", "v"]}
+  correctAnswer={0}
+  explanation="Characters are zero-indexed. At index 4, we have 'S'."
+/>
+
+<MCQ 
+  question="Which method changes all letters to uppercase?"
+  options={["toUpper()", "capitalize()", "toUpperCase()", "upperCase()"]}
+  correctAnswer={2}
+  explanation=".toUpperCase() converts all letters in a string to uppercase."
+/>
+
+<MCQ 
+  question="Which of the following will return true?"
+  options={[
+    `"hello".includes("z")`,
+    `"hello".startsWith("e")`,
+    `"hello".endsWith("o")`,
+    `"hello".charAt(0) === "h!"`
+  ]}
+  correctAnswer={2}
+  explanation='"hello" ends with the letter "o", so .endsWith("o") returns true.'
+/>
+
+<Divider />
+

@@ -1,0 +1,263 @@
+## Day 19: Window Object & Browser Interactions
+
+Welcome to Day 19! Today, we’ll explore one of the most fundamental global objects in the browser: the `window` object. Whether you're opening pop-ups, checking screen dimensions, or handling timeouts — the `window` object is the environment where your JavaScript code runs in the browser.
+
+<Note>
+Think of the `window` object as the "global controller" of your browser tab. Anything outside the webpage — like browser size, location, or console — is accessible here.
+</Note>
+
+<Divider />
+
+### Understanding the Global Window Object
+
+In a browser environment, `window` is the **top-level object**. It represents the open browser window (or tab) and gives us access to everything related to it — including DOM elements, browser APIs, storage, and more.
+
+Let’s look at a visual representation:
+
+<VisualMockup title="Window Object Overview" color="blue" icon="dashboard">
+  <div className="text-center">
+    <h2 className="font-bold text-lg mb-2">window</h2>
+    <div className="flex justify-center flex-wrap gap-3 text-sm">
+      <div className="bg-blue-100 px-3 py-1 rounded">document</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">location</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">navigator</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">screen</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">console</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">localStorage</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">setTimeout</div>
+      <div className="bg-blue-100 px-3 py-1 rounded">alert()</div>
+    </div>
+  </div>
+</VisualMockup>
+
+<Tip>
+In the browser, everything that’s a global variable or function is technically a property of `window`. So when you use `alert("Hello")`, you're actually calling `window.alert("Hello")`.
+</Tip>
+
+<Divider />
+
+### Accessing the Window Object
+
+You don’t need to import or declare `window` — it’s already available globally:
+
+<CodeBlock language="js">
+{`console.log(window);`}
+</CodeBlock>
+
+This logs the entire window object with hundreds of properties and methods you can explore.
+
+<CodeBlock language="js">
+{`console.log(window.innerWidth); // width of the browser window
+console.log(window.location.href); // current URL
+console.log(window.navigator.userAgent); // browser info`}
+</CodeBlock>
+
+<Divider />
+
+### Practical Example
+
+Let’s create a small interactive example to fetch and display basic window info:
+
+<HtmlCssJsPlayground
+  initialHTML={`<h2>Window Info</h2>
+<ul id="info"></ul>`}
+  initialCSS={`body { font-family: sans-serif; padding: 10px; }
+ul { margin-top: 10px; line-height: 1.7; }`}
+  initialJS={`const ul = document.getElementById("info");
+const data = [
+  "Width: " + window.innerWidth,
+  "Height: " + window.innerHeight,
+  "URL: " + window.location.href,
+  "User Agent: " + window.navigator.userAgent
+];
+
+data.forEach(item => {
+  const li = document.createElement("li");
+  li.textContent = item;
+  ul.appendChild(li);
+});`}
+/>
+
+<Divider />
+
+### Built-in Browser Dialogs: alert, confirm, and prompt
+
+JavaScript provides three native dialog methods on the `window` object to interact with users:
+
+1. `alert()` – shows a simple message.
+2. `confirm()` – asks the user to confirm (returns `true` or `false`).
+3. `prompt()` – asks the user for input (returns the input or `null`).
+
+<CodeBlock language="js">
+{`alert("This is a simple alert!");
+
+const userConfirmed = confirm("Do you want to continue?");
+console.log("User clicked:", userConfirmed);
+
+const name = prompt("What is your name?");
+console.log("User entered:", name);`}
+</CodeBlock>
+
+These are simple but powerful tools — especially useful for quick interactions, debugging, or form validations.
+
+<Note>
+All three methods pause JavaScript execution until the user responds.
+</Note>
+
+<HtmlCssJsPlayground
+  initialHTML={`<button onclick="interact()">Try Interactions</button>`}
+  initialCSS={`button {
+  background-color: #16a34a;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+}`}
+  initialJS={`function interact() {
+  alert("Hello there!");
+
+  const proceed = confirm("Shall we continue?");
+  if (!proceed) return;
+
+  const name = prompt("What is your name?");
+  if (name) {
+    alert("Welcome, " + name + "!");
+  }
+}`}
+/>
+
+<Divider />
+
+### The `location` Object
+
+The `window.location` object gives you full control over the current URL. You can read it, redirect the page, or even reload it.
+
+<CodeBlock language="js">
+{`console.log(window.location.href);  // Full URL
+console.log(window.location.hostname); // Domain only
+console.log(window.location.pathname); // Path after the domain`}
+</CodeBlock>
+
+You can also change the page URL using:
+
+<CodeBlock language="js">
+{`window.location.href = "https://example.com"; // redirect to another page
+window.location.reload(); // refresh the page`}
+</CodeBlock>
+
+<VisualMockup title="Location Object Breakdown" color="green" icon="map">
+  <ul className="list-disc list-inside space-y-1 text-sm">
+    <li><strong>href</strong>: Full URL of the current page</li>
+    <li><strong>hostname</strong>: Domain (e.g., example.com)</li>
+    <li><strong>pathname</strong>: Path after the domain (e.g., /blog/post)</li>
+    <li><strong>protocol</strong>: http or https</li>
+    <li><strong>reload()</strong>: Reloads the current page</li>
+    <li><strong>assign()</strong>: Navigate to another page (adds to history)</li>
+    <li><strong>replace()</strong>: Navigate and replace current page in history</li>
+  </ul>
+</VisualMockup>
+
+<Divider />
+
+### The `navigator` and `screen` Objects
+
+Besides `window`, browsers expose more objects packed with device and browser info:
+
+#### `navigator` – User Agent Info
+
+<CodeBlock language="js">
+{`console.log(navigator.userAgent); // Info about the browser & OS
+console.log(navigator.language);   // User's preferred language
+console.log(navigator.onLine);     // true or false`}
+</CodeBlock>
+
+You can use this to detect whether the user is online, the browser type, platform, etc.
+
+<HtmlCssJsPlayground
+  initialHTML={`<button onclick="getInfo()">Get Browser Info</button>
+<p id="info"></p>`}
+  initialCSS={`button {
+  background-color: #4f46e5;
+  color: white;
+  padding: 8px 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+}
+p {
+  margin-top: 12px;
+  font-family: monospace;
+}`}
+  initialJS={`function getInfo() {
+  const info = \`Language: \${navigator.language}, Online: \${navigator.onLine}\`;
+  document.getElementById("info").innerText = info;
+}`}
+/>
+
+#### `screen` – Device Screen Info
+
+<CodeBlock language="js">
+{`console.log(screen.width);  // Screen width in pixels
+console.log(screen.height); // Screen height
+console.log(screen.orientation.type); // Orientation info (landscape/portrait)`}
+</CodeBlock>
+
+These are useful for responsive layouts, fullscreen experiences, and device-specific logic.
+
+<Divider />
+
+## 🧠 Exercise
+
+Create a small app with 3 buttons:
+- One shows an alert.
+- One asks for confirmation and logs the result.
+- One prompts for the user’s name and displays a greeting on the page.
+
+Use everything you’ve learned so far — especially dialog methods and `window` object properties.
+
+<Note>
+You can style the buttons using what you’ve learned in CSS, and organize the JavaScript code into separate functions for clarity.
+</Note>
+
+<Divider />
+
+## ✅ Quiz Time
+
+<MCQ
+  question="Which of these objects is used to get screen width?"
+  options={["window", "navigator", "document", "screen"]}
+  correctAnswer={3}
+  explanation="The `screen` object contains screen-related properties like width and height."
+/>
+
+<MCQ
+  question="What does `prompt()` return if the user clicks 'Cancel'?"
+  options={["false", "null", "undefined", "an empty string"]}
+  correctAnswer={1}
+  explanation="If the user cancels a prompt, the return value is `null`."
+/>
+
+<MCQ
+  question="Which method reloads the current page?"
+  options={["location.redirect()", "location.navigate()", "location.reload()", "location.refresh()"]}
+  correctAnswer={2}
+  explanation="`window.location.reload()` refreshes the current web page."
+/>
+
+<Divider />
+
+## 🔚 Summary
+
+Today you explored the **window object** — the gateway to the browser’s features.
+
+You learned about:
+- Dialog boxes (`alert`, `confirm`, `prompt`)
+- URL control with `location`
+- User device details via `navigator` and `screen`
+
+These features are essential when working with web apps, debugging, and interacting with users or their environment.
+
+In the next lesson, we’ll enter the world of **DOM (Document Object Model)** — the real magic of JavaScript in the browser.
+
+Get ready to manipulate real HTML pages with code! 🚀

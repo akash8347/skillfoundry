@@ -1,0 +1,399 @@
+## Day 24: Error Handling & Try Catch
+
+Welcome to Day 24! Today, we’ll explore **Error Handling** in JavaScript—an essential concept for writing resilient and bug-free code. When you start building real-world web apps, not everything will go as planned. Errors will occur due to user input, failed network requests, or unexpected conditions. That’s where **`try...catch`**, **`throw`**, and **`finally`** blocks come in.
+
+<Divider />
+
+### Why Error Handling Matters
+
+Errors are inevitable. But how we **handle** them determines the stability of our applications.
+
+Without error handling:
+
+- A single error can break your entire script.
+- Users get no feedback, just a broken UI or a console error.
+- Debugging becomes harder.
+
+With proper error handling:
+
+- You can gracefully inform users of issues.
+- Prevent your entire app from crashing.
+- Log errors for developers to investigate later.
+
+Let’s begin with the basic syntax of error handling in JavaScript.
+
+<Divider />
+
+### The `try...catch` Syntax
+
+JavaScript provides a built-in way to handle runtime errors using `try...catch`.
+
+<CodeBlock language="js">
+{`try {
+  // Code that might throw an error
+} catch (error) {
+  // Handle the error
+}`}
+</CodeBlock>
+
+Let’s look at a simple example:
+
+
+<JsPlayground initialJs={`try {
+  let result = 10 / 0;
+  console.log("This will still run:", result);
+} catch (err) {
+  console.log("Something went wrong:", err.message);
+}
+
+console.log("Script continues after the try-catch.");`} />
+
+
+
+
+<Note>
+Even though dividing by zero doesn’t throw an error in JavaScript (it returns `Infinity`), this structure is useful when calling functions that might fail.
+</Note>
+
+<Divider />
+
+### Common Error Types
+
+Before diving deeper, it helps to know the common types of errors in JavaScript:
+
+<Table
+  columns={["Type", "Description", "Example"]}
+  data={[
+    ["ReferenceError", "Accessing a variable that hasn’t been declared.", "console.log(x);"],
+    ["TypeError", "Performing an operation on an incompatible type.", `"abc".push(1); // Strings don’t have push()`],
+    ["SyntaxError", "Invalid JavaScript syntax.", `"let = 5"`],
+    ["RangeError", "A number out of range.", `"new Array(-1)"`],
+    ["EvalError", "Error related to `eval()` usage (rare).", "eval('alert(\"hi\")');"]
+  ]}
+/>
+
+<Note>
+Only **runtime errors** (like `TypeError`, `ReferenceError`) can be caught using `try...catch`. Syntax errors will still crash your code at compile time and can't be caught.
+</Note>
+
+<Divider />
+
+### The `catch` Block
+
+Inside the `catch` block, you can access an error object (commonly named `err`, `e`, or `error`). It contains useful info like the error message, name, and stack trace.
+
+<JsPlayground initialJs={`try {
+  let user = undefined;
+  console.log(user.name);
+} catch (e) {
+  console.log("Error name:", e.name);     // TypeError
+  console.log("Error message:", e.message); // Cannot read properties of undefined
+}`} />
+
+
+
+You can even use destructuring to extract the error message directly:
+
+<CodeBlock language="js">
+{`catch ({ message }) {
+  console.log("Oops!", message);
+}`}
+</CodeBlock>
+
+### Throwing Custom Errors with `throw`
+
+Sometimes, your application logic might decide something is wrong—even if JavaScript itself doesn’t throw an error. In such cases, you can **manually throw** an error using the `throw` keyword.
+
+<CodeBlock language="js">
+{`throw new Error("Something went wrong!");`}
+</CodeBlock>
+
+Let’s see it in action with a validation function:
+
+<CodeBlock language="js">
+{`function validateAge(age) {
+  if (age < 0) {
+    throw new Error("Age cannot be negative");
+  }
+  return "Age is valid";
+}
+
+try {
+  console.log(validateAge(-5));
+} catch (e) {
+  console.log("Caught an error:", e.message);
+}`}
+</CodeBlock>
+
+<Note>
+You can technically throw anything (like strings, numbers, objects), but it's best practice to throw an `Error` object for consistency and better debugging.
+</Note>
+
+Here are examples of valid (but not recommended) and recommended throw statements:
+
+<CodeBlock language="js">
+{`// Valid but NOT recommended
+throw "Just a string";
+throw 404;
+throw { message: "Oops!", code: 123 };
+
+// Recommended
+throw new Error("A clear, descriptive message");`}
+</CodeBlock>
+
+<Divider />
+
+### The `finally` Block
+
+The `finally` block is used to execute **cleanup code** after `try` and `catch`, **no matter what**—even if an error is thrown or not.
+
+<CodeBlock language="js">
+{`try {
+  console.log("Trying something risky...");
+  throw new Error("Unexpected issue");
+} catch (e) {
+  console.log("Caught error:", e.message);
+} finally {
+  console.log("This always runs");
+}`}
+</CodeBlock>
+
+<Note>
+Even if there’s a `return` statement in `try` or `catch`, the `finally` block will still run before the function exits.
+</Note>
+
+<Divider />
+
+### Rethrowing Errors
+
+You can catch an error, maybe log it or perform some action, and then **rethrow** it so that the outer code or caller can also handle it.
+
+<CodeBlock language="js">
+{`function fetchData() {
+  try {
+    // Simulate an error
+    throw new Error("Network issue");
+  } catch (err) {
+    console.log("Logging the error:", err.message);
+    throw err; // Rethrow the same error
+  }
+}
+
+try {
+  fetchData();
+} catch (e) {
+  console.log("Handling error in outer try:", e.message);
+}`}
+</CodeBlock>
+
+This pattern is super useful when you need both **local** and **global** handling of the same issue.
+
+<Divider />
+
+### Real-World Use Case: Form Validation
+
+Let’s simulate a form validation scenario where we want to ensure all fields are correctly filled. If not, we throw an error.
+
+<CodeBlock language="js">
+{`function validateForm(form) {
+  if (!form.name) throw new Error("Name is required");
+  if (!form.email.includes("@")) throw new Error("Invalid email address");
+
+  return "Form submitted successfully!";
+}
+
+try {
+  const userForm = {
+    name: "",
+    email: "testemail.com"
+  };
+
+  const result = validateForm(userForm);
+  console.log(result);
+} catch (e) {
+  console.log("Form error:", e.message);
+}`}
+</CodeBlock>
+
+<Note>
+Instead of crashing the app, we caught the error, showed a user-friendly message, and kept the script running.
+</Note>
+
+<Divider />
+
+### Creating Custom Error Classes
+
+In complex applications, it's helpful to create your own **custom error classes** that extend the built-in `Error` class. This allows for more specific and meaningful error handling.
+
+Here’s how you can create and use one:
+
+<CodeBlock language="js">
+{`class ValidationError extends Error {
+  constructor(message) {
+    super(message); // Call parent constructor
+    this.name = "ValidationError"; // Custom error name
+  }
+}
+
+function processUser(user) {
+  if (!user.username) {
+    throw new ValidationError("Username is missing");
+  }
+  return "User is valid";
+}
+
+try {
+  const result = processUser({});
+  console.log(result);
+} catch (e) {
+  if (e instanceof ValidationError) {
+    console.log("Validation failed:", e.message);
+  } else {
+    console.log("Unknown error:", e);
+  }
+}`}
+</CodeBlock>
+
+<Note>
+Custom error classes give you more **control and structure**, especially when you're building large apps or libraries.
+</Note>
+
+<Divider />
+
+### When NOT to Use `try...catch`
+
+While `try...catch` is powerful, it’s not always the best tool for every situation. Here are some scenarios where it’s better to avoid using it:
+
+<Table
+  columns={["❌ Avoid Using", "✅ Prefer"]}
+  data={[
+    ["To control normal flow (like loops)", "Use `if/else` or proper logic"],
+    ["Everywhere in your code", "Use only where failure is expected (e.g. API calls, user input)"],
+    ["For syntax errors", "Fix the code — syntax errors can't be caught"],
+    ["To silently ignore errors", "Always log or handle them properly"]
+  ]}
+/>
+
+<Tip>
+Don't abuse `try...catch` to hide bugs. It should **help you catch exceptions**, not mask broken logic.
+</Tip>
+
+<Divider />
+
+### Best Practices for Error Handling
+
+Here’s a quick checklist of **do's and don’ts**:
+
+<Table
+  columns={["✅ Do", "❌ Don’t"]}
+  data={[
+    ["Use `try...catch` around risky code only", "Wrap your entire app in one massive try block"],
+    ["Log meaningful error messages", "Silently fail without feedback"],
+    ["Create custom error classes when needed", "Throw vague errors like `throw 'fail'`"],
+    ["Use `finally` to clean up resources", "Ignore resource cleanup"],
+    ["Rethrow if the caller should handle it", "Swallow the error without rethrowing"]
+  ]}
+/>
+
+<Note>
+Good error handling doesn’t just prevent crashes — it improves **user experience** and helps **developers debug** faster.
+</Note>
+
+<Divider />
+
+### Exercise
+
+Let’s practice what you've learned. Below is a challenge that combines validation and error handling.
+
+#### ✅ Task:
+Create a function `registerUser(user)` that:
+
+- Checks if `user.username` and `user.password` are provided
+- If not, throws a custom error
+- If valid, returns `"User registered successfully!"`
+
+Wrap it in a `try...catch` and handle the error gracefully.
+
+<CodeBlock language="js">
+{`class InputError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "InputError";
+  }
+}
+
+function registerUser(user) {
+  if (!user.username || !user.password) {
+    throw new InputError("Username and password are required");
+  }
+  return "User registered successfully!";
+}
+
+try {
+  const user = { username: "akash" }; // Missing password
+  const result = registerUser(user);
+  console.log(result);
+} catch (e) {
+  if (e instanceof InputError) {
+    console.log("Input error:", e.message);
+  } else {
+    console.log("Other error:", e);
+  }
+}`}
+</CodeBlock>
+
+<Divider />
+
+### MCQs
+
+<MCQ
+  question="What does the 'finally' block do in a try-catch-finally structure?"
+  options={[
+    "Runs only if there is an error",
+    "Runs only if there is no error",
+    "Runs always, regardless of error",
+    "Skips execution if try block succeeds"
+  ]}
+  correctAnswer={2}
+  explanation="The 'finally' block always runs, whether an error occurred or not. It's used for cleanup or final steps."
+/>
+
+<MCQ
+  question="Which of the following is a valid way to create a custom error class?"
+  options={[
+    "class MyError extends Exception",
+    "class MyError extends Error",
+    "function MyError() {}",
+    "class Error inherits MyError"
+  ]}
+  correctAnswer={1}
+  explanation="Custom error classes must extend the built-in Error class in JavaScript."
+/>
+
+<MCQ
+  question="What happens if you throw a string using 'throw'?"
+  options={[
+    "It throws a syntax error",
+    "It throws a runtime error with type 'StringError'",
+    "It's valid, but not recommended",
+    "It is converted to an Error object"
+  ]}
+  correctAnswer={2}
+  explanation="You can throw any value in JavaScript, including strings, but it's best practice to use Error objects."
+/>
+
+<Divider />
+
+## ✅ Summary
+
+Today, you learned:
+
+- How to use `try`, `catch`, `finally`
+- How to throw your own errors
+- Why and how to create custom error classes
+- When to avoid using try-catch
+- How to write clean and maintainable error-handling logic
+
+Great job! Up next: **ES6+ Features: Let, Const, Arrow Functions, etc.**
+
+<Divider />

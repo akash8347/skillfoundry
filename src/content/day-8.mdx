@@ -1,0 +1,296 @@
+## Day 8: Introduction to JavaScript
+
+JavaScript is the language that brings the web to life. HTML gives structure, CSS adds style, but it's JavaScript that makes a website interactive and dynamic. If you've ever clicked a button and saw something change on a webpage, that was JavaScript in action. It's one of the core technologies of the web, and whether you're building a website, a mobile app, or even a server-side application, JavaScript will likely play a role.
+
+<Note>
+JavaScript is a beginner-friendly language and it's also incredibly powerful. It's the only programming language that can run directly inside the browser.
+</Note>
+
+<Divider />
+
+### What is JavaScript?
+
+JavaScript (often shortened to JS) is a scripting language used to create and control dynamic website content — like interactive forms, image sliders, popups, and even games. It was originally created by **Brendan Eich** in 1995 during his time at **Netscape**. The language was developed in just **10 days**, and while it has changed drastically since then, its core remains simple and approachable.
+
+Here's where JavaScript fits into the broader picture of web development:
+
+<Table
+  columns={["Layer", "Role", "Technology"]}
+  data={[
+    ["Structure", "Layout, elements, content", "HTML"],
+    ["Presentation", "Colors, fonts, spacing", "CSS"],
+    ["Behavior", "Logic, interactivity, actions", "JavaScript"]
+  ]}
+/>
+
+<Divider />
+
+<Divider />
+
+### Why Learn JavaScript?
+
+JavaScript is **everywhere**. It’s not just limited to the browser anymore — with tools like **Node.js**, you can build complete backend services using JavaScript. It's used in:
+
+- Websites (Frontend)
+- Web Servers (Backend with Node.js)
+- Mobile Apps (React Native)
+- Desktop Apps (Electron)
+- Game Development
+- Machine Learning (TensorFlow.js)
+- Internet of Things (IoT)
+
+<Tip>
+Learning JavaScript opens the doors to full-stack development with a single language.
+</Tip>
+
+<Divider />
+
+### How JavaScript Works
+
+When you write JavaScript code and run it in the browser, a JavaScript engine (like Chrome’s **V8 Engine**) interprets and executes that code. Modern browsers have fast engines that convert your JavaScript into machine code.
+
+Here's a basic flow of what happens:
+
+1. You write JS code inside a `<script>` tag or a `.js` file.
+2. The browser downloads that code.
+3. The JavaScript engine parses, interprets, and executes it line by line.
+
+JS is a **single-threaded** language, meaning it executes one task at a time in sequence. (Don’t worry — we’ll explore async behavior like `setTimeout` and `Promises` in later days.)
+
+<Divider />
+
+### Writing Your First JavaScript Code
+
+Let’s write your first “Hello, World!” in JavaScript. You can run it using our interactive playground below.
+
+<JsPlayground initialJs={`console.log("Hello, World!");`} />
+
+This will simply print the message in your browser's console. To see it in action on a real site:
+
+<CodeBlock language="html">
+{`<script>
+  console.log("Hello, World!");
+</script>`}
+</CodeBlock>
+
+<Divider />
+
+### Variables in JavaScript
+
+Variables are like labeled containers for storing data. In JavaScript, you can store anything — numbers, text, even functions — in variables. These variables can then be reused and updated throughout your program. Think of them like **storage boxes** where you keep values to use later.
+
+In older versions of JavaScript, variables were declared using `var`. But modern JavaScript introduced two more keywords — `let` and `const`. And they’re way more predictable and safer to use.
+
+<Note>
+In this course, we will mostly use `let` and `const`. Avoid using `var` unless you specifically need function-scoped behavior (which is rare).
+</Note>
+
+<Divider />
+
+### Declaring Variables with `let`
+
+Use `let` when the value of the variable **might change** later.
+
+<CodeBlock language="js">
+{`let name = "Akash";
+console.log(name); // Output: Akash
+
+name = "Lukka";
+console.log(name); // Output: Lukka`}
+</CodeBlock>
+
+- `let` allows you to reassign the variable.
+- It is **block scoped**, meaning it only works inside the block `{}` where it is defined.
+
+Try it yourself:
+
+<JsPlayground initialJs={`let name = "Akash";
+console.log(name);
+
+name = "Lukka";
+console.log(name);`} />
+
+<Divider />
+
+### Declaring Constants with `const`
+
+Use `const` when the value **should not change** after being assigned.
+
+<CodeBlock language="js">
+{`const country = "India";
+console.log(country);`}
+</CodeBlock>
+
+If you try to reassign a `const` variable, JavaScript will throw an error.
+
+<JsPlayground initialJs={`const country = "India";
+console.log(country);
+
+// Try changing the value
+country = "USA"; // ❌ Error`} />
+
+<Tip>
+Always use `const` by default, and switch to `let` only when you know the value will change.
+</Tip>
+
+<Divider />
+
+### Rules for Naming Variables
+
+JavaScript has some rules and conventions when it comes to naming variables:
+
+<Table
+  columns={["Rule/Convention", "Example", "Valid?"]}
+  data={[
+    ["Can only start with letters, $, or _", "let $name = 'John';", "✅"],
+    ["Can't start with numbers", "let 2name = 'John';", "❌"],
+    ["No spaces allowed", "let user name = 'Alice';", "❌"],
+    ["Case-sensitive", "let age = 21; let Age = 30;", "✅ (they are different)"],
+    ["Use camelCase", "let userName = 'Dev';", "✅ (recommended)"]
+  ]}
+/>
+
+<Note>
+Reserved keywords like `let`, `var`, `if`, `function`, etc. cannot be used as variable names.
+</Note>
+
+<Divider />
+
+### Dynamic Typing in JavaScript
+
+JavaScript is **dynamically typed**, which means you don't need to declare the data type of a variable. The type is determined at runtime, based on the assigned value.
+
+<CodeBlock language="js">
+{`let age = 25;      // number
+age = "twenty five"; // now it's a string`}
+</CodeBlock>
+
+This flexibility is powerful but can lead to bugs if not managed carefully — that’s why understanding **types** is super important (which we’ll cover deeply on Day 2).
+
+<Divider />
+
+<Divider />
+
+### Writing Comments in JavaScript
+
+Comments are notes you write for yourself or other developers inside the code. They are **ignored by JavaScript** during execution, but they’re super useful for explaining what your code does.
+
+There are two types:
+
+- **Single-line comment** using `//`
+- **Multi-line comment** using `/* */`
+
+<CodeBlock language="js">
+{`// This is a single-line comment
+
+/*
+  This is a multi-line comment.
+  It can span multiple lines.
+*/`}
+</CodeBlock>
+
+<JsPlayground initialJs={`// This will be ignored
+console.log("This will run");
+
+/* console.log("This won't run"); */`} />
+
+<Tip>
+Always write meaningful comments — not what the code *is*, but *why* it’s there.
+</Tip>
+
+<Divider />
+
+### Recap of Day 1
+
+Let’s quickly review everything we covered today:
+
+<Table
+  columns={["Topic", "Summary"]}
+  data={[
+    ["What is JavaScript?", "A scripting language that adds behavior and interactivity to websites."],
+    ["Why Learn JS?", "It runs in the browser and on the server (Node.js), enabling full-stack development."],
+    ["JS in Web Dev", "HTML (structure), CSS (style), JS (behavior)."],
+    ["Variables", "`let` and `const` for storing data; avoid `var`."],
+    ["Dynamic Typing", "JS doesn't require you to specify data types upfront."],
+    ["Comments", "Use `//` and `/* */` to document your code."]
+  ]}
+/>
+
+<Divider />
+
+<Divider />
+
+### 🧠 Exercise
+
+
+
+1. Create a variable called `firstName` and assign your name to it.
+2. Change its value to another name and log it.
+3. Create a constant called `birthYear` and assign your birth year.
+4. Try changing the value of `birthYear` and see what happens.
+5. Add a single-line and a multi-line comment in your code.
+
+
+
+<JsPlayground initialJs={`let firstName = "Rahul";
+firstName = "Rohit";
+console.log(firstName);
+
+const birthYear = 2000;
+// birthYear = 1999; // ❌ Try uncommenting this
+
+// This is a single-line comment
+/* This is
+a multi-line comment */`} />
+
+<Divider />
+
+<Divider />
+
+### MCQs
+
+<MCQ
+  question="Which of the following is used to declare a variable that will not change?"
+  options={["var", "let", "const", "define"]}
+  correctAnswer={2}
+  explanation="const is used to declare constants — variables that cannot be reassigned."
+/>
+
+<MCQ
+  question="What will be the output of this code?\n\nlet name = 'John';\nname = 'Doe';\nconsole.log(name);"
+  options={["John", "Doe", "undefined", "Error"]}
+  correctAnswer={1}
+  explanation="The value of 'name' was reassigned to 'Doe', so that’s what will be printed."
+/>
+
+<MCQ
+  question="Which of these is a valid variable name?"
+  options={["2cool", "first-name", "_user", "let"]}
+  correctAnswer={2}
+  explanation="_user is valid. 2cool starts with a number, first-name uses a hyphen, and 'let' is a reserved keyword."
+/>
+
+<MCQ
+  question="What is the purpose of comments in JavaScript?"
+  options={[
+    "They improve performance",
+    "They are executed line-by-line",
+    "They help explain code but are ignored during execution",
+    "They must be avoided in production"
+  ]}
+  correctAnswer={2}
+  explanation="Comments are for developers and are ignored by the JavaScript engine."
+/>
+
+<Divider />
+
+<Divider />
+
+### 🎯 Up Next: Day 9 — JavaScript Data Types
+
+On Day 9  , we’ll explore the different types of data you can store in JS — strings, numbers, booleans, undefined, null, objects, arrays, and more. This is one of the most important foundations of the language.
+
+So bookmark this: variables store data, but to **use data properly**, you need to understand **what kind** of data you're working with.
+
+See you on Day 9 🔥
+

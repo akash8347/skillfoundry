@@ -1,0 +1,283 @@
+## Day 12: Loops in JavaScript
+
+One of the most powerful tools in any programming language is the ability to **repeat tasks**. In JavaScript, loops help us do just that. Instead of writing the same code multiple times, loops allow us to **automate repetitive tasks** in a clean and efficient way.
+
+Let’s break down the different types of loops in JavaScript and understand how and when to use them.
+
+<Divider />
+
+### 🔁 What is a Loop?
+
+A **loop** is a way to tell JavaScript:
+
+> "Hey, run this block of code multiple times until a certain condition is no longer true."
+
+There are several types of loops in JavaScript:
+
+<Table 
+  columns={["Loop Type", "Description"]} 
+  data={[
+    ["`for`", "Run a block of code a specific number of times."],
+    ["`while`", "Run a block as long as the condition is true."],
+    ["`do...while`", "Like `while`, but runs at least once."],
+    ["`for...of`", "Loop through values in an iterable (like arrays)."],
+    ["`for...in`", "Loop through keys in an object."]
+  ]} 
+/>
+
+<Tip>Start with `for` and `while` loops first. Master them before exploring the others.</Tip>
+
+<Divider />
+
+### 🧠 The `for` Loop
+
+This is the most common loop in JavaScript and looks like this:
+
+<CodeBlock language="js">
+{`for (let i = 0; i < 5; i++) {
+  // code block to be executed
+}`}
+</CodeBlock>
+
+Let’s break it down:
+
+- **Initialization**: Usually a counter variable like `let i = 0`.
+- **Condition**: As long as this is `true`, the loop continues.
+- **Update**: After each loop, update the counter (`i++` usually).
+
+Here's a basic example:
+
+<JsPlayground initialJs={`for (let i = 0; i < 5; i++) {
+  console.log("Number:", i);
+}`} />
+
+<Note>It starts at 0 and runs as long as `i < 5`. After every loop, it adds 1 to `i` using `i++`.</Note>
+
+<Divider />
+
+### 🧪 Looping through Arrays
+
+You can use loops to go through each item in an array:
+
+<JsPlayground initialJs={`let fruits = ["apple", "banana", "cherry"];
+
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}`} />
+
+<Note>Use `fruits.length` to dynamically handle any array size.</Note>
+
+<Tip>If you're just looping over array items, \`for...of\` is often more readable — we'll cover that soon.</Tip>
+
+<Divider />
+
+### ⚠️ Be Careful of Infinite Loops
+
+An **infinite loop** is when your condition never becomes `false`. This causes the loop to run forever and can crash your program or browser tab.
+
+<CodeBlock language="js">
+{`for (let i = 0; i >= 0; i++) {
+  console.log(i);
+}`}
+</CodeBlock>
+
+Always double-check your loop's **exit condition**!
+
+### 🔄 The `while` Loop
+
+A `while` loop runs **as long as the condition is true**. It checks the condition **before** running the block each time.
+
+<CodeBlock language="js">
+{`let i = 0;
+
+while (i < 5) {
+  console.log("i is:", i);
+  i++;
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let i = 0;
+
+while (i < 5) {
+  console.log("i is:", i);
+  i++;
+}`} />
+
+<Note>If the condition is false at the start, the loop won’t run at all.</Note>
+
+<Divider />
+
+### 🔁 The `do...while` Loop
+
+The `do...while` loop is almost the same as `while`, but the difference is:  
+👉 **It always runs at least once**, even if the condition is false.
+
+<CodeBlock language="js">
+{`let i = 10;
+
+do {
+  console.log("i is:", i);
+  i++;
+} while (i < 5);`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let i = 10;
+
+do {
+  console.log("i is:", i);
+  i++;
+} while (i < 5);`} />
+
+<Note>This loop runs once even though `i < 5` is false from the beginning.</Note>
+
+<Tip>Use `do...while` only when you absolutely want the block to run at least once.</Tip>
+
+<Divider />
+
+### 🔂 The `for...of` Loop
+
+This loop is **super clean** for looping through **arrays and other iterable things**.
+
+<CodeBlock language="js">
+{`let colors = ["red", "green", "blue"];
+
+for (let color of colors) {
+  console.log(color);
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let colors = ["red", "green", "blue"];
+
+for (let color of colors) {
+  console.log(color);
+}`} />
+
+<Note>No need to manage `i`, `length`, or indexing manually — clean and safe.</Note>
+
+<Tip>`for...of` works on arrays, strings, maps, sets — anything that is iterable.</Tip>
+
+<Divider />
+
+### 🧾 The `for...in` Loop
+
+`for...in` is used for **looping through keys/properties** of an object.
+
+<CodeBlock language="js">
+{`let person = {
+  name: "Akash",
+  age: 25,
+  job: "Developer"
+};
+
+for (let key in person) {
+  console.log(key + ": " + person[key]);
+}`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let person = {
+  name: "Akash",
+  age: 25,
+  job: "Developer"
+};
+
+for (let key in person) {
+  console.log(key + ": " + person[key]);
+}`} />
+
+<Note>Don’t use `for...in` on arrays — it loops over **indices as strings**, not values.</Note>
+
+<Tip>If you want values of an object, use `Object.values(obj)` or `Object.entries(obj)` in a `for...of` loop.</Tip>
+
+<Divider />
+
+### 🛠 Real-World Example: Looping Over User Data
+
+Let’s say you’re building a basic web app where users sign up. You store their names in an array and want to display a greeting to each.
+
+Here’s how a loop can help automate that:
+
+<JsPlayground initialJs={`let users = ["Akash", "Ravi", "Sneha", "Priya"];
+
+for (let user of users) {
+  console.log("Welcome, " + user + "!");
+}`} />
+
+<Note>
+Without a loop, you'd have to manually write out:
+</Note>
+
+<CodeBlock language="js">
+{`console.log("Welcome, Akash!");
+console.log("Welcome, Ravi!");
+console.log("Welcome, Sneha!");
+console.log("Welcome, Priya!");`}
+</CodeBlock>
+
+😩 That would be a nightmare. Loops make it a breeze.
+
+<Divider />
+
+## 🧠 Exercise
+
+Try solving these tasks using loops:
+
+<Task>
+Create a <strong>for loop</strong> that prints numbers from 1 to 10.
+</Task>
+
+<Task>
+Given an array of numbers, print only the numbers that are <strong>even</strong>.
+</Task>
+
+<Task>
+Loop through an object representing a book:
+</Task>
+
+<CodeBlock language="js">
+{`let book = {
+  title: "JS Mastery",
+  author: "Akash",
+  pages: 350
+};`}
+</CodeBlock>
+
+<Task>Use <code>for...in</code> to print all key-value pairs.</Task>
+
+<Tip>Test your code in the playground after writing it!</Tip>
+
+<Divider />
+
+## ✅ Quick Quiz
+
+<MCQ 
+  question="What kind of loop guarantees at least one execution?" 
+  options={["for", "while", "do...while", "for...in"]} 
+  correctAnswer={2} 
+  explanation="A do...while loop checks the condition after executing the block, so it always runs at least once."
+/>
+
+<MCQ 
+  question="Which loop is best for iterating over arrays?" 
+  options={["for...in", "while", "do...while", "for...of"]} 
+  correctAnswer={3} 
+  explanation="for...of is designed to iterate over iterable items like arrays, and it gives direct access to values."
+/>
+
+<MCQ 
+  question='What will this code print?' 
+  options={["1 2 3", "0 1 2", "1 2 3 4", "Nothing, it’s an error"]} 
+  correctAnswer={0} 
+  explanation="It starts at 1 and runs while i <= 3. So it prints 1, 2, and 3."
+>
+<CodeBlock language="js">
+{`for (let i = 1; i <= 3; i++) {
+  console.log(i);
+}`}
+</CodeBlock>
+</MCQ>
+
+<Divider />
+
+<Note>You’ve now mastered the core loops in JavaScript. These are essential for building logic, handling data, and creating dynamic behavior in web applications.</Note>
+
+Next up, we’ll explore **Functions in JavaScript** — the real backbone of reusable and clean code!

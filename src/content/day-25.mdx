@@ -1,0 +1,486 @@
+## Day 25: ES6+ Features – Let, Const, Arrow Functions, etc.
+
+The release of ES6 (also known as ECMAScript 2015) brought some of the most important updates to JavaScript. If you're coming from an older version or want to write clean, modern code, learning ES6+ features is a must.
+
+Today, we'll cover:
+
+- `let` and `const` (block scoping)
+- Arrow functions
+- Template literals
+- Destructuring
+- Default parameters
+- Spread and rest operators
+- And more…
+
+Let’s start with the foundations.
+
+<Divider />
+
+### `let` and `const` – Modern Variable Declarations
+
+Before ES6, we only had `var` to declare variables. But `var` is function-scoped and behaves oddly in many situations. ES6 introduced `let` and `const`, which are **block-scoped**, and behave more predictably.
+
+#### ✅ `let`: Mutable and block-scoped
+Use `let` when the variable needs to change later.
+
+<CodeBlock language="js">
+{`let age = 25;
+age = 26; // allowed
+console.log(age); // 26`}
+</CodeBlock>
+
+#### ✅ `const`: Immutable binding
+Use `const` when the variable shouldn't be reassigned. **Note**: it doesn't make the value immutable, just the binding.
+
+<CodeBlock language="js">
+{`const name = "Akash";
+name = "John"; // ❌ Error: Assignment to constant variable`}
+</CodeBlock>
+
+<Tip>
+Use `const` by default and `let` only when the variable needs to change.
+</Tip>
+
+<Divider />
+
+### Block Scoping
+
+Variables declared with `let` and `const` are **limited to the block** (like an `if` or `for`) where they are defined. Unlike `var`, they are **not hoisted** in the same way.
+
+<JsPlayground initialJs={`{
+  let message = "Hello from inside block";
+  console.log(message); // ✅ Works inside block
+}
+console.log(message); // ❌ ReferenceError: message is not defined`} />
+
+Compare this with `var`:
+
+<JsPlayground initialJs={`{
+  var msg = "Hi with var";
+  console.log(msg); // ✅ Works
+}
+console.log(msg); // ✅ Still works outside block (unexpected!)`} />
+
+<Note>
+This is why `let` and `const` are considered safer: they prevent accidental access from outside the block.
+</Note>
+
+<Divider />
+
+### Temporal Dead Zone (TDZ)
+
+If you try to access a `let` or `const` variable **before it's declared**, you'll get a ReferenceError. This time period is called the **Temporal Dead Zone**.
+
+<JsPlayground initialJs={`console.log(x); // ❌ ReferenceError
+let x = 10;`} />
+
+With `var`, this would print `undefined` instead — another reason why `let` is safer.
+
+<Divider />
+
+### Arrow Functions – A Modern Way to Write Functions
+
+Arrow functions were introduced in ES6 to simplify function expressions. They give us a more concise syntax and also handle the `this` keyword differently, which we’ll explore in a bit.
+
+Let’s start with the syntax.
+
+#### 🔹 Traditional Function Expression
+
+<CodeBlock language="js">
+{`const add = function (a, b) {
+  return a + b;
+};`}
+</CodeBlock>
+
+#### 🔹 Arrow Function Equivalent
+
+<CodeBlock language="js">
+{`const add = (a, b) => {
+  return a + b;
+};`}
+</CodeBlock>
+
+If there’s only **one return statement**, and it returns a value directly, you can make it even shorter:
+
+<CodeBlock language="js">
+{`const add = (a, b) => a + b;`}
+</CodeBlock>
+
+If there’s **only one parameter**, you can omit the parentheses:
+
+<CodeBlock language="js">
+{`const greet = name => \`Hello, \${name}!\`;`}
+</CodeBlock>
+
+<JsPlayground initialJs={`const greet = name => \`Hello, \${name}!\`;
+console.log(greet("Akash"));`} />
+
+<Note>
+Arrow functions are always anonymous. You assign them to a variable or use them inline.
+</Note>
+
+<Divider />
+
+### No `this` Binding in Arrow Functions
+
+One of the most important differences between regular functions and arrow functions is how they handle `this`.
+
+Arrow functions do **not** have their own `this`. Instead, they **inherit** it from the parent scope.
+
+Let’s see an example with a traditional function inside an object:
+
+<JsPlayground initialJs={`const person = {
+  name: "Akash",
+  greet: function () {
+    console.log("Hi, my name is", this.name);
+  }
+};
+
+person.greet(); // 'this' refers to the person object`} />
+
+Now with an arrow function:
+
+<JsPlayground initialJs={`const person = {
+  name: "Akash",
+  greet: () => {
+    console.log("Hi, my name is", this.name);
+  }
+};
+
+person.greet(); // 'this' is undefined or window in non-strict mode`} />
+
+<Note>
+Arrow functions are **not suitable** as methods inside objects when you need `this` to refer to the object itself.
+</Note>
+
+<Divider />
+
+### Arrow Functions & Callbacks
+
+Arrow functions shine in places like `.map()`, `.filter()`, or `.forEach()` where small, concise functions are helpful.
+
+<JsPlayground initialJs={`const numbers = [1, 2, 3, 4];
+
+const doubled = numbers.map(n => n * 2);
+console.log(doubled); // [2, 4, 6, 8]`} />
+
+<Tip>
+Use arrow functions for short callbacks or when you want to inherit `this` from the surrounding context.
+</Tip>
+
+<Divider />
+
+### Template Literals – Easier String Formatting
+
+Template literals, introduced in ES6, make it easier to work with strings. You use **backticks** (\`\`) instead of regular quotes and embed variables directly inside strings using `${}`.
+
+#### 🔹 Without Template Literals
+
+<CodeBlock language="js">
+{`const name = "Akash";
+const greeting = "Hello, " + name + "!";
+console.log(greeting);`}
+</CodeBlock>
+
+#### 🔹 With Template Literals
+
+<CodeBlock language="js">
+{`const name = "Akash";
+const greeting = \`Hello, \${name}!\`;
+console.log(greeting);`}
+</CodeBlock>
+
+You can also span multiple lines without concatenation:
+
+<CodeBlock language="js">
+{`const message = \`This is line one.
+This is line two.
+This is line three.\`;
+
+console.log(message);`}
+</CodeBlock>
+
+<Divider />
+
+### Default Parameters
+
+In ES6, you can assign default values to function parameters directly in the function declaration.
+
+This avoids the need for manual checks like `if (!param) { param = value }`.
+
+#### 🔹 Example
+
+<CodeBlock language="js">
+{`function greet(name = "Guest") {
+  console.log(\`Hello, \${name}!\`);
+}
+
+greet();       // Hello, Guest!
+greet("Akash"); // Hello, Akash!`}
+</CodeBlock>
+
+<Note>
+Default parameters only apply if the argument is `undefined`. Passing `null` will not trigger the default.
+</Note>
+
+<Divider />
+
+### Spread Operator (`...`)
+
+The **spread operator** unpacks elements of arrays or objects. You can use it to copy, merge, or pass elements individually.
+
+#### 🔹 Copying Arrays
+
+<CodeBlock language="js">
+{`const arr = [1, 2, 3];
+const copy = [...arr];
+
+console.log(copy); // [1, 2, 3]`}
+</CodeBlock>
+
+#### 🔹 Merging Arrays
+
+<CodeBlock language="js">
+{`const nums1 = [1, 2];
+const nums2 = [3, 4];
+const allNums = [...nums1, ...nums2];
+
+console.log(allNums); // [1, 2, 3, 4]`}
+</CodeBlock>
+
+#### 🔹 Merging Objects
+
+<CodeBlock language="js">
+{`const obj1 = { name: "Akash" };
+const obj2 = { age: 25 };
+const merged = { ...obj1, ...obj2 };
+
+console.log(merged); // { name: 'Akash', age: 25 }`}
+</CodeBlock>
+
+<Tip>
+If two objects have the same key, the one spread later will overwrite the earlier one.
+</Tip>
+
+<Divider />
+
+### Rest Parameters (`...`)
+
+**Rest parameters** collect remaining arguments into an array. It’s the reverse of spread — instead of unpacking, you’re **packing** into an array.
+
+#### 🔹 Function with Rest Parameters
+
+<CodeBlock language="js">
+{`function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+
+console.log(sum(1, 2, 3)); // 6
+console.log(sum(5, 10, 15, 20)); // 50`}
+</CodeBlock>
+
+You can use rest parameters to build flexible functions that accept any number of arguments.
+
+<Divider />
+
+### Object Property Shorthand
+
+If your object’s keys and variable names match, you can use **shorthand syntax** to write cleaner code.
+
+#### 🔹 Traditional Way
+
+<CodeBlock language="js">
+{`const name = "Akash";
+const age = 25;
+
+const user = {
+  name: name,
+  age: age
+};`}
+</CodeBlock>
+
+#### 🔹 Shorthand Way
+
+<CodeBlock language="js">
+{`const name = "Akash";
+const age = 25;
+
+const user = { name, age };
+
+console.log(user); // { name: 'Akash', age: 25 }`}
+</CodeBlock>
+
+<Divider />
+
+### Destructuring
+
+Destructuring allows you to **extract values** from arrays or objects into variables in one line.
+
+#### 🔹 Array Destructuring
+
+<CodeBlock language="js">
+{`const colors = ["red", "green", "blue"];
+const [first, second] = colors;
+
+console.log(first);  // red
+console.log(second); // green`}
+</CodeBlock>
+
+#### 🔹 Object Destructuring
+
+<CodeBlock language="js">
+{`const person = {
+  name: "Akash",
+  age: 25
+};
+
+const { name, age } = person;
+
+console.log(name); // Akash
+console.log(age);  // 25`}
+</CodeBlock>
+
+<Tip>
+You can rename during destructuring like `const { name: userName } = person;`
+</Tip>
+
+<Divider />
+
+## 🏋️‍♂️ Exercise
+
+Let's put all your ES6+ knowledge to work!
+
+### ✅ Task 1: Refactor This Code
+
+Refactor the following old-school JavaScript code using **let/const**, **arrow functions**, **template literals**, and **object shorthand**:
+
+<CodeBlock language="js">
+{`var name = "Akash";
+var age = 25;
+
+function introduce(name, age) {
+  return "Hello, my name is " + name + " and I am " + age + " years old.";
+}
+
+var user = {
+  name: name,
+  age: age
+};`}
+</CodeBlock>
+
+Try converting it to the modern ES6+ syntax.
+
+<Divider />
+
+### ✅ Task 2: Spread + Rest Challenge
+
+Write a function `maxValue` that accepts any number of arguments and returns the largest value.
+
+<CodeBlock language="js">
+{`maxValue(10, 2, 89, 33); // 89`}
+</CodeBlock>
+
+Hint: Use rest parameters + `Math.max()` with spread.
+
+<Divider />
+
+## 🧠 Multiple Choice Questions
+
+<MCQ 
+  question="What will the following code output?"
+  options={[
+    "true",
+    "false",
+    "undefined",
+    "Throws an error"
+  ]}
+  correctAnswer={1}
+  explanation="Spread creates a new array. Even though `copy` and `arr` have the same elements, they are different objects in memory."
+>
+<CodeBlock language="js">
+{`const arr = [1, 2, 3];
+const copy = [...arr];
+console.log(copy === arr);`}
+</CodeBlock>
+</MCQ>
+
+<Divider />
+
+<MCQ 
+  question="Which of these is NOT a valid use of the spread operator?"
+  options={[
+    "[...arr1, ...arr2]",
+    "{...obj1, ...obj2}",
+    "...args => args.reduce(...)",
+    "Math.max(...nums)"
+  ]}
+  correctAnswer={2}
+  explanation="Option C is incorrect syntax. Spread can’t be used directly like that in an arrow function declaration."
+/>
+
+<Divider />
+
+<MCQ 
+  question="What does this function return?"
+  options={[
+    "Hello, undefined!",
+    "Hello, Guest!",
+    "Hello!",
+    "Throws an error"
+  ]}
+  correctAnswer={1}
+  explanation='Since no argument is passed, the default value `"Guest"` is used.'
+>
+<CodeBlock language="js">
+{`function greet(name = "Guest") {
+  return \`Hello, \${name}!\`;
+}
+
+greet();`}
+</CodeBlock>
+</MCQ>
+
+<Divider />
+
+<MCQ 
+  question="What will be logged?"
+  options={[
+    "name",
+    "Akash",
+    "undefined",
+    "Throws error"
+  ]}
+  correctAnswer={1}
+  explanation="Destructuring with renaming assigns the value of `name` to a new variable `userName`."
+>
+<CodeBlock language="js">
+{`const person = { name: "Akash", age: 25 };
+const { name: userName } = person;
+
+console.log(userName);`}
+</CodeBlock>
+</MCQ>
+
+<Divider />
+
+<MCQ 
+  question="Which of these is valid array destructuring?"
+  options={[
+    "const [a, b] = {1, 2}",
+    "const a, b = [1, 2]",
+    "const [a, b] = [1, 2]",
+    "const {a, b} = [1, 2]"
+  ]}
+  correctAnswer={2}
+  explanation="Only Option C uses correct syntax to destructure an array into `a` and `b`."
+/>
+
+<Divider />
+
+## ✅ You’ve completed Day 25!
+
+You've learned the superpowers of modern JavaScript — `let`, `const`, arrow functions, template literals, destructuring, spread & rest, and object shorthand. These are now the default way of writing clean, elegant JS.
+
+Up next: You’ll learn about **Destructuring, Spread & Rest Operators in depth** tomorrow!
+
+Get some chai, and see you in **Day 26**! ☕

@@ -1,0 +1,471 @@
+## 📅 Day 29: Mastering Async/Await — Writing Cleaner Async Code
+
+Asynchronous code is a major part of real-world JavaScript development, especially when dealing with APIs, timers, file operations, or any task that takes time.
+
+In the previous lesson, we got a taste of `async/await`. Today, we’ll explore this feature deeply — from **how it works under the hood**, to **sequential vs parallel awaits**, and **how to handle real-world patterns**.
+
+<Divider />
+
+### 🔁 What Does `async` Do?
+
+When you declare a function as `async`, it **automatically returns a Promise**.
+
+<CodeBlock language="js">
+{`async function sayHello() {
+  return "Hello!";
+}
+
+sayHello().then((res) => console.log(res)); // Logs: Hello!`}
+</CodeBlock>
+
+So even if the function just returns a string, it's wrapped inside a Promise.
+
+<Divider />
+
+### ⏸️ What Does `await` Do?
+
+The `await` keyword can only be used **inside async functions**. It tells JavaScript:
+
+> “Pause execution here, wait for this Promise to resolve, and then continue.”
+
+Example:
+
+<CodeBlock language="js">
+{`function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function greet() {
+  console.log("⏱ Waiting...");
+  await delay(2000); // waits 2 seconds
+  console.log("👋 Hello after 2 seconds!");
+}
+
+greet();`}
+</CodeBlock>
+
+<JsPlayground>
+{`function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function greet() {
+  console.log("⏱ Waiting...");
+  await delay(2000); // waits 2 seconds
+  console.log("👋 Hello after 2 seconds!");
+}
+
+greet();`}
+</JsPlayground>
+
+<Note>
+When JavaScript hits `await`, it doesn’t block the entire script — it only pauses **that function**, and continues with the rest of the program. This is called **non-blocking async flow**.
+</Note>
+
+<Divider />
+
+### 🧠 await is just sugar for `.then()`
+
+Behind the scenes, `await` is just a cleaner way of writing `.then()` calls. But it's easier to read and manage — especially in complex flows.
+
+### ⛓️ Chaining Multiple `await` Calls
+
+Let’s say we want to fetch user data, then fetch their posts, then fetch the comments on the first post.
+
+You can chain them step by step using `await`:
+
+<CodeBlock language="js">
+{`async function fetchUserFlow() {
+  const user = await fetchUser();
+  const posts = await fetchPosts(user.id);
+  const comments = await fetchComments(posts[0].id);
+
+  console.log("Done!", { user, posts, comments });
+}`}
+</CodeBlock>
+
+Each step **waits** for the previous to finish — this is called **sequential execution**.
+
+<Divider />
+
+### 🐌 Sequential vs ⚡ Parallel `await`s
+
+Sometimes, steps are independent and don’t need to wait for each other.
+
+**Sequential (slow):**
+
+<CodeBlock language="js">
+{`await fetch1();
+await fetch2(); // waits for fetch1
+await fetch3(); // waits for fetch2`}
+</CodeBlock>
+
+**Parallel (fast):**
+
+<CodeBlock language="js">
+{`const p1 = fetch1();
+const p2 = fetch2();
+const p3 = fetch3();
+
+const result1 = await p1;
+const result2 = await p2;
+const result3 = await p3;`}
+</CodeBlock>
+
+This runs all fetches **at the same time**, and then waits for them together — a huge performance boost!
+
+<Tip>
+If your `await` calls are not dependent on each other, run them in parallel using `Promise.all()` or the pattern above!
+</Tip>
+
+<Divider />
+
+### 💣 Common Mistake: Forgetting `await`
+
+Let’s say you’re inside an async function and forget to `await`:
+
+<CodeBlock language="js">
+{`async function showData() {
+  const data = fetchData(); // ❌ missing await
+  console.log(data); // Logs: Promise {<pending>}
+}`}
+</CodeBlock>
+
+Always remember to `await` when you expect a resolved value.
+
+<Divider />
+
+### 🧪 Quick Challenge: Refactor to async/await
+
+Refactor this `.then()` based code into `async/await` style:
+
+<CodeBlock language="js">
+{`fetchUser()
+  .then(user => fetchPosts(user.id))
+  .then(posts => console.log(posts));`}
+</CodeBlock>
+
+Try it in your head, or even better, try in a live playground! We'll share the answer shortly.
+
+<Divider />
+
+<Divider />
+
+## ⚠️ Error Handling in Async/Await
+
+Just like in normal JavaScript code, we can catch errors in async functions using `try...catch`.
+
+Here’s how:
+
+<CodeBlock language="js">
+{`async function getData() {
+  throw new Error("Something went wrong!");
+}
+
+async function main() {
+  try {
+    const data = await getData();
+    console.log("Data:", data);
+  } catch (err) {
+    console.error("❌ Error caught:", err.message);
+  }
+}
+
+main();`}
+</CodeBlock>
+
+<JsPlayground>
+{`async function getData() {
+  throw new Error("Something went wrong!");
+}
+
+async function main() {
+  try {
+    const data = await getData();
+    console.log("Data:", data);
+  } catch (err) {
+    console.error("❌ Error caught:", err.message);
+  }
+}
+
+main();`}
+</JsPlayground>
+
+<Note>
+Wrapping your `await` calls inside a `try...catch` block ensures your program doesn’t crash when an error occurs — especially important when dealing with API calls or file reads.
+</Note>
+
+<Divider />
+
+## ✅ Refactor from .then() to async/await
+
+Previously, you had this code:
+
+<CodeBlock language="js">
+{`fetchUser()
+  .then(user => fetchPosts(user.id))
+  .then(posts => console.log(posts));`}
+</CodeBlock>
+
+Now let’s refactor it using `async/await`:
+
+<CodeBlock language="js">
+{`async function main() {
+  const user = await fetchUser();
+  const posts = await fetchPosts(user.id);
+  console.log(posts);
+}
+
+main();`}
+</CodeBlock>
+
+Much more readable and easier to debug, right?
+
+<Divider />
+
+## 🧙 Optional Catch Using `.catch()` with Await
+
+Yes, you can also catch errors like this:
+
+<CodeBlock language="js">
+{`const data = await fetchData().catch(err => {
+  console.log("Caught:", err.message);
+});`}
+</CodeBlock>
+
+But this is less readable and less powerful than a full `try...catch`.
+
+<Divider />
+
+## 🌀 Handling Multiple Awaits in One Try-Catch
+
+Here’s a better structure if you’re doing multiple awaits:
+
+<CodeBlock language="js">
+{`async function fullFlow() {
+  try {
+    const user = await fetchUser();
+    const posts = await fetchPosts(user.id);
+    const comments = await fetchComments(posts[0].id);
+    console.log({ user, posts, comments });
+  } catch (error) {
+    console.error("Something went wrong:", error.message);
+  }
+}`}
+</CodeBlock>
+
+<Tip>
+If you want to handle each error separately, you can split them into separate `try...catch` blocks — but avoid overcomplicating things if not needed.
+</Tip>
+
+<Divider />
+
+## ⏳ Real-World Example: Fetching Data with Async/Await
+
+Let’s simulate a real-world API call and handle it with `async/await`.
+
+Suppose we want to:
+
+1. Fetch a user.
+2. Fetch their posts.
+3. Fetch comments on the first post.
+
+Let’s build this flow:
+
+<CodeBlock language="js">
+{`function fakeApi(data, delay = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(data), delay);
+  });
+}
+
+function fetchUser() {
+  return fakeApi({ id: 1, name: "John Doe" });
+}
+
+function fetchPosts(userId) {
+  return fakeApi([
+    { id: 101, title: "Post 1", userId },
+    { id: 102, title: "Post 2", userId },
+  ]);
+}
+
+function fetchComments(postId) {
+  return fakeApi([
+    { id: 1001, text: "Nice post!", postId },
+    { id: 1002, text: "Thanks for sharing", postId },
+  ]);
+}`}
+</CodeBlock>
+
+Now let's use these functions in an async function:
+
+<CodeBlock language="js">
+{`async function loadData() {
+  try {
+    const user = await fetchUser();
+    const posts = await fetchPosts(user.id);
+    const comments = await fetchComments(posts[0].id);
+
+    console.log("User:", user);
+    console.log("Posts:", posts);
+    console.log("Comments on first post:", comments);
+  } catch (err) {
+    console.error("❌ Error:", err.message);
+  }
+}
+
+loadData();`}
+</CodeBlock>
+
+<JsPlayground>
+{`function fakeApi(data, delay = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(data), delay);
+  });
+}
+
+function fetchUser() {
+  return fakeApi({ id: 1, name: "John Doe" });
+}
+
+function fetchPosts(userId) {
+  return fakeApi([
+    { id: 101, title: "Post 1", userId },
+    { id: 102, title: "Post 2", userId },
+  ]);
+}
+
+function fetchComments(postId) {
+  return fakeApi([
+    { id: 1001, text: "Nice post!", postId },
+    { id: 1002, text: "Thanks for sharing", postId },
+  ]);
+}
+
+async function loadData() {
+  try {
+    const user = await fetchUser();
+    const posts = await fetchPosts(user.id);
+    const comments = await fetchComments(posts[0].id);
+
+    console.log("User:", user);
+    console.log("Posts:", posts);
+    console.log("Comments on first post:", comments);
+  } catch (err) {
+    console.error("❌ Error:", err.message);
+  }
+}
+
+loadData();`}
+</JsPlayground>
+
+<Note>
+This pattern is very common in full-stack and frontend development, especially when building dashboards, feeds, or fetching user-related data.
+</Note>
+
+<Divider />
+
+## 🛠 Bonus: Parallelizing Async Calls
+
+By default, `await` waits for each line to finish. But what if two tasks can be done at the same time?
+
+You can use `Promise.all`:
+
+<CodeBlock language="js">
+{`async function parallelFetch() {
+  try {
+    const [user, posts] = await Promise.all([
+      fetchUser(),
+      fetchPosts(1),
+    ]);
+    console.log("User:", user);
+    console.log("Posts:", posts);
+  } catch (err) {
+    console.error("Error:", err.message);
+  }
+}`}
+</CodeBlock>
+
+<Tip>
+Use `Promise.all()` when multiple async operations don’t depend on each other and can run in parallel.
+</Tip>
+
+<Divider />
+
+## 🧠 Exercises
+
+### ✅ Exercise 1: Rewrite a Promise chain using async/await
+
+Convert this code to use async/await instead:
+
+<CodeBlock language="js">
+{`fetch("https://jsonplaceholder.typicode.com/posts/1")
+  .then((res) => res.json())
+  .then((data) => console.log("Post:", data))
+  .catch((err) => console.error("Error:", err));`}
+</CodeBlock>
+
+### ✅ Exercise 2: Create a fake async workflow
+
+1. Make 3 fake functions: `getProfile()`, `getSettings()`, `getNotifications()`, all returning Promises.
+2. Use `async/await` to fetch them one after another and log the results.
+3. Add a `try-catch` to handle any errors.
+
+### ✅ Exercise 3: Handle parallel tasks
+
+Use `Promise.all()` to fetch `getPosts()` and `getAlbums()` at the same time. Then log them.
+
+<Divider />
+
+## ✅ MCQs
+
+<MCQ
+  question="What does the 'await' keyword do in JavaScript?"
+  options={[
+    "Waits for a setTimeout to finish",
+    "Blocks the thread until the function completes",
+    "Pauses execution of the async function until the Promise resolves",
+    "Converts a synchronous function to asynchronous"
+  ]}
+  correctAnswer={2}
+  explanation="The 'await' keyword pauses execution of an async function until the Promise is resolved or rejected."
+/>
+
+<MCQ
+  question="Which of the following is a valid way to declare an async function?"
+  options={[
+    "function myFunc() async {}",
+    "async function myFunc() {}",
+    "function async myFunc() {}",
+    "await function myFunc() {}"
+  ]}
+  correctAnswer={1}
+  explanation="Only 'async function myFunc() {}' is valid syntax for declaring an async function."
+/>
+
+<MCQ
+  question="What happens if a Promise is rejected and there's no try/catch around await?"
+  options={[
+    "The script continues normally",
+    "JavaScript throws an uncaught error",
+    "The code returns undefined",
+    "The function stops without error"
+  ]}
+  correctAnswer={1}
+  explanation="If there's no try/catch, a rejected Promise will cause an unhandled exception and potentially crash the async function."
+/>
+
+<MCQ
+  question="How can you run multiple async functions in parallel using async/await?"
+  options={[
+    "Call them without await",
+    "Use await inside a loop",
+    "Use setTimeout",
+    "Use Promise.all()"
+  ]}
+  correctAnswer={3}
+  explanation="To run multiple Promises in parallel, you can use Promise.all() with async/await."
+/>
+
+

@@ -1,0 +1,318 @@
+## Day 30: JSON & LocalStorage
+
+Welcome to the final day of this JavaScript course! 🎉 Today, we’ll explore two crucial concepts every web developer must master: **JSON (JavaScript Object Notation)** and **LocalStorage**.
+
+These two tools allow your web app to **store, retrieve, and exchange data** efficiently. You’ll see them used in real-world applications like login systems, form drafts, shopping carts, settings, and more.
+
+<Divider />
+
+## 🧩 What is JSON?
+
+JSON stands for **JavaScript Object Notation**. It’s a lightweight **data format** used to store and transport data — especially useful when exchanging data between a client and a server.
+
+JSON looks very similar to a JavaScript object, but it is always a **string** when transmitted or stored.
+
+### 📦 Example: JSON Format
+
+<CodeBlock language="json">
+{`{
+  "name": "Akash",
+  "age": 25,
+  "skills": ["HTML", "CSS", "JavaScript"]
+}`}
+</CodeBlock>
+
+### ✅ Rules of JSON:
+
+- Data is in **key-value pairs**
+- Keys and string values must be in **double quotes**
+- No functions or undefined values allowed
+- It must be **valid UTF-8 text**
+
+<Divider />
+
+## 🔁 JSON.stringify() and JSON.parse()
+
+To work with JSON in JavaScript, we use two built-in methods:
+
+<Table
+  columns={["Method", "Description"]}
+  data={[
+    ["JSON.stringify()", "Converts a JS object into a JSON string"],
+    ["JSON.parse()", "Converts a JSON string back to a JS object"]
+  ]}
+/>
+
+### 🔧 Example 1: stringify()
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 25,
+  isAdmin: false
+};
+
+const jsonData = JSON.stringify(user);
+console.log(jsonData); // "{"name":"Akash","age":25,"isAdmin":false}"`}
+</CodeBlock>
+
+### 🔧 Example 2: parse()
+
+<CodeBlock language="js">
+{`const jsonString = '{"name":"Akash","age":25,"isAdmin":false}';
+const userObj = JSON.parse(jsonString);
+
+console.log(userObj.name); // Akash
+console.log(userObj.age);  // 25`}
+</CodeBlock>
+
+<Tip>
+Always validate your JSON before parsing. If the JSON is malformed, `JSON.parse()` will throw an error.
+</Tip>
+
+<Divider />
+
+## 🧪 Try it Yourself
+
+<JsPlayground>
+{`const person = {
+  name: "Rahul",
+  city: "Delhi"
+};
+
+// Convert JS object to JSON
+const jsonStr = JSON.stringify(person);
+console.log("JSON string:", jsonStr);
+
+// Parse it back
+const parsed = JSON.parse(jsonStr);
+console.log("Parsed name:", parsed.name);`}
+</JsPlayground>
+
+<Divider />
+
+## 🧠 What is localStorage?
+
+`localStorage` is a built-in **Web API** that allows you to store data in the browser **permanently** (until manually deleted). It’s super handy for saving user preferences, theme settings, cart items, login tokens, and more.
+
+### 🌍 Where is this data stored?
+
+In the user's browser — separate for each **domain**. Even if the user closes and reopens the browser, the data remains intact.
+
+<Divider />
+
+## 📦 Basic localStorage Methods
+
+<Table
+  columns={["Method", "What It Does"]}
+  data={[
+    ["localStorage.setItem(key, value)", "Saves a key-value pair"],
+    ["localStorage.getItem(key)", "Retrieves the value by key"],
+    ["localStorage.removeItem(key)", "Deletes the key-value pair"],
+    ["localStorage.clear()", "Clears everything in localStorage"]
+  ]}
+/>
+
+<Note>
+localStorage only supports **strings** as values. If you want to store objects/arrays, convert them to JSON using `JSON.stringify()` and retrieve them using `JSON.parse()`.
+</Note>
+
+<Divider />
+
+## 🔧 Example: Saving a name in localStorage
+
+<CodeBlock language="js">
+{`localStorage.setItem("username", "Akash");
+
+// Retrieve it
+const name = localStorage.getItem("username");
+console.log(name); // "Akash"`}
+</CodeBlock>
+
+<Divider />
+
+## 🔧 Storing Objects in localStorage
+
+You can't store JavaScript objects directly, but you can convert them into JSON strings.
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  theme: "dark"
+};
+
+localStorage.setItem("userData", JSON.stringify(user));
+
+// Later, retrieve and parse it
+const saved = JSON.parse(localStorage.getItem("userData"));
+console.log(saved.theme); // "dark"`}
+</CodeBlock>
+
+<JsPlayground>
+{`// Set data
+const settings = {
+  layout: "grid",
+  notifications: true
+};
+
+localStorage.setItem("settings", JSON.stringify(settings));
+
+// Get data
+const stored = JSON.parse(localStorage.getItem("settings"));
+console.log("Layout:", stored.layout);
+console.log("Notifications:", stored.notifications);`}
+</JsPlayground>
+
+<Divider />
+
+## 🧹 Removing & Clearing Data
+
+If you want to **delete a specific item** or **clear everything** from `localStorage`, you’ve got options:
+
+### 🧽 Remove one item
+
+<CodeBlock language="js">
+{`localStorage.removeItem("username");`}
+</CodeBlock>
+
+### 🧼 Clear all localStorage data
+
+<CodeBlock language="js">
+{`localStorage.clear();`}
+</CodeBlock>
+
+Be careful with `clear()` — it wipes out **all** data stored under your domain, not just one specific key.
+
+<Divider />
+
+## 💼 Real-World Use Cases
+
+Here’s where you’ll actually find JSON and localStorage being used together:
+
+<Table
+  columns={["Use Case", "How It's Used"]}
+  data={[
+    ["Login Tokens", "Save tokens received from the server in localStorage"],
+    ["Theme Settings", "Persist dark/light mode selection"],
+    ["Draft Forms", "Save incomplete form data locally"],
+    ["Cart Items", "Preserve items added to cart even if the page reloads"],
+    ["Page Preferences", "Remember sidebar open/close status, filters, tabs, etc."]
+  ]}
+/>
+
+<Note>
+localStorage is great for **non-sensitive** data. Never store passwords or critical private info. For that, use secure cookies or session-based authentication.
+</Note>
+
+<Divider />
+
+## 🧪 Try Clearing Data Example
+
+<JsPlayground>
+{`// Add item
+localStorage.setItem("testKey", "Test Value");
+
+// Remove it
+localStorage.removeItem("testKey");
+
+// Confirm it's removed
+const result = localStorage.getItem("testKey");
+console.log(result); // Should be null`}
+</JsPlayground>
+
+<Divider />
+
+## ⚠️ Caution: Storage Limits
+
+Most browsers allow up to **5–10MB** of localStorage per domain. It’s fine for small-scale needs but not suitable for storing large blobs of data (e.g., images, video).
+
+<Divider />
+
+## 📚 Summary
+
+- JSON is a string-based format used for data exchange.
+- Use `JSON.stringify()` to convert JS objects into JSON strings.
+- Use `JSON.parse()` to bring them back into JS.
+- `localStorage` lets you persist data across sessions.
+- Always convert non-string values into JSON when using `localStorage`.
+- Avoid storing sensitive information in `localStorage`.
+
+<Divider />
+
+## 🏋️‍♂️ Exercise
+
+<Task>
+Create a simple preferences manager using `localStorage`. Your app should:
+- Ask the user for their name and preferred theme (light/dark).
+- Save this data using `localStorage`.
+- When the page is reloaded, it should greet the user by name and apply their saved theme preference (no actual CSS required—just console logs for now).
+
+Bonus: Use `JSON.stringify()` and `JSON.parse()` to store the preferences as an object.
+</Task>
+
+<Divider />
+
+## 🧠 MCQs
+
+<MCQ
+  question="What does JSON stand for?"
+  options={[
+    "Java Secure Object Notation",
+    "JavaScript Object Notation",
+    "Java Serializable Object Network",
+    "JavaScript Open Namespace"
+  ]}
+  correctAnswer={1}
+  explanation="JSON stands for JavaScript Object Notation. It's a format for structuring data as key-value pairs."
+/>
+
+<MCQ
+  question="Which method converts a JavaScript object to a JSON string?"
+  options={[
+    "JSON.parse()",
+    "JSON.convert()",
+    "JSON.stringify()",
+    "JSON.objectify()"
+  ]}
+  correctAnswer={2}
+  explanation="JSON.stringify() is used to convert JS objects into JSON strings for storage or transmission."
+/>
+
+<MCQ
+  question="What does localStorage.getItem('key') return if the key doesn’t exist?"
+  options={["null", "undefined", "false", "error"]}
+  correctAnswer={0}
+  explanation="localStorage.getItem() returns null when the specified key doesn't exist."
+/>
+
+<MCQ
+  question="Which of the following is NOT true about localStorage?"
+  options={[
+    "It persists data even after the browser is closed.",
+    "It can only store strings directly.",
+    "It automatically encrypts stored data.",
+    "It is synchronous (blocking)."
+  ]}
+  correctAnswer={2}
+  explanation="localStorage does NOT encrypt data. Developers must avoid storing sensitive data there."
+/>
+
+<Divider />
+
+## 🎉 Congratulations!
+
+You've just wrapped up **Day 30** — and the entire **JavaScript course**! 🥳
+
+You now understand:
+- Callback Functions
+- Promises
+- Async/Await
+- JSON
+- localStorage
+- And much more!
+
+You're officially equipped to build real-world apps and understand how the frontend works deeply. 🚀
+
+Keep practicing. Build projects. And remember — the more you code, the better you become.
+
+Happy coding, Bro! 💻🔥

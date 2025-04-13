@@ -1,0 +1,367 @@
+## Day 9: JavaScript Data Types
+
+JavaScript is a **dynamically typed language**, which means you don’t need to define the type of a variable when declaring it — JavaScript figures it out at runtime based on the assigned value.
+
+But even though the type is assigned dynamically, you still need to **understand different types** because they define how data behaves, what operations are allowed, and how memory is allocated.
+
+<Divider />
+
+### 🔢 Primitive vs Non-Primitive (Reference) Types
+
+In JavaScript, data types are mainly divided into two broad categories:
+
+<Table
+  columns={["Type", "Sub-Types", "Examples"]}
+  data={[
+    ["Primitive", "String, Number, Boolean, Null, Undefined, Symbol, BigInt", `"Hello", 42, true`],
+    ["Reference", "Objects, Arrays, Functions", `{}, [], function() {}`]
+  ]}
+/>
+
+<Tip>
+Primitive types are immutable and compared by value. Reference types are mutable and compared by reference.
+</Tip>
+
+Let’s break them down one by one.
+
+<Divider />
+
+### 1. String
+
+A **string** is a sequence of characters, like words or sentences.
+
+<CodeBlock language="js">
+{`let name = "Akash";
+let greeting = 'Hello!';
+let message = \`Welcome, \${name}!\`;`}
+</CodeBlock>
+
+<JsPlayground initialJs={`let name = "Akash";
+let message = \`Welcome, \${name}!\`;
+console.log(message);`} />
+
+You can use:
+- **Double quotes** `"text"`
+- **Single quotes** `'text'`
+- **Backticks** `` `text` `` for template literals (which allow embedding variables using `${}`)
+
+<Divider />
+
+### 2. Number
+
+JavaScript has only **one number type** — used for integers and floating point values.
+
+<CodeBlock language="js">
+{`let age = 25;
+let score = 99.5;
+let negative = -100;`}
+</CodeBlock>
+
+Numbers also support basic arithmetic:
+
+<CodeBlock language="js">
+{`let sum = 10 + 5;
+let product = 4 * 5;
+let division = 20 / 2;
+let modulus = 10 % 3; // remainder`}
+</CodeBlock>
+
+<Tip>
+JavaScript automatically converts strings to numbers (and vice versa) when needed — this is called **type coercion**. But it can lead to confusing bugs.
+</Tip>
+
+<Divider />
+
+### 3. Boolean
+
+A **boolean** is either `true` or `false`. They are commonly used in conditions, comparisons, and control flow.
+
+<CodeBlock language="js">
+{`let isLoggedIn = true;
+let isAdmin = false;
+
+console.log(10 > 5); // true
+console.log(5 === "5"); // false (strict equality)`}
+</CodeBlock>
+
+Booleans power `if`, `else`, loops, and more. Understanding them is key for logic.
+
+<JsPlayground initialJs={`let age = 18;
+let canVote = age >= 18;
+console.log("Eligible to vote:", canVote);`} />
+
+<Divider />
+
+### 4. Undefined
+
+When a variable is declared but **not assigned any value**, it is `undefined`.
+
+<CodeBlock language="js">
+{`let score;
+console.log(score); // undefined`}
+</CodeBlock>
+
+This is JavaScript's way of saying “this variable exists, but there’s no value yet.”
+
+<Tip>
+Avoid using `undefined` as a manual value unless you're intentionally resetting or clearing a variable.
+</Tip>
+
+<Divider />
+
+### 5. Null
+
+Unlike `undefined`, `null` is **explicitly assigned** by the developer to indicate “no value” or “empty.”
+
+<CodeBlock language="js">
+{`let user = null;
+console.log(user); // null`}
+</CodeBlock>
+
+<Note>
+In JavaScript, `typeof null` returns `"object"` — this is a known bug in the language and has been preserved for backward compatibility.
+</Note>
+
+<Divider />
+
+### 6. Symbol
+
+Introduced in **ES6**, a Symbol is a **unique and immutable** value. It’s mostly used for object property keys to avoid name conflicts.
+
+<CodeBlock language="js">
+{`const sym1 = Symbol("id");
+const sym2 = Symbol("id");
+
+console.log(sym1 === sym2); // false`}
+</CodeBlock>
+
+Even if the descriptions are the same, every symbol is completely unique.
+
+<Tip>
+You won't use Symbols often as a beginner, but they are powerful in advanced use-cases like meta-programming and working with private object properties.
+</Tip>
+
+<Divider />
+
+### 7. BigInt
+
+For working with **extremely large numbers** beyond the safe range of regular numbers.
+
+<CodeBlock language="js">
+{`const big = 1234567890123456789012345678901234567890n;
+console.log(typeof big); // bigint`}
+</CodeBlock>
+
+To declare a BigInt, just add an `n` to the end of the number.
+
+<Divider />
+
+### Summary of Primitive Types
+
+<Table
+  columns={["Type", "Description", "Example"]}
+  data={[
+    ["String", "Text or characters", `"Hello"`],
+    ["Number", "Numeric values (int/float)", `42, 3.14`],
+    ["Boolean", "True or false", `true, false`],
+    ["Undefined", "Declared but not assigned", `let x;`],
+    ["Null", "Empty or unknown value", `let y = null;`],
+    ["Symbol", "Unique identifier", `Symbol("id")`],
+    ["BigInt", "Very large numbers", `123n`]
+  ]}
+/>
+
+<Divider />
+
+## 🧠 Reference (Non-Primitive) Data Types
+
+Unlike primitive types, **reference types** are more powerful. They allow you to store collections of data, attach behavior, and structure your logic in reusable ways.
+
+Let’s go through them one by one:
+
+<Divider />
+
+### 1. Object
+
+An **object** is a collection of key-value pairs. It’s like a real-world object that has properties and values.
+
+<CodeBlock language="js">
+{`let user = {
+  name: "Akash",
+  age: 22,
+  isAdmin: true
+};
+
+console.log(user.name); // Akash`}
+</CodeBlock>
+
+You can access properties using:
+- Dot notation: `user.name`
+- Bracket notation: `user["name"]`
+
+<Tip>
+Objects are the backbone of JavaScript — you’ll be using them everywhere, from data structures to APIs.
+</Tip>
+
+<Divider />
+
+### 2. Array
+
+An **array** stores a list of values in a single variable. The values can be of any type, even a mix.
+
+<CodeBlock language="js">
+{`let fruits = ["apple", "banana", "mango"];
+console.log(fruits[1]); // banana`}
+</CodeBlock>
+
+Arrays are **zero-indexed**, meaning the first element is at index 0.
+
+<JsPlayground initialJs={`let scores = [10, 20, 30];
+console.log("First score:", scores[0]);`} />
+
+Common array methods:
+- `push()`, `pop()`
+- `shift()`, `unshift()`
+- `length`
+- `includes()`, `indexOf()`
+
+<Tip>
+Arrays are technically objects in JavaScript, but they come with special behavior for handling sequences.
+</Tip>
+
+<Divider />
+
+### 3. Function
+
+A **function** is a reusable block of code designed to perform a task.
+
+<CodeBlock language="js">
+{`function greet(name) {
+  console.log("Hello, " + name + "!");
+}
+
+greet("Akash");`}
+</CodeBlock>
+
+Functions can:
+- Accept parameters
+- Return values
+- Be assigned to variables
+- Be passed as arguments (yes, functions are *first-class citizens* in JS)
+
+<JsPlayground initialJs={`function square(num) {
+  return num * num;
+}
+console.log(square(5));`} />
+
+<Divider />
+
+### How Reference Types Differ from Primitive Types
+
+When you copy a **primitive**, you copy the value.  
+When you copy a **reference type**, you copy the reference (pointer) to the same memory location.
+
+<CodeBlock language="js">
+{`let a = { value: 10 };
+let b = a;
+
+b.value = 20;
+console.log(a.value); // 20 - because a and b point to the same object`}
+</CodeBlock>
+
+<Note>
+Understanding this behavior is essential — otherwise you’ll make changes in one place and unknowingly affect another.
+</Note>
+
+<Divider />
+
+
+## 🧪 Practice & Recap
+
+Understanding data types is one thing — **using** them is where the learning gets cemented. Try these small tasks to reinforce your understanding:
+
+<Task>
+Declare a variable for your name, age, and a boolean that represents whether you are a student. Print all of them.
+</Task>
+
+<Task>
+Create an object to represent a car. Add properties like brand, model, and isElectric.
+</Task>
+
+<Task>
+Make an array of your 3 favorite programming languages. Print the second one using its index.
+</Task>
+
+<Task>
+Write a function that adds two numbers and returns the result. Call it with different inputs.
+</Task>
+
+<Divider />
+
+## 🎯 Summary Table
+
+<Table
+  columns={["Category", "Type", "Example"]}
+  data={[
+    ["Primitive", "String", `"JavaScript"`],
+    ["Primitive", "Number", `99, 3.14`],
+    ["Primitive", "Boolean", `true, false`],
+    ["Primitive", "Undefined", `let x;`],
+    ["Primitive", "Null", `let y = null`],
+    ["Primitive", "Symbol", `Symbol("key")`],
+    ["Primitive", "BigInt", `123456789n`],
+    ["Reference", "Object", `{ name: "Akash" }`],
+    ["Reference", "Array", `["js", "html", "css"]`],
+    ["Reference", "Function", `function greet() {}`],
+  ]}
+/>
+
+<Divider />
+
+## ❓ MCQs
+
+<MCQ
+  question="Which of the following is a primitive data type?"
+  options={["Array", "Object", "Number", "Function"]}
+  correctAnswer={2}
+  explanation="Number is a primitive. Arrays, objects, and functions are reference types."
+/>
+
+<MCQ
+  question="What does typeof null return in JavaScript?"
+  options={["'null'", "'undefined'", "'object'", "'number'"]}
+  correctAnswer={2}
+  explanation="Due to a long-standing bug in JavaScript, typeof null returns 'object'."
+/>
+
+<MCQ
+  question="Which keyword is used to declare a BigInt?"
+  options={["bigint", "BigInt", "n", "Just add 'n' after the number"]}
+  correctAnswer={3}
+  explanation="You create BigInt values by appending an 'n' to the end of an integer."
+/>
+
+<MCQ
+  question="What is the output?\n\nlet a = {x: 1};\nlet b = a;\nb.x = 2;\nconsole.log(a.x);"
+  options={["1", "2", "undefined", "Error"]}
+  correctAnswer={1}
+  explanation="Both a and b reference the same object. Changing b also changes a."
+/>
+
+<MCQ
+  question="Which statement is true about functions in JavaScript?"
+  options={[
+    "Functions cannot be stored in variables.",
+    "Functions return only strings.",
+    "Functions are first-class citizens.",
+    "Functions cannot be passed as arguments.",
+  ]}
+  correctAnswer={2}
+  explanation="Functions in JavaScript are first-class citizens. They can be stored in variables, passed around, and returned from other functions."
+/>
+
+<Divider />
+
+That wraps up Day 9. You're doing great, and now you have a solid understanding of all data types in JavaScript!
+
+Next up: **Day 10 – Booleans, Operators, and Date**

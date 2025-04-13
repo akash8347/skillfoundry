@@ -1,0 +1,398 @@
+## Day 7: Real-World Layouts – Building Your First Web Page
+
+Welcome to Day 7! Today is super exciting — you'll finally **combine all the HTML and CSS knowledge** you've learned so far to build your **first real-world web page layout**.
+
+We'll walk through how to plan, design, and build a basic **landing page layout** that includes:
+
+- A navigation bar
+- A hero section
+- Feature highlights
+- A call to action (CTA)
+- A footer
+
+By the end of this day, you'll feel confident creating structured layouts that look professional and work across screen sizes.
+
+<Note>
+Don't worry about making things *pretty* yet — our focus today is layout structure using Flexbox and proper semantic HTML. We'll handle colors, fonts, animations, etc. in future days.
+</Note>
+
+<Divider />
+
+## 🔍 What We'll Build
+
+Before we touch any code, let’s understand the structure.
+
+We’ll build a simple landing page like this:
+
+<BrowserMockup>
+  <div className="bg-gray-100 min-h-screen flex flex-col">
+    <header className="bg-white px-6 py-4 shadow flex justify-between">
+      <div className="font-bold text-xl">MyBrand</div>
+      <nav className="space-x-4">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <main className="flex-1 px-6 py-12 text-center">
+      <h1 className="text-4xl font-bold mb-4">Welcome to My Website</h1>
+      <p className="text-lg mb-8">Let’s build modern web layouts with clean HTML & CSS.</p>
+      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg">Get Started</button>
+    </main>
+
+    <footer className="bg-gray-200 py-4 text-center text-sm">
+      © 2025 MyBrand. All rights reserved.
+    </footer>
+  </div>
+</BrowserMockup>
+
+Looks neat, right? Let's start by building the structure step-by-step.
+
+<Divider />
+
+## 🧠 Step 1: Basic HTML Skeleton
+
+Start by setting up the HTML structure of the landing page. We'll focus only on semantics for now.
+
+<HtmlCssPlayground
+  initialHTML={`<header>
+  <h1>MyBrand</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Features</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Welcome to My Website</h2>
+  <p>Let’s build modern web layouts with clean HTML & CSS.</p>
+  <button>Get Started</button>
+</main>
+
+<footer>
+  <p>© 2025 MyBrand. All rights reserved.</p>
+</footer>`}
+  initialCSS={``}
+/>
+
+<Tip>
+Don't worry about styles yet. Just make sure your **HTML is clean and properly structured** — use tags like `<header>`, `<main>`, and `<footer>` for clarity.
+</Tip>
+
+<Divider />
+
+## 🧱 Step 2: Layout the Page with Flexbox
+
+Let’s now style the layout so everything is positioned correctly.
+
+<HtmlCssPlayground
+  initialHTML={`<div class="container">
+  <header class="header">
+    <h1>MyBrand</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h2>Welcome to My Website</h2>
+    <p>Let’s build modern web layouts with clean HTML & CSS.</p>
+    <button>Get Started</button>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 MyBrand. All rights reserved.</p>
+  </footer>
+</div>`}
+  initialCSS={`.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav a {
+  margin-left: 1rem;
+}
+
+.main {
+  flex: 1;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.footer {
+  background: #eee;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.875rem;
+}`}
+/>
+
+<Tip>
+Use `flex-direction: column` for the whole page to make the layout stack top to bottom. Then use `flex` again in header to align nav and logo side by side.
+</Tip>
+
+<Divider />
+
+## 🖼️ Step 3: Style the Hero Section
+
+Now let’s polish the main hero section to center content nicely and give it a clean visual feel.
+
+<HtmlCssPlayground
+  initialHTML={`<main class="main">
+  <h2>Welcome to My Website</h2>
+  <p>Let’s build modern web layouts with clean HTML & CSS.</p>
+  <button>Get Started</button>
+</main>`}
+  initialCSS={`.main {
+  flex: 1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f9fafb;
+}
+
+.main h2 {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.main p {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.main button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.main button:hover {
+  background: #1d4ed8;
+}`}
+/>
+
+<Note>
+Always give enough `padding` and spacing in the hero section. It's the first impression for users!
+</Note>
+
+<Divider />
+
+## 🌟 Step 4: Add Feature Cards
+
+Next, let’s add a "Features" section with 3 flex items that wrap on smaller screens.
+
+<HtmlCssPlayground
+  initialHTML={`<section class="features">
+  <div class="feature-card">🚀 Fast</div>
+  <div class="feature-card">🎨 Stylish</div>
+  <div class="feature-card">⚙️ Easy to Use</div>
+</section>`}
+  initialCSS={`.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #fff;
+}
+
+.feature-card {
+  background: #f1f5f9;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  flex: 1 1 200px;
+  text-align: center;
+  font-size: 1.125rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}`}
+/>
+
+<Tip>
+Use `flex-wrap` and `gap` to make cards responsive and well spaced. `flex: 1 1 200px` makes them grow and wrap smartly.
+</Tip>
+
+<Divider />
+
+## 🧹 Final Touches: Footer & Spacing
+
+Let's finalize the footer and make sure the entire layout is consistent.
+
+<HtmlCssPlayground
+  initialHTML={`<footer class="footer">
+  <p>© 2025 MyBrand. All rights reserved.</p>
+</footer>`}
+  initialCSS={`.footer {
+  background: #e5e7eb;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.875rem;
+  color: #333;
+}`}
+/>
+
+<Note>
+Footer should always be at the bottom, use `flex: 1` in the middle content so the footer sticks without absolute positioning hacks.
+</Note>
+
+<Divider />
+
+## 🏁 Full Layout Preview
+
+Here’s how your final full-page layout might look when combined:
+
+<CodeBlock language="html">
+{`<div class="container">
+  <header class="header">
+    <h1>MyBrand</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h2>Welcome to My Website</h2>
+    <p>Let’s build modern web layouts with clean HTML & CSS.</p>
+    <button>Get Started</button>
+  </main>
+
+  <section class="features">
+    <div class="feature-card">🚀 Fast</div>
+    <div class="feature-card">🎨 Stylish</div>
+    <div class="feature-card">⚙️ Easy to Use</div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 MyBrand. All rights reserved.</p>
+  </footer>
+</div>`}
+</CodeBlock>
+
+<Note>
+You can extend this with animations, scroll effects, background images, and JavaScript later. Today’s focus was layout structure — and you nailed it!
+</Note>
+
+<Divider />
+
+## 🧠 Recap of What You Learned Today
+
+You’ve come a long way! Let’s quickly recap what we covered:
+
+<Table
+  columns={["Concept", "What You Did"]}
+  data={[
+    ["Semantic Structure", "Used `<header>`, `<main>`, `<section>`, `<footer>` to organize content clearly."],
+    ["Flexbox Layout", "Used `display: flex` and `flex-direction: column` for page flow."],
+    ["Responsive Design", "Made feature cards responsive with `flex-wrap`, `gap`, and flexible widths."],
+    ["Hero Section", "Centered important content with proper padding and hierarchy."],
+    ["Clean Footer", "Used consistent styling and spacing to finish off the page."]
+  ]}
+/>
+
+<Tip>
+This layout structure is the **foundation of almost every modern landing page**. Master this, and you'll be able to build anything!
+</Tip>
+
+<Divider />
+
+## 🛠️ Task
+
+Your task for today is to **recreate the entire landing page** we built, but with your **own content and personal touch**.
+
+<BrowserMockup>
+  <ul className="list-disc pl-6 space-y-2">
+    <li>Change the logo text to your name or portfolio brand</li>
+    <li>Update the navigation links to your real projects or sections</li>
+    <li>Customize the hero message and button</li>
+    <li>Add your own feature points (e.g. “Developer”, “Designer”, “Freelancer”)</li>
+    <li>Try adding a light background color or gradient</li>
+  </ul>
+</BrowserMockup>
+
+<Note>
+When you're done, deploy it to GitHub Pages, Vercel, or Netlify and show it to the world 💪  
+This is your **first portfolio-worthy webpage**!
+</Note>
+
+<Divider />
+
+## 🧠 MCQ Time!
+
+Let’s lock in your learnings with a few MCQs.
+
+<MCQ
+  question="Which layout strategy did we use to stack the page vertically?"
+  options={["Grid", "Flexbox with column direction", "Absolute positioning", "Float layout"]}
+  correctAnswer={1}
+  explanation="We used Flexbox with `flex-direction: column` to stack the header, main, features, and footer sections vertically."
+/>
+
+<MCQ
+  question="What does `flex: 1 1 200px` mean in the feature cards?"
+  options={[
+    "The card will never shrink",
+    "The card has a fixed width of 200px",
+    "The card can grow and shrink with a minimum width of 200px",
+    "The card will stretch to 100% width always"
+  ]}
+  correctAnswer={2}
+  explanation="`flex: 1 1 200px` allows the item to grow and shrink, with a base size of 200px."
+/>
+
+<MCQ
+  question="Why do we use semantic tags like `<main>`, `<section>`, and `<footer>`?"
+  options={[
+    "They make the website look fancy",
+    "They improve SEO, accessibility, and code readability",
+    "They are required for all websites",
+    "They prevent bugs"
+  ]}
+  correctAnswer={1}
+  explanation="Semantic tags help browsers, screen readers, and search engines understand the structure of your content."
+/>
+
+<MCQ
+  question="Which CSS property allows you to make feature cards wrap on smaller screens?"
+  options={["justify-content", "flex-shrink", "flex-wrap", "align-items"]}
+  correctAnswer={2}
+  explanation="The `flex-wrap` property allows flex items to wrap onto multiple lines when necessary."
+/>
+
+<Divider />
+
+## 🎯 You Did It!
+
+This was a big day — you’ve officially built your **first complete webpage layout** using everything we’ve learned so far. The skills you’ve unlocked here will carry you through the rest of your web design journey.
+
+Coming up next: we’ll dive deeper into **CSS Grid**, **advanced responsiveness**, **color theory**, and **typography**.
+
+But for now…  
+
+<BrowserMockup>
+  <div className="p-6 text-xl text-center font-semibold">
+    Go take a break, grab a chai ☕, and celebrate this milestone! 🚀
+  </div>
+</BrowserMockup>
+
+<Divider />

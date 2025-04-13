@@ -1,0 +1,497 @@
+## Day 6: Flexbox Mastery — Responsive Layouts Made Easy
+
+<Divider />
+
+Flexbox, or the **Flexible Box Module**, is one of the most powerful layout systems in CSS. It allows you to design complex layouts with ease, especially when it comes to alignment, spacing, and responsiveness.
+
+Today, we’ll dive deep into Flexbox, explore all its core properties, and use it to build practical, responsive web layouts.
+
+<Divider />
+
+### What is Flexbox?
+
+Flexbox is a one-dimensional layout method for laying out items in rows or columns. It excels at distributing space and aligning items in a container, even when their sizes are unknown or dynamic.
+
+<Note>
+Flexbox is designed for *one-dimensional layouts* — either row-based or column-based — unlike Grid which handles two dimensions.
+</Note>
+
+<Divider />
+
+### Enabling Flexbox
+
+To use Flexbox, set the `display` property of a container to `flex`.
+
+<CodeBlock language="css">
+{`display: flex;`}
+</CodeBlock>
+
+Once enabled, all direct children of this container become **flex items**.
+
+<HtmlCssPlayground
+  initialHTML={`<div class="container">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div>`}
+  initialCSS={`.container {
+  display: flex;
+  gap: 1rem;
+  padding: 10px;
+  background: #e0f7fa;
+}
+
+.item {
+  background: #00796b;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+}`}
+ />
+
+<Divider />
+
+### Flex Direction
+
+The `flex-direction` property defines the **main axis** — the direction the flex items are placed.
+
+#### Options:
+- `row` (default)
+- `row-reverse`
+- `column`
+- `column-reverse`
+
+<HtmlCssPlayground
+  initialHTML={`<div class="flex-container">
+  <div class="box">A</div>
+  <div class="box">B</div>
+  <div class="box">C</div>
+</div>`}
+  initialCSS={`.flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f1f1f1;
+  padding: 1rem;
+}
+
+.box {
+  background: #ff7043;
+  padding: 10px;
+  color: white;
+  border-radius: 4px;
+}`}
+ />
+
+<Tip>
+Changing `flex-direction` does **not** rotate the items — it only changes the layout direction.
+</Tip>
+
+<Divider />
+
+### Main Axis vs Cross Axis
+
+Understanding Flexbox is all about understanding these two axes:
+
+- **Main axis**: Direction in which the items are laid out (`row` or `column`)
+- **Cross axis**: Perpendicular to the main axis
+
+If `flex-direction: row`, then:
+- Main axis → horizontal
+- Cross axis → vertical
+
+If `flex-direction: column`, then:
+- Main axis → vertical
+- Cross axis → horizontal
+
+<Divider />
+
+### Justify Content
+
+This property controls how items are **distributed along the main axis**.
+
+#### Common values:
+- `flex-start` (default)
+- `center`
+- `flex-end`
+- `space-between`
+- `space-around`
+- `space-evenly`
+
+<HtmlCssPlayground
+  initialHTML={`<div class="justify-example">
+  <div class="dot">1</div>
+  <div class="dot">2</div>
+  <div class="dot">3</div>
+</div>`}
+  initialCSS={`.justify-example {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #fce4ec;
+}
+
+.dot {
+  width: 40px;
+  height: 40px;
+  background: #ec407a;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}`}
+ />
+
+<Divider />
+
+### Align Items
+
+Align items works on the **cross axis**.
+
+#### Common values:
+- `stretch` (default)
+- `flex-start`
+- `center`
+- `flex-end`
+- `baseline`
+
+<HtmlCssPlayground
+  initialHTML={`<div class="align-items-container">
+  <div class="align-box tall">A</div>
+  <div class="align-box">B</div>
+  <div class="align-box">C</div>
+</div>`}
+  initialCSS={`.align-items-container {
+  display: flex;
+  align-items: flex-end;
+  height: 150px;
+  background: #e8f5e9;
+  padding: 1rem;
+}
+
+.align-box {
+  background: #66bb6a;
+  color: white;
+  padding: 1rem;
+  margin-right: 10px;
+}
+
+.tall {
+  height: 100px;
+}`}
+ />
+
+<Divider />
+
+### Align Self
+
+Sometimes you want to override the alignment of a single item while keeping others unaffected. That’s where `align-self` comes in — it allows individual flex items to align themselves differently along the **cross axis**.
+
+<HtmlCssPlayground
+  initialHTML={`<div class="self-align-container">
+  <div class="self-item">1</div>
+  <div class="self-item special">2</div>
+  <div class="self-item">3</div>
+</div>`}
+  initialCSS={`.self-align-container {
+  display: flex;
+  align-items: flex-start;
+  height: 150px;
+  background: #fff3e0;
+  padding: 1rem;
+}
+
+.self-item {
+  background: #ffb74d;
+  color: white;
+  padding: 1rem;
+  margin-right: 10px;
+  height: 50px;
+}
+
+.special {
+  align-self: flex-end;
+  height: 100px;
+}`}
+ />
+
+<Tip>
+`align-self` accepts the same values as `align-items`, and it overrides it *only for that specific item*.
+</Tip>
+
+<Divider />
+
+### Flex Wrap
+
+By default, Flexbox tries to fit all items in a single line. If they can’t fit, they’ll squish. But what if you want them to **wrap onto multiple lines**?
+
+Use `flex-wrap`.
+
+<CodeBlock language="css">
+{`flex-wrap: wrap;`}
+</CodeBlock>
+
+<HtmlCssPlayground
+  initialHTML={`<div class="wrap-container">
+  <div class="wrap-item">A</div>
+  <div class="wrap-item">B</div>
+  <div class="wrap-item">C</div>
+  <div class="wrap-item">D</div>
+  <div class="wrap-item">E</div>
+</div>`}
+  initialCSS={`.wrap-container {
+  display: flex;
+  flex-wrap: wrap;
+  background: #ede7f6;
+  gap: 10px;
+  padding: 1rem;
+  width: 300px;
+}
+
+.wrap-item {
+  flex: 0 0 120px;
+  background: #7e57c2;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+}`}
+ />
+
+<Note>
+Don’t forget to use `gap` to control spacing when wrapping!
+</Note>
+
+<Divider />
+
+### Gap in Flexbox
+
+Instead of using margins for spacing between flex items, you can simply use the `gap` property.
+
+<CodeBlock language="css">
+{`gap: 1rem;`}
+</CodeBlock>
+
+✅ Cleaner  
+✅ Responsive  
+✅ Doesn’t affect outer spacing like `margin` would
+
+<HtmlCssPlayground
+  initialHTML={`<div class="gap-example">
+  <div class="box">Box 1</div>
+  <div class="box">Box 2</div>
+  <div class="box">Box 3</div>
+</div>`}
+  initialCSS={`.gap-example {
+  display: flex;
+  gap: 20px;
+  background: #f3e5f5;
+  padding: 1rem;
+}
+
+.box {
+  background: #ab47bc;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+}`}
+ />
+
+<Divider />
+
+### Flex Grow, Shrink & Basis
+
+Flex items can grow or shrink depending on available space using:
+
+- `flex-grow`: How much a flex item should grow.
+- `flex-shrink`: How much a flex item should shrink.
+- `flex-basis`: The initial size of the item *before* growing or shrinking.
+
+<CodeBlock language="css">
+{`flex-grow: 1;
+flex-shrink: 1;
+flex-basis: 0;`}
+</CodeBlock>
+
+Instead of writing them separately, we can use the **`flex` shorthand**:
+
+<CodeBlock language="css">
+{`flex: 1 1 0;`}
+</CodeBlock>
+
+Which means:
+- Grow = 1
+- Shrink = 1
+- Basis = 0
+
+<HtmlCssPlayground
+  initialHTML={`<div class="grow-container">
+  <div class="grow-box one">1</div>
+  <div class="grow-box two">2</div>
+  <div class="grow-box three">3</div>
+</div>`}
+  initialCSS={`.grow-container {
+  display: flex;
+  gap: 10px;
+  background: #e3f2fd;
+  padding: 1rem;
+}
+
+.grow-box {
+  background: #42a5f5;
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.one {
+  flex: 1;
+}
+.two {
+  flex: 2;
+}
+.three {
+  flex: 3;
+}`}
+ />
+
+<Tip>
+Flex grow distributes **remaining space**. Items with a higher grow value take more space relative to others.
+</Tip>
+
+<Divider />
+
+### Mini Project: Responsive Card Layout
+
+Let’s build a simple **card layout** that:
+- Stacks vertically on small screens
+- Arranges in rows on larger screens
+- Uses flex properties, gap, wrap, and responsiveness
+
+<HtmlCssPlayground
+  initialHTML={`<div class="card-layout">
+  <div class="card">Card 1</div>
+  <div class="card">Card 2</div>
+  <div class="card">Card 3</div>
+</div>`}
+  initialCSS={`.card-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.card {
+  flex: 1 1 300px;
+  background: #ef5350;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}`}
+ />
+
+<Divider />
+
+## Recap
+
+Flexbox is one of the most powerful CSS modules for building responsive layouts with ease. Here’s a quick recap of what you learned today:
+
+- `display: flex` turns a container into a flex context.
+- `flex-direction` controls the main axis (`row`, `column`, etc.).
+- `justify-content` aligns items along the main axis.
+- `align-items` aligns items along the cross axis.
+- `align-self` lets you override alignment for specific items.
+- `flex-wrap` allows items to wrap onto new lines.
+- `gap` provides spacing between items cleanly.
+- `flex-grow`, `flex-shrink`, `flex-basis` control expansion and contraction.
+- `flex` shorthand simplifies writing all 3 together.
+
+<Note>
+Mastering Flexbox means you can build navbars, cards, layouts, and entire pages without even touching Grid!
+</Note>
+
+<Divider />
+
+## 🚀 Exercise
+
+Build a **responsive dashboard layout** with the following structure:
+
+- A header at the top with logo on the left and navigation links on the right
+- A sidebar on the left and main content area on the right
+- Inside the content area, show 3 cards that wrap on smaller screens
+
+Structure:
+
+<CodeBlock language="html">
+{`<header>...</header>
+<main class="main-layout">
+  <aside>Sidebar</aside>
+  <section class="content">
+    <div class="card">1</div>
+    <div class="card">2</div>
+    <div class="card">3</div>
+  </section>
+</main>`}
+</CodeBlock>
+
+Things to practice:
+
+- Use `display: flex`, `flex-wrap`, `gap`, and `flex: 1` correctly.
+- Add media queries to stack layout on smaller devices.
+
+<Divider />
+
+## 🧠 Quiz Time
+
+<MCQ
+  question="What does the shorthand 'flex: 1' expand to?"
+  options={[
+    "flex-grow: 1; flex-shrink: 0; flex-basis: auto;",
+    "flex-grow: 1; flex-shrink: 1; flex-basis: 0;",
+    "flex-grow: 0; flex-shrink: 1; flex-basis: 0;",
+    "flex-grow: 1; flex-shrink: 0; flex-basis: 0;"
+  ]}
+  correctAnswer={1}
+  explanation="The shorthand 'flex: 1' equals 'flex-grow: 1; flex-shrink: 1; flex-basis: 0'. It lets the item grow and shrink equally."
+/>
+
+<MCQ
+  question="Which property overrides 'align-items' for a single item?"
+  options={["justify-content", "align-items", "align-self", "flex-basis"]}
+  correctAnswer={2}
+  explanation="The 'align-self' property is used to override the container’s cross-axis alignment for just one item."
+/>
+
+<MCQ
+  question="What does 'flex-wrap: wrap' allow a flex container to do?"
+  options={[
+    "Force items to shrink in one line",
+    "Let items wrap onto new lines",
+    "Center the flex container",
+    "Disable flex-grow"
+  ]}
+  correctAnswer={1}
+  explanation="'flex-wrap: wrap' makes items wrap onto the next line if there's not enough space on the main axis."
+/>
+
+<MCQ
+  question="Which property is best to add space *between* flex items?"
+  options={["margin", "gap", "padding", "border"]}
+  correctAnswer={1}
+  explanation="The 'gap' property is the most modern way to add spacing between flex items without extra margin hacks."
+/>
+
+<Divider />
+
+## 💡 Bonus Tips
+
+- Always combine `flex-wrap: wrap` with `gap` for clean multi-line layouts.
+- `flex-basis: 0` is key when distributing space equally with `flex: 1`.
+- You can use Flexbox inside Grid items for more control.
+- Use tools like [flexbox.tech](https://flexbox.tech) to visually experiment.
+
+<Note>
+Now that you know Flexbox, Day 7 will level you up further — building a real-world layout using everything we’ve covered so far. Get ready for some HTML + CSS magic!
+</Note>

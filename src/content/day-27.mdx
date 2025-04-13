@@ -1,0 +1,396 @@
+## Day 27: Callback Functions
+
+### 🧠 What is a Callback Function?
+
+A **callback function** is simply a function that is **passed as an argument** to another function and is **invoked after some operation has been completed**. This is a core concept in JavaScript, especially when dealing with **asynchronous operations**, like reading a file, making a network request, or setting a timer.
+
+Callbacks are the building blocks of asynchronous JavaScript. Understanding them is critical before moving on to Promises and `async/await`.
+
+<Divider />
+
+### 🔁 Function as a First-Class Citizen
+
+In JavaScript, functions are treated as **first-class citizens**, which means:
+
+- You can store them in variables
+- You can pass them as arguments
+- You can return them from other functions
+
+This allows you to pass a function into another function — a core part of callbacks.
+
+<CodeBlock language="js">
+{`function greet(name) {
+  console.log("Hello", name);
+}
+
+function processUser(callback) {
+  const username = "Akash";
+  callback(username);
+}
+
+processUser(greet); // Output: Hello Akash`}
+</CodeBlock>
+
+In the above example, the function `greet` is passed as an argument to `processUser`. When `callback(username)` is called, `greet` is executed.
+
+<Divider />
+
+### 🎯 Real-Life Analogy
+
+Imagine you order food at a restaurant. The chef says, “I’ll call your name when the food is ready.” You give your name — that's the **callback**. Once the food is ready, the chef calls your name and serves you the food.
+
+Similarly, in JavaScript, you **pass a function**, and it gets called when the work is done.
+
+<Divider />
+
+### 🧪 Synchronous vs Asynchronous Callbacks
+
+Callbacks can be **synchronous** or **asynchronous**, depending on the function they are passed to.
+
+#### ✅ Synchronous Example:
+
+<CodeBlock language="js">
+{`function calculate(a, b, callback) {
+  const result = a + b;
+  callback(result);
+}
+
+calculate(5, 3, function (res) {
+  console.log("Result:", res);
+});`}
+</CodeBlock>
+
+This executes line-by-line, immediately.
+
+#### ⏳ Asynchronous Example:
+
+<CodeBlock language="js">
+{`function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data loaded!");
+  }, 2000);
+}
+
+fetchData(function (data) {
+  console.log(data); // Runs after 2 seconds
+});`}
+</CodeBlock>
+
+Here, the callback runs after a 2-second delay, thanks to `setTimeout`.
+
+<JsPlayground>
+{`function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data loaded!");
+  }, 2000);
+}
+
+fetchData(function (data) {
+  console.log(data); // Will be shown after 2s
+});`}
+</JsPlayground>
+
+<Divider />
+
+### 📌 Why Use Callbacks?
+
+Callbacks are essential when dealing with tasks that take time to complete — such as:
+
+- Fetching data from a server
+- Reading files
+- Handling events (like clicks or form submissions)
+
+They help us **wait for something to complete**, then take action.
+
+<Divider />
+
+### 🧱 Nested Callbacks (Callback Hell)
+
+The problem with callbacks arises when you start nesting them too deeply. This results in **callback hell**, which makes code hard to read and maintain.
+
+Example:
+
+<CodeBlock language="js">
+{`loginUser("akash", "1234", function (user) {
+  getUserProfile(user, function (profile) {
+    getUserPosts(profile.id, function (posts) {
+      console.log("User posts:", posts);
+    });
+  });
+});`}
+</CodeBlock>
+
+This pyramid-like structure is hard to follow. That’s why **Promises** and **async/await** were introduced (we'll cover that in the next chapters).
+
+<Divider />
+
+### ♻️ Reusable Logic with Callbacks
+
+One powerful use of callbacks is making your code reusable and flexible. Instead of hardcoding logic, you can allow users of your function to **define what should happen next**.
+
+Let’s take an example of a reusable math operation handler:
+
+<CodeBlock language="js">
+{`function performOperation(a, b, callback) {
+  return callback(a, b);
+}
+
+function add(x, y) {
+  return x + y;
+}
+
+function multiply(x, y) {
+  return x * y;
+}
+
+console.log(performOperation(5, 3, add));      // 8
+console.log(performOperation(5, 3, multiply)); // 15`}
+</CodeBlock>
+
+You can plug in any logic using a callback without modifying the `performOperation` function.
+
+<Divider />
+
+### 🧰 Built-in JavaScript Functions That Use Callbacks
+
+JavaScript provides several built-in functions that use callbacks. Some of the most common are:
+
+#### 1. `setTimeout` and `setInterval`
+
+These functions accept callbacks to execute after a delay or at intervals.
+
+<CodeBlock language="js">
+{`setTimeout(function () {
+  console.log("Executed after 2 seconds");
+}, 2000);`}
+</CodeBlock>
+
+#### 2. Array Methods: `forEach`, `map`, `filter`, `reduce`
+
+These methods rely heavily on callbacks:
+
+<CodeBlock language="js">
+{`const numbers = [1, 2, 3, 4];
+
+numbers.forEach(function (num) {
+  console.log("Number:", num);
+});`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const doubled = numbers.map(function (num) {
+  return num * 2;
+});
+
+console.log(doubled); // [2, 4, 6, 8]`}
+</CodeBlock>
+
+<JsPlayground>
+{`const numbers = [1, 2, 3, 4];
+
+const squared = numbers.map(function (n) {
+  return n * n;
+});
+
+console.log("Squared numbers:", squared);`}
+</JsPlayground>
+
+<Divider />
+
+### 📁 Simulating File Read with Callbacks
+
+Let’s simulate a file reading function that takes time to complete (like reading from disk or database) and uses a callback to handle the result.
+
+<CodeBlock language="js">
+{`function readFile(filename, callback) {
+  setTimeout(() => {
+    const fakeContent = "This is the content of " + filename;
+    callback(fakeContent);
+  }, 1500);
+}
+
+readFile("data.txt", function (content) {
+  console.log("File content:", content);
+});`}
+</CodeBlock>
+
+<JsPlayground>
+{`function readFile(filename, callback) {
+  setTimeout(() => {
+    const fakeContent = "This is the content of " + filename;
+    callback(fakeContent);
+  }, 1500);
+}
+
+readFile("data.txt", function (content) {
+  console.log("File content:", content);
+});`}
+</JsPlayground>
+
+<Divider />
+
+### ⚠️ Callback Pitfalls
+
+1. **Callback Hell**: As we saw earlier, deeply nested callbacks are hard to manage.
+2. **Inversion of Control**: You pass control to another function and hope it behaves. If it doesn’t call your callback or calls it multiple times, bugs can happen.
+3. **No error handling**: Traditional callbacks don’t support `try...catch` across async boundaries unless you implement custom error-first callbacks.
+
+<Divider />
+
+### 🛑 Error-First Callbacks
+
+In Node.js and other asynchronous environments, a **standard convention** called **error-first callbacks** is used. This means the **first argument** passed to the callback is reserved for error (if any), and the second is the actual result.
+
+<CodeBlock language="js">
+{`function fetchUserData(id, callback) {
+  if (id <= 0) {
+    // Simulate error
+    callback("Invalid ID", null);
+  } else {
+    setTimeout(() => {
+      const user = { id, name: "John Doe" };
+      callback(null, user);
+    }, 1000);
+  }
+}
+
+fetchUserData(1, function (err, user) {
+  if (err) {
+    console.log("Error:", err);
+  } else {
+    console.log("User data:", user);
+  }
+});`}
+</CodeBlock>
+
+<JsPlayground>
+{`function fetchUserData(id, callback) {
+  if (id <= 0) {
+    callback("Invalid ID", null);
+  } else {
+    setTimeout(() => {
+      const user = { id, name: "John Doe" };
+      callback(null, user);
+    }, 1000);
+  }
+}
+
+fetchUserData(1, function (err, user) {
+  if (err) {
+    console.log("Error:", err);
+  } else {
+    console.log("User data:", user);
+  }
+});`}
+</JsPlayground>
+
+<Divider />
+
+### 💡 Why Error-First Callbacks?
+
+This pattern lets developers easily check if something went wrong and handle the error before moving on.
+
+Without this, you’d need separate `onSuccess` and `onError` callbacks, which quickly becomes messy.
+
+<Divider />
+
+### 🧪 One More Example: Error Simulation
+
+Let’s simulate an error:
+
+<CodeBlock language="js">
+{`fetchUserData(-5, function (err, user) {
+  if (err) {
+    console.log("Oops!", err);
+  } else {
+    console.log("This will not run for invalid ID");
+  }
+});`}
+</CodeBlock>
+
+<JsPlayground>
+{`fetchUserData(-5, function (err, user) {
+  if (err) {
+    console.log("Oops!", err);
+  } else {
+    console.log("This will not run for invalid ID");
+  }
+});`}
+</JsPlayground>
+
+<Divider />
+
+### 🧭 What's Next?
+
+Callbacks are foundational, but they come with some pain points:
+
+- Hard to read (callback hell)
+- Error handling isn't consistent
+- Doesn't scale well for many operations
+
+That’s where **Promises** and **Async/Await** come in — more readable, manageable ways to handle async code.
+
+<Divider />
+
+## ✅ Exercise
+
+1. Write a function `calculate(a, b, operation)` that takes a callback for addition or subtraction.
+2. Create an async-like function `downloadImage(url, callback)` which simulates downloading and calls back with either `"Image downloaded"` or an error.
+3. Recreate a `.map()` using a `for` loop and a callback function.
+
+<Divider />
+
+## 🎯 MCQs
+
+<MCQ
+  question="Which of the following best describes a callback function?"
+  options={[
+    "A function that returns another function",
+    "A function passed into another function to be executed later",
+    "A built-in JavaScript timer",
+    "A function that runs only once"
+  ]}
+  correctAnswer={1}
+  explanation="A callback is a function passed to another function to be called later, often after some task completes."
+/>
+
+<MCQ
+  question="In error-first callbacks, what is typically the first parameter?"
+  options={[
+    "The successful result",
+    "The function name",
+    "An error object or null",
+    "A Boolean flag"
+  ]}
+  correctAnswer={2}
+  explanation="Error-first callbacks always have the error as the first argument, followed by the result."
+/>
+
+<MCQ
+  question="Which JavaScript methods commonly use callbacks?"
+  options={[
+    "map(), filter(), forEach()",
+    "push(), pop(), shift()",
+    "concat(), join(), slice()",
+    "all of the above"
+  ]}
+  correctAnswer={0}
+  explanation="Array methods like map, filter, and forEach rely on callbacks to process each element."
+/>
+
+<MCQ
+  question="What's a downside of using many nested callbacks?"
+  options={[
+    "Code is easier to read",
+    "Improved performance",
+    "Callback hell",
+    "They execute immediately"
+  ]}
+  correctAnswer={2}
+  explanation="Nested callbacks make code messy and harder to follow, known as callback hell."
+/>
+
+<Divider />
+
+Be ready for **Day 28: Promises and Async JavaScript** — we'll upgrade from callbacks to Promises and `then()`.
+

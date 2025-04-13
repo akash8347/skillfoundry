@@ -1,0 +1,427 @@
+## Day 20: Document Object Model (DOM) Basics
+
+The **Document Object Model (DOM)** is the bridge between your HTML page and JavaScript. It's a structured representation of your HTML content that allows you to read, modify, and interact with the page dynamically.
+
+<Note>
+When your browser loads a web page, it doesn't just render the HTML visually. It parses it and constructs a tree-like model — the DOM — which JavaScript can interact with.
+</Note>
+
+<Divider />
+
+## What is the DOM?
+
+The DOM turns every element in your HTML into a **node** that JavaScript can access.
+
+For example, an HTML structure like this:
+
+<CodeBlock language="html">
+{`<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+    <p>This is a paragraph.</p>
+    <button>Click me</button>
+  </body>
+</html>`}
+</CodeBlock>
+
+Will be turned into a **DOM tree** structure that looks like this:
+
+<VisualMockup title="DOM Tree Structure" color="purple" icon="code">
+  <ul className="list-disc list-inside">
+    <li>{"<html>"}
+      <ul className="ml-4 list-disc">
+        <li>{"<head>"}
+          <ul className="ml-4 list-disc">
+            <li>{"<title>"}</li>
+          </ul>
+        </li>
+        <li>{"<body>"}
+          <ul className="ml-4 list-disc">
+            <li>{"<h1>"}</li>
+            <li>{"<p>"}</li>
+            <li>{"<button>"}</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</VisualMockup>
+
+<Divider />
+
+## Accessing the DOM in JavaScript
+
+You can access this DOM using the `document` object provided by the browser.
+
+<CodeBlock language="js">
+{`console.log(document);`}
+</CodeBlock>
+
+This logs the entire page structure as an object. You’ll see the HTML content as a tree of nested nodes.
+
+### Selecting Elements
+
+To interact with individual elements, JavaScript provides a number of selector methods:
+
+- `document.getElementById()`
+- `document.getElementsByClassName()`
+- `document.getElementsByTagName()`
+- `document.querySelector()`
+- `document.querySelectorAll()`
+
+Let’s explore the most commonly used: `querySelector()`.
+
+### Selecting a Heading
+
+<CodeBlock language="html">
+{`<h1>Welcome to My Website</h1>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const heading = document.querySelector("h1");
+console.log(heading);`}
+</CodeBlock>
+
+<BrowserMockup>
+Welcome to My Website
+</BrowserMockup>
+
+This code finds the first `<h1>` element and logs it to the console.
+
+<Tip icon="lightbulb">
+If the element doesn’t exist, `querySelector()` will return `null`. Always check that the element exists before using it.
+</Tip>
+
+<Divider />
+
+## Selecting Buttons and Other Elements
+
+Let’s try selecting a button:
+
+<CodeBlock language="html">
+{`<button>Click Me</button>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const btn = document.querySelector("button");
+console.log(btn);`}
+</CodeBlock>
+
+<BrowserMockup>
+<button>Click Me</button>
+</BrowserMockup>
+
+You can also select elements by class or ID:
+
+### By Class Name
+
+<CodeBlock language="html">
+{`<p class="info">This is some info.</p>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const infoPara = document.querySelector(".info");
+console.log(infoPara);`}
+</CodeBlock>
+
+### By ID
+
+<CodeBlock language="html">
+{`<div id="box">This is a box</div>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const box = document.querySelector("#box");
+console.log(box);`}
+</CodeBlock>
+
+<Divider />
+
+## Other DOM Selection Methods
+
+Besides `querySelector()`, you’ll often come across other selection methods:
+
+### `getElementById()`
+
+This is one of the oldest and most direct ways to select an element using its `id`.
+
+<CodeBlock language="html">
+{`<h2 id="main-title">Dashboard</h2>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const title = document.getElementById("main-title");
+console.log(title);`}
+</CodeBlock>
+
+<BrowserMockup>
+<h2>Dashboard</h2>
+</BrowserMockup>
+
+### `getElementsByClassName()`
+
+This method returns a **live HTMLCollection** of all elements with the specified class name.
+
+<CodeBlock language="html">
+{`<div class="box">Box 1</div>
+<div class="box">Box 2</div>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const boxes = document.getElementsByClassName("box");
+console.log(boxes);`}
+</CodeBlock>
+
+<Tip icon="lightbulb">
+Even if there's only one element with the class, this method returns a collection (not a single element).
+</Tip>
+
+### `getElementsByTagName()`
+
+This method gets all elements with a given tag.
+
+<CodeBlock language="html">
+{`<p>Paragraph 1</p>
+<p>Paragraph 2</p>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const paragraphs = document.getElementsByTagName("p");
+console.log(paragraphs);`}
+</CodeBlock>
+
+These are older methods but still useful. The newer and more flexible `querySelector()` and `querySelectorAll()` are often preferred today.
+
+<Divider />
+
+## Modifying Elements with JavaScript
+
+Once you’ve selected an element, you can change its content, attributes, and style.
+
+Let’s cover the 3 ways to change **text content** inside an element:
+
+### 1. `textContent`
+
+Sets or gets the raw text content of an element.
+
+<CodeBlock language="js">
+{`const heading = document.querySelector("h1");
+heading.textContent = "New Title";`}
+</CodeBlock>
+
+<BrowserMockup>
+<h1>New Title</h1>
+</BrowserMockup>
+
+### 2. `innerText`
+
+Similar to `textContent`, but it respects styles like `display: none` and doesn’t return hidden text.
+
+<Note>
+In most use cases, `textContent` is preferred for consistency and performance.
+</Note>
+
+### 3. `innerHTML`
+
+This allows you to change the **HTML content**, not just text.
+
+<CodeBlock language="js">
+{`const box = document.querySelector("#box");
+box.innerHTML = "<strong>Bold Text</strong>";`}
+</CodeBlock>
+
+<BrowserMockup>
+<div id="box"><strong>Bold Text</strong></div>
+</BrowserMockup>
+
+<Warning>
+Using `innerHTML` can be risky if you're injecting untrusted content, as it may introduce security issues like XSS.
+</Warning>
+
+<Divider />
+
+## Styling Elements with JavaScript
+
+You can also update styles directly from JavaScript using the `.style` property.
+
+<CodeBlock language="js">
+{`const heading = document.querySelector("h1");
+heading.style.color = "blue";
+heading.style.backgroundColor = "lightgray";`}
+</CodeBlock>
+
+This directly updates the inline CSS of the element.
+
+<Tip icon="wrench">
+CSS class manipulation using `classList` (like `add()`, `remove()`, `toggle()`) is usually a better and more scalable way to apply styles. We'll cover that in a later lesson.
+</Tip>
+
+<Divider />
+
+## Working with Attributes
+
+You can access and modify HTML attributes (like `type`, `id`, `class`, `disabled`, etc.) using JavaScript:
+
+### `getAttribute()` and `setAttribute()`
+
+<CodeBlock language="html">
+{`<button id="submitBtn" type="submit">Submit</button>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const btn = document.querySelector("#submitBtn");
+
+console.log(btn.getAttribute("type")); // "submit"
+
+btn.setAttribute("type", "button");
+btn.setAttribute("disabled", "true");`}
+</CodeBlock>
+
+<BrowserMockup>
+<button type="button" disabled>Submit</button>
+</BrowserMockup>
+
+You can also check for an attribute using `hasAttribute()` and remove it with `removeAttribute()`.
+
+<CodeBlock language="js">
+{`console.log(btn.hasAttribute("disabled")); // true
+
+btn.removeAttribute("disabled");`}
+</CodeBlock>
+
+<BrowserMockup>
+<button type="button">Submit</button>
+</BrowserMockup>
+
+<Divider />
+
+
+## DOM Navigation
+
+You can also move around the DOM relative to a selected element.
+
+Here's a quick overview:
+
+<VisualMockup title="DOM Navigation Reference" icon="dashboard" color="blue">
+<ul className="list-disc list-inside">
+  <li><strong>parentNode</strong> – goes up to the parent</li>
+  <li><strong>children</strong> – returns all child elements</li>
+  <li><strong>firstElementChild / lastElementChild</strong> – gets first/last child</li>
+  <li><strong>nextElementSibling / previousElementSibling</strong> – moves to next/previous sibling</li>
+</ul>
+</VisualMockup>
+
+### Example:
+
+<CodeBlock language="html">
+{`<div class="container">
+  <p>First paragraph</p>
+  <p>Second paragraph</p>
+</div>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const secondPara = document.querySelectorAll("p")[1];
+const firstPara = secondPara.previousElementSibling;
+
+console.log(firstPara.textContent); // "First paragraph"`}
+</CodeBlock>
+
+<Divider />
+
+## Node Types in the DOM
+
+Everything in the DOM is a **node** — but not all nodes are the same.
+
+<VisualMockup title="Types of DOM Nodes" icon="book" color="green">
+<ul className="list-disc list-inside">
+  <li><strong>Element Nodes</strong>: Any HTML tag (e.g., &lt;div&gt;, &lt;p&gt;)</li>
+  <li><strong>Text Nodes</strong>: Text inside an element or attribute</li>
+  <li><strong>Comment Nodes</strong>: HTML comments</li>
+  <li><strong>Document Node</strong>: Represents the whole page (`document` object)</li>
+</ul>
+</VisualMockup>
+
+You can check the type of node using `.nodeType`:
+
+<CodeBlock language="js">
+{`const el = document.querySelector("h1");
+console.log(el.nodeType); // 1 (Element Node)`}
+</CodeBlock>
+
+<Note>
+Element nodes are the most common ones you'll work with. Text nodes and comment nodes are rarely used directly.
+</Note>
+
+<Divider />
+
+## Summary
+
+Let’s summarize what you learned today:
+
+<VisualMockup title="Today's Key Takeaways" icon="lightbulb" color="yellow" size="lg">
+<ul className="list-disc list-inside">
+  <li>The DOM is a live, tree-like structure of your HTML document.</li>
+  <li>You can select elements using methods like <code>querySelector</code>, <code>getElementById</code>, etc.</li>
+  <li>Once selected, you can read/change content, styles, and attributes.</li>
+  <li>You can navigate between parents, children, and siblings in the DOM tree.</li>
+  <li>The DOM consists of various node types: elements, text, comments, and the document itself.</li>
+</ul>
+</VisualMockup>
+
+<Divider />
+
+## Exercise
+
+Choose any simple HTML structure and practice the following:
+
+- Select elements using different methods
+- Change their text and styles
+- Add or remove attributes
+- Move between parent and child nodes
+
+Here’s an example challenge:
+
+<CodeBlock language="html">
+{`<section id="info">
+  <h2 class="title">Welcome</h2>
+  <p>This is a short paragraph.</p>
+</section>`}
+</CodeBlock>
+
+Write JavaScript to:
+
+1. Select the section by ID
+2. Update the heading to "Hello World"
+3. Change paragraph text color to red
+4. Add a class to the section
+
+<Divider />
+
+## MCQs
+
+<MCQ
+  question="Which method returns a NodeList of matching elements?"
+  options={["getElementById", "getElementsByClassName", "querySelectorAll", "getElementsByTagName"]}
+  correctAnswer={2}
+  explanation="querySelectorAll returns a static NodeList of all matching elements."
+/>
+
+<MCQ
+  question="What does `textContent` do?"
+  options={["Changes the HTML structure", "Applies CSS", "Sets or gets text inside an element", "Removes an element"]}
+  correctAnswer={2}
+  explanation="textContent sets or gets just the raw text content of an element."
+/>
+
+<MCQ
+  question="Which node type corresponds to element nodes?"
+  options={["1", "2", "3", "9"]}
+  correctAnswer={0}
+  explanation="Element nodes have nodeType 1. Text nodes are 3, comments are 8, and the document is 9."
+/>
+
+<Divider />

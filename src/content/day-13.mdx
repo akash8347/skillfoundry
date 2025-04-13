@@ -1,0 +1,298 @@
+## Day 13: Functions in JavaScript
+
+### 🧠 What is a Function?
+
+A **function** is a reusable block of code designed to perform a specific task. Think of it like a mini-program inside your program. You write it once and use it whenever you need it — instead of rewriting the same logic again and again.
+
+For example, if you want to greet a user, you could write:
+
+<CodeBlock language="js">
+{`console.log("Hello, Akash!");
+console.log("Hello, Ravi!");
+console.log("Hello, Sneha!");`}
+</CodeBlock>
+
+But wouldn’t it be better if we could write this once and reuse it for any name?
+
+That’s where functions shine:
+
+<JsPlayground initialJs={`function greet(name) {
+  console.log("Hello, " + name + "!");
+}
+
+greet("Akash");
+greet("Ravi");
+greet("Sneha");`} />
+
+### 🔁 Why Functions?
+
+- **Avoid repetition**: No more copy-pasting the same code.
+- **Make code readable**: Functions help organize logic into readable chunks.
+- **Easy to test and debug**: Small, isolated functions are easier to test.
+- **Promote reusability**: Write once, use everywhere.
+
+<Note>
+Functions are the building blocks of JavaScript. In real projects, nearly everything is inside some function — from event listeners to data calculations.
+</Note>
+
+<Divider />
+
+### ✍️ Declaring a Function
+
+Let’s break down how to **create** a function using the classic syntax:
+
+<CodeBlock language="js">
+{`function functionName(parameters) {
+  // code to execute
+}`}
+</CodeBlock>
+
+Example:
+
+<JsPlayground initialJs={`function sayHello() {
+  console.log("Hello there!");
+}
+
+sayHello();`} />
+
+Here, `sayHello` is the **function name**, and the code inside it runs whenever you **call** it using `sayHello()`.
+
+<Tip>
+Don’t forget the parentheses `()` when calling a function, even if it has no parameters!
+</Tip>
+
+<Divider />
+
+### 🔡 Functions with Parameters
+
+You can pass values into functions. These are called **parameters**. They help make your function dynamic.
+
+<CodeBlock language="js">
+{`function greetUser(username) {
+  console.log("Welcome, " + username + "!");
+}
+
+greetUser("Lukka"); // 👉 Welcome, Lukka!`}
+</CodeBlock>
+
+<JsPlayground initialJs={`function greetUser(username) {
+  console.log("Welcome, " + username + "!");
+}
+
+greetUser("Lukka");`} />
+
+You can also pass multiple parameters:
+
+<CodeBlock language="js">
+{`function add(a, b) {
+  console.log("Sum:", a + b);
+}
+
+add(5, 3); // 👉 Sum: 8`}
+</CodeBlock>
+
+<JsPlayground initialJs={`function add(a, b) {
+  console.log("Sum:", a + b);
+}
+
+add(5, 3);`} />
+
+<Note>
+The variables inside the parentheses are called <strong>parameters</strong>. When you call the function, the values you pass are called <strong>arguments</strong>.
+</Note>
+
+<Divider />
+
+### 🔙 Returning Values from Functions
+
+Sometimes, instead of just logging something, you want a function to **give you a value** back. That’s when you use the `return` keyword.
+
+Let’s modify the `add` function to return the result instead of printing it:
+
+<CodeBlock language="js">
+{`function add(a, b) {
+  return a + b;
+}
+
+let sum = add(4, 6);
+console.log("Sum is:", sum); // 👉 Sum is: 10`}
+</CodeBlock>
+
+<JsPlayground initialJs={`function add(a, b) {
+  return a + b;
+}
+
+let sum = add(4, 6);
+console.log("Sum is:", sum);`} />
+
+<Note>
+As soon as a function hits a `return` statement, it stops running and sends that value back to where it was called.
+</Note>
+
+<Tip>
+A function can only return **one value**, but that value can be anything: number, string, array, object, even another function!
+</Tip>
+
+<Divider />
+
+### 🧾 Function Expressions
+
+You can also store a function in a variable. This is called a **function expression**:
+
+<CodeBlock language="js">
+{`const multiply = function(a, b) {
+  return a * b;
+};
+
+console.log(multiply(3, 4)); // 👉 12`}
+</CodeBlock>
+
+<JsPlayground initialJs={`const multiply = function(a, b) {
+  return a * b;
+};
+
+console.log(multiply(3, 4));`} />
+
+This works just like a normal function, but is **anonymous** (it has no name) and stored in a variable.
+
+<Note>
+In JavaScript, functions are first-class citizens — which means they can be treated just like data: assigned to variables, passed as arguments, or returned from other functions.
+</Note>
+
+<Divider />
+
+### ⚡ Arrow Functions
+
+Arrow functions are a **shorter** and more modern way to write functions. They're especially useful when the function is simple.
+
+Here’s how the `multiply` function looks as an arrow function:
+
+<CodeBlock language="js">
+{`const multiply = (a, b) => {
+  return a * b;
+};`}
+</CodeBlock>
+
+If there’s only one line (and it's a return), you can simplify even more:
+
+<CodeBlock language="js">
+{`const multiply = (a, b) => a * b;`}
+</CodeBlock>
+
+<JsPlayground initialJs={`const multiply = (a, b) => a * b;
+
+console.log(multiply(5, 6));`} />
+
+<Tip>
+If your arrow function has only one parameter, you can even skip the parentheses:  
+<code>name => console.log(name)</code>
+</Tip>
+
+<Note>
+Arrow functions do not have their own <code>this</code> context, which makes them behave differently inside objects or classes. But for basic usage, they’re great!
+</Note>
+
+<Divider />
+
+### 🌍 Real-World Examples
+
+Now that you understand how functions work, let’s explore how they’re used in real life — especially in web development.
+
+#### 🧮 1. Calculator Function
+
+<JsPlayground initialJs={`function calculate(operation, a, b) {
+  if (operation === "add") return a + b;
+  else if (operation === "subtract") return a - b;
+  else if (operation === "multiply") return a * b;
+  else if (operation === "divide") return a / b;
+  else return "Invalid operation";
+}
+
+console.log(calculate("add", 4, 2));
+console.log(calculate("multiply", 3, 7));`} />
+
+#### 🔄 2. Reusable Message Generator
+
+<JsPlayground initialJs={`function generateMessage(name, timeOfDay) {
+  return \`Good \${timeOfDay}, \${name}!\`;
+}
+
+console.log(generateMessage("Akash", "evening"));`} />
+
+#### 📅 3. Age Checker
+
+<JsPlayground initialJs={`function checkEligibility(age) {
+  return age >= 18 ? "Eligible" : "Not Eligible";
+}
+
+console.log(checkEligibility(21));`} />
+
+<Divider />
+
+### 🧪 Exercise
+
+**Task:**  
+Write a function named `isEven` that takes a number as input and returns `"Even"` if it's divisible by 2, or `"Odd"` if it's not.
+
+Test the function with different values and log the results.
+
+<JsPlayground initialJs={`// Write your function here
+
+function isEven(num) {
+  // your logic
+}
+
+console.log(isEven(4)); // "Even"
+console.log(isEven(7)); // "Odd"`} />
+
+<Divider />
+
+### ✅ MCQs
+
+<MCQ 
+  question="What is the correct way to define a function in JavaScript?"
+  options={[
+    "function = myFunc() {}",
+    "def myFunc() {}",
+    "function myFunc() {}",
+    "func myFunc = () => {}"
+  ]}
+  correctAnswer={2}
+  explanation="The correct syntax to define a function in JavaScript is: function myFunc() {}"
+/>
+
+<MCQ 
+  question="What does the return statement do in a function?"
+  options={[
+    "It prints the output to the console",
+    "It exits the function and gives back a value",
+    "It repeats the function",
+    "It stores data inside a variable"
+  ]}
+  correctAnswer={1}
+  explanation="The return statement exits the function and sends a value back to where the function was called."
+/>
+
+<MCQ 
+  question="What is the output of this code?\n\nfunction test() { return 5; }\nconsole.log(test());"
+  options={[
+    "undefined",
+    "null",
+    "5",
+    "error"
+  ]}
+  correctAnswer={2}
+  explanation="The function returns 5, which is then logged using console.log."
+/>
+
+<Divider />
+
+### 🚀 Wrap Up
+
+Today you learned one of the most fundamental concepts of JavaScript — **functions**. They let you group code into logical, reusable blocks and make your programs clean, maintainable, and powerful.
+
+In the upcoming days, you’ll use functions everywhere — especially when dealing with events, arrays, objects, and even the DOM.
+
+<Note>
+Take your time to practice writing and calling functions. Try creating mini utilities like temperature converters, tip calculators, or message formatters using everything you’ve learned today.
+</Note>

@@ -1,0 +1,428 @@
+## Day 21: DOM Manipulation – Selecting & Changing Elements
+
+Welcome to Day 21! Now that you understand how the DOM works, it's time to actually **interact** with it. Today you'll learn how to **select elements**, **modify their content**, **change styles**, and even **create or remove elements** dynamically using JavaScript.
+
+By the end of this lesson, you'll be able to build rich, interactive websites that respond to user actions and update the page without refreshing.
+
+<Note>
+DOM manipulation is a core skill for any frontend developer. It's what turns a static page into an interactive experience.
+</Note>
+
+<Divider />
+
+## Selecting Elements
+
+The first step in manipulating anything is **selecting** it. JavaScript gives us several methods to grab elements from the DOM.
+
+### `getElementById`
+
+<CodeBlock language="html">
+{`<h1 id="title">Hello World</h1>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const title = document.getElementById("title");
+console.log(title);`}
+</CodeBlock>
+
+### `getElementsByClassName`
+
+<CodeBlock language="html">
+{`<p class="message">Hello</p>
+<p class="message">Hi</p>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const messages = document.getElementsByClassName("message");
+console.log(messages); // HTMLCollection (array-like)`}
+</CodeBlock>
+
+### `getElementsByTagName`
+
+<CodeBlock language="html">
+{`<ul>
+  <li>One</li>
+  <li>Two</li>
+</ul>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const listItems = document.getElementsByTagName("li");
+console.log(listItems);`}
+</CodeBlock>
+
+### `querySelector` and `querySelectorAll`
+
+These are modern and more powerful. They use CSS selectors!
+
+<CodeBlock language="html">
+{`<div class="box">Box 1</div>
+<div class="box">Box 2</div>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const firstBox = document.querySelector(".box"); // Only first match
+const allBoxes = document.querySelectorAll(".box"); // All matches
+
+console.log(firstBox);
+console.log(allBoxes);`}
+</CodeBlock>
+
+<VisualMockup title="Common DOM Selection Methods" color="green" icon="book">
+<ul className="list-disc list-inside">
+  <li><strong>getElementById()</strong> - Select by ID</li>
+  <li><strong>getElementsByClassName()</strong> - Select all by class (HTMLCollection)</li>
+  <li><strong>getElementsByTagName()</strong> - Select all by tag (HTMLCollection)</li>
+  <li><strong>querySelector()</strong> - First match using CSS selector</li>
+  <li><strong>querySelectorAll()</strong> - All matches using CSS selector (NodeList)</li>
+</ul>
+</VisualMockup>
+
+<Divider />
+
+## Changing Text and HTML
+
+Once you've selected an element, you can change its **text** or **HTML content**.
+
+### `textContent` and `innerHTML`
+
+<CodeBlock language="html">
+{`<p id="info">Old text</p>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const info = document.getElementById("info");
+
+info.textContent = "New plain text";
+info.innerHTML = "<strong>Bolded HTML text</strong>";`}
+</CodeBlock>
+
+<BrowserMockup>
+<strong>Bolded HTML text</strong>
+</BrowserMockup>
+
+<Tip icon="code">
+Use `textContent` when inserting plain text, and `innerHTML` when injecting HTML (but be cautious with untrusted data).
+</Tip>
+
+<Divider />
+
+## Changing Styles with JavaScript
+
+You can directly modify the style of an element using the `.style` property.
+
+### Inline Styling via `.style`
+
+<CodeBlock language="html">
+{`<h2 id="heading">Styled Text</h2>`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const heading = document.getElementById("heading");
+
+heading.style.color = "blue";
+heading.style.fontSize = "28px";
+heading.style.backgroundColor = "lightgray";`}
+</CodeBlock>
+
+<BrowserMockup>
+<h2 style={{ color: "blue", fontSize: "28px", backgroundColor: "lightgray" }}>
+  Styled Text
+</h2>
+</BrowserMockup>
+
+<Tip icon="tools">
+JS style properties use **camelCase** (e.g., `backgroundColor`) instead of kebab-case (`background-color`).
+</Tip>
+
+<Divider />
+
+## Adding and Removing Classes
+
+Instead of writing inline styles, a better approach is using CSS classes — you can **add, remove, or toggle** classes using the `classList` property.
+
+### `classList.add()` and `classList.remove()`
+
+<CodeBlock language="html">
+{`<div id="card" className="box">Card</div>`}
+</CodeBlock>
+
+<CodeBlock language="css">
+{`.highlight {
+  border: 2px solid green;
+  background-color: #e6ffe6;
+}`}
+</CodeBlock>
+
+<CodeBlock language="js">
+{`const card = document.getElementById("card");
+
+card.classList.add("highlight");
+// Later...
+card.classList.remove("box");`}
+</CodeBlock>
+
+<BrowserMockup>
+<div style={{
+  border: "2px solid green",
+  backgroundColor: "#e6ffe6",
+  padding: "10px",
+  borderRadius: "6px"
+}}>
+  Card
+</div>
+</BrowserMockup>
+
+### `classList.toggle()`
+
+Toggles the class on or off each time it's called:
+
+<CodeBlock language="js">
+{`card.classList.toggle("highlight"); // Adds if not present, removes if already present`}
+</CodeBlock>
+
+<Note>
+Toggling is great for things like dark mode, dropdowns, mobile nav, etc.
+</Note>
+
+<Divider />
+
+  ## Creating and Inserting Elements
+
+You can build new elements using JavaScript with `document.createElement()`, and insert them into the DOM using methods like `appendChild()` or `append()`.
+
+### `createElement()` + `appendChild()`
+
+<CodeBlock language="js">
+{`const newPara = document.createElement("p");
+newPara.textContent = "This is a new paragraph created via JS!";
+
+const container = document.getElementById("container");
+container.appendChild(newPara);`}
+</CodeBlock>
+
+<BrowserMockup>
+<div id="container">
+  <p>This is a new paragraph created via JS!</p>
+</div>
+</BrowserMockup>
+
+<Tip icon="lightbulb">
+You can also use `innerText` or `innerHTML` to add content to newly created elements.
+</Tip>
+
+<Divider />
+
+### `append()` vs `appendChild()`
+
+Both are used to insert nodes into the DOM, but:
+
+<Table
+  columns={["Feature", "`appendChild()`", "`append()`"]}
+  data={[
+    ["Accepts", "Only Node elements", "Nodes or strings"],
+    ["Multiple Items?", "❌", "✅"],
+    ["Returns", "Inserted Node", "Nothing"],
+  ]}
+/>
+
+<Note>
+`append()` is more flexible for modern use cases, while `appendChild()` is slightly older but still widely used.
+</Note>
+
+<Divider />
+
+## Inserting Elements Before or After
+
+You can also insert elements in specific positions using:
+
+- `parentNode.insertBefore(newNode, referenceNode)`
+- `element.before()` or `element.after()` (modern)
+
+### Example: Insert Before
+
+<CodeBlock language="js">
+{`const list = document.getElementById("myList");
+const newItem = document.createElement("li");
+newItem.textContent = "👋 Inserted before the second item";
+
+const secondItem = list.children[1];
+list.insertBefore(newItem, secondItem);`}
+</CodeBlock>
+
+<BrowserMockup>
+<ul id="myList">
+  <li>Item 1</li>
+  <li>👋 Inserted before the second item</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+</BrowserMockup>
+
+<Divider />
+
+## Removing Elements
+
+To remove elements, use the `.remove()` method (modern) or `.removeChild()` (older):
+
+### Using `.remove()`
+
+<CodeBlock language="js">
+{`const alertBox = document.getElementById("alert");
+alertBox.remove();`}
+</CodeBlock>
+
+### Using `.removeChild()`
+
+<CodeBlock language="js">
+{`const list = document.getElementById("myList");
+const item = list.children[0];
+list.removeChild(item);`}
+</CodeBlock>
+
+<Tip icon="wrench">
+Modern `.remove()` is simpler, but not supported in IE. Use `.removeChild()` if you need broader compatibility.
+</Tip>
+
+<Divider />
+
+  ## Cloning Elements
+
+Sometimes, you might want to **duplicate** an existing element — either to reuse or manipulate it separately.
+
+Use the `cloneNode()` method:
+
+### `cloneNode(true)` vs `cloneNode(false)`
+
+- `true`: Deep clone (includes children)
+- `false`: Shallow clone (no children)
+
+### Example:
+
+<CodeBlock language="js">
+{`const card = document.querySelector(".card");
+const copy = card.cloneNode(true);
+
+document.body.appendChild(copy);`}
+</CodeBlock>
+
+<BrowserMockup>
+<div className="card">
+  <h2>Card Title</h2>
+  <p>This is a reusable card.</p>
+</div>
+<div className="card">
+  <h2>Card Title</h2>
+  <p>This is a reusable card.</p>
+</div>
+</BrowserMockup>
+
+
+<Note>
+If you just want to reuse structure or content, `cloneNode(true)` saves time.
+</Note>
+
+<Divider />
+
+## innerText vs textContent vs innerHTML
+
+These properties are often used for **reading** or **updating** content inside HTML elements. But they behave slightly differently:
+
+<Table
+  columns={["Property", "What it Returns", "Renders HTML?", "Hidden Text?"]}
+  data={[
+    ["`innerText`", "Visible text only", "No", "❌ Skips hidden text"],
+    ["`textContent`", "All text (even hidden)", "No", "✅ Includes hidden text"],
+    ["`innerHTML`", "HTML structure", "Yes", "✅ Includes hidden"],
+  ]}
+/>
+
+### Example:
+
+<CodeBlock language="js">
+{`const el = document.querySelector("#info");
+
+console.log(el.innerText);     // Visible text
+console.log(el.textContent);   // All text
+console.log(el.innerHTML);     // Includes HTML tags`}
+</CodeBlock>
+
+<BrowserMockup>
+<div id="info">
+  <strong>Hello</strong>, <span style={{ display: "none" }}>Hidden</span> World!
+</div>
+</BrowserMockup>
+
+
+<Tip icon="lightbulb">
+Use `innerHTML` with caution — inserting untrusted content can expose your site to **XSS (Cross-Site Scripting)** attacks.
+</Tip>
+
+<Divider />
+
+## 🧠 Exercise Time!
+
+Let's put your knowledge into action.
+
+### Task:
+Build a basic list where users can:
+
+- Add a new item (using `createElement` and `append`)
+- Remove an item (using `.remove()`)
+
+Create a layout with a text input, a button, and an unordered list.
+
+<Note>
+Try solving it on your own first! You’ll find it a great way to reinforce DOM manipulation concepts.
+</Note>
+
+<Divider />
+
+## ✅ Quick Quiz
+
+Here are some multiple choice questions to test your learning.
+
+<MCQ
+  question="Which method is used to create a new HTML element in JavaScript?"
+  options={["createNode()", "makeElement()", "document.createElement()", "new Element()"]}
+  correctAnswer={2}
+  explanation="The correct method is `document.createElement()` — it's the standard way to create new elements."
+/>
+
+<MCQ
+  question="What does `appendChild()` return?"
+  options={["Nothing", "The appended child", "The parent node", "A boolean"]}
+  correctAnswer={1}
+  explanation="`appendChild()` returns the child node that was appended."
+/>
+
+<MCQ
+  question="Which property includes hidden content inside an element?"
+  options={["innerText", "textContent", "visibleText", "innerValue"]}
+  correctAnswer={1}
+  explanation="`textContent` includes all text — even from hidden elements like `display: none`."
+/>
+
+<MCQ
+  question="How do you remove an element from the DOM?"
+  options={["deleteElement()", "removeNode()", "element.remove()", "node.removeFromDOM()"]}
+  correctAnswer={2}
+  explanation="`element.remove()` is the modern way to remove an element directly from the DOM."
+/>
+
+<Divider />
+
+## 🎉 Day 21 Recap
+
+Today, you learned how to:
+
+- Select and modify DOM elements
+- Create, insert, and remove elements dynamically
+- Understand the difference between innerText, textContent, and innerHTML
+- Clone and reuse existing elements
+
+This is the foundation of **dynamic page updates** — key to every interactive website.
+
+<Tip icon="dashboard">
+Tomorrow, we'll dive into **DOM Events** — learn how to handle user interactions like clicks, typing, and more!
+</Tip>

@@ -1,0 +1,285 @@
+## Day 26: Destructuring, Spread & Rest Operators in Depth
+
+JavaScript has evolved a lot, and one of the features that has made code cleaner and more expressive is **destructuring**. Pair this with the powerful **spread** and **rest** operators, and you'll find yourself writing much less code to achieve much more.
+
+<Divider />
+
+## 🧠 What is Destructuring?
+
+Destructuring allows you to **unpack values** from arrays or properties from objects into distinct variables in a **clean and readable** way.
+
+### Array Destructuring
+
+Let’s say you have an array:
+
+<CodeBlock language="js">
+{`const numbers = [10, 20, 30];`}
+</CodeBlock>
+
+Instead of doing:
+
+<CodeBlock language="js">
+{`const a = numbers[0];
+const b = numbers[1];
+const c = numbers[2];`}
+</CodeBlock>
+
+You can write:
+
+<CodeBlock language="js">
+{`const [a, b, c] = numbers;
+
+console.log(a); // 10
+console.log(b); // 20
+console.log(c); // 30`}
+</CodeBlock>
+
+You can also skip values:
+
+<CodeBlock language="js">
+{`const [first, , third] = [1, 2, 3];
+console.log(first); // 1
+console.log(third); // 3`}
+</CodeBlock>
+
+### Object Destructuring
+
+You can do the same with objects:
+
+<CodeBlock language="js">
+{`const user = {
+  name: "Akash",
+  age: 24,
+  city: "Delhi"
+};
+
+const { name, age } = user;
+
+console.log(name); // Akash
+console.log(age);  // 24`}
+</CodeBlock>
+
+You can even rename variables during destructuring:
+
+<CodeBlock language="js">
+{`const { city: hometown } = user;
+console.log(hometown); // Delhi`}
+</CodeBlock>
+
+<Divider />
+
+## 🔄 Destructuring in Function Parameters
+
+You can destructure directly in a function's parameter list. Super useful when dealing with objects.
+
+<CodeBlock language="js">
+{`function displayUser({ name, age }) {
+  console.log(\`\${name} is \${age} years old\`);
+}
+
+const user = { name: "Neha", age: 22 };
+displayUser(user); // Neha is 22 years old`}
+</CodeBlock>
+
+<Divider />
+
+## ✨ Spread Operator (`...`)
+
+The **spread operator** lets you **expand arrays or objects** into individual elements.
+
+### Spreading Arrays
+
+<CodeBlock language="js">
+{`const arr1 = [1, 2];
+const arr2 = [3, 4];
+const merged = [...arr1, ...arr2];
+
+console.log(merged); // [1, 2, 3, 4]`}
+</CodeBlock>
+
+### Copying Arrays
+
+<CodeBlock language="js">
+{`const original = [1, 2, 3];
+const copy = [...original];
+
+console.log(copy); // [1, 2, 3]`}
+</CodeBlock>
+
+Changing `copy` won’t affect `original`, making it great for immutability.
+
+### Spreading Objects
+
+<CodeBlock language="js">
+{`const obj1 = { a: 1, b: 2 };
+const obj2 = { b: 3, c: 4 };
+
+const combined = { ...obj1, ...obj2 };
+console.log(combined); // { a: 1, b: 3, c: 4 }`}
+</CodeBlock>
+
+Note: **Later properties override earlier ones** (`b: 3` overwrites `b: 2` here).
+
+<Divider />
+
+## 📦 Rest Operator (`...`)
+
+While spread expands, **rest gathers** the remaining values.
+
+### In Arrays
+
+<CodeBlock language="js">
+{`const [first, ...rest] = [1, 2, 3, 4];
+console.log(first); // 1
+console.log(rest);  // [2, 3, 4]`}
+</CodeBlock>
+
+### In Objects
+
+<CodeBlock language="js">
+{`const { a, ...others } = { a: 1, b: 2, c: 3 };
+console.log(a);      // 1
+console.log(others); // { b: 2, c: 3 }`}
+</CodeBlock>
+
+### In Function Parameters
+
+You can use the rest operator to accept **any number of arguments**:
+
+<CodeBlock language="js">
+{`function sum(...nums) {
+  return nums.reduce((acc, val) => acc + val, 0);
+}
+
+console.log(sum(1, 2, 3)); // 6`}
+</CodeBlock>
+
+<Divider />
+
+## 🤯 Destructuring with Defaults
+
+You can set **default values** while destructuring in case the value is undefined:
+
+<CodeBlock language="js">
+{`const [a = 10, b = 20] = [undefined, 30];
+
+console.log(a); // 10
+console.log(b); // 30`}
+</CodeBlock>
+
+<Divider />
+
+## 🧪 Playground Example
+
+Here’s a combined example using destructuring, rest, and spread all together:
+
+<JsPlayground>
+{`const user = {
+  name: "Akash",
+  age: 25,
+  city: "Mumbai",
+  country: "India"
+};
+
+const { name, ...details } = user;
+
+console.log(name);    // Akash
+console.log(details); // { age: 25, city: "Mumbai", country: "India" }
+
+const moreDetails = { ...details, hobby: "Coding" };
+
+console.log(moreDetails); 
+// { age: 25, city: "Mumbai", country: "India", hobby: "Coding" }`}
+</JsPlayground>
+
+<Divider />
+
+## 🏋️‍♂️ Exercise
+
+1. Create a function that takes an object with `name`, `age`, and `email` and prints them individually using destructuring.
+
+<CodeBlock language="js">
+{`function printUser({ name, age, email }) {
+  console.log("Name:", name);
+  console.log("Age:", age);
+  console.log("Email:", email);
+}
+
+printUser({ name: "Ravi", age: 25, email: "ravi@example.com" });`}
+</CodeBlock>
+
+2. Merge two arrays using the spread operator and sort them.
+
+<CodeBlock language="js">
+{`const arr1 = [4, 1, 7];
+const arr2 = [2, 9, 3];
+const merged = [...arr1, ...arr2].sort((a, b) => a - b);
+console.log(merged); // [1, 2, 3, 4, 7, 9]`}
+</CodeBlock>
+
+3. Write a function that takes any number of arguments using the rest operator and returns their product.
+
+<CodeBlock language="js">
+{`function multiplyAll(...nums) {
+  return nums.reduce((acc, num) => acc * num, 1);
+}
+
+console.log(multiplyAll(2, 3, 4)); // 24`}
+</CodeBlock>
+
+4. Destructure an array `[5, 10, 15, 20]` to extract the first two elements, and collect the rest in another variable.
+
+<CodeBlock language="js">
+{`const [first, second, ...rest] = [5, 10, 15, 20];
+console.log(first); // 5
+console.log(second); // 10
+console.log(rest); // [15, 20]`}
+</CodeBlock>
+
+5. Copy the following object using the spread operator and change one property:
+
+<CodeBlock language="js">
+{`const person = { name: "Ravi", age: 21 };
+const updated = { ...person, age: 22 };
+console.log(updated); // { name: "Ravi", age: 22 }`}
+</CodeBlock>
+
+<Divider />
+
+## ✅ MCQs
+
+<MCQ 
+  question="What does the spread operator `...` do in JavaScript?" 
+  options={[
+    "Merges two objects together",
+    "Gathers remaining values into an array",
+    "Expands an array or object into individual elements",
+    "Deletes properties from an object"
+  ]}
+  correctAnswer={2}
+  explanation="The spread operator expands arrays or objects into individual elements or properties."
+/>
+
+<MCQ 
+  question="Which syntax is valid for array destructuring?" 
+  options={[
+    "const [a, b] = { a: 1, b: 2 };",
+    "const {a, b} = [1, 2];",
+    "const [a, b] = [1, 2];",
+    "const a, b = [1, 2];"
+  ]}
+  correctAnswer={2}
+  explanation="Array destructuring uses square brackets to unpack values from arrays."
+/>
+
+<MCQ 
+  question="What will the rest operator \`...rest\` return in this destructuring? \`const [x, ...rest] = [1, 2, 3, 4]\`" 
+  options={[
+    "[1, 2, 3, 4]",
+    "[2, 3, 4]",
+    "[1]",
+    "undefined"
+  ]}
+  correctAnswer={1}
+  explanation="The rest operator collects the remaining values after the first element, so \`rest\` becomes [2, 3, 4]."
+/>

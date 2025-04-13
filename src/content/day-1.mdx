@@ -1,0 +1,219 @@
+## Day 1: Introduction to Web Design & How the Web Works
+
+### What is Web Design?
+
+Web design is the process of **creating websites** and **web applications**. It involves planning, designing, and building content for the web using languages like **HTML**, **CSS**, and **JavaScript**.
+
+A well-designed website is:
+- Visually appealing  
+- Easy to navigate
+- Responsive across devices (like phones, tablets, laptops)
+- Fast and user-friendly
+
+<Note>
+Web design is not just about how a site *looks* but also how it *works*. Good design balances beauty with usability.
+</Note>
+
+<Divider />
+
+### How the Web Works (High-Level Overview)
+
+When you type a website address like `www.google.com` in your browser and hit Enter, a lot of things happen behind the scenes:
+
+1. The **browser** sends a request to a server.
+2. The **server** responds with files (HTML, CSS, JS, images, etc.).
+3. The browser downloads and displays those files as a web page.
+
+Let’s break it down a bit more:
+
+### 🧠 Key Concepts:
+- **Browser**: Tool you use to view websites (like Chrome, Firefox, Safari)
+- **URL**: The address of a web page (e.g., `https://youtube.com`)
+- **HTTP**: Protocol used to communicate between browser and server
+- **Server**: A computer that hosts the website's files and sends them to users on request
+
+<Tip>
+Think of the web like ordering food:  
+You (browser) place an order (request) at a restaurant (server), and it delivers the food (website files) to you.
+</Tip>
+
+<Task>
+Open your browser’s DevTools (Right-click → Inspect → Network tab). Reload a page and see the files getting loaded. Try identifying the HTML, CSS, and JS files.
+</Task>
+
+### The Browser-Server Relationship
+
+When you visit a website, you’re basically having a conversation with another computer — the **server**.
+
+Let’s walk through what happens:
+
+1. You type `www.example.com` into your browser.
+2. Your browser first asks a special service called **DNS** to find the actual IP address of that domain.
+3. Once it gets the address, it sends a **request** to the server located there.
+4. The server receives the request and sends back a **response** — usually an HTML file first.
+5. The browser then reads the HTML, and if it finds links to CSS or JS files, it sends more requests for those.
+
+So, the **browser** is the client asking for stuff, and the **server** is the kitchen cooking up the files you asked for.
+
+<Note>
+DNS (Domain Name System) is like the phonebook of the web. It translates human-readable names (`google.com`) into machine-readable IP addresses (`142.250.195.78`).
+</Note>
+
+<Divider />
+
+### Visualizing the Web Flow
+
+Here's a simple step-by-step breakdown:
+
+1. **User types a URL**
+2. DNS resolves it to an IP address
+3. Browser sends an HTTP request
+4. Server processes the request
+5. Server sends back an HTTP response
+6. Browser renders the web page
+
+<Task>
+Try this:
+- Open Terminal (or CMD) and type: `ping google.com`
+- You'll see the IP address of Google’s servers. That’s DNS resolution in action!
+</Task>
+
+<Tip>
+Use tools like [https://who.is](https://who.is) to check domain info, and [https://developer.mozilla.org](https://developer.mozilla.org) to learn web fundamentals from scratch.
+</Tip>
+
+### Roles of HTML, CSS, and JavaScript
+
+A basic web page is made up of three core technologies. Here's how they work together:
+
+- **HTML** (HyperText Markup Language): Defines the **structure** of the web page — headings, paragraphs, buttons, forms, etc.
+- **CSS** (Cascading Style Sheets): Controls the **appearance** — colors, layout, fonts, spacing, animations, and responsiveness.
+- **JavaScript**: Adds **interactivity and logic** — things like clicking buttons, showing/hiding content, form validation, etc.
+
+<Tip>
+Think of it like this:
+- HTML is the skeleton 🦴  
+- CSS is the skin, clothes, and style 😎  
+- JavaScript is the brain 🧠
+</Tip>
+
+<Divider />
+
+### Frontend vs Backend (Simplified View)
+
+Web development is usually split into two major parts:
+
+### ✅ Frontend
+Everything the **user sees and interacts with** directly:
+- HTML, CSS, JavaScript
+- Buttons, forms, layout, animations
+
+Runs **in the browser**
+
+### 🔧 Backend
+Everything that happens **behind the scenes**:
+- Databases (like MySQL, MongoDB)
+- Servers (Node.js, Python, PHP, etc.)
+- Business logic and APIs
+
+Runs **on the server**
+
+<Note>
+Frontend sends requests to the Backend (like "get all products"), and the Backend sends the data back (like a list of products in JSON format).
+</Note>
+
+<Task>
+Open any site, right-click → Inspect → Elements tab.  
+Try identifying:
+- HTML tags
+- CSS classes
+- JavaScript-driven elements (like dropdowns or modals)
+</Task>
+
+### Lifecycle of a Web Request (Start to Finish)
+
+Let’s connect all the dots now. When you visit a site, here's the typical flow:
+
+1. **You enter a URL** in the browser.
+2. Browser sends a **DNS request** to get the IP address.
+3. It then sends an **HTTP request** to that IP (the server).
+4. The server processes the request and sends back an **HTML response**.
+5. The browser reads the HTML, then loads the **CSS and JavaScript** files.
+6. The page is rendered on screen — and now you can interact with it!
+
+<Tip>
+Use browser DevTools → Network tab  
+You’ll see all the requests made: HTML, CSS, JS, images, fonts, APIs, and more!
+</Tip>
+
+<Divider />
+
+### Let’s Recap with a Real-World Analogy
+
+Imagine you're ordering pizza online:
+
+- You → Browser  
+- Pizza website → Server  
+- Typing URL → Placing your order  
+- Server receiving request → Taking your order  
+- Server sending HTML/CSS/JS → Pizza being delivered  
+- Browser rendering → You enjoying the pizza 🍕
+
+<Note>
+Every time you visit a website, you're going through this process — in milliseconds!
+</Note>
+
+<Task>
+Pick a simple site like `wikipedia.org`  
+- Use DevTools and analyze:
+  - How many files are loaded?
+  - What types? (HTML, CSS, JS, images)
+  - Can you find the main HTML file?
+</Task>
+
+### 🎯 Summary – What You Learned Today
+
+Today, you’ve taken your first step into the world of web design. Let’s quickly review what you’ve covered:
+
+✅ What web design is and why it matters  
+✅ How browsers and servers interact  
+✅ The flow of a typical web request  
+✅ Roles of HTML, CSS, and JavaScript  
+✅ Difference between frontend and backend  
+
+<Tip>
+Understanding how the web works under the hood gives you superpowers — you won’t just *build* websites, you’ll know *how* they live and breathe.
+</Tip>
+
+<Divider />
+
+### 🔥 What’s Coming Up Tomorrow?
+
+Tomorrow in **Day 2**, you’ll start building your first real web pages using **HTML**.  
+We’ll cover:
+
+- HTML document structure
+- Common tags like `h1`, `p`, `img`, `a`, `div`
+- Semantic HTML and best practices
+- Hands-on playgrounds to write your own code!
+
+<Note>
+From tomorrow, you’ll write real code — not just learn concepts. So gear up for the fun part!
+</Note>
+
+<Task>
+Before Day 2, install a code editor like [VS Code](https://code.visualstudio.com/).  
+Also, install a browser like Chrome or Firefox if you haven’t already.  
+Let’s get your setup ready!
+</Task>
+
+<Divider />
+
+### 🚀 You’ve Completed Day 1!
+
+You now understand how the web works — a huge foundational milestone.  
+Every great web designer starts here.
+
+Keep going. You’ve got this.  
+See you in Day 2. 👋✨
+

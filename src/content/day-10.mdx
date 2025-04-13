@@ -1,0 +1,282 @@
+
+## Day 10: Booleans, Operators & Date in JavaScript
+
+When you start adding **logic and decision-making** into your programs, JavaScript starts to feel more like a living thing. It can make decisions, check for truth or falsehood, and respond to different situations. That's where **booleans**, **operators**, and **dates** come into play.
+
+Let's break them down one by one.
+
+<Divider />
+
+## ✅ Booleans: True or False
+
+A **boolean** is a primitive data type in JavaScript that represents one of two values:
+
+<Table
+  columns={["Value", "Meaning"]}
+  data={[
+    ["true", "Represents a logical truth"],
+    ["false", "Represents a logical falsehood"],
+  ]}
+/>
+
+In real-world logic:
+
+- Is the light on? → `true`
+- Is the user logged in? → `false`
+- Has the form been submitted? → `true`
+
+<CodeBlock language="js">
+{`const isOnline = true;
+const hasAccess = false;
+
+console.log("User Online:", isOnline); // true
+console.log("Access Granted:", hasAccess); // false`}
+</CodeBlock>
+
+<Note>
+Booleans are often the result of comparisons or condition checks, which makes them a fundamental part of writing logic.
+</Note>
+
+<Divider />
+
+## 🔍 Comparison Operators
+
+Comparison operators **compare two values** and return a boolean (`true` or `false`). Here's a quick overview:
+
+<Table
+  columns={["Operator", "Meaning", "Example", "Result"]}
+  data={[
+    ["==", "Equal to (loose)", "5 == '5'", "true"],
+    ["===", "Equal to (strict)", "5 === '5'", "false"],
+    ["!=", "Not equal (loose)", "5 != '5'", "false"],
+    ["!==", "Not equal (strict)", "5 !== '5'", "true"],
+    [">", "Greater than", "10 > 5", "true"],
+    ["<", "Less than", "10 < 5", "false"],
+    [">=", "Greater or equal", "10 >= 10", "true"],
+    ["<=", "Less or equal", "10 <= 5", "false"],
+  ]}
+/>
+
+<Tip>
+Use `===` instead of `==` to avoid type coercion bugs. It compares both **value** and **type**.
+</Tip>
+
+<CodeBlock language="js">
+{`console.log(5 == "5");   // true (because types are coerced)
+console.log(5 === "5");  // false (no coercion; types differ)
+
+console.log(10 > 5);     // true
+console.log(7 <= 3);     // false`}
+</CodeBlock>
+
+<Divider />
+
+## ⚙️ Logical Operators
+
+These operators help us combine multiple conditions or reverse them.
+
+<Table
+  columns={["Operator", "Name", "Usage", "Result"]}
+  data={[
+    ["&&", "AND", "true && false", "false"],
+    ["||", "OR", "true || false", "true"],
+    ["!", "NOT", "!true", "false"],
+  ]}
+/>
+
+<CodeBlock language="js">
+{`const isLoggedIn = true;
+const hasPermission = false;
+
+console.log(isLoggedIn && hasPermission); // false
+console.log(isLoggedIn || hasPermission); // true
+console.log(!isLoggedIn);                 // false`}
+</CodeBlock>
+
+<Note>
+The AND (`&&`) operator requires **both** conditions to be true.  
+The OR (`||`) operator returns true if **any** one is true.  
+The NOT (`!`) operator **reverses** the boolean value.
+</Note>
+
+<Divider />
+
+## 🗓️ The Date Object in JavaScript
+
+JavaScript provides a built-in **Date object** to work with dates and times. You can get the current date, create specific dates, extract day/month/year values, and even manipulate time.
+
+To create a new Date object:
+
+<CodeBlock language="js">
+{`const now = new Date();
+console.log(now);`}
+</CodeBlock>
+
+This will output the current date and time based on the user’s device.
+
+<Note>
+JavaScript Date objects are based on the number of **milliseconds** since January 1, 1970 (UTC). This is known as the Unix Epoch.
+</Note>
+
+<Divider />
+
+### 📅 Common Date Methods
+
+Once you have a Date object, you can extract different parts from it:
+
+<Table
+  columns={["Method", "Description", "Example Output"]}
+  data={[
+    ["getFullYear()", "Returns the 4-digit year", "2025"],
+    ["getMonth()", "Returns month (0-11)", "0 = Jan, 11 = Dec"],
+    ["getDate()", "Returns the day of the month (1-31)", "7"],
+    ["getDay()", "Returns the weekday (0-6)", "0 = Sunday"],
+    ["getHours()", "Returns hour (0-23)", "15"],
+    ["getMinutes()", "Returns minutes (0-59)", "32"],
+    ["getSeconds()", "Returns seconds (0-59)", "10"],
+    ["getMilliseconds()", "Returns ms (0-999)", "442"],
+  ]}
+/>
+
+<Tip>
+Months are zero-indexed! So `0` means **January**, `11` means **December**.
+</Tip>
+
+<CodeBlock language="js">
+{`const today = new Date();
+
+console.log("Year:", today.getFullYear());
+console.log("Month:", today.getMonth()); // Remember: 0-based
+console.log("Date:", today.getDate());
+console.log("Day:", today.getDay());     // 0 = Sunday
+console.log("Hours:", today.getHours());
+console.log("Minutes:", today.getMinutes());
+console.log("Seconds:", today.getSeconds());`}
+</CodeBlock>
+
+<Divider />
+
+### ✨ Custom Date Creation
+
+You can also create custom dates by passing values:
+
+<CodeBlock language="js">
+{`const birthday = new Date(2000, 0, 15); // Jan 15, 2000
+console.log(birthday);`}
+</CodeBlock>
+
+Here’s the order of parameters:
+
+<Table
+  columns={["Order", "Parameter", "Example"]}
+  data={[
+    ["1", "Year", "2000"],
+    ["2", "Month (0-11)", "0 for Jan"],
+    ["3", "Day (1-31)", "15"],
+    ["4 (Optional)", "Hour (0-23)", "14"],
+    ["5 (Optional)", "Minutes", "30"],
+    ["6 (Optional)", "Seconds", "0"],
+  ]}
+/>
+
+<Note>
+If you pass invalid dates like February 30, JavaScript will adjust them automatically to valid ones.
+</Note>
+
+<Divider />
+
+## 🛠️ Real-World Usage Examples
+
+Let’s apply what we’ve learned about **Booleans, Operators**, and **Dates** using simple yet powerful examples.
+
+<Divider />
+
+### ✅ Example 1: Age Verification System
+
+Let’s say you want to check if a user is 18 or older based on their birth year.
+
+<CodeBlock language="js">
+{`const birthYear = 2005;
+const currentYear = new Date().getFullYear();
+
+const age = currentYear - birthYear;
+const isAdult = age >= 18;
+
+console.log("User is adult:", isAdult);`}
+</CodeBlock>
+
+<Tip>
+Logical and comparison operators like `>=` and `==` are heavily used in such conditional checks.
+</Tip>
+
+<Divider />
+
+### ✅ Example 2: Simple Login Validator
+
+<CodeBlock language="js">
+{`const username = "admin";
+const password = "1234";
+
+const inputUser = "admin";
+const inputPass = "1234";
+
+const isValid = inputUser === username && inputPass === password;
+
+console.log("Login success:", isValid);`}
+</CodeBlock>
+
+<Note>
+Always use `===` over `==` to avoid type coercion issues.
+</Note>
+
+<Divider />
+
+### ✅ Example 3: Working Hours Checker
+
+Let’s determine whether the current time is within work hours (9am–5pm):
+
+<CodeBlock language="js">
+{`const now = new Date();
+const hour = now.getHours();
+
+const isWorkTime = hour >= 9 && hour <= 17;
+
+console.log("Working hours?", isWorkTime);`}
+</CodeBlock>
+
+<Divider />
+
+## ✍️ Exercise
+
+Write a JavaScript program to:
+
+- Take the user's birth year
+- Calculate their age
+- Print if they are a teenager (13–19), adult (20–59), or senior (60+)
+
+<Divider />
+
+## 🎯 MCQs
+
+<MCQ
+  question="What will be the result of: `true && false || true`?"
+  options={["true", "false", "Syntax Error", "undefined"]}
+  correctAnswer={0}
+  explanation="`&&` has higher precedence than `||`, so it becomes `false || true` which results in `true`."
+/>
+
+<MCQ
+  question="Which method returns the day of the week from a Date object?"
+  options={["getDate()", "getMonth()", "getDay()", "getFullYear()"]}
+  correctAnswer={2}
+  explanation="`getDay()` returns the day of the week (0 for Sunday, 6 for Saturday)."
+/>
+
+<MCQ
+  question="Which of the following is a strict equality comparison?"
+  options={["==", "===", "!=", "<="]}
+  correctAnswer={1}
+  explanation="`===` checks both value and type without coercion, making it a strict comparison."
+/>
+
+
