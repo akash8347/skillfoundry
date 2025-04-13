@@ -20,7 +20,7 @@ export async function POST(req) {
 
     const token = generateToken(user, "10m");
     // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://192.168.1.10:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
     const magicLink = `${baseUrl}/auth/verify?token=${token}`;
 
