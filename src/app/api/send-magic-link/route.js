@@ -36,16 +36,16 @@ export async function POST(req) {
         // to: [{ email }],
         to: [{ email }],
 
-        subject: "Your Magic Login Link",
+        subject: "Your login Login Link",
         htmlContent: `
   <div style="font-family: sans-serif; padding: 24px;">
     <h2 style="color: #333;">Hello ${user.name || "there"},</h2>
-    <p>Click the button below to log in to <strong>Coding Hub</strong>:</p>
+    <p>Click the button below to log in to <strong>Skill Foundry</strong>:</p>
     <a href="${magicLink}" style="display:inline-block; padding: 12px 20px; background:#4f46e5; color:#fff; border-radius:6px; text-decoration:none;">Login Now</a>
     <p style="margin-top: 16px;">This link will expire in 10 minutes.</p>
     <hr style="margin: 32px 0; border: none; border-top: 1px solid #ccc;">
     <p style="font-size: 0.85em; color: #666;">
-      You received this email because you requested a login link for Coding Hub.<br>
+      You received this email because you requested a login link for Skill Foundry.<br>
       Skill Foundry, Mumbai, IN<br>
       <a href="mailto:support@skillfoundry.in" style="color:#999;">Unsubscribe</a>
     </p>
