@@ -124,9 +124,9 @@ export default function Checkout({ isOpen, setIsOpen }) {
         <div className="text-center text-xl font-bold sm:mb-4 mb-2">Payment Details</div>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
-          <div className="w-[140px]">
+          <div className="w-[120px]">
             <Image
-              src="/main-book-final.png"
+              src="/web-design-book.png"
               alt="Book Mockup"
               width={1208}
               height={1251}
