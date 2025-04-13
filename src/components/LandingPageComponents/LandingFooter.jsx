@@ -33,7 +33,7 @@ const LandingFooter = () => {
           <li><Link href="/refund-policy">Refund Policy</Link></li>
           <li><Link href="/about-us">About us</Link></li>
 
-          <li><Link href="/support">support</Link></li>
+          <li><Link href="/Contact-us">Contact us</Link></li>
         </ul>
       </div>
     </div>
