@@ -69,6 +69,8 @@ export default function Checkout({ isOpen, setIsOpen }) {
         description: "Purchase E-Guide Bundle",
         order_id: data.order.id,
         handler: async (response) => {
+          setLoading(true); // show loading while verifying and redirecting
+
           const verifyRes = await fetch("/api/payment-verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -80,6 +82,8 @@ export default function Checkout({ isOpen, setIsOpen }) {
             window.location.href = "/Dashboard/welcome";
           } else {
             setError("Payment verification failed.");
+            setLoading(false); // stop loading if error
+
           }
         },
         prefill: {
