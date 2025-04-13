@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import Navbar from "@/components/LandingPageComponents/Navbar";
-import Head from 'next/head'; // optional, but not used in App Router. Metadata goes directly inside <head>
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Primary Meta Tags */}
+        {/* Meta Tags */}
         <title>SkillFoundry — Learn Programming & Upgrade Your Skills</title>
         <meta name="title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
         <meta name="description" content="SkillFoundry is a leading platform offering high-quality programming and tech courses to help you level up your career." />
@@ -36,7 +35,7 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow" />
 
         {/* Favicon */}
-        <link rel="icon" href="public/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -51,15 +50,30 @@ export default function RootLayout({ children }) {
         <meta property="twitter:title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
         <meta property="twitter:description" content="Join SkillFoundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
         <meta property="twitter:image" content="https://skillfoundry.in/title-logo.jpg" />
-
-        
-
-        {/* Razorpay Script */}
-        <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-S0ZH0MENPZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-S0ZH0MENPZ');
+          `}
+        </Script>
+
+        {/* Razorpay Script */}
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="afterInteractive"
+        />
+
         {children}
       </body>
     </html>
