@@ -126,7 +126,7 @@ export default function Checkout({ isOpen, setIsOpen }) {
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
           <div className="w-[120px]">
             <Image
-              src="/web-design-book.png"
+              src="/web-design-book.webp"
               alt="Book Mockup"
               width={1208}
               height={1251}

@@ -61,7 +61,7 @@ export default function LandingPage() {
           <section className=" lg:py-20 xl:px-28 lg:px-4 lg:w-[90%] xl:w-[90%] lg:mx-auto xl:mx-auto pt-2 sm:pt-5 pb-8 flex flex-col lg:flex-row items-center text-black">
             <div className="w-[80%] mb-3 mt-2  lg:mt-0 lg:mb-0 lg:w-full max-w-[250px] lg:max-w-[380px] mx-auto">
               <Image
-                src="/web-design-book.png"
+                src="/web-design-book.webp"
                 alt="30 Days Web Design Mastery"
                 width={350}
                 height={100}
