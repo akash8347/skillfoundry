@@ -69,7 +69,7 @@ export default function Home() {
                 HTML, CSS, JavaScript + Projects, Quizzes & Certificate.
               </p>
               <Link
-                href="/Web-Desin-Course"
+                href="/Web-Design-Course"
                 className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition"
               >
                 View Course
