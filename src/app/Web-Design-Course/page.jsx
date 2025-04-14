@@ -86,7 +86,7 @@ export default function LandingPage() {
 
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3 text-sm sm:text-base">
                   <div className="flex items-center text-green-600 font-semibold">
-                    <span className="mr-1">4.8</span>
+                    <span className="mr-1">4.9</span>
                     <span className="text-yellow-500">★★★★★</span>
                     <span className="ml-2 text-green-600">(1,200+ reviews)</span>
                   </div>

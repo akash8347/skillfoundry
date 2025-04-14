@@ -43,8 +43,8 @@ export default function PrivacyPolicy() {
         <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
         <p>
           If you have any questions or concerns about this Privacy Policy, please reach out to us at{" "}
-          <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
-            support@skill-foundry.in
+          <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
+          skill.foundry365@gmail.com
           </Link>
           .
         </p>

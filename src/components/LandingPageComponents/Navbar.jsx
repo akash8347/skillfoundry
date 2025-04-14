@@ -43,7 +43,7 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="absolute left-0 top-[100%] w-full bg-white shadow-md px-6 py-4 space-y-2 border-t border-gray-200 z-40"
           >
-            <Link href="/Web-Desin-Course" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+            <Link href="/Web-Design-Course" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               Home
             </Link>
             <Link href="/Dashboard" className="block text-gray-800 font-medium hover:text-blue-600 transition">

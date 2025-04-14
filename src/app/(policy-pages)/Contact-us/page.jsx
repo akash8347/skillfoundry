@@ -11,8 +11,8 @@ const faqs = [
     answer: (
       <>
         If you purchased a course from Skill Foundry, you can access all your purchased content by visiting{" "}
-        <a href="https://skill-foundry.in/dashboard" className="text-blue-600 underline">
-          skill-foundry.in/dashboard
+        <a href="https://skill-foundry.in/Dashboard" className="text-blue-600 underline">
+          skill-foundry.in/Dashboard
         </a>
         .
       </>
@@ -23,8 +23,8 @@ const faqs = [
     answer: (
       <>
         If you're having trouble logging in, please contact us directly at{" "}
-        <a href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
-          support@skill-foundry.in
+        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
+        skill.foundry365@gmail.com
         </a>
         . We'll be happy to assist you as soon as possible.
       </>
@@ -35,8 +35,8 @@ const faqs = [
     answer: (
       <>
         If you need to change the name on your certificate, please email us at{" "}
-        <a href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
-          support@skill-foundry.in
+        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
+        skill.foundry365@gmail.com
         </a>{" "}
         with your request and the correct name you want to appear on the certificate.
       </>
@@ -64,8 +64,8 @@ export default function Support() {
         <ul className="list-disc pl-6 mb-8">
           <li>
             Email:{" "}
-            <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
-            support@skill-foundry.in
+            <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
+            skill.foundry365@gmail.com
           </Link>
           </li>
         </ul>
