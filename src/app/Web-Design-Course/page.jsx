@@ -71,38 +71,38 @@ export default function LandingPage() {
             </div>
 
 
-            <div className="md:w-[80%] w-[90%] mx-auto mt-2 lg:mt-0">
+            <div className="md:w-[80%] w-[90%] mx-auto  lg:mt-0">
               <div>
                 <h2 className=" text-[2rem] sm:text-4xl font-extrabold leading-tight text-black">
                   Become a Certified Web Designer in Just 30 Days
                 </h2>
-{/* for mobile grid */}
- {/* books grid */}
- <section className=" mt-2 sm:hidden mb-5">
-            <h2 className="hidden sm:text-4xl mb-2 text-2xl mx-auto mt-8 w-[90%] sm:w-[68%] font-semibold sm:mb-5 text-gray-900 text-center">
-              Premium Guides Provided
-            </h2>
+                {/* for mobile grid */}
+                {/* books grid */}
+                <section className=" mt-2 sm:hidden mb-5">
+                  <h2 className="hidden sm:text-4xl mb-2 text-2xl mx-auto mt-8 w-[90%] sm:w-[68%] font-semibold sm:mb-5 text-gray-900 text-center">
+                    Premium Guides Provided
+                  </h2>
 
-            <div className="w-[95%] sm:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto p-2 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
-              {books.map((book, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center border border-gray-200 rounded-lg  sm:p-3"
-                >
-                  <Image
-                    src={`/book-${index}.png`}
-                    alt={book.title}
-                    height={500}
-                    width={380}
-                    className="h-48 w-55 sm:h-64 object-contain transition-all duration-300"
-                  />
-                  <p className="mt-1 sm:mt-2 text-center text-sm sm:text-base font-medium">
-                    {book.title}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
+                  <div className="w-[95%] sm:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto p-2 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
+                    {books.map((book, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center border border-gray-200 rounded-lg  sm:p-3"
+                      >
+                        <Image
+                          src={`/book-${index}.png`}
+                          alt={book.title}
+                          height={500}
+                          width={380}
+                          className="h-48 w-55 sm:h-64 object-contain transition-all duration-300"
+                        />
+                        <p className="mt-1 sm:mt-2 text-center text-sm sm:text-base font-medium">
+                          {book.title}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
 
 
 
