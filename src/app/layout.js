@@ -3,7 +3,7 @@ import "./globals.css";
 import Script from 'next/script';
 import Navbar from "@/components/LandingPageComponents/Navbar";
 import { Analytics } from '@vercel/analytics/next';
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -99,6 +99,7 @@ fbq('track', 'PageView');
 
         {children}
         <Analytics />
+        <SpeedInsights />
 
       </body>
     </html>
