@@ -19,16 +19,7 @@ export default function DashboardLayout({ children }) {
       : `Day ${currentSlug}`;
 
 
-      useEffect(() => {
-        
-          gtag('event', 'conversion', {
-              send_to: 'AW-10800865067/A0HdCJbchbgaEKu-oJ4o',
-              'transaction_id': ''
-          });
-        
-
-
-      }, []);
+     
   useEffect(() => {
     const handleScroll = () => {
       // Only close on small screens when sidebar is open

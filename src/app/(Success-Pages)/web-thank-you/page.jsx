@@ -1,6 +1,19 @@
 // components/SuccessCard.jsx
 
+import { useEffect } from "react";
+
 export default function SuccessCard() {
+
+   useEffect(() => {
+          
+            gtag('event', 'conversion', {
+                send_to: 'AW-10800865067/A0HdCJbchbgaEKu-oJ4o',
+                'transaction_id': ''
+            });
+          
+  
+  
+        }, []);
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
         <div className="bg-white max-w-md w-full rounded-2xl shadow-lg p-8 text-center">
