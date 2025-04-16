@@ -42,7 +42,7 @@ export default function SuccessCard() {
   
           {/* Download Button */}
           <a
-            href="/https://drive.google.com/drive/folders/1S5SjSt2jWIeWSTOCUT78k-kvo8maLle8?usp=sharing" // update this
+            href="https://drive.google.com/drive/folders/1S5SjSt2jWIeWSTOCUT78k-kvo8maLle8?usp=sharing" // update this
             className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
           >
             Download Now
