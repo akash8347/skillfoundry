@@ -6,8 +6,8 @@ const StickyBuyNow = ({ setCheckoutOpen }) => {
     <div className="fixed bottom-0 left-0 w-full md:hidden bg-white border-t border-gray-200 px-4 py-2 flex justify-between items-center z-50">
       <div>
         <div className="text-lg font-bold text-black">
-          ₹499
-          <span className="text-sm line-through text-gray-500 ml-2">₹4999</span>
+          ₹199
+          <span className="text-sm line-through text-gray-500 ml-2">₹2000</span>
         </div>
         <div className="text-green-600 text-sm font-medium">90% off</div>
       </div>

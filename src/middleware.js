@@ -10,7 +10,10 @@ export async function middleware(request) {
   if (pathname === "/login" && token) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-  const isProtected = pathname.startsWith("/Dashboard") || pathname.startsWith("/certification")
+  const isProtected =
+  pathname.startsWith("/Dashboard") ||
+  pathname.startsWith("/certification") ||
+  pathname.startsWith("/download");
 
   if (isProtected) {
     const verified = token ? await verifyTokenEdge(token) : null;
@@ -24,5 +27,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/Dashboard/:path*", "/Dashboard","/certification","/certification/:path*"],
+  matcher: ["/Dashboard/:path*", "/Dashboard","/certification","/certification/:path*","/download/:path*", "/download"],
 };

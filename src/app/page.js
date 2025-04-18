@@ -58,7 +58,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
             <div className="bg-gray-100 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform">
               <Image
-                src="/main-book-final.png"
+                src="/web-design-book.webp"
                 width={400}
                 height={300}
                 alt="Web Design Course"

@@ -5,7 +5,7 @@ export default function Materials() {
     <div className="p-6 max-w-3xl mx-auto space-y-6">
       <h2 className="text-3xl font-bold text-gray-800">📚 Downloadable Materials</h2>
       <p className="text-gray-600">
-        Here you can download all the supporting materials for the course.
+        Here you can download all the materials for the course.
       </p>
 
       <div className="space-y-4">

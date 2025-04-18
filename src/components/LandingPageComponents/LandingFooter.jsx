@@ -21,7 +21,7 @@ const LandingFooter = () => {
         <h4 className="font-semibold mb-2 text-gray-800">Quick Links</h4>
         <ul className="space-y-1 text-sm text-gray-600">
           <li><Link href="/">Home</Link></li>
-          <li><Link href="/Dashboard">Dashboard</Link></li>
+          <li><Link href="/download/js-download">Dashboard</Link></li>
           <li><Link href="#courses">Courses</Link></li>
         </ul>
       </div>
