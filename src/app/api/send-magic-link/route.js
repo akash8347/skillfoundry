@@ -47,7 +47,6 @@ export async function POST(req) {
     <p style="font-size: 0.85em; color: #666;">
       You received this email because you requested a login link for Skill Foundry.<br>
       Skill Foundry, Mumbai, IN<br>
-      <a href="mailto:support@skillfoundry.in" style="color:#999;">Unsubscribe</a>
     </p>
   </div>
 `

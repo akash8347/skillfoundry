@@ -4,14 +4,27 @@ import { Plus, Minus } from "lucide-react";
 import Navbar from "@/lib/myComponents/Navbar";
 import Link from "next/link";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
-
+const backup=[
+  {
+    question: "I want to change my certificate name",
+    answer: (
+      <>
+        If you need to change the name on your certificate, please email us at{" "}
+        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
+        skill.foundry365@gmail.com
+        </a>{" "}
+        with your request and the correct name you want to appear on the certificate.
+      </>
+    ),
+  }
+]
 const faqs = [
   {
     question: "How can I access my already purchased course which I am unable to find?",
     answer: (
       <>
         If you purchased a course from Skill Foundry, you can access all your purchased content by visiting{" "}
-        <a href="https://skill-foundry.in/Dashboard" className="text-blue-600 underline">
+        <a href="https://skill-foundry.in/download/js-download" className="text-blue-600 underline">
           skill-foundry.in/Dashboard
         </a>
         .
@@ -30,18 +43,7 @@ const faqs = [
       </>
     ),
   },
-  {
-    question: "I want to change my certificate name",
-    answer: (
-      <>
-        If you need to change the name on your certificate, please email us at{" "}
-        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-        skill.foundry365@gmail.com
-        </a>{" "}
-        with your request and the correct name you want to appear on the certificate.
-      </>
-    ),
-  },
+  
 ];
 
 export default function Support() {

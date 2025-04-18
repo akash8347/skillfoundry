@@ -29,7 +29,7 @@ const JSnavbar = () => {
         </Link>
 
         <div className="pr-5 sm:pr-10">
-          30 DAYS OF mastery
+          30 DAYS OF MASTERY
         </div>
 
         <button

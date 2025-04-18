@@ -13,7 +13,7 @@ export default function TermsAndConditions() {
         <h2 className="text-xl font-semibold mb-2">Introduction</h2>
         <p className="mb-4">
           Welcome to <strong>Skill Foundry</strong>! These Terms and Conditions govern your use of our website,{" "}
-          <strong>skill-foundry.in</strong>, and access to the 30 Days of Web Design Mastery course. By using our platform, you accept these terms in full. If you disagree with any part of these terms, please refrain from using our website.
+          <strong>skill-foundry.in</strong>, and access to the courses. By using our platform, you accept these terms in full. If you disagree with any part of these terms, please refrain from using our website.
         </p>
 
         <h2 className="text-xl font-semibold mb-2">Intellectual Property Rights</h2>

@@ -10,7 +10,7 @@ export default function RefundPolicy() {
         <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
   
         <p className="mb-4">
-          Thank you for choosing <strong>Skill Foundry</strong> and enrolling in our 30 Days of Web Design Mastery course at <strong>skill-foundry.in</strong>.
+          Thank you for choosing <strong>Skill Foundry</strong> and enrolling in our courses at <strong>skill-foundry.in</strong>.
         </p>
   
         <h2 className="text-xl font-semibold mb-2">Digital Products</h2>

@@ -8,7 +8,7 @@ import FAQSection from "../30-days-Web/lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JSCheckout from "./lib/JSCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -16,7 +16,22 @@ import { Star } from "lucide-react";
 import { UrgencySection } from "../comman-components/UrgencySection";
 import WhyAffordable from "../comman-components/WhyAffordable";
 import BundleOfferBanner from "../comman-components/BundleOfferBanner";
+
+
+
 export default function LandingLayout() {
+  const [enrolled, setEnrolled] = useState(43);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomChance = Math.random();
+      if (randomChance < 0.05) { // 5% chance to increment
+        setEnrolled((prev) => prev + 1);
+      }
+    }, 60000); // every 60 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
 
@@ -25,7 +40,7 @@ export default function LandingLayout() {
       <title>30 days of Javascript mastery</title>
 
       <Navbar />
-      <UrgencyBadge />
+      {/* <UrgencyBadge /> */}
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -60,7 +75,27 @@ export default function LandingLayout() {
                   <span className="text-gray-500">5,000+ students</span>
                 </div>
               </div>
-              {/* <MobileOfferCard/> */}
+              {/* ------------------<MobileOfferCard/> */}
+              <div className="md:hidden w-full  my-4">
+
+                {/* Enrollment Stat */}
+                <div className="bg-gray-100 border border-gray-300 rounded-xl p-2 text-sm text-gray-700 mb-3">
+
+                  <p>
+                    <span className="font-semibold">{enrolled} people</span> enrolled in the last 24 hours!
+                  </p>
+                </div>
+
+                <button onClick={() => setCheckoutOpen(true)}
+                  className="relative w-full bg-gradient-to-r from-teal-400 to-sky-400 text-white font-semibold text-[17px] py-3 rounded-2xl shadow-xl hover:from-teal-500 hover:to-sky-500 transition duration-300">
+                    ENROLL NOW
+                  <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] font-bold px-2 py-[2px] rounded-full shadow">
+                    BEST DEAL
+                  </span>
+                </button>
+
+
+              </div>
 
               <p className="text-gray-700 text-base leading-relaxed mb-4">
                 These structured, hands-on JavaScript guides take you from beginner to advanced with real-world projects to make you job-ready. Whether you're starting from scratch or sharpening your skills, this pack has everything you need.

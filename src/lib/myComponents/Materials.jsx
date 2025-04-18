@@ -9,8 +9,8 @@ export default function Materials() {
       </p>
 
       <div className="space-y-4">
-        <DownloadButton filename="html.pdf" label="HTML Cheatsheet" />
-        <DownloadButton filename="CSS.pdf" label="CSS Guide" />
+        <DownloadButton filename="html.pdf" label="HTML Made Easy" />
+        <DownloadButton filename="CSS.pdf" label="CSS Made Easy" />
         <DownloadButton filename="30_DAYS_OF_JAVASCRIPT.pdf" label="30 days of JavaScript e-guide" />
         <DownloadButton filename="JS-100-INTERVIEW-QUESTIONS.pdf" label="100+ interview questions" />
         <DownloadButton filename="JS-100-QUIZ.pdf" label="100+ quizzes & mcqs" />

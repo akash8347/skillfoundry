@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
 
         <p className="mb-4">
-          This Privacy Policy explains how <strong>Skill Foundry</strong> collects, uses, and protects your information when you use our website and enroll in the 30 Days of Web Design Mastery course available at{" "}
+          This Privacy Policy explains how <strong>Skill Foundry</strong> collects, uses, and protects your information when you use our website and enroll in the Mastery courses available at{" "}
           <strong>skill-foundry.in</strong>. By using our website, you agree to the terms outlined in this policy.
         </p>
 

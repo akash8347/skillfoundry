@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "SkillFoundry — Learn Programming & Upgrade Your Skills",
-  description: "SkillFoundry is a leading platform offering high-quality programming and tech courses to help you level up your career.",
-  icons: {
-    icon: '/icon.png',
-  },
-};
+// export const metadata = {
+//   title: "SkillFoundry — Learn Programming & Upgrade Your Skills",
+//   description: "SkillFoundry is a leading platform offering high-quality programming and tech courses to help you level up your career.",
+//   icons: {
+//     icon: '/icon.png',
+//   },
+// };
 
 export default function RootLayout({ children }) {
   return (
