@@ -86,13 +86,13 @@ export default function LandingLayout() {
                   </p>
                 </div>
 
-                <button onClick={() => setCheckoutOpen(true)}
+                {/* <button onClick={() => setCheckoutOpen(true)}
                   className="relative w-full bg-gradient-to-r from-teal-400 to-sky-400 text-white font-semibold text-[17px] py-2 rounded-2xl shadow-xl hover:from-teal-500 hover:to-sky-500 transition duration-300">
                     ENROLL NOW
                   <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] font-bold px-2 py-[2px] rounded-full shadow">
                     BEST DEAL
                   </span>
-                </button>
+                </button> */}
 
 
               </div>
