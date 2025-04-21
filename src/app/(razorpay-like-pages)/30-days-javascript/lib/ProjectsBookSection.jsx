@@ -18,7 +18,7 @@ export default function ProjectsBookSection() {
             alt="100+ JavaScript Projects"
             width={300}
             height={400}
-            className="w-[250px] md:w-[300px] h-auto mx-auto rounded-md hover:scale-105 transition-transform duration-300 ease-in-out"
+            className="w-[200px] md:w-[300px] h-auto mx-auto rounded-md hover:scale-105 transition-transform duration-300 ease-in-out"
           />
         </div>
 

@@ -5,20 +5,17 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function JSCheckout({ isOpen, setIsOpen }) {
-  const [form, setForm] = useState({ name: "", email: "", mobile: "" });
+  const [form, setForm] = useState({  email: "", mobile: "" });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
     const errors = {};
-    const nameTrimmed = form.name.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[6-9]\d{9}$/;
 
-    if (!nameTrimmed || nameTrimmed.length < 3) {
-      errors.name = "Name must be at least 3 characters long";
-    }
+
 
     if (!emailRegex.test(form.email)) {
       errors.email = "Enter a valid email address";
@@ -63,7 +60,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 19900,
+        amount: 14900,
         currency: "INR",
         name: "Javascript Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -87,7 +84,6 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           }
         },
         prefill: {
-          name: form.name,
           email: form.email,
           contact: form.mobile,
         },
@@ -140,7 +136,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn HTML, CSS, JavaScript, live coding, premium guides and more.
             </p>
-            <p className="font-bold text-green-700">₹199</p>
+            <p className="font-bold text-green-700">₹149</p>
           </div>
         </div>
 
@@ -165,18 +161,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         <form className="space-y-4 mt-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              name="name"
-              className={`w-full border ${fieldErrors.name ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              placeholder="Enter your name"
-              onChange={handleChange}
-              value={form.name}
-            />
-            {fieldErrors.name && <p className="text-xs text-red-500 mt-1">{fieldErrors.name}</p>}
-          </div>
+     
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -209,7 +194,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 199"}
+            {loading ? "Processing..." : "Buy @ INR 149"}
           </Button>
         </form>
       </div>

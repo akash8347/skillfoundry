@@ -6,7 +6,7 @@ export const UrgencySection = () => {
       {/* Top Row - Badge and Timer */}
       <div className="flex justify-between items-center mb-3">
         <span className="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-1 rounded-full">
-          #199
+          #149
         </span>
         <span className="text-amber-700 text-sm font-medium">
           Limited Time Offer - Expires Soon!

@@ -12,7 +12,6 @@ export async function POST(req) {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      name,
       email,
       mobile,
     } = await req.json();
@@ -35,7 +34,6 @@ export async function POST(req) {
       await user.save();
     } else {
       user = new User({
-        name,
         email,
         mobile,
         certificateNumber: `WD-${uuidv4().slice(0, 8).toUpperCase()}`,

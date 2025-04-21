@@ -16,7 +16,7 @@ export default function Bonus() {
             alt="JavaScript Interview Questions"
             width={220}
             height={300}
-            className="w-[250px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+            className="w-[200px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
@@ -37,7 +37,7 @@ export default function Bonus() {
             alt="JavaScript MCQs and Quizzes"
             width={220}
             height={300}
-            className="w-[250px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+            className="w-[200px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
