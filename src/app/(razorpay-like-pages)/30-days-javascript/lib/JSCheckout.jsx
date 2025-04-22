@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function JSCheckout({ isOpen, setIsOpen }) {
-  const [form, setForm] = useState({  email: "", mobile: "" });
+  const [form, setForm] = useState({ email: "", mobile: "" });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -76,6 +76,15 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
           const verifyData = await verifyRes.json();
           if (verifyData.success) {
+
+            // Trigger Facebook Purchase event
+            if (typeof window !== 'undefined' && window.fbq) {
+              window.fbq('track', 'Purchase', {
+                value: 149.00,
+                currency: 'INR'
+              });
+            }
+
             window.location.href = "/download/js-download";
           } else {
             setError("Payment verification failed.");
@@ -161,7 +170,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         <form className="space-y-4 mt-4">
-     
+
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -190,8 +199,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           </div>
 
           <Button
-        className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
-        onClick={handlePayment}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+            onClick={handlePayment}
             disabled={loading}
           >
             {loading ? "Processing..." : "Buy @ INR 149"}
