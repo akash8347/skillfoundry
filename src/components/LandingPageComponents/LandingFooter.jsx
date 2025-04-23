@@ -32,7 +32,7 @@ const LandingFooter = () => {
           <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           <li><Link href="/refund-policy">Refund Policy</Link></li>
           <li><Link href="/about-us">About us</Link></li>
-
+          <li><Link href="/operational-address">Operational Address</Link></li>
           <li><Link href="/Contact-us">Contact us</Link></li>
         </ul>
       </div>
