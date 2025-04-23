@@ -49,35 +49,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Courses Section */}
-      <section id="courses" className="px-6 py-20 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">
-            Our Courses
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
-            <div className="bg-gray-100 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform">
-              <Image
-                src="/web-design-book.webp"
-                width={400}
-                height={300}
-                alt="Web Design Course"
-                className="rounded-lg mb-4 w-full h-auto object-contain"
-              />
-              <h3 className="text-2xl font-semibold mb-2">30 Days of Web Design Mastery</h3>
-              <p className="text-gray-600 mb-4 text-sm">
-                HTML, CSS, JavaScript + Projects, Quizzes & Certificate.
-              </p>
-              <Link
-                href="/Web-Design-Course"
-                className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition"
-              >
-                View Course
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Roadmap Section */}
       <section className="px-6 py-20 bg-gray-50 border-t border-gray-200">
