@@ -24,7 +24,7 @@ export default function Home() {
             <Link href="#courses" className="text-sm font-medium hover:text-blue-600 transition">
               Courses
             </Link>
-            <Link href="/Dashboard" className="text-sm font-medium hover:text-blue-600 transition">
+            <Link href="/download/js-download" className="text-sm font-medium hover:text-blue-600 transition">
               Dashboard
             </Link>
           </nav>
@@ -48,8 +48,37 @@ export default function Home() {
           </Link>
         </div>
       </section>
+ 
+     {/* Courses Section */}
+<section id="courses" className="px-6 py-20 bg-white border-t border-gray-200">
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-4xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+      Our Courses
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 place-items-center">
+      {/* Course Card */}
+      <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-sm w-full border border-gray-100">
+        <Image
+          src="/main-image.webp"
+          alt="30 Days of JavaScript"
+          width={600}
+          height={400}
+          className="w-full h-auto object-cover"
+        />
+        <div className="p-6 text-center">
+          <h3 className="text-xl font-semibold mb-4">30 Days JavaScript Pack</h3>
+          <Link
+            href="/30-days-javascript"
+            className="inline-block mt-2 bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+          >
+            Learn More
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-     
 
       {/* Roadmap Section */}
       <section className="px-6 py-20 bg-gray-50 border-t border-gray-200">
