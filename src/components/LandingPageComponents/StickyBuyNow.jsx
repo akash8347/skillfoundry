@@ -23,17 +23,18 @@ const StickyBuyNow = ({ setCheckoutOpen }) => {
         </div>
       </div>
 
-      {/* Vibration animation button */}
+      {/* Strong Vibrating Motion Button */}
       <motion.button
-        initial={{ x: 0 }}
-        animate={{ x: [0, -4, 4, -4, 4, 0] }}
-        transition={{
-          duration: 0.4,
-          repeat: Infinity,
-          repeatDelay: 1.5,
-          ease: 'easeInOut',
+        animate={{
+          x: [0, -6, 6, -6, 6, -4, 4, -2, 2, 0]
         }}
-        className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2 px-5 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+        transition={{
+          duration: 0.6,
+          repeat: Infinity,
+          repeatDelay: 1.2,
+          ease: 'easeInOut'
+        }}
+        className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2.5 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
         onClick={() => setCheckoutOpen(true)}
       >
         <Zap className="w-4 h-4" />
