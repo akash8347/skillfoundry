@@ -131,19 +131,16 @@
   scrollbar-width: none;
 }
 
-@keyframes vibrate {
-  0%, 100% { transform: translateX(0); }
-  10% { transform: translateX(-3px); }
-  20% { transform: translateX(3px); }
-  30% { transform: translateX(-3px); }
-  40% { transform: translateX(3px); }
-  50% { transform: translateX(-2px); }
-  60% { transform: translateX(2px); }
-  70% { transform: translateX(-1px); }
-  80% { transform: translateX(1px); }
-  90% { transform: translateX(0); }
+@keyframes gentle-vibrate {
+  0% { transform: translateX(0); }
+  2% { transform: translateX(-2px); }
+  4% { transform: translateX(2px); }
+  6% { transform: translateX(-2px); }
+  8% { transform: translateX(2px); }
+  10% { transform: translateX(0); }
+  100% { transform: translateX(0); }
 }
 
 .vibrate-btn {
-  animation: vibrate 0.4s ease-in-out infinite;
+  animation: gentle-vibrate 2s ease-in-out infinite;
 }
