@@ -1,4 +1,7 @@
+'use client'
+
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Button } from '../ui/button'
 import { Zap, Clock } from 'lucide-react'
 
@@ -20,13 +23,23 @@ const StickyBuyNow = ({ setCheckoutOpen }) => {
           </div>
         </div>
       </div>
-      <Button
-        className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+
+      {/* Vibrating Motion Button */}
+      <motion.button
+        initial={{ x: 0 }}
+        animate={{ x: [0, -2, 2, -2, 2, 0] }}
+        transition={{
+          duration: 0.3,
+          repeat: Infinity,
+          repeatDelay: 2,
+          ease: 'easeInOut',
+        }}
+        className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 min-w-[140px]"
         onClick={() => setCheckoutOpen(true)}
       >
         <Zap className="w-4 h-4" />
         <span>Buy Now</span>
-      </Button>
+      </motion.button>
     </div>
   )
 }
