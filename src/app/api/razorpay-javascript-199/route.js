@@ -10,7 +10,7 @@ export async function POST(req) {
         });
 
         const options = {
-            amount: 14900, // ₹149 in paise
+            amount: 19900, // ₹199 in paise
             currency: "INR",
             receipt: `order_rcptid_${Date.now()}`,
         };
@@ -19,6 +19,7 @@ export async function POST(req) {
 
         return Response.json({ order, name, email, mobile });
     } catch (error) {
+        
         return Response.json({ error: "Failed to create Razorpay order" }, { status: 500 });
     }
 }

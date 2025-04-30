@@ -59,16 +59,16 @@ export default function Home() {
       {/* Course Card */}
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-sm w-full border border-gray-100">
         <Image
-          src="/main-image.webp"
-          alt="30 Days of JavaScript"
+          src="/last.png"
+          alt="30 Days of Python"
           width={600}
           height={400}
           className="w-full h-auto object-cover"
         />
         <div className="p-6 text-center">
-          <h3 className="text-xl font-semibold mb-4">30 Days JavaScript Pack</h3>
+          <h3 className="text-xl font-semibold mb-4">30 Days Python Pack</h3>
           <Link
-            href="/30-days-javascript"
+            href="/30-days-python"
             className="inline-block mt-2 bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
           >
             Learn More

@@ -16,7 +16,7 @@ export default function VerifyPage() {
       body: JSON.stringify({ token }),
     }).then(async (res) => {
       if (res.ok) {
-        window.location.href = "/download/js-download";
+        window.location.href = "/download/python-download";
       } else {
         alert("Invalid or expired token.");
         window.location.href = "/login";

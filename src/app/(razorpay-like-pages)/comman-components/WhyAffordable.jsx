@@ -59,7 +59,7 @@ export default function WhyAffordable() {
               <p className="text-gray-700 text-xs md:text-sm">Pages of Content</p>
             </div>
             <div className="bg-green-100 rounded-lg p-3 text-center">
-              <p className="text-lg md:text-2xl font-bold text-green-800">100+</p>
+              <p className="text-lg md:text-2xl font-bold text-green-800">150+</p>
               <p className="text-gray-700 text-xs md:text-sm">Complete Projects</p>
             </div>
             <div className="bg-green-100 rounded-lg p-3 text-center">
