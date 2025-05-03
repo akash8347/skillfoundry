@@ -24,21 +24,22 @@ import JsStickyBuyNow from "@/components/LandingPageComponents/JsStickyBuyNow";
 
 
 export default function LandingLayout() {
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
   const [showBack, setShowBack] = useState(false)
 
 
   useEffect(() => {
-    if (searchParams.get('from') === 'checkout') {
+    let params = new URLSearchParams(document.location.search);
+    if (params.get('from') === 'checkout') {
       setShowBack(true)
     }
-  }, [searchParams])
+  }, [params])
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
 
   return (
     <>
-    <Suspense>
+    
       <title>30 days of Javascript mastery</title>
       {showBack && (
   <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
@@ -147,7 +148,6 @@ export default function LandingLayout() {
 
 
       </div>
-      </Suspense>
     </>
   );
 }
