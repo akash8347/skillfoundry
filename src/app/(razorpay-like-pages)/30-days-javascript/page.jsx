@@ -30,11 +30,12 @@ export default function LandingLayout() {
 
 
   useEffect(() => {
-    let params = new URLSearchParams(document.location.search);
+    const params = new URLSearchParams(window.location.search)
     if (params.get('from') === 'checkout') {
       setShowBack(true)
     }
-  }, [params])
+  }, [])
+  
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
 
   return (
