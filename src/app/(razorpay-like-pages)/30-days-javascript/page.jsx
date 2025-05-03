@@ -8,7 +8,7 @@ import FAQSection from "../30-days-Web/lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import JSCheckout from "./lib/JSCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -38,6 +38,7 @@ export default function LandingLayout() {
 
   return (
     <>
+    <Suspense>
       <title>30 days of Javascript mastery</title>
       {showBack && (
   <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
@@ -146,6 +147,7 @@ export default function LandingLayout() {
 
 
       </div>
+      </Suspense>
     </>
   );
 }
