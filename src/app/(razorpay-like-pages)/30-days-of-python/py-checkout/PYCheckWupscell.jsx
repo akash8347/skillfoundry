@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
@@ -172,7 +173,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     />
     <div>
       <p className="text-sm font-medium text-gray-800">
-        Add the <a href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</a> to your order.
+        Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
       </p>
       <p className="text-xs text-gray-700 mt-1">
         Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
