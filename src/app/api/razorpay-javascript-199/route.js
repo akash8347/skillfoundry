@@ -2,7 +2,7 @@ import Razorpay from "razorpay";
 
 export async function POST(req) {
     try {
-        const { name, email, mobile } = await req.json();
+        const { name, email, mobile, amount } = await req.json();
 
         const razorpay = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
@@ -10,7 +10,7 @@ export async function POST(req) {
         });
 
         const options = {
-            amount: 19900, // ₹199 in paise
+            amount: amount, // amount in paise, must be a number (e.g., 50000 for ₹500.00)
             currency: "INR",
             receipt: `order_rcptid_${Date.now()}`,
         };
@@ -19,7 +19,7 @@ export async function POST(req) {
 
         return Response.json({ order, name, email, mobile });
     } catch (error) {
-        
+        console.error("Razorpay order creation error:", error); // <-- This is important!
         return Response.json({ error: "Failed to create Razorpay order" }, { status: 500 });
     }
 }

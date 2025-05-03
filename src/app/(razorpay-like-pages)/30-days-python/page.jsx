@@ -19,16 +19,19 @@ import BundleOfferBanner from "../comman-components/BundleOfferBanner";
 import AIBookSection from "./lib/AIBookSection";
 import AutomationPythonBookSection from "./lib/AutomationPythonBookSection";
 import WebDevPythonBookSection from "./lib/WebDevPythonBookSection";
+import { useRouter } from "next/navigation";
+
 export default function LandingLayout() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
+  const router = useRouter();
 
   return (
     <>
-      <title>30 days of Javascript mastery</title>
+      <title>30 days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge />
+      <UrgencyBadge price={299} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -38,7 +41,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day Python Mastery Pack – ₹199
+                30-Day Python Mastery Pack – ₹299
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-6" />
 
@@ -103,7 +106,7 @@ export default function LandingLayout() {
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  onClick={() => setCheckoutOpen(true)}
+      onClick={() => router.push("/30-days-python/py-checkout")}
 
                 >
                   Buy Now
@@ -113,9 +116,15 @@ export default function LandingLayout() {
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow setCheckoutOpen={setCheckoutOpen} />
+        <StickyBuyNow   setCheckoutOpen={setCheckoutOpen} />
+
 
       </div>
+
+
+
+
+
     </>
   );
 }

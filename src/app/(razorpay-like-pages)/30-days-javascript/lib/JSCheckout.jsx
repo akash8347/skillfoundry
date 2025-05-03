@@ -10,6 +10,9 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+  const courseIdentifier="javascript_199";
+  const amount=19900;
+
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,7 +51,11 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
       const res = await fetch("/api/razorpay-javascript-199", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          amount,
+          
+        }),
       });
 
       const data = await res.json();
@@ -60,7 +67,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 14900,
+        amount: 19900,
         currency: "INR",
         name: "Javascript Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -71,7 +78,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           const verifyRes = await fetch("/api/payment-verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, ...form }),
+            body: JSON.stringify({ ...response, ...form, courseIdentifier:courseIdentifier }),
           });
 
           const verifyData = await verifyRes.json();
@@ -80,7 +87,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             // Trigger Facebook Purchase event
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
-                value: 149.00,
+                value: 199.00,
                 currency: 'INR'
               });
             }
@@ -145,7 +152,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn HTML, CSS, JavaScript, live coding, premium guides and more.
             </p>
-            <p className="font-bold text-green-700">₹149</p>
+            <p className="font-bold text-green-700">₹199</p>
           </div>
         </div>
 
@@ -203,7 +210,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 149"}
+            {loading ? "Processing..." : "Buy @ INR 199"}
           </Button>
         </form>
       </div>

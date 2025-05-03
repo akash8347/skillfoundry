@@ -24,7 +24,7 @@ export default function Home() {
             <Link href="#courses" className="text-sm font-medium hover:text-blue-600 transition">
               Courses
             </Link>
-            <Link href="/download/js-download" className="text-sm font-medium hover:text-blue-600 transition">
+            <Link href="/download" className="text-sm font-medium hover:text-blue-600 transition">
               Dashboard
             </Link>
           </nav>
@@ -59,7 +59,7 @@ export default function Home() {
       {/* Course Card */}
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-sm w-full border border-gray-100">
         <Image
-          src="/last.png"
+          src="/last.webp"
           alt="30 Days of Python"
           width={600}
           height={400}

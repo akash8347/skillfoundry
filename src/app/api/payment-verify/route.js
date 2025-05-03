@@ -14,6 +14,7 @@ export async function POST(req) {
       razorpay_signature,
       email,
       mobile,
+      courseIdentifier
     } = await req.json();
 
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
@@ -23,14 +24,62 @@ export async function POST(req) {
     if (generatedSignature !== razorpay_signature) {
       return Response.json({ error: "Invalid signature" }, { status: 400 });
     }
+    // --------------- course identify-------------------
+    let coursesToSave = [];
+    switch (courseIdentifier) {
+      case "python_299":
+        coursesToSave = [{ name: "python", amount: 29900 }];
+        break;
+      case "javascript_199":
+        coursesToSave = [{ name: "javascript", amount: 19900 }];
+        break;
+      case "python_js_combo_498":
+        coursesToSave = [
+          { name: "python", amount: 29900 },
+          { name: "javascript", amount: 19900 },
+        ];
+        break;
+
+
+      default:
+        return Response.json({ error: "Invalid courseIdentifier" }, { status: 400 });
+    }
+
+    coursesToSave = coursesToSave.map((course) => ({
+      ...course,
+      purchasedAt: new Date(),
+    }));
+
+
+
+
+
 
     let user = await User.findOne({ email });
 
     if (user) {
       user.purchases.push({ razorpay_order_id, razorpay_payment_id });
+
+
+      const courseNames = coursesToSave.map(c => c.name);
+      const existingCourses = user.courses?.map(c => c.name) || [];
+
+      for (const course of coursesToSave) {
+        if (!existingCourses.includes(course.name)) {
+          user.courses.push(course);
+        }
+      }
+
+
+
+
+
+
       if (!user.certificateNumber) {
         user.certificateNumber = `WD-${uuidv4().slice(0, 8).toUpperCase()}`;
       }
+
+
       await user.save();
     } else {
       user = new User({
@@ -38,11 +87,12 @@ export async function POST(req) {
         mobile,
         certificateNumber: `WD-${uuidv4().slice(0, 8).toUpperCase()}`,
         purchases: [{ razorpay_order_id, razorpay_payment_id }],
+        courses: coursesToSave,
       });
       await user.save();
     }
 
-  
+
 
 
     const token = generateToken(user);

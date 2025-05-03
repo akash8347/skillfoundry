@@ -8,7 +8,7 @@ import FAQSection from "../30-days-Web/lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JSCheckout from "./lib/JSCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -16,17 +16,43 @@ import { Star } from "lucide-react";
 import { UrgencySection } from "../comman-components/UrgencySection";
 import WhyAffordable from "../comman-components/WhyAffordable";
 import BundleOfferBanner from "../comman-components/BundleOfferBanner";
-export default function LandingLayout() {
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
+import JsStickyBuyNow from "@/components/LandingPageComponents/JsStickyBuyNow";
 
+
+
+export default function LandingLayout() {
+  const searchParams = useSearchParams()
+
+  const [showBack, setShowBack] = useState(false)
+
+
+  useEffect(() => {
+    if (searchParams.get('from') === 'checkout') {
+      setShowBack(true)
+    }
+  }, [searchParams])
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
 
   return (
     <>
       <title>30 days of Javascript mastery</title>
+      {showBack && (
+  <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
+    <Link
+      href="/30-days-of-python/py-checkout"
+      className="bg-gray-800 border border-gray-700 shadow-lg shadow-gray-900/30 px-4 py-2 rounded-lg text-gray-100 text-sm hover:bg-gray-700 flex items-center space-x-2 transition-colors duration-200"
+    >
+      <ArrowLeft size={18} className="text-blue-400" />
+      <span className="font-medium">Back to Python Checkout</span>
+    </Link>
+  </div>
+)}
 
       <Navbar />
       <UrgencyBadge />
-
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-5">
@@ -35,7 +61,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day JavaScript Mastery Pack – ₹149
+                30-Day JavaScript Mastery Pack – ₹199
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-6" />
 
@@ -55,9 +81,9 @@ export default function LandingLayout() {
                   ))}
                 </div>
                 <div className="flex items-center gap-1 text-sm">
-                  <span className="font-medium text-gray-700">4.9/5</span>
+                  <span className="font-medium text-gray-700">4.8/5</span>
                   <span className="text-gray-400">•</span>
-                  <span className="text-gray-500">5,000+ students</span>
+                  <span className="text-gray-500">800+ students</span>
                 </div>
               </div>
               {/* <MobileOfferCard/> */}
@@ -110,9 +136,14 @@ export default function LandingLayout() {
               </div>
             </div>
           </aside>
+       
         </main>
         <LandingFooter />
-        <StickyBuyNow setCheckoutOpen={setCheckoutOpen} />
+        <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen} />
+
+        {/* ------------------------------- */}
+
+
 
       </div>
     </>

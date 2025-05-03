@@ -60,7 +60,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 19900,
+        amount: 29900,
         currency: "INR",
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -80,12 +80,12 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             // Trigger Facebook Purchase event
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
-                value: 199.00,
+                value: 299.00,
                 currency: 'INR'
               });
             }
 
-            window.location.href = "/download/py-download";
+            window.location.href = "/download";
           } else {
             setError("Payment verification failed.");
             setLoading(false); // stop loading if error
@@ -145,7 +145,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn Core python, Artificial Intellegece, Web Development, Automation in Python and Make Projects.
             </p>
-            <p className="font-bold text-green-700">₹199</p>
+            <p className="font-bold text-green-700">₹299</p>
           </div>
         </div>
 
@@ -203,7 +203,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 199"}
+            {loading ? "Processing..." : "Buy @ INR 299"}
           </Button>
         </form>
       </div>
