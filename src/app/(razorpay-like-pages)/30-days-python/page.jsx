@@ -41,7 +41,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day Python Mastery Pack – ₹299
+                30-Day Python Mastery Pack
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-6" />
 
