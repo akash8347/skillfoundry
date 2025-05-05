@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { UrgencySection } from "../comman-components/UrgencySection";
-import WhyAffordable from "../comman-components/WhyAffordable";
+import JSWhyAffordable from "./lib/JSWhyAffordable";
 import BundleOfferBanner from "../comman-components/BundleOfferBanner";
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -104,7 +104,7 @@ export default function LandingLayout() {
               <ProjectsBookSection />
               <HTMLCSS />
               <Bonus />
-              <WhyAffordable />
+              <JSWhyAffordable />
               <BundleOfferBanner />
               <FAQSection />
             </div>
