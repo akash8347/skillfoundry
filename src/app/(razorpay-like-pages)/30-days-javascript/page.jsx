@@ -55,7 +55,7 @@ export default function LandingLayout() {
 )}
 
       <Navbar />
-      <UrgencyBadge />
+      <UrgencyBadge price={199} />
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-5">
