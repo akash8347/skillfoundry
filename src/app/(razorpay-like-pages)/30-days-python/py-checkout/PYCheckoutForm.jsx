@@ -86,7 +86,9 @@ export default function PYCheckoutForm({ showCloseButton = true  }) {
                 currency: 'INR'
               });
             }
-            window.location.href = "/download";
+            setTimeout(() => {
+              window.location.href = "/download";
+            }, 1000);
           } else {
             setError("Payment verification failed.");
             setLoading(false);

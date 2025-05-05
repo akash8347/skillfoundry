@@ -89,7 +89,9 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
                 currency: 'INR'
               });
             }
-            window.location.href = "/download";
+            setTimeout(() => {
+              window.location.href = "/download";
+            }, 1000);
           } else {
             setError("Payment verification failed.");
             setLoading(false);
