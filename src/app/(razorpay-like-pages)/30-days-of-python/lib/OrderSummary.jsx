@@ -2,16 +2,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [selectedItems, setSelectedItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [customer, setCustomer] = useState({ email: '', mobile: '' });
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
     // Get selected items from localStorage
@@ -22,6 +22,17 @@ export default function OrderSummary() {
       // Calculate total
       const sum = items.reduce((acc, item) => acc + item.price, 0);
       setTotal(sum);
+    }
+    setLoadingSkeleton(false);
+  }, []);
+
+  // Load customer details from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedForm = localStorage.getItem('checkoutForm');
+      if (savedForm) {
+        setCustomer(JSON.parse(savedForm));
+      }
     }
   }, []);
 
@@ -36,8 +47,8 @@ export default function OrderSummary() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: searchParams.get("email"),
-          mobile: searchParams.get("phone"),
+          email: customer.email,
+          mobile: customer.mobile,
           amount: total * 100, // Convert to paise
         }),
       });
@@ -62,8 +73,8 @@ export default function OrderSummary() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
               ...response, 
-              email: searchParams.get("email"),
-              mobile: searchParams.get("phone"),
+              email: customer.email,
+              mobile: customer.mobile,
               courseIdentifier 
             }),
           });
@@ -84,8 +95,8 @@ export default function OrderSummary() {
           }
         },
         prefill: {
-          email: searchParams.get("email"),
-          contact: searchParams.get("phone"),
+          email: customer.email,
+          contact: customer.mobile,
         },
         theme: { color: "#2563eb" },
       };
@@ -110,33 +121,54 @@ export default function OrderSummary() {
       </h2>
       
       <div className="space-y-4 mb-6">
-        {selectedItems.map((item, index) => (
-          <div key={index} className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-            <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
-              <Image
-                src={index === 0 ? "/last.webp" : "/main-image.webp"}
-                alt={item.name}
-                fill
-                sizes="(max-width: 640px) 128px, 160px"
-                className="object-contain"
-                priority={index === 0}
-              />
+        {loadingSkeleton ? (
+          <>
+            <div className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm animate-pulse">
+              <div className="w-32 h-20 sm:w-40 sm:h-28 rounded-lg bg-gray-200" />
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="h-5 w-2/3 bg-gray-200 rounded" />
+                <div className="h-4 w-1/2 bg-gray-200 rounded" />
+                <div className="h-6 w-24 bg-gray-300 rounded mt-2" />
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">{item.name}</h3>
-              <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">{item.description}</p>
-              <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
-                ₹{item.price}
-                {item.name === "30 Days of Python Mastery" && (
-                  <span className="text-gray-400 line-through text-xs sm:text-sm">₹3000</span>
-                )}
-                {item.name === "30 Days of JavaScript Course" && (
-                  <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-                )}
-              </p>
+            <div className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm animate-pulse">
+              <div className="w-32 h-20 sm:w-40 sm:h-28 rounded-lg bg-gray-200" />
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="h-5 w-2/3 bg-gray-200 rounded" />
+                <div className="h-4 w-1/2 bg-gray-200 rounded" />
+                <div className="h-6 w-24 bg-gray-300 rounded mt-2" />
+              </div>
             </div>
-          </div>
-        ))}
+          </>
+        ) : (
+          selectedItems.map((item, index) => (
+            <div key={index} className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+              <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
+                <Image
+                  src={index === 0 ? "/last.webp" : "/main-image.webp"}
+                  alt={item.name}
+                  fill
+                  sizes="(max-width: 640px) 128px, 160px"
+                  className="object-contain"
+                  priority={index === 0}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">{item.name}</h3>
+                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">{item.description}</p>
+                <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
+                  ₹{item.price}
+                  {item.name === "30 Days of Python Mastery" && (
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹3000</span>
+                  )}
+                  {item.name === "30 Days of JavaScript Course" && (
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
+                  )}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       <div className="border-t pt-4">

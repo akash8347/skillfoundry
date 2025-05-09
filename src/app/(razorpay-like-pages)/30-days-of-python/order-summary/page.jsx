@@ -2,13 +2,21 @@
 import Navbar from "@/components/LandingPageComponents/Navbar";
 import OrderSummary from "../lib/OrderSummary";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function OrderSummaryPage() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-  const phone = searchParams.get("phone");
-  const name = searchParams.get("name");
+  const [customer, setCustomer] = useState({ email: "", mobile: "" });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedForm = localStorage.getItem("checkoutForm");
+      if (savedForm) {
+        setCustomer(JSON.parse(savedForm));
+      }
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <>
@@ -20,7 +28,7 @@ export default function OrderSummaryPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Order Summary Card */}
             <div className="lg:col-span-2">
-              <OrderSummary />
+                <OrderSummary />
             </div>
 
             {/* Customer Details Card */}
@@ -32,15 +40,29 @@ export default function OrderSummaryPage() {
                 Customer Details
               </h2>
               <div className="space-y-4">
-               
-                <div className="bg-gray-100 p-3 rounded-lg">
-                  <p className="text-xs text-gray-500 uppercase tracking-wider">Email</p>
-                  <p className="font-medium text-gray-900">{email}</p>
-                </div>
-                <div className="bg-gray-100 p-3 rounded-lg">
-                  <p className="text-xs text-gray-500 uppercase tracking-wider">Phone</p>
-                  <p className="font-medium text-gray-900">{phone}</p>
-                </div>
+                {loading ? (
+                  <>
+                    <div className="bg-gray-100 p-3 rounded-lg animate-pulse">
+                      <div className="h-3 w-20 bg-gray-300 rounded mb-2" />
+                      <div className="h-5 w-40 bg-gray-300 rounded" />
+                    </div>
+                    <div className="bg-gray-100 p-3 rounded-lg animate-pulse">
+                      <div className="h-3 w-20 bg-gray-300 rounded mb-2" />
+                      <div className="h-5 w-32 bg-gray-300 rounded" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="bg-gray-100 p-3 rounded-lg">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider">Email</p>
+                      <p className="font-medium text-gray-900">{customer.email}</p>
+                    </div>
+                    <div className="bg-gray-100 p-3 rounded-lg">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider">Phone</p>
+                      <p className="font-medium text-gray-900">{customer.mobile}</p>
+                    </div>
+                  </>
+                )}
               </div>
               
               <div className="mt-6 pt-4 border-t border-gray-100">

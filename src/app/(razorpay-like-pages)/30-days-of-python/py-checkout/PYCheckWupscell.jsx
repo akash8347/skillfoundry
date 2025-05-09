@@ -79,7 +79,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       phone: form.mobile
     }).toString();
 
-    router.push(`/30-days-of-python/order-summary?${queryParams}`);
+    router.push(`/30-days-of-python/order-summary`);
   };
 
   return (
