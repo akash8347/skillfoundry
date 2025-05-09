@@ -1,19 +1,32 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
 
-  const [form, setForm] = useState({ email: "", mobile: "" });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedForm = localStorage.getItem("checkoutForm");
+      if (savedForm) return JSON.parse(savedForm);
+    }
+    return { email: "", mobile: "" };
+  });
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [addUpsell, setAddUpsell] = useState(false); // upsell checkbox
+  const [addUpsell, setAddUpsell] = useState(false);
+
+  // Save form values to localStorage on change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("checkoutForm", JSON.stringify(form));
+    }
+  }, [form]);
 
   const onClose = () => {
     router.push("/30-days-of-python");
@@ -33,7 +46,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
-  const handlePayment = async (e) => {
+  const handleContinue = (e) => {
     e.preventDefault();
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
@@ -41,75 +54,32 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       return;
     }
 
-    setError("");
-    setLoading(true);
-
-    const amount = addUpsell ? 49800 : 29900;
-    const desc = addUpsell
-      ? "Python + JavaScript Mastery Bundle"
-      : "Python Mastery Pack";
-
-      const courseIdentifier=addUpsell ? "python_js_combo_498": "python_299"
-    try {
-      const res = await fetch("/api/razorpay-javascript-199", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          amount,
-          
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Something went wrong!");
-        setLoading(false);
-        return;
+    // Save selected items to localStorage
+    const selectedItems = [
+      {
+        name: "30 Days of Python Mastery",
+        price: 299,
+        description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
       }
+    ];
 
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: amount,
-        currency: "INR",
-        name: "Skill Foundry",
-        description: desc,
-        order_id: data.order.id,
-        handler: async (response) => {
-          setLoading(true);
-          const verifyRes = await fetch("/api/payment-verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, ...form, courseIdentifier: courseIdentifier }),
-          });
-          const verifyData = await verifyRes.json();
-          if (verifyData.success) {
-            if (typeof window !== 'undefined' && window.fbq) {
-              window.fbq('track', 'Purchase', {
-                value: amount / 100,
-                currency: 'INR'
-              });
-            }
-        
-            setTimeout(() => {
-              window.location.href = "/download";
-            }, 1000);
-          } else {
-            setError("Payment verification failed.");
-            setLoading(false);
-          }
-        },
-        prefill: { email: form.email, contact: form.mobile },
-        theme: { color: "#528FF0" },
-      };
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+    if (addUpsell) {
+      selectedItems.push({
+        name: "30 Days of JavaScript Course",
+        price: 199,
+        description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
+      });
     }
+
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+
+    // Navigate to order summary with form data
+    const queryParams = new URLSearchParams({
+      email: form.email,
+      phone: form.mobile
+    }).toString();
+
+    router.push(`/30-days-of-python/order-summary?${queryParams}`);
   };
 
   return (
@@ -123,7 +93,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         </button>
       )}
 
-      <div className="text-center text-xl font-bold sm:mb-4 mb-2">Payment Details</div>
+      <div className="text-center text-xl font-bold sm:mb-4 mb-2">Checkout Details</div>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
         <div className="w-[120px]">
@@ -162,35 +132,34 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         ))}
       </ul>
 
-     {/* Upsell Section */}
-<div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4 shadow-sm">
-  <h3 className="text-sm font-semibold text-yellow-800 mb-2">
-    🎁 Special Offer: Upgrade Your Learning!
-  </h3>
-  <label className="flex items-start gap-3 cursor-pointer">
-    <input
-      type="checkbox"
-      checked={addUpsell}
-      onChange={() => setAddUpsell(!addUpsell)}
-      className="mt-1 accent-blue-600"
-    />
-    <div>
-      <p className="text-sm font-medium text-gray-800">
-        Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
-      </p>
-      <p className="text-xs text-gray-700 mt-1">
-        Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
-      </p>
-      <p className="text-green-600 font-semibold text-sm mt-2">
-        Add for just ₹199 extra
-      </p>
-    </div>
-  </label>
-</div>
-
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
-    
+      {/* Upsell Section */}
+      <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4 shadow-sm">
+        <h3 className="text-sm font-semibold text-yellow-800 mb-2">
+          🎁 Special Offer: Upgrade Your Learning!
+        </h3>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={addUpsell}
+            onChange={() => {
+              setAddUpsell(!addUpsell);
+              toast.success("Upsell course added to your order!");
+            }}
+            className="mt-1 accent-blue-600"
+          />
+          <div>
+            <p className="text-sm font-medium text-gray-800">
+              Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
+            </p>
+            <p className="text-xs text-gray-700 mt-1">
+              Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
+            </p>
+            <p className="text-green-600 font-semibold text-sm mt-2">
+              Add for just ₹199 extra
+            </p>
+          </div>
+        </label>
+      </div>
 
       <form className="space-y-4 mt-4">
         <div>
@@ -220,11 +189,12 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         </div>
 
         <Button
-          className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 px-6 rounded-lg"
-          onClick={handlePayment}
+          type="submit"
+          onClick={handleContinue}
+          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
           disabled={loading}
         >
-          {loading ? "Processing..." : `Buy @ ₹${addUpsell ? "498" : "299"}`}
+          {loading ? "Processing..." : "Confirm Your Order"}
         </Button>
       </form>
     </div>

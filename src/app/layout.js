@@ -4,6 +4,8 @@ import Script from 'next/script';
 import Navbar from "@/components/LandingPageComponents/Navbar";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Toaster } from 'react-hot-toast';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -96,6 +98,7 @@ fbq('track', 'PageView');
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"
         />
+      <Toaster position="top-center" />
 
         {children}
         <Analytics />
