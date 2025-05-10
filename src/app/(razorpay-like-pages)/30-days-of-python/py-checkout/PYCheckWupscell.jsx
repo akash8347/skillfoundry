@@ -143,7 +143,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
             checked={addUpsell}
             onChange={() => {
               setAddUpsell(!addUpsell);
-              toast.success("Upsell course added to your order!");
+              toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
             }}
             className="mt-1 accent-blue-600"
           />
