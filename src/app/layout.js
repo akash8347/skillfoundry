@@ -47,6 +47,40 @@ fbq('track', 'PageView');
             `,
           }}
         />
+         
+         {/* quora Pixel Script */}
+
+<Script
+  id="quora-pixel"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      !function(q,e,v,n,t,s){
+        if(q.qp) return;
+        n=q.qp=function(){
+          n.qp ? n.qp.apply(n,arguments) : n.queue.push(arguments);
+        };
+        n.queue=[];
+        t=document.createElement(e);
+        t.async=!0;
+        t.src=v;
+        s=document.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s);
+      }(window, 'script', 'https://a.quora.com/qevents.js');
+      qp('init', '00bc38fbdadc412ea94c97ca1e63485c');
+      qp('track', 'ViewContent');
+    `,
+  }}
+/>
+<noscript>
+  <img
+    height="1"
+    width="1"
+    style={{ display: 'none' }}
+    src="https://q.quora.com/_/ad/00bc38fbdadc412ea94c97ca1e63485c/pixel?tag=ViewContent&noscript=1"
+/>
+</noscript>
+
 
 
 

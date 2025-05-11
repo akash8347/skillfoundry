@@ -37,6 +37,8 @@ export default function OrderSummary() {
   }, []);
 
   const handlePayment = async () => {
+
+   
     try {
       setLoading(true);
     
