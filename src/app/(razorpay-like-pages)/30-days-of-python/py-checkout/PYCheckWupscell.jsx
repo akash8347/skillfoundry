@@ -58,7 +58,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     const selectedItems = [
       {
         name: "30 Days of Python Mastery",
-        price: 299,
+        price: 199,
         description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
       }
     ];
@@ -66,7 +66,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     if (addUpsell) {
       selectedItems.push({
         name: "30 Days of JavaScript Course",
-        price: 199,
+        price: 99,
         description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
       });
     }
@@ -112,7 +112,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <p className="text-sm text-gray-600">
             Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-          <p className="font-bold text-green-700">₹299</p>
+          <p className="font-bold text-green-700">₹199</p>
         </div>
       </div>
 
@@ -155,7 +155,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
               Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
             </p>
             <p className="text-green-600 font-semibold text-sm mt-2">
-              Add for just ₹199 extra
+              Add for just ₹99 extra
             </p>
           </div>
         </label>

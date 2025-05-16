@@ -67,8 +67,8 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
       <div className="flex items-center gap-3">
         <div className="flex flex-col">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-gray-900">₹299</span>
-            <span className="text-sm line-through text-gray-400 ml-2">₹3000</span>
+            <span className="text-xl font-bold text-gray-900">₹199</span>
+            <span className="text-sm line-through text-gray-400 ml-2">₹2000</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">90% OFF</span>

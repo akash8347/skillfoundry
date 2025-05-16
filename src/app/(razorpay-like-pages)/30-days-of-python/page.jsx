@@ -5,7 +5,7 @@ import ProjectsBookSection from "./lib/ProjectsBookSection";
 import HTMLCSS from "./lib/HTMLCSS";
 import Bonus from "./lib/Bonus";
 import FAQSection from "../30-days-Web/lib/FAQSection";
-// import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
+import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function LandingLayout() {
       <title>30 days of Python mastery</title>
 
       <Navbar />
-      {/* <UrgencyBadge price={299} /> */}
+      <UrgencyBadge price={199} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -41,7 +41,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day Python Mastery Pack
+                30-Day Python Mastery Pack with Premium Guides
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-6" />
 

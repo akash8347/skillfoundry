@@ -5,7 +5,7 @@ import ProjectsBookSection from "./lib/ProjectsBookSection";
 import HTMLCSS from "./lib/HTMLCSS";
 import Bonus from "./lib/Bonus";
 import FAQSection from "../30-days-Web/lib/FAQSection";
-// import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
+import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
 import { Suspense, useEffect, useState } from "react";
@@ -55,7 +55,7 @@ export default function LandingLayout() {
 )}
 
       <Navbar />
-      {/* <UrgencyBadge price={199} /> */}
+      <UrgencyBadge price={99} />
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-5">

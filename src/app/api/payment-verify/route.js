@@ -28,15 +28,15 @@ export async function POST(req) {
     let coursesToSave = [];
     switch (courseIdentifier) {
       case "python_299":
-        coursesToSave = [{ name: "python", amount: 29900 }];
+        coursesToSave = [{ name: "python", amount: 19900 }];
         break;
       case "javascript_199":
-        coursesToSave = [{ name: "javascript", amount: 19900 }];
+        coursesToSave = [{ name: "javascript", amount: 9900 }];
         break;
       case "python_js_combo_498":
         coursesToSave = [
-          { name: "python", amount: 29900 },
-          { name: "javascript", amount: 19900 },
+          { name: "python", amount: 19900 },
+          { name: "javascript", amount: 9900 },
         ];
         break;
 
