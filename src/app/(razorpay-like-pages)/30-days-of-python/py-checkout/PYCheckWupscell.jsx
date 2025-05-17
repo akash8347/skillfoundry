@@ -66,7 +66,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     if (addUpsell) {
       selectedItems.push({
         name: "30 Days of JavaScript Course",
-        price: 99,
+        price: 149,
         description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
       });
     }
@@ -155,7 +155,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
               Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
             </p>
             <p className="text-green-600 font-semibold text-sm mt-2">
-              Add for just ₹99 extra
+              Add for just ₹149 extra
             </p>
           </div>
         </label>

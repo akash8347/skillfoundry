@@ -164,7 +164,7 @@ export default function OrderSummary() {
                     <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
                   )}
                   {item.name === "30 Days of JavaScript Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹999</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
                   )}
                 </p>
               </div>
@@ -184,7 +184,7 @@ export default function OrderSummary() {
             {total === 199 && (
               <span className="text-gray-400 line-through text-sm">₹2000</span>
             )}
-            {(total === 498 || total === 299) && (
+            {(total === 348 || total === 199) && (
               <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
                 90% OFF
               </span>

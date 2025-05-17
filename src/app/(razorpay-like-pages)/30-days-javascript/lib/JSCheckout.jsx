@@ -11,7 +11,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
   const [loading, setLoading] = useState(false);
 
   const courseIdentifier="javascript_199";
-  const amount=9900;
+  const amount=14900;
 
   const validateForm = () => {
     const errors = {};
@@ -67,7 +67,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 9900,
+        amount: 14900,
         currency: "INR",
         name: "Javascript Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -87,7 +87,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             // Trigger Facebook Purchase event
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
-                value: 99.00,
+                value: 149.00,
                 currency: 'INR'
               });
             }
@@ -152,7 +152,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn HTML, CSS, JavaScript, live coding, premium guides and more.
             </p>
-            <p className="font-bold text-green-700">₹99</p>
+            <p className="font-bold text-green-700">₹149</p>
           </div>
         </div>
 
@@ -210,7 +210,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 99"}
+            {loading ? "Processing..." : "Buy @ INR 149"}
           </Button>
         </form>
       </div>
