@@ -89,6 +89,7 @@ export default function OrderSummary() {
               });
             }
             toast.success("Payment successful!");
+            localStorage.setItem("firstTime","true")
             setTimeout(() => {
               window.location.href = "/download";
             }, 1000);
@@ -147,7 +148,7 @@ export default function OrderSummary() {
             <div key={index} className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
               <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
                 <Image
-                  src={index === 0 ? "/last.webp" : "/main-image.webp"}
+                  src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
                   alt={item.name}
                   fill
                   sizes="(max-width: 640px) 128px, 160px"
@@ -160,8 +161,8 @@ export default function OrderSummary() {
                 <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">{item.description}</p>
                 <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
                   ₹{item.price}
-                  {item.name === "30 Days of Python Mastery" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
+                  {item.name === "Python Mastery Course" && (
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2500</span>
                   )}
                   {item.name === "30 Days of JavaScript Course" && (
                     <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
@@ -178,13 +179,13 @@ export default function OrderSummary() {
           <div className="flex items-baseline gap-2">
             <span className="font-bold text-base sm:text-lg">Total Amount</span>
             <span className="font-bold text-base sm:text-lg text-gray-900">₹{total}</span>
-            {total === 298 && (
-              <span className="text-gray-400 line-through text-sm">₹3000</span>
+            {total === 248 && (
+              <span className="text-gray-400 line-through text-sm">₹2500</span>
             )}
             {total === 199 && (
               <span className="text-gray-400 line-through text-sm">₹2000</span>
             )}
-            {(total === 348 || total === 199) && (
+            {(total === 248 || total === 199) && (
               <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
                 90% OFF
               </span>

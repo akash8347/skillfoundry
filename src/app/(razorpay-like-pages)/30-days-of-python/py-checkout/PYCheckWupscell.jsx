@@ -57,8 +57,8 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     // Save selected items to localStorage
     const selectedItems = [
       {
-        name: "30 Days of Python Mastery",
-        price: 199,
+        name: "Python Mastery Course",
+        price: 249,
         description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
       }
     ];
@@ -98,7 +98,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
         <div className="w-[120px]">
           <Image
-            src="/last.webp"
+            src="/book-bundle.webp"
             alt="Book Mockup"
             width={1208}
             height={1251}
@@ -112,7 +112,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <p className="text-sm text-gray-600">
             Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-          <p className="font-bold text-green-700">₹199</p>
+          <p className="font-bold text-green-700">₹249</p>
         </div>
       </div>
 

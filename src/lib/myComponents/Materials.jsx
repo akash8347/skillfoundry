@@ -2,13 +2,25 @@
 import { useEffect, useState } from "react";
 import { Loader2, Download } from "lucide-react";
 
-const PYTHON_DRIVE_LINK = "https://drive.google.com/your-python-link";
-const JS_DRIVE_LINK = "https://drive.google.com/your-js-link";
+const PYTHON_DRIVE_LINK = "https://drive.google.com/drive/folders/18hG0Omuwj8Se1xJQuDYtvPdhEEY44qt3?usp=sharing";
+const JS_DRIVE_LINK = "https://drive.google.com/drive/folders/1veiv54vM5rqb-YSgSZXw-YMBuOYIIGyV?usp=sharing";
 
 export default function Materials() {
   const [hasPythonAccess, setHasPythonAccess] = useState(false);
   const [hasJavaScriptAccess, setHasJavaScriptAccess] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [customer, setCustomer] = useState({ email: "", mobile: "" });
+
+
+   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedForm = localStorage.getItem("checkoutForm");
+      if (savedForm) {
+        setCustomer(JSON.parse(savedForm));
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchAccess = async () => {
@@ -26,6 +38,45 @@ export default function Materials() {
 
     fetchAccess();
   }, []);
+
+  useEffect(() => {
+  if (
+    localStorage.getItem("firstTime") === "true" &&
+    customer.email &&  // ✅ Make sure customer is loaded
+    (hasPythonAccess || hasJavaScriptAccess) // ✅ Ensure access is loaded too
+  ) {
+    const sendEmail = async () => {
+      try {
+        const res = await fetch("/api/send-download-link", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: customer.email,
+            hasPythonAccess,
+            hasJavaScriptAccess,
+          }),
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          localStorage.setItem("firstTime", "false");
+        } else {
+        }
+      } catch (error) {
+        console.error("Email send error:", error);
+        alert("An error occurred while sending email.");
+      }
+    };
+
+  
+    sendEmail();
+  }
+}, [customer, hasPythonAccess, hasJavaScriptAccess]);
+
+
+
 
   const renderDownloadButton = (title, link) => (
     <div className="bg-white border rounded-2xl shadow hover:shadow-md transition p-4 flex items-center justify-between">

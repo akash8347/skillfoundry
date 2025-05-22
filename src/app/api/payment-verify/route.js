@@ -31,12 +31,12 @@ export async function POST(req) {
         coursesToSave = [{ name: "python", amount: 19900 }];
         break;
       case "javascript_199":
-        coursesToSave = [{ name: "javascript", amount: 9900 }];
+        coursesToSave = [{ name: "javascript", amount: 14900 }];
         break;
       case "python_js_combo_498":
         coursesToSave = [
           { name: "python", amount: 19900 },
-          { name: "javascript", amount: 9900 },
+          { name: "javascript", amount: 14900 },
         ];
         break;
 

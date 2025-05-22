@@ -20,6 +20,9 @@ import AIBookSection from "./lib/AIBookSection";
 import AutomationPythonBookSection from "./lib/AutomationPythonBookSection";
 import WebDevPythonBookSection from "./lib/WebDevPythonBookSection";
 import { useRouter } from "next/navigation";
+import DataScience from "./lib/DataScience";
+import CyberBook from "./lib/CyberBook";
+import Cheatsheet from "./lib/Cheatsheet";
 
 export default function LandingLayout() {
 
@@ -31,7 +34,7 @@ export default function LandingLayout() {
       <title>30 days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge price={199} />
+      <UrgencyBadge price={249} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -40,15 +43,16 @@ export default function LandingLayout() {
           <section className="lg:w-2/3 w-full flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day Python Mastery Pack with Premium Guides
+              <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+The Python Mastery Collection: 9 Expert Guides With 150+ Projects
+
               </h2>
-              <div className="w-16 h-1 bg-blue-600 mb-6" />
+              <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
 
               <Image
                 width={1200}
                 height={700}
-                src="/last.webp"
+                src="/mobile-heroimg.png"
                 alt="JavaScript Mastery Pack"
                 className="w-full rounded-lg md:mb-6  mb-3"
                 priority={true}
@@ -69,16 +73,19 @@ export default function LandingLayout() {
               {/* <MobileOfferCard/> */}
 
               <p className="text-gray-700 text-base leading-relaxed mb-4">
-              These structured, hands-on Python guides help you master automation, AI, web development, and game building — with 100+ real-world projects to make you truly job-ready.              </p>
+                These structured, hands-on Python guides help you master automation, AI, web development, Cyber security, Data Science in python and game building — with 100+ real-world projects to make you truly job-ready.              </p>
 
 
               <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
 
               <PythonBookSection />
-              <AIBookSection/>
-              <AutomationPythonBookSection/>
-              <WebDevPythonBookSection/>
-              <HTMLCSS />             
+              <AIBookSection />
+              <DataScience />
+              <CyberBook />
+              <AutomationPythonBookSection />
+              <WebDevPythonBookSection />
+              <HTMLCSS />
+              <Cheatsheet/>
               <WhyAffordable />
               <BundleOfferBanner />
               <FAQSection />
@@ -96,7 +103,7 @@ export default function LandingLayout() {
                   <Image
                     width={200}
                     height={300}
-                    src="/zik-zak-python.webp"
+                    src="/book-bundle.webp"
                     alt="JavaScript Mastery Pack"
                     className="w-full rounded-lg shadow-lg mb-6"
                   />
@@ -106,7 +113,7 @@ export default function LandingLayout() {
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-      onClick={() => router.push("/30-days-of-python/py-checkout")}
+                  onClick={() => router.push("/30-days-of-python/py-checkout")}
 
                 >
                   Buy Now

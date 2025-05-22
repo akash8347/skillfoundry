@@ -60,7 +60,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 19900,
+        amount: 24900,
         currency: "INR",
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
