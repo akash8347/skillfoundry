@@ -44,7 +44,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-The Python Mastery Collection: 9 Expert Guides With 150+ Projects
+30 days of Python Mastery 6+ Expert Guides Collection
 
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
@@ -52,7 +52,7 @@ The Python Mastery Collection: 9 Expert Guides With 150+ Projects
               <Image
                 width={1200}
                 height={700}
-                src="/mobile-heroimg.png"
+                src="/last.webp"
                 alt="JavaScript Mastery Pack"
                 className="w-full rounded-lg md:mb-6  mb-3"
                 priority={true}
@@ -73,15 +73,14 @@ The Python Mastery Collection: 9 Expert Guides With 150+ Projects
               {/* <MobileOfferCard/> */}
 
               <p className="text-gray-700 text-base leading-relaxed mb-4">
-                These structured, hands-on Python guides help you master automation, AI, web development, Cyber security, Data Science in python and game building — with 100+ real-world projects to make you truly job-ready.              </p>
+                These structured, hands-on Python guides help you master automation, AI, web development, Data Science in python and game building — with 150+ real-world projects to make you truly job-ready.              </p>
 
 
               <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
 
               <PythonBookSection />
               <AIBookSection />
-              <DataScience />
-              <CyberBook />
+             <DataScience></DataScience>
               <AutomationPythonBookSection />
               <WebDevPythonBookSection />
               <HTMLCSS />

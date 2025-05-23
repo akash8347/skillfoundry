@@ -8,7 +8,7 @@ export default function Cheatsheet() {
       {/* Heading and Image */}
       <div className="flex flex-col items-center gap-6 text-center md:text-left">
         <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
-          🐍 Python Cheatsheet
+        Bonus:  🐍 Python Cheatsheet
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
