@@ -34,7 +34,7 @@ export default function LandingLayout() {
       <title>30 days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge price={249} />
+      <UrgencyBadge price={199} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}

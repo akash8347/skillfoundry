@@ -162,7 +162,7 @@ export default function OrderSummary() {
                 <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
                   ₹{item.price}
                   {item.name === "Python Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2500</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
                   )}
                   {item.name === "30 Days of JavaScript Course" && (
                     <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
@@ -179,13 +179,13 @@ export default function OrderSummary() {
           <div className="flex items-baseline gap-2">
             <span className="font-bold text-base sm:text-lg">Total Amount</span>
             <span className="font-bold text-base sm:text-lg text-gray-900">₹{total}</span>
-            {total === 248 && (
-              <span className="text-gray-400 line-through text-sm">₹2500</span>
+            {total === 348 && (
+              <span className="text-gray-400 line-through text-sm">₹3500</span>
             )}
             {total === 199 && (
               <span className="text-gray-400 line-through text-sm">₹2000</span>
             )}
-            {(total === 248 || total === 199) && (
+            {(total === 348 || total === 199) && (
               <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
                 90% OFF
               </span>

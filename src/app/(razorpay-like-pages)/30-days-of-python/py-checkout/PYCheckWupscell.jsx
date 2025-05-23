@@ -58,7 +58,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     const selectedItems = [
       {
         name: "Python Mastery Course",
-        price: 249,
+        price: 199,
         description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
       }
     ];
@@ -112,7 +112,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <p className="text-sm text-gray-600">
             Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-          <p className="font-bold text-green-700">₹249</p>
+          <p className="font-bold text-green-700">₹199</p>
         </div>
       </div>
 
