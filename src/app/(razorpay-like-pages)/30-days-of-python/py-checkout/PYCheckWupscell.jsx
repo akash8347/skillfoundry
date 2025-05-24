@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
   });
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [addUpsell, setAddUpsell] = useState(false);
+  // const [addUpsell, setAddUpsell] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -61,19 +61,10 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       }
     ];
 
-    if (addUpsell) {
-      selectedItems.push({
-        name: "30 Days of JavaScript Course",
-        price: 149,
-        description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
-      });
-    }
+  
 
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-    router.push(`/30-days-of-python/order-summary?${new URLSearchParams({
-      email: form.email,
-      phone: form.mobile
-    }).toString()}`);
+    router.push(`/30-days-of-python/order-summary`);
   };
 
   return (
@@ -124,34 +115,6 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         ))}
       </ul>
 
-      {/* Upsell Section */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-        <h3 className="text-sm font-semibold text-blue-800 mb-2">
-          🎁 Special Offer: Upgrade Your Learning!
-        </h3>
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={addUpsell}
-            onChange={() => {
-              setAddUpsell(!addUpsell);
-              toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
-            }}
-            className="mt-1 accent-blue-600 w-4 h-4"
-          />
-          <div>
-            <p className="text-sm font-medium text-gray-800">
-              Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
-            </p>
-            <p className="text-xs text-gray-700 mt-1">
-              Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
-            </p>
-            <p className="text-green-600 font-semibold text-sm mt-2">
-              Add for just ₹149 extra
-            </p>
-          </div>
-        </label>
-      </div>
 
       <form className="space-y-4 mt-4">
         <div>

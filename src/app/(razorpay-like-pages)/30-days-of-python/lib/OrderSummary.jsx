@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
-
+import Link from "next/link";
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -12,6 +12,8 @@ export default function OrderSummary() {
   const [total, setTotal] = useState(0);
   const [customer, setCustomer] = useState({ email: '', mobile: '' });
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+   const [addUpsell, setAddUpsell] = useState(false);
+
 
   useEffect(() => {
     // Get selected items from localStorage
@@ -35,6 +37,23 @@ export default function OrderSummary() {
       }
     }
   }, []);
+
+  const upsellItem = {
+  name: "30 Days of JavaScript Course",
+  price: 149,
+  description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
+};
+
+const displayItems = addUpsell 
+  ? [...selectedItems, upsellItem] 
+  : selectedItems;
+
+  useEffect(() => {
+  const sum = displayItems.reduce((acc, item) => acc + item.price, 0);
+  setTotal(sum);
+}, [displayItems]);
+
+
 
   const handlePayment = async () => {
 
@@ -134,17 +153,10 @@ export default function OrderSummary() {
                 <div className="h-6 w-24 bg-gray-300 rounded mt-2" />
               </div>
             </div>
-            <div className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm animate-pulse">
-              <div className="w-32 h-20 sm:w-40 sm:h-28 rounded-lg bg-gray-200" />
-              <div className="flex-1 min-w-0 space-y-2">
-                <div className="h-5 w-2/3 bg-gray-200 rounded" />
-                <div className="h-4 w-1/2 bg-gray-200 rounded" />
-                <div className="h-6 w-24 bg-gray-300 rounded mt-2" />
-              </div>
-            </div>
+           
           </>
         ) : (
-          selectedItems.map((item, index) => (
+          displayItems.map((item, index) => (
             <div key={index} className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
               <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
                 <Image
@@ -193,34 +205,35 @@ export default function OrderSummary() {
           </div>
         </div>
 
-        <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100">
-          <h3 className="font-semibold text-blue-800 text-sm sm:text-base mb-3 flex items-center">
-            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            What's Included:
-          </h3>
-          <ul className="space-y-2 text-xs sm:text-sm text-blue-700">
-            <li className="flex items-start gap-2">
-              <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
-              </svg>
-              <span>Lifetime access to all Premium Guides</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
-              </svg>
-              <span>Downloadable resources and code files</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
-              </svg>
-              <span>All project Resource access</span>
-            </li>
-          </ul>
-        </div>
+
+  {/* Upsell Section */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <h3 className="text-sm font-semibold text-blue-800 mb-2">
+          🎁 Special Offer: Upgrade Your Learning!
+        </h3>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={addUpsell}
+            onChange={() => {
+              setAddUpsell(!addUpsell);
+              toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
+            }}
+            className="mt-1 accent-blue-600 w-4 h-4"
+          />
+          <div>
+            <p className="text-sm font-medium text-gray-800">
+              Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
+            </p>
+            <p className="text-xs text-gray-700 mt-1">
+              Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
+            </p>
+            <p className="text-green-600 font-semibold text-sm mt-2">
+              Add for just ₹149 extra
+            </p>
+          </div>
+        </label>
+      </div>
 
         {/* Inline button for desktop, hidden on mobile */}
         <div className="hidden sm:block">
