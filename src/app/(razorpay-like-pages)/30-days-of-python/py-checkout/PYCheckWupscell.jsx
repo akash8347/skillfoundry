@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Check } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,6 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
   const [loading, setLoading] = useState(false);
   const [addUpsell, setAddUpsell] = useState(false);
 
-  // Save form values to localStorage on change
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
@@ -54,7 +53,6 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       return;
     }
 
-    // Save selected items to localStorage
     const selectedItems = [
       {
         name: "Python Mastery Course",
@@ -72,37 +70,33 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     }
 
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-
-    // Navigate to order summary with form data
-    const queryParams = new URLSearchParams({
+    router.push(`/30-days-of-python/order-summary?${new URLSearchParams({
       email: form.email,
       phone: form.mobile
-    }).toString();
-
-    router.push(`/30-days-of-python/order-summary`);
+    }).toString()}`);
   };
 
   return (
     <div className="h-full w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-auto">
       {showCloseButton && (
         <button
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors"
           onClick={onClose}
         >
           <X size={28} />
         </button>
       )}
 
-      <div className="text-center text-xl font-bold sm:mb-4 mb-2">Checkout Details</div>
+      <div className="text-center text-xl font-bold sm:mb-4 mb-4 mt-4">Checkout Details</div>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
-        <div className="w-[120px]">
+        <div className="w-[120px] h-[63px] relative hidden sm:block"> {/* Added hidden sm:block to hide on mobile */}
           <Image
             src="/book-bundle.webp"
             alt="Book Mockup"
-            width={1208}
-            height={1251}
-            className="rounded-xl hidden sm:block"
+            width={1200}
+            height={628}
+            className="rounded-xl object-cover"
           />
         </div>
         <div className="sm:flex-1 text-left">
@@ -124,17 +118,15 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           "Exercise, code and practice",
         ].map((benefit, idx) => (
           <li key={idx} className="flex items-start gap-2">
-            <svg className="w-4 h-4 text-green-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
-            </svg>
-            {benefit}
+            <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+            <span className="text-gray-700">{benefit}</span>
           </li>
         ))}
       </ul>
 
       {/* Upsell Section */}
-      <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4 shadow-sm">
-        <h3 className="text-sm font-semibold text-yellow-800 mb-2">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <h3 className="text-sm font-semibold text-blue-800 mb-2">
           🎁 Special Offer: Upgrade Your Learning!
         </h3>
         <label className="flex items-start gap-3 cursor-pointer">
@@ -145,7 +137,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
               setAddUpsell(!addUpsell);
               toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
             }}
-            className="mt-1 accent-blue-600"
+            className="mt-1 accent-blue-600 w-4 h-4"
           />
           <div>
             <p className="text-sm font-medium text-gray-800">
@@ -167,11 +159,12 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <input
             type="email"
             name="email"
-            className={`w-full border ${fieldErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md p-2`}
+            className={`w-full border ${fieldErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors`}
             placeholder="Enter your email"
             onChange={handleChange}
             value={form.email}
           />
+          <p className="text-xs text-gray-500 mt-1">Access to this purchase will be sent to this email</p>
           {fieldErrors.email && <p className="text-xs text-red-500 mt-1">{fieldErrors.email}</p>}
         </div>
 
@@ -180,7 +173,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <input
             type="tel"
             name="mobile"
-            className={`w-full border ${fieldErrors.mobile ? 'border-red-500' : 'border-gray-300'} rounded-md p-2`}
+            className={`w-full border ${fieldErrors.mobile ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors`}
             placeholder="Enter your phone number"
             onChange={handleChange}
             value={form.mobile}
@@ -191,10 +184,18 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         <Button
           type="submit"
           onClick={handleContinue}
-          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition-colors"
           disabled={loading}
         >
-          {loading ? "Processing..." : "Confirm Your Order"}
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </span>
+          ) : "Review Your Order"}
         </Button>
       </form>
     </div>
