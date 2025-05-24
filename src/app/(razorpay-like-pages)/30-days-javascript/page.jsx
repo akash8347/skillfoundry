@@ -45,7 +45,7 @@ export default function LandingLayout() {
       {showBack && (
   <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
     <Link
-      href="/30-days-of-python/py-checkout"
+      href="/30-days-of-python/order-summary"
       className="bg-gray-800 border border-gray-700 shadow-lg shadow-gray-900/30 px-4 py-2 rounded-lg text-gray-100 text-sm hover:bg-gray-700 flex items-center space-x-2 transition-colors duration-200"
     >
       <ArrowLeft size={18} className="text-blue-400" />
