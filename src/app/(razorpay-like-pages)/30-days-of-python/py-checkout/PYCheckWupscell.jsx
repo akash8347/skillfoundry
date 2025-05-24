@@ -5,6 +5,9 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { indianStates } from "@/lib/indianStates";
+import Select from "react-select";
+
 // import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
@@ -15,11 +18,10 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       const savedForm = localStorage.getItem("checkoutForm");
       if (savedForm) return JSON.parse(savedForm);
     }
-    return { email: "", mobile: "" };
+  return { email: "", mobile: "", state: null }; // state is null initially
   });
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  // const [addUpsell, setAddUpsell] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,14 +33,25 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     router.push("/30-days-of-python");
   };
 
-  const validateForm = () => {
-    const errors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
-    if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
-    if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
-    return errors;
-  };
+ const validateForm = () => {
+  const errors = {};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
+  if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
+  if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
+    errors.state = "Please select a state";
+  }
+  return errors;
+};
+
+// Modify handleChange for react-select only
+const handleSelectChange = (selectedOption) => {
+  setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
+  setFieldErrors(prev => ({ ...prev, state: "" }));
+};
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -143,6 +156,20 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           />
           {fieldErrors.mobile && <p className="text-xs text-red-500 mt-1">{fieldErrors.mobile}</p>}
         </div>
+
+        <div>
+  <label className="block text-sm font-medium text-gray-700">State</label>
+<Select
+  name="state"
+  options={indianStates}
+  onChange={handleSelectChange}
+  value={indianStates.find(s => s.value === form.state) || null}
+  className="react-select-container"
+  classNamePrefix="react-select"
+  placeholder="Select your state"
+/>
+  {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
+</div>
 
         <Button
           type="submit"
