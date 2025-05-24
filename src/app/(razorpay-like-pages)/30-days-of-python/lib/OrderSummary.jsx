@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
+import { X } from "lucide-react"; // Add this at the top
+
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -157,33 +159,54 @@ const displayItems = addUpsell
           </>
         ) : (
           displayItems.map((item, index) => (
-            <div key={index} className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-              <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
-                <Image
-                  src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
-                  alt={item.name}
-                  fill
-                  sizes="(max-width: 640px) 128px, 160px"
-                  className="object-contain"
-                  priority={index === 0}
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">{item.name}</h3>
-                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">{item.description}</p>
-                <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
-                  ₹{item.price}
-                  {item.name === "Python Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-                  )}
-                  {item.name === "30 Days of JavaScript Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
-                  )}
-                </p>
-              </div>
-            </div>
-          ))
+  <div
+    key={index}
+    className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
+  >
+    {/* Subtle X mark using Lucide */}
+    {item.name === "30 Days of JavaScript Course" && (
+      <button
+        className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
+        title="Remove"
+        onClick={()=>{
+          setAddUpsell(!addUpsell);
+              toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
+        }}
+      >
+        <X className="w-4 h-4" />
+      </button>
+    )}
+
+    <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
+      <Image
+        src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
+        alt={item.name}
+        fill
+        sizes="(max-width: 640px) 128px, 160px"
+        className="object-contain"
+        priority={index === 0}
+      />
+    </div>
+
+    <div className="flex-1 min-w-0">
+      <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">
+        {item.name}
+      </h3>
+      <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
+        {item.description}
+      </p>
+      <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
+        ₹{item.price}
+        {item.name === "Python Mastery Course" && (
+          <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
         )}
+        {item.name === "30 Days of JavaScript Course" && (
+          <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
+        )}
+      </p>
+    </div>
+  </div>
+)))}
       </div>
 
       <div className="border-t pt-4">
