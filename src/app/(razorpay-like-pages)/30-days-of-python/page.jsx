@@ -12,7 +12,7 @@ import { useState } from "react";
 import PYCheckout from "./lib/PYCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star,Check } from "lucide-react";
 import { UrgencySection } from "../comman-components/UrgencySection";
 import WhyAffordable from "../comman-components/WhyAffordable";
 import BundleOfferBanner from "../comman-components/BundleOfferBanner";
@@ -44,7 +44,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-30 days of Python Mastery 6+ Expert Guides Collection
+                30 days of Python Mastery 6+ Expert Guides Collection
 
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
@@ -72,19 +72,35 @@ export default function LandingLayout() {
               </div>
               {/* <MobileOfferCard/> */}
 
-              <p className="text-gray-700 text-base leading-relaxed mb-4">
-                These structured, hands-on Python guides help you master automation, AI, web development, Data Science in python and game building — with 150+ real-world projects to make you truly job-ready.              </p>
+              {/* <p className="text-gray-700 text-base leading-relaxed mb-4">
+                These structured, hands-on Python guides help you master automation, AI, web development, Data Science in python and game building — with 150+ real-world projects to make you truly job-ready.              </p> */}
 
-
+<ul className="md:hidden space-y-1 text-sm mb-4">
+  {[
+    "Day-by-Day structured Python learning",
+    "Artificial Intelligence in Python",
+    "Data Science with Python",
+    "Automation using Python",
+    "Web development using Python",
+    "150+ Core Python + Game Projects",
+  ].map((benefit, idx) => (
+    <li key={idx} className="flex items-start gap-2">
+      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0 drop-shadow-sm" />
+      <span className="text-gray-700 font-[450] tracking-wide leading-tight">
+        {benefit}
+      </span>
+    </li>
+  ))}
+</ul>
               <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
 
               <PythonBookSection />
               <AIBookSection />
-             <DataScience></DataScience>
+              <DataScience></DataScience>
               <AutomationPythonBookSection />
               <WebDevPythonBookSection />
               <HTMLCSS />
-              <Cheatsheet/>
+              <Cheatsheet />
               <WhyAffordable />
               <BundleOfferBanner />
               <FAQSection />
