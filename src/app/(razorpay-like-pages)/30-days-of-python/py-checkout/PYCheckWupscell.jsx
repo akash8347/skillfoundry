@@ -18,7 +18,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       const savedForm = localStorage.getItem("checkoutForm");
       if (savedForm) return JSON.parse(savedForm);
     }
-  return { email: "", mobile: "", state: null }; // state is null initially
+    return { email: "", mobile: "", state: null }; // state is null initially
   });
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -33,24 +33,24 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     router.push("/30-days-of-python");
   };
 
- const validateForm = () => {
-  const errors = {};
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^[6-9]\d{9}$/;
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
 
-  if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
-  if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
-  if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
-    errors.state = "Please select a state";
-  }
-  return errors;
-};
+    if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
+    if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
+    if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
+      errors.state = "Please select a state";
+    }
+    return errors;
+  };
 
-// Modify handleChange for react-select only
-const handleSelectChange = (selectedOption) => {
-  setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
-  setFieldErrors(prev => ({ ...prev, state: "" }));
-};
+  // Modify handleChange for react-select only
+  const handleSelectChange = (selectedOption) => {
+    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
+    setFieldErrors(prev => ({ ...prev, state: "" }));
+  };
 
 
   const handleChange = (e) => {
@@ -74,7 +74,7 @@ const handleSelectChange = (selectedOption) => {
       }
     ];
 
-  
+
 
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
     router.push(`/30-days-of-python/order-summary`);
@@ -158,18 +158,18 @@ const handleSelectChange = (selectedOption) => {
         </div>
 
         <div>
-  <label className="block text-sm font-medium text-gray-700">State</label>
-<Select
-  name="state"
-  options={indianStates}
-  onChange={handleSelectChange}
-  value={indianStates.find(s => s.value === form.state) || null}
-  className="react-select-container"
-  classNamePrefix="react-select"
-  placeholder="Select your state"
-/>
-  {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
-</div>
+          <label className="block text-sm font-medium text-gray-700">State</label>
+          <Select
+            name="state"
+            options={indianStates}
+            onChange={handleSelectChange}
+            value={indianStates.find(s => s.value === form.state) || null}
+            className="react-select-container"
+            classNamePrefix="react-select"
+            placeholder="Select your state"
+          />
+          {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
+        </div>
 
         <Button
           type="submit"
