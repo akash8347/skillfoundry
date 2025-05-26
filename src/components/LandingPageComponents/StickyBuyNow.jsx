@@ -95,7 +95,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
         ) : (
           <>
             <Zap className="w-4 h-4" />
-            <span>Download</span>
+            <span>Buy Now</span>
           </>
         )}
       </button>
