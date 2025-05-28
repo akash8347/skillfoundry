@@ -68,7 +68,7 @@ export default function Home() {
         <div className="p-6 text-center">
           <h3 className="text-xl font-semibold mb-4">30 Days Python Pack</h3>
           <Link
-            href="/30-days-python"
+            href="/30-days-of-python"
             className="inline-block mt-2 bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
           >
             Learn More

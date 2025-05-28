@@ -13,7 +13,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-2">
         {/* Logo */}
-        <Link href="/30-days-javascript" className="flex items-center gap-2">
+        <Link href="/30-days-of-python" className="flex items-center gap-2">
           <Image
             src="/logo.jpg"
             alt="Skill Foundry Logo"
@@ -43,10 +43,10 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="absolute left-0 top-[100%] w-full bg-white shadow-md px-6 py-4 space-y-2 border-t border-gray-200 z-40"
           >
-            <Link href="/30-days-javascript" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+            <Link href="/30-days-of-python" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               Home
             </Link>
-            <Link href="/download/js-download" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+            <Link href="/download" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               My Course
             </Link>
           </motion.nav>
