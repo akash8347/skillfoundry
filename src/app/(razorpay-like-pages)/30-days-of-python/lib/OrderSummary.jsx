@@ -43,8 +43,8 @@ export default function OrderSummary() {
   }, []);
 
   const upsellItem = {
-    name: "30 Days of JavaScript Course",
-    price: 149,
+    name: "JavaScript Mastery Course",
+    price: 199,
     description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
   };
 
@@ -172,9 +172,9 @@ export default function OrderSummary() {
       layout
       className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
     >
-      {item.name === "30 Days of JavaScript Course" && (
+      {item.name === "JavaScript Mastery Course" && (
         <button
-          className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
+          className="absolute top-2 right-1 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
           title="Remove"
           onClick={() => {
             setAddUpsell(!addUpsell);
@@ -208,8 +208,8 @@ export default function OrderSummary() {
           {item.name === "Python Mastery Course" && (
             <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
           )}
-          {item.name === "30 Days of JavaScript Course" && (
-            <span className="text-gray-400 line-through text-xs sm:text-sm">₹1500</span>
+          {item.name === "JavaScript Mastery Course" && (
+            <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
           )}
         </p>
       </div>
@@ -246,9 +246,9 @@ export default function OrderSummary() {
 
         {/* Upsell Section */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-          <h3 className="text-sm font-semibold text-blue-800 mb-2">
+          {/* <h3 className="text-sm font-semibold text-blue-800 mb-2">
             🎁 Special Offer: Upgrade Your Learning!
-          </h3>
+          </h3> */}
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -261,14 +261,14 @@ export default function OrderSummary() {
             />
             <div>
               <p className="text-sm font-medium text-gray-800">
-                Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">30 Days of JavaScript Course</Link> to your order.
+                Add the <Link href="/30-days-javascript?from=checkout" className="underline text-blue-600">JavaScript Mastery Course</Link> to your order.
               </p>
               <p className="text-xs text-gray-700 mt-1">
                 Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
               </p>
-              <p className="text-green-600 font-semibold text-sm mt-2">
+              {/* <p className="text-green-600 font-semibold text-sm mt-2">
                 Add for just ₹149 extra
-              </p>
+              </p> */}
             </div>
           </label>
         </div>

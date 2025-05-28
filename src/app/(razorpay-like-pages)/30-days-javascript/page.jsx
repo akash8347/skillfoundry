@@ -55,7 +55,7 @@ export default function LandingLayout() {
 )}
 
       <Navbar />
-      <UrgencyBadge price={149} />
+      <UrgencyBadge price={199} />
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-5">
@@ -64,7 +64,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-Day JavaScript Mastery Pack
+                30-Day JavaScript Mastery Pack 
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-6" />
 
