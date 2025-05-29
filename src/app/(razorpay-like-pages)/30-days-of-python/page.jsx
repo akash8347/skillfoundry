@@ -82,11 +82,11 @@ export default function LandingLayout() {
     "Data Science with Python",
     "Automation using Python",
     "Web development using Python",
-    "150+ Core Python + Game Projects",
+    "150+ Python Projects",
   ].map((benefit, idx) => (
     <li key={idx} className="flex items-start gap-2">
-      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0 drop-shadow-sm" />
-      <span className="text-gray-700 font-[450] tracking-wide leading-tight">
+      <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0 drop-shadow-sm" />
+      <span className="text-gray-700  text-[1rem] font-[500] text-md tracking-wide leading-tight">
         {benefit}
       </span>
     </li>
