@@ -72,8 +72,10 @@ export default function LandingLayout() {
               </div>
               {/* <MobileOfferCard/> */}
 
-              {/* <p className="text-gray-700 text-base leading-relaxed mb-4">
-                These structured, hands-on Python guides help you master automation, AI, web development, Data Science in python and game building — with 150+ real-world projects to make you truly job-ready.              </p> */}
+              <p className="text-gray-700 text-base leading-relaxed mb-4">
+Master Python with 150+ Real-World Projects — Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Game Development.
+
+                            </p>
 
 <ul className="md:hidden space-y-1 text-sm mb-4">
   {[
