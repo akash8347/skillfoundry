@@ -67,7 +67,7 @@ export default function LandingLayout() {
                 <div className="flex items-center gap-1 text-sm">
                   <span className="font-medium text-gray-700">4.9/5</span>
                   <span className="text-gray-400">•</span>
-                  <span className="text-gray-500">1,200+ students</span>
+                  <span className="text-gray-500">1,500+ students</span>
                 </div>
               </div>
               {/* <MobileOfferCard/> */}
