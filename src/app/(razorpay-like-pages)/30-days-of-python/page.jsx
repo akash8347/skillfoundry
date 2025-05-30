@@ -73,7 +73,7 @@ export default function LandingLayout() {
               {/* <MobileOfferCard/> */}
 
               <p className="text-gray-700 text-base leading-relaxed mb-4">
-Master Python with 150+ Real-World Projects — Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Game Development.
+Master Python with 150+ Real-World Projects — Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
 
                             </p>
 
