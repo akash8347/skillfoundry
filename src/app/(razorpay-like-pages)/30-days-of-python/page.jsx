@@ -43,10 +43,18 @@ export default function LandingLayout() {
           <section className="lg:w-2/3 w-full flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
-              <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+              {/* <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
                 30-days of Python Mastery 6+ Expert Guides Collection
                 & 150+ advanced Python projects
 
+              </h2> */}
+
+               <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+                30-days of Python Mastery
+                <div className="text-xl  font-normal text-gray-600">
+                  6+ Expert Guides Collection
+                  & 150+ advanced Python projects
+                </div>
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
 
