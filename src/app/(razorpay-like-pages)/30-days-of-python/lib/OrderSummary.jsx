@@ -32,15 +32,46 @@ export default function OrderSummary() {
     setLoadingSkeleton(false);
   }, []);
 
-  // Load customer details from localStorage on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedForm = localStorage.getItem('checkoutForm');
-      if (savedForm) {
-        setCustomer(JSON.parse(savedForm));
+ useEffect(() => {
+  if (typeof window !== 'undefined') {
+    const savedForm = localStorage.getItem('checkoutForm');
+    const lastEmailSent = localStorage.getItem('lastEmailSent');
+    const now = new Date().getTime();
+    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hrs in ms
+
+    if (savedForm) {
+      const parsedForm = JSON.parse(savedForm);
+      setCustomer(parsedForm); // Good for UI
+
+      // ✅ Only send if no timestamp or more than 24 hours passed
+      if (!lastEmailSent || now - parseInt(lastEmailSent, 10) > twentyFourHours) {
+        fetch('/api/checkout-filled', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: parsedForm.email,
+            mobile: parsedForm.mobile,
+          }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              console.log("✅ Email sent successfully");
+              localStorage.setItem('lastEmailSent', now.toString()); // ⏱ Save new timestamp
+            } else {
+              console.error("❌ Email sending failed");
+            }
+          })
+          .catch(err => console.error("❌ Error sending email:", err));
+      } else {
+        console.log("⏳ Email already sent in the last 24 hours.");
       }
     }
-  }, []);
+  }
+}, []);
+
 
   const upsellItem = {
     name: "JavaScript Mastery Course",
