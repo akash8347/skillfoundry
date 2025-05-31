@@ -44,7 +44,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-days of Python Mastery 6+ Expert Guides Collection
+                30-days of Python Mastery 
 
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
