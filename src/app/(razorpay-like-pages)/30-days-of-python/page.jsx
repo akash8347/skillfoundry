@@ -53,7 +53,7 @@ export default function LandingLayout() {
                 30-days of Python Mastery
                 <div className="text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
-                  & 150+ advanced Python projects
+                  & 100+ advanced Python projects
                 </div>
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
