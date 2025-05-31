@@ -44,7 +44,8 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-days of Python Mastery 
+                30-days of Python Mastery 6+ Expert Guides Collection
+                & 150+ advanced Python projects
 
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
@@ -67,13 +68,13 @@ export default function LandingLayout() {
                 <div className="flex items-center gap-1 text-sm">
                   <span className="font-medium text-gray-700">4.9/5</span>
                   <span className="text-gray-400">•</span>
-                  <span className="text-gray-500">1,500+ students</span>
+                  <span className="text-gray-500">1,200+ students</span>
                 </div>
               </div>
               {/* <MobileOfferCard/> */}
 
               <p className="text-gray-700 text-base leading-relaxed mb-4">
-Master Python with 150+ Real-World Projects — Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
+Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
 
                             </p>
 
@@ -85,6 +86,7 @@ Master Python with 150+ Real-World Projects — Boost Your Career, Deepen Your K
     "Automation using Python",
     "Web development using Python",
     "150+ Python Projects",
+    "Python code cheatsheet",
   ].map((benefit, idx) => (
     <li key={idx} className="flex items-start gap-2">
       <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0 drop-shadow-sm" />
