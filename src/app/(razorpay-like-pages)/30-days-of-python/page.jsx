@@ -93,7 +93,7 @@ Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automati
     "Data Science with Python",
     "Automation using Python",
     "Web development using Python",
-    "150+ Total(core+game) Python Projects",
+    "150+ Total(core+game) Projects",
     "Python code cheatsheet",
   ].map((benefit, idx) => (
     <li key={idx} className="flex items-start gap-2">
