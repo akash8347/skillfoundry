@@ -307,7 +307,7 @@ export default function OrderSummary() {
         {/* Inline button for desktop, hidden on mobile */}
         <div className="hidden sm:block">
           <Button
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-200 text-sm sm:text-base shadow-md hover:shadow-lg"
+            className="w-full bg-black text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-200 text-sm sm:text-base shadow-md hover:shadow-lg"
             onClick={handlePayment}
             disabled={loading}
           >
@@ -337,7 +337,7 @@ export default function OrderSummary() {
       <div className="sm:hidden">
         <div className="fixed bottom-10 left-0 w-full  px-5 z-50 flex justify-center pointer-events-none">
           <Button
-            className="w-full mx-2 pointer-events-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-5  transition-all duration-200 text-base shadow-md hover:shadow-lg"
+            className="w-full mx-2 pointer-events-auto bg-black  text-white font-semibold py-5  transition-all duration-200 text-base shadow-md hover:shadow-lg"
             onClick={handlePayment}
             disabled={loading}
           >
