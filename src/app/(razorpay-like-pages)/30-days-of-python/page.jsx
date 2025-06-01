@@ -38,7 +38,7 @@ export default function LandingLayout() {
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
-        <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-5">
+        <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-3">
           {/* Left Column - Content */}
           <section className="lg:w-2/3 w-full flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
@@ -48,8 +48,8 @@ export default function LandingLayout() {
                 & 150+ advanced Python projects
 
               </h2> */}
-
-              <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+{/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
+              <h2 className=" text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
                 30-days of Python Mastery
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection

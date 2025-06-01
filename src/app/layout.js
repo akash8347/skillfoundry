@@ -47,14 +47,14 @@ fbq('track', 'PageView');
             `,
           }}
         />
-         
-         {/* quora Pixel Script */}
 
-<Script
-  id="quora-pixel"
-  strategy="afterInteractive"
-  dangerouslySetInnerHTML={{
-    __html: `
+        {/* quora Pixel Script */}
+
+        <Script
+          id="quora-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
       !function(q,e,v,n,t,s){
         if(q.qp) return;
         n=q.qp=function(){
@@ -70,16 +70,16 @@ fbq('track', 'PageView');
       qp('init', '00bc38fbdadc412ea94c97ca1e63485c');
       qp('track', 'ViewContent');
     `,
-  }}
-/>
-<noscript>
-  <img
-    height="1"
-    width="1"
-    style={{ display: 'none' }}
-    src="https://q.quora.com/_/ad/00bc38fbdadc412ea94c97ca1e63485c/pixel?tag=ViewContent&noscript=1"
-/>
-</noscript>
+          }}
+        />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://q.quora.com/_/ad/00bc38fbdadc412ea94c97ca1e63485c/pixel?tag=ViewContent&noscript=1"
+          />
+        </noscript>
 
 
 
@@ -132,7 +132,7 @@ fbq('track', 'PageView');
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"
         />
-      <Toaster position="top-center" />
+        <Toaster position="top-center" />
 
         {children}
         <Analytics />
