@@ -137,7 +137,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
           </div>
         </div>
       </div> */}
-     <button
+   <button
   className="custom-button modern-gradient"
   onClick={handleClick}
   disabled={isLoading}
@@ -154,7 +154,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
     ) : (
       <>
         <Zap className="icon" />
-        <span>GET IT NOW</span>
+        <span>BUY NOW</span>
       </>
     )}
   </span>
