@@ -32,7 +32,7 @@ export default function LandingLayout() {
       <title>30days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge price={199} />
+      {/* <UrgencyBadge price={199} /> */}
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -47,7 +47,7 @@ export default function LandingLayout() {
 
               </h2> */}
 {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
-              <h2 className=" text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
+              <h2 className="mt-5 sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
                 30-days of Python Mastery
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
