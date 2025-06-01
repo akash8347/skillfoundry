@@ -234,7 +234,7 @@ export default function OrderSummary() {
                   <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
                     {item.description}
                   </p>
-                  <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
+                  <p className="text-green-600   font-bold text-base sm:text-lg flex items-center gap-2">
                     ₹{item.price}
                     {item.name === "Python Mastery Course" && (
                       <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>

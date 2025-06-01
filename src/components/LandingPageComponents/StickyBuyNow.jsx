@@ -138,7 +138,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
         </div>
       </div> */}
       <button
-        className="vibrate-btn w-full flex justify-center bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2.5 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+        className="w-full flex justify-center bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2.5 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
         onClick={handleClick}
         disabled={isLoading}
       >
