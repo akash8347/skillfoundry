@@ -154,7 +154,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
     ) : (
       <>
         <Zap className="icon" />
-        <span>Get It Now</span>
+        <span>GET IT NOW</span>
       </>
     )}
   </span>
