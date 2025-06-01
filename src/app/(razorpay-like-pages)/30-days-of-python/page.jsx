@@ -1,9 +1,9 @@
 "use client"
 import Navbar from "@/components/LandingPageComponents/Navbar";
 import PythonBookSection from "./lib/PythonBookSection";
-import ProjectsBookSection from "./lib/ProjectsBookSection";
+// import ProjectsBookSection from "./lib/ProjectsBookSection";
 import HTMLCSS from "./lib/HTMLCSS";
-import Bonus from "./lib/Bonus";
+// import Bonus from "./lib/Bonus";
 import FAQSection from "../30-days-Web/lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
@@ -13,7 +13,6 @@ import PYCheckout from "./lib/PYCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star, Check } from "lucide-react";
-import { UrgencySection } from "../comman-components/UrgencySection";
 import WhyAffordable from "../comman-components/WhyAffordable";
 import BundleOfferBanner from "../comman-components/BundleOfferBanner";
 import AIBookSection from "./lib/AIBookSection";
@@ -21,7 +20,6 @@ import AutomationPythonBookSection from "./lib/AutomationPythonBookSection";
 import WebDevPythonBookSection from "./lib/WebDevPythonBookSection";
 import { useRouter } from "next/navigation";
 import DataScience from "./lib/DataScience";
-import CyberBook from "./lib/CyberBook";
 import Cheatsheet from "./lib/Cheatsheet";
 
 export default function LandingLayout() {
