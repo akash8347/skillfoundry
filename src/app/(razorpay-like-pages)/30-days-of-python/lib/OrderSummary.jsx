@@ -32,45 +32,45 @@ export default function OrderSummary() {
     setLoadingSkeleton(false);
   }, []);
 
- useEffect(() => {
-  if (typeof window !== 'undefined') {
-    const savedForm = localStorage.getItem('checkoutForm');
-    const lastEmailSent = localStorage.getItem('lastEmailSent');
-    const now = new Date().getTime();
-    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hrs in ms
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedForm = localStorage.getItem('checkoutForm');
+      const lastEmailSent = localStorage.getItem('lastEmailSent');
+      const now = new Date().getTime();
+      const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hrs in ms
 
-    if (savedForm) {
-      const parsedForm = JSON.parse(savedForm);
-      setCustomer(parsedForm); // Good for UI
+      if (savedForm) {
+        const parsedForm = JSON.parse(savedForm);
+        setCustomer(parsedForm); // Good for UI
 
-      // ✅ Only send if no timestamp or more than 24 hours passed
-      if (!lastEmailSent || now - parseInt(lastEmailSent, 10) > twentyFourHours) {
-        fetch('/api/checkout-filled', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: parsedForm.email,
-            mobile: parsedForm.mobile,
-          }),
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              console.log("✅ Email sent successfully");
-              localStorage.setItem('lastEmailSent', now.toString()); // ⏱ Save new timestamp
-            } else {
-              console.error("❌ Email sending failed");
-            }
+        // ✅ Only send if no timestamp or more than 24 hours passed
+        if (!lastEmailSent || now - parseInt(lastEmailSent, 10) > twentyFourHours) {
+          fetch('/api/checkout-filled', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: parsedForm.email,
+              mobile: parsedForm.mobile,
+            }),
           })
-          .catch(err => console.error("❌ Error sending email:", err));
-      } else {
-        console.log("⏳ Email already sent in the last 24 hours.");
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                console.log("✅ Email sent successfully");
+                localStorage.setItem('lastEmailSent', now.toString()); // ⏱ Save new timestamp
+              } else {
+                console.error("❌ Email sending failed");
+              }
+            })
+            .catch(err => console.error("❌ Error sending email:", err));
+        } else {
+          console.log("⏳ Email already sent in the last 24 hours.");
+        }
       }
     }
-  }
-}, []);
+  }, []);
 
 
   const upsellItem = {
@@ -192,61 +192,61 @@ export default function OrderSummary() {
           </>
         ) : (
 
-<AnimatePresence mode="popLayout">
-  {displayItems.map((item, index) => (
-    <motion.div
-      key={item.name}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      layout
-      className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
-    >
-      {item.name === "JavaScript Mastery Course" && (
-        <button
-          className="absolute top-2 right-1 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
-          title="Remove"
-          onClick={() => {
-            setAddUpsell(!addUpsell);
-            toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
-          }}
-        >
-          <X className="w-4 h-4" />
-        </button>
-      )}
+          <AnimatePresence mode="popLayout">
+            {displayItems.map((item, index) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                layout
+                className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
+              >
+                {item.name === "JavaScript Mastery Course" && (
+                  <button
+                    className="absolute top-0 right-1 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
+                    title="Remove"
+                    onClick={() => {
+                      setAddUpsell(!addUpsell);
+                      toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
+                    }}
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
 
-      <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
-        <Image
-          src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
-          alt={item.name}
-          fill
-          sizes="(max-width: 640px) 128px, 160px"
-          className="object-contain"
-          priority={index === 0}
-        />
-      </div>
+                <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
+                  <Image
+                    src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 640px) 128px, 160px"
+                    className="object-contain"
+                    priority={index === 0}
+                  />
+                </div>
 
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">
-          {item.name}
-        </h3>
-        <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
-          {item.description}
-        </p>
-        <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
-          ₹{item.price}
-          {item.name === "Python Mastery Course" && (
-            <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-          )}
-          {item.name === "JavaScript Mastery Course" && (
-            <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-          )}
-        </p>
-      </div>
-    </motion.div>
-  ))}
-</AnimatePresence>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">
+                    {item.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
+                    {item.description}
+                  </p>
+                  <p className="text-green-600 font-bold text-base sm:text-lg flex items-center gap-2">
+                    ₹{item.price}
+                    {item.name === "Python Mastery Course" && (
+                      <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
+                    )}
+                    {item.name === "JavaScript Mastery Course" && (
+                      <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
+                    )}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
 
 
 

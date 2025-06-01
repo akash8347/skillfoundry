@@ -4,17 +4,27 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // <-- add this
+import { indianStates } from "@/lib/indianStates";
+import Select from "react-select";
+
 
 export default function PYCheckoutForm({ showCloseButton = true  }) {
     const router = useRouter(); // <-- initialize router
 
-  const [form, setForm] = useState({ email: "", mobile: "" });
+  const [form, setForm] = useState({ email: "", mobile: "" ,state:null});
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+
+ const handleSelectChange = (selectedOption) => {
+    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
+    setFieldErrors(prev => ({ ...prev, state: "" }));
+  };
+
+
   const courseIdentifier="python_299";
-const amount=29900;
+const amount=19900;
   const onClose=()=>{
     router.push("/30-days-python");
   }
@@ -65,7 +75,7 @@ const amount=29900;
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 29900,
+        amount: 19900,
         currency: "INR",
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -81,7 +91,7 @@ const amount=29900;
           if (verifyData.success) {
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
-                value: 299.00,
+                value: 199.00,
                 currency: 'INR'
               });
             }
@@ -134,7 +144,7 @@ const amount=29900;
           <p className="text-sm text-gray-600">
             Learn Core python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-          <p className="font-bold text-green-700">₹299</p>
+          <p className="font-bold text-green-700">₹199</p>
         </div>
       </div>
 
@@ -183,12 +193,27 @@ const amount=29900;
           {fieldErrors.mobile && <p className="text-xs text-red-500 mt-1">{fieldErrors.mobile}</p>}
         </div>
 
+  <div>
+          <label className="block text-sm font-medium text-gray-700">State</label>
+          <Select
+            name="state"
+            options={indianStates}
+            onChange={handleSelectChange}
+            value={indianStates.find(s => s.value === form.state) || null}
+            className="react-select-container"
+            classNamePrefix="react-select"
+            placeholder="Select your state"
+          />
+          {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
+        </div>
+
+
         <Button
           className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 px-6 rounded-lg"
           onClick={handlePayment}
           disabled={loading}
         >
-          {loading ? "Processing..." : "Buy @ INR w99"}
+          {loading ? "Processing..." : "Buy Now"}
         </Button>
       </form>
     </div>

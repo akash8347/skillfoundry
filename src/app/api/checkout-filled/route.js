@@ -58,7 +58,6 @@ import nodemailer from "nodemailer";
 export async function POST(req) {
   try {
     const { email, mobile } = await req.json();
-    console.log("email: from node mailer" + email + " mobile: " + mobile);
 
     const htmlMessage = `
       <div style="font-family: Arial, sans-serif; padding: 20px;">
