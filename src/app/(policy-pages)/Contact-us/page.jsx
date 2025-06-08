@@ -24,7 +24,7 @@ const faqs = [
     answer: (
       <>
         If you purchased a course from Skill Foundry, you can access all your purchased content by visiting{" "}
-        <a href="https://skill-foundry.in/download/js-download" className="text-blue-600 underline">
+        <a href="https://skill-foundry.in/download" className="text-blue-600 underline">
           skill-foundry.in/Dashboard
         </a>
         .

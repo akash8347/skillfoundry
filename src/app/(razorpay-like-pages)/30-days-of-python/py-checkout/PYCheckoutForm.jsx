@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -16,15 +16,23 @@ export default function PYCheckoutForm({ showCloseButton = true  }) {
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-
+useEffect(() => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("checkoutForm", JSON.stringify(form));
+      }
+    }, [form]);
+     
+  
  const handleSelectChange = (selectedOption) => {
     setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
     setFieldErrors(prev => ({ ...prev, state: "" }));
   };
 
 
+
+
   const courseIdentifier="python_299";
-const amount=19900;
+const amount=24900;
   const onClose=()=>{
     router.push("/30-days-python");
   }
@@ -75,7 +83,7 @@ const amount=19900;
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 19900,
+        amount: 24900,
         currency: "INR",
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -91,7 +99,7 @@ const amount=19900;
           if (verifyData.success) {
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
-                value: 199.00,
+                value: 249.00,
                 currency: 'INR'
               });
             }
@@ -144,7 +152,7 @@ const amount=19900;
           <p className="text-sm text-gray-600">
             Learn Core python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-          <p className="font-bold text-green-700">₹199</p>
+          <p className="font-bold text-green-700">₹249</p>
         </div>
       </div>
 
@@ -209,7 +217,7 @@ const amount=19900;
 
 
         <Button
-          className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 px-6 rounded-lg"
+          className="w-full  text-white font-semibold py-3 px-6 rounded-lg"
           onClick={handlePayment}
           disabled={loading}
         >

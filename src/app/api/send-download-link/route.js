@@ -77,6 +77,7 @@
 import nodemailer from "nodemailer";
 
 export async function POST(req) {
+
   try {
     const { email, name, hasPythonAccess, hasJavaScriptAccess } = await req.json();
 

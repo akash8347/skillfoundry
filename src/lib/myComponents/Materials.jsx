@@ -41,6 +41,7 @@ export default function Materials() {
 
   useEffect(() => {
   if (
+    
     localStorage.getItem("firstTime") === "true" &&
     customer.email &&  // ✅ Make sure customer is loaded
     (hasPythonAccess || hasJavaScriptAccess) // ✅ Ensure access is loaded too

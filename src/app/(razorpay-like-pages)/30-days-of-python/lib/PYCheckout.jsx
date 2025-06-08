@@ -3,12 +3,18 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+import Select from "react-select";
+import { indianStates } from "@/lib/indianStates";
 export default function PYCheckout({ isOpen, setIsOpen }) {
-  const [form, setForm] = useState({ email: "", mobile: "" });
+  const [form, setForm] = useState({ email: "", mobile: "", state: null });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const handleSelectChange = (selectedOption) => {
+    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
+    setFieldErrors(prev => ({ ...prev, state: "" }));
+  };
 
   const validateForm = () => {
     const errors = {};
@@ -43,12 +49,17 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
     setError("");
     setLoading(true);
-
+    const amount = 24900;
     try {
+
       const res = await fetch("/api/razorpay-javascript-199", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          amount,
+
+        }),
       });
 
       const data = await res.json();
@@ -66,32 +77,63 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
         description: "Purchase E-Guide Bundle",
         order_id: data.order.id,
         handler: async (response) => {
-          setLoading(true); // show loading while verifying and redirecting
+          setLoading(true);
 
-          const verifyRes = await fetch("/api/payment-verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, ...form }),
-          });
+          try {
+            // Step 1: Verify payment
+            const verifyRes = await fetch("/api/payment-verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...response,
+                ...form,
+                courseIdentifier: "python_299"
+              }),
+            });
 
-          const verifyData = await verifyRes.json();
-          if (verifyData.success) {
+            const verifyData = await verifyRes.json();
 
-            // Trigger Facebook Purchase event
-            if (typeof window !== 'undefined' && window.fbq) {
-              window.fbq('track', 'Purchase', {
-                value: 299.00,
-                currency: 'INR'
-              });
+            if (verifyData.success) {
+              // Step 2: Track with Facebook Pixel
+              if (typeof window !== 'undefined' && window.fbq) {
+                window.fbq('track', 'Purchase', {
+                  value: 249.00,
+                  currency: 'INR'
+                });
+              }
+
+              // Step 3: Attempt to send download email (but don't block redirect if it fails)
+              try {
+                await fetch("/api/send-download-link", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email: form.email,
+                    name: form.name,
+                    hasPythonAccess: true,
+                    hasJavaScriptAccess: false // set true if needed
+                  }),
+                });
+              } catch (emailError) {
+                console.warn("Download email failed to send:", emailError);
+                // Optionally log or show toast (don't block flow)
+              }
+
+              // Step 4: Always redirect
+              window.location.href = "/download";
+
+            } else {
+              setError("Payment verification failed.");
+              setLoading(false);
             }
 
-            window.location.href = "/download";
-          } else {
-            setError("Payment verification failed.");
-            setLoading(false); // stop loading if error
-
+          } catch (err) {
+            console.error("Handler error:", err);
+            setError("An unexpected error occurred.");
+            setLoading(false);
           }
         },
+
         prefill: {
           email: form.email,
           contact: form.mobile,
@@ -126,18 +168,10 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
           <X size={28} />
         </button>
 
-        <div className="text-center text-xl font-bold sm:mb-4 mb-2">Payment Details</div>
+        <div className="text-center text-xl font-bold sm:mb-4  mt-5 sm:mt-0 mb-3">Payment Details</div>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
-          <div className="w-[120px]">
-            <Image
-              src="/main-image.png"
-              alt="Book Mockup"
-              width={1208}
-              height={1251}
-              className="rounded-xl hidden sm:block"
-            />
-          </div>
+
           <div className="sm:flex-1  sm:text-left">
             <h3 className="text-xl text-left sm:text-left font-semibold text-gray-800 leading-tight">
               30 Days of Python Mastery
@@ -145,43 +179,27 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn Core python, Artificial Intellegece, Web Development, Automation in Python and Make Projects.
             </p>
-            <p className="font-bold text-green-700">₹299</p>
+            <p className="font-bold text-green-700">₹249</p>
           </div>
         </div>
 
-        <div className="bg-white text-black rounded-xl pb-0 sm:pb-3">
-          <ul className="space-y-1 text-sm">
-            {[
-              "Day-by-Day structured Python learning",
-              "AI, Automation, web devlopment in python",
-              "150+ Core Python+Game Projects",
-              "Exercise, code and practice",
-            ].map((benefit, idx) => (
-              <li key={idx} className="flex items-start gap-2">
-                <svg className="w-4 h-4 text-green-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
-                </svg>
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </div>
+
 
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         <form className="space-y-4 mt-4">
-
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
               name="email"
-              className={`w-full border ${fieldErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`w-full border ${fieldErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors`}
               placeholder="Enter your email"
               onChange={handleChange}
               value={form.email}
             />
+            <p className="text-xs text-gray-500 mt-1">Access to this purchase will be sent to this email</p>
             {fieldErrors.email && <p className="text-xs text-red-500 mt-1">{fieldErrors.email}</p>}
           </div>
 
@@ -198,12 +216,28 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             {fieldErrors.mobile && <p className="text-xs text-red-500 mt-1">{fieldErrors.mobile}</p>}
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-700">State</label>
+            <Select
+              name="state"
+              options={indianStates}
+              onChange={handleSelectChange}
+              value={indianStates.find(s => s.value === form.state) || null}
+              className="react-select-container"
+              classNamePrefix="react-select"
+              placehold er="Select your state"
+              menuPlacement="top"
+            />
+            {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
+          </div>
+
+
           <Button
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+            className="w-full hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
             onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 299"}
+            {loading ? "Processing..." : "Buy Now"}
           </Button>
         </form>
       </div>

@@ -5,7 +5,7 @@ const UrgencyBadge = ({price}) => {
   return (
     <div className="sm:hidden flex justify-center mt-4">
       <div className="relative bg-red-100 text-red-600 font-semibold text-sm px-4 py-1 rounded-full flex items-center">
-Now ₹{price} – Limited Time Price Drop!        <span className='pl-1'>
+Now ₹{price} – Limited Time Offer!        <span className='pl-1'>
           <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
           <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-red-500 rounded-full " />
         </span>
