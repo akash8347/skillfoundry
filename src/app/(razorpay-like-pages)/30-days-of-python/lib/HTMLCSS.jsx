@@ -23,7 +23,7 @@ export default function CoreProjects() {
           <div className="w-full md:w-92 flex-shrink-0">
             <Image
               src="/project-core-py.webp"
-              alt="AI with Python"
+              alt="100+ python projects"
               width={300}
               height={400}
               className="w-[88%] mx-auto md:w-full h-auto"
