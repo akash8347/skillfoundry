@@ -48,7 +48,10 @@ export default function LandingLayout() {
               </h2> */}
 {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
               <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
-                30-days of Python Mastery
+                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm">
+                  30-days of Python Mastery
+                </span>
+                
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
                   & 100+ advanced Python projects

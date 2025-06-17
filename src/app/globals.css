@@ -141,9 +141,9 @@
   100% { transform: translateX(0); }
 }
 
-.vibrate-btn {
+/* .vibrate-btn {
   animation: gentle-vibrate 2s ease-in-out infinite;
-}
+} */
 
 
 .custom-button {
