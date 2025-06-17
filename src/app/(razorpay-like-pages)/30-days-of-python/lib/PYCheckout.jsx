@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
 import { indianStates } from "@/lib/indianStates";
+import { Lock } from "lucide-react";
+
 export default function PYCheckout({ isOpen, setIsOpen }) {
   const [form, setForm] = useState({ email: "", mobile: "", state: null });
   const [error, setError] = useState("");
@@ -239,8 +241,20 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
           >
             {loading ? "Processing..." : "Buy Now"}
           </Button>
+
         </form>
+  <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
+  <div className="bg-green-100 p-1.5 rounded-full shadow-sm">
+    <Lock size={14} className="text-green-600" />
+  </div>
+  <span className="tracking-tight">Secure Checkout</span>
+</div>
+
+
+
       </div>
+   
+
     </div>
   );
 }
