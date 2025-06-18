@@ -8,7 +8,7 @@ import FAQSection from "../30-days-Web/lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
-import {  useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import PYCheckout from "./lib/PYCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -25,38 +25,7 @@ import Cheatsheet from "./lib/Cheatsheet";
 export default function LandingLayout() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
-    const hasPushed = useRef(false)
-
   const router = useRouter();
-
- // Handle back button
-  useEffect(() => {
-    const handlePopState = (e) => {
-      if (checkoutOpen) {
-        setCheckoutOpen(false)
-        e.preventDefault()
-      }
-    }
-
-    if (checkoutOpen && !hasPushed.current) {
-      window.history.pushState({ checkout: true }, '') // create a new entry
-      hasPushed.current = true
-
-      window.addEventListener('popstate', handlePopState)
-    }
-
-    if (!checkoutOpen) {
-      hasPushed.current = false
-      window.removeEventListener('popstate', handlePopState)
-    }
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
-    }
-  }, [checkoutOpen])
-
-
-
 
   return (
     <>
@@ -78,11 +47,8 @@ export default function LandingLayout() {
 
               </h2> */}
 {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
-              <h2 className=" sm:mt-0 text-[1.68rem] lg:text-3xl font-bold text-gray-800 mb-2">
-                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm">
-                  30-days of Python Mastery
-                </span>
-                
+              <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
+                30-days of Python Mastery
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
                   & 100+ advanced Python projects
