@@ -181,7 +181,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn Core python, Artificial Intellegece, Web Development, Automation in Python and Make Projects.
             </p>
-            <p className="font-bold text-green-700">₹249</p>
+            {/* <p className="font-bold text-green-700">₹249</p> */}
           </div>
         </div>
 
