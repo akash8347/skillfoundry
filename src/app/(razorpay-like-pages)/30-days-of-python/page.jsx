@@ -21,11 +21,38 @@ import WebDevPythonBookSection from "./lib/WebDevPythonBookSection";
 import { useRouter } from "next/navigation";
 import DataScience from "./lib/DataScience";
 import Cheatsheet from "./lib/Cheatsheet";
+import {  useEffect, useRef } from "react";
 
 export default function LandingLayout() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
+      const hasPushed = useRef(false)
+
+       useEffect(() => {
+    const handlePopState = (e) => {
+      if (checkoutOpen) {
+        setCheckoutOpen(false)
+        e.preventDefault()
+      }
+    }
+
+    if (checkoutOpen && !hasPushed.current) {
+      window.history.pushState({ checkout: true }, '') // create a new entry
+      hasPushed.current = true
+
+      window.addEventListener('popstate', handlePopState)
+    }
+
+    if (!checkoutOpen) {
+      hasPushed.current = false
+      window.removeEventListener('popstate', handlePopState)
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [checkoutOpen])
 
   return (
     <>
@@ -48,7 +75,7 @@ export default function LandingLayout() {
               </h2> */}
 {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
               <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
-                30-days of Python Mastery
+               <div className="">30-days of Python Mastery</div> 
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
                   & 100+ advanced Python projects
