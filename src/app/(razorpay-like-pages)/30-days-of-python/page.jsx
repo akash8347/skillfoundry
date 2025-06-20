@@ -21,15 +21,15 @@ import WebDevPythonBookSection from "./lib/WebDevPythonBookSection";
 import { useRouter } from "next/navigation";
 import DataScience from "./lib/DataScience";
 import Cheatsheet from "./lib/Cheatsheet";
-import {  useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function LandingLayout() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
-      const hasPushed = useRef(false)
+  const hasPushed = useRef(false)
 
-       useEffect(() => {
+  useEffect(() => {
     const handlePopState = (e) => {
       if (checkoutOpen) {
         setCheckoutOpen(false)
@@ -67,32 +67,63 @@ export default function LandingLayout() {
           {/* Left Column - Content */}
           <section className="lg:w-2/3 w-full flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
-            <div className="mb-8 px-6">
+            <div className="mb-8 ">
+
               {/* <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
                 30-days of Python Mastery 6+ Expert Guides Collection
                 & 150+ advanced Python projects
-
               </h2> */}
-{/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
-              <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
+
+              {/* below is the main original, working title code */}
+
+              {/* <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
                <div className="">30-days of Python Mastery</div> 
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
                   & 100+ advanced Python projects
                 </div>
-              </h2>
-              <div className="w-16 h-1 bg-blue-600 mb-3 md:mb-6" />
+              </h2> */}
 
+              {/* this is just for test */}
+              {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
+
+
+
+
+   <div className="flex justify-center sm:mt-0 text-[1.66rem] lg:text-3xl font-bold text-gray-800 mb-3">
+  <div className="bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md px-3 py-1 inline-block text-black whitespace-nowrap">
+    30-days of Python Mastery
+  </div>
+</div>
+         
               <Image
                 width={1200}
                 height={700}
                 src="/last.webp"
                 alt="JavaScript Mastery Pack"
-                className="w-full rounded-lg md:mb-6  mb-3"
+                className="w-full rounded-lg md:mb-6 px-3   mb-3"
                 priority={true}
               />
-              {/* ⭐ Rating Section - moved below image */}
-              <div className="flex items-center flex-wrap gap-2 mb-4">
+            
+              {/* <MobileOfferCard/> */}
+
+              <h2 className="sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2 text-center">
+            
+
+
+                <div className="mt-2 text-[1.2rem] lg:text-xl font-normal text-gray-600 px-6">
+                  6+ Expert Guides Collection & 100+ advanced Python projects
+                </div>
+
+                <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
+              </h2>
+
+              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6">
+                Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
+
+              </p>
+                {/* ⭐ Rating Section - moved below image */}
+               <div className="flex items-center flex-wrap gap-2 mb-4 px-6">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -103,13 +134,7 @@ export default function LandingLayout() {
                   <span className="text-gray-400">•</span>
                   <span className="text-gray-500">1,200+ students</span>
                 </div>
-              </div>
-              {/* <MobileOfferCard/> */}
-
-              <p className="text-gray-700 text-base leading-relaxed mb-4">
-                Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
-
-              </p>
+              </div> 
 
               {/* <div className="md:hidden mb-8 pt-5 pb-6 px-4 bg-white rounded-xl border border-gray-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.05)] relative">
                
@@ -140,43 +165,47 @@ export default function LandingLayout() {
                   ))}
                 </ul>
               </div> */}
-<div className="md:hidden mb-6 mt-8 bg-white rounded-lg border border-gray-200 relative">
-  {/* Colored badge title */}
-  <div className="absolute -top-3 left-3">
-    <div className="bg-emerald-600 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
-      COMPLETE COLLECTION
-    </div>
-  </div>
+              <div className="px-6">
+              <div className="md:hidden mb-6 mt-8 bg-white rounded-lg border border-gray-200 relative">
+                {/* Colored badge title */}
+                <div className="absolute -top-3 left-3">
+                  <div className="bg-emerald-600 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
+                    COMPLETE COLLECTION
+                  </div>
+                </div>
 
-  <ul className="p-4 pt-5 space-y-2.5">
-    {[
-      "Day-by-Day structured Python learning",
-      "Artificial Intelligence in Python", 
-      "Data Science with Python",
-      "Automation using Python",
-      "Web development using Python",
-      "150+ Total (core + game) Projects",
-      "Python code cheatsheet",
-    ].map((benefit, idx) => (
-      <li key={idx} className="flex items-start">
-        {/* Clean check icon */}
-        <svg
-          className="w-4 h-4 mt-0.5 mr-2 text-emerald-500 flex-shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-        <span className="text-gray-800 text-sm">
-          {benefit}
-        </span>
-      </li>
-    ))}
-  </ul>
-</div>
+                <ul className="p-4 pt-5 space-y-2.5">
+                  {[
+                    "Day-by-Day structured Python learning",
+                    "Artificial Intelligence in Python",
+                    "Data Science with Python",
+                    "Automation using Python",
+                    "Web development using Python",
+                    "150+ Total (core + game) Projects",
+                    "Python code cheatsheet",
+                  ].map((benefit, idx) => (
+                    <li key={idx} className="flex items-start">
+                      {/* Clean check icon */}
+                      <svg
+                        className="w-4 h-4 mt-0.5 mr-2 text-emerald-500 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-gray-800 text-sm">
+                        {benefit}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              </div>
 
+        <div className="px-6">
 
+        
               <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
 
               <PythonBookSection />
@@ -189,6 +218,7 @@ export default function LandingLayout() {
               <WhyAffordable />
               <BundleOfferBanner />
               <FAQSection />
+            </div>
             </div>
 
           </section>
@@ -214,7 +244,7 @@ export default function LandingLayout() {
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
                   // onClick={() => router.push("/30-days-of-python/py-checkout")}
-                  onClick={()=>setCheckoutOpen(true)}
+                  onClick={() => setCheckoutOpen(true)}
 
                 >
                   Buy Now
