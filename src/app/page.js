@@ -399,16 +399,6 @@ className="w-full h-[250px] object-contain bg-white"
 
       <details className="group bg-gray-50 border border-gray-200 rounded-xl p-5 transition-all">
         <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
-          Will I get a certificate after completing a course?
-          <span className="ml-2 transition-transform duration-300 group-open:rotate-180">▼</span>
-        </summary>
-        <p className="mt-4 text-gray-600 text-sm">
-          Yes! You'll receive a downloadable certificate of completion after finishing any course, which you can add to your resume or LinkedIn profile.
-        </p>
-      </details>
-
-      <details className="group bg-gray-50 border border-gray-200 rounded-xl p-5 transition-all">
-        <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
           Can I access the course content offline?
           <span className="ml-2 transition-transform duration-300 group-open:rotate-180">▼</span>
         </summary>
