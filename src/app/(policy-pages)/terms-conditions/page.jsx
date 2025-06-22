@@ -52,8 +52,8 @@ export default function TermsAndConditions() {
         <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
         <p>
           If you have any questions about these terms, please contact us at{" "}
-          <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-          skill.foundry365@gmail.com
+          <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+          support@skill-foundry.in
           </Link>
           .
         </p>

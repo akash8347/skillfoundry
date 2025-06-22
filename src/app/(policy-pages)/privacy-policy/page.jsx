@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
 
         <p className="mb-4">
           This Privacy Policy explains how <strong>Skill Foundry</strong> collects, uses, and protects your information when you use our website and enroll in the Mastery courses available at{" "}
-          <strong>skill-foundry.in</strong>. By using our website, you agree to the terms outlined in this policy.
+          <strong>skill-foundry.in</strong> Products. By using our website, you agree to the terms outlined in this policy.
         </p>
 
         <h2 className="text-xl font-semibold mb-2">Information We Collect</h2>
@@ -43,8 +43,8 @@ export default function PrivacyPolicy() {
         <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
         <p>
           If you have any questions or concerns about this Privacy Policy, please reach out to us at{" "}
-          <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-          skill.foundry365@gmail.com
+          <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+          support@skill-foundry.in
           </Link>
           .
         </p>

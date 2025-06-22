@@ -24,10 +24,10 @@ export default function About() {
           <li>
             <span className="font-medium">Email:</span>{" "}
             <Link
-              href="mailto:skill.foundry365@gmail.com"
+              href="mailto:support@skill-foundry.in"
               className="text-blue-600 underline"
             >
-              skill.foundry365@gmail.com
+              support@skill-foundry.in
             </Link>
           </li>
           <li>

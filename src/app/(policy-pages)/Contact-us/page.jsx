@@ -10,8 +10,8 @@ const backup=[
     answer: (
       <>
         If you need to change the name on your certificate, please email us at{" "}
-        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-        skill.foundry365@gmail.com
+        <a href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+        support@skill-foundry.in
         </a>{" "}
         with your request and the correct name you want to appear on the certificate.
       </>

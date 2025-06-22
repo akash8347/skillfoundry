@@ -29,8 +29,8 @@ export default function RefundPolicy() {
         <h2 className="text-xl font-semibold mb-2">Need Help?</h2>
         <p>
           If you experience any technical issues accessing the course or need assistance, please contact us at{" "}
-          <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-          skill.foundry365@gmail.com
+          <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+          support@skill-foundry.in
                     </Link>
           . We're here to help!
         </p>
