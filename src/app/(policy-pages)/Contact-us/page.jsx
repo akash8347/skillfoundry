@@ -36,8 +36,8 @@ const faqs = [
     answer: (
       <>
         If you're having trouble logging in, please contact us directly at{" "}
-        <a href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-        skill.foundry365@gmail.com
+        <a href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+        support@skill-foundry.in
         </a>
         . We'll be happy to assist you as soon as possible.
       </>
@@ -66,8 +66,8 @@ export default function Support() {
         <ul className="list-disc pl-6 mb-8">
           <li>
             Email:{" "}
-            <Link href="mailto:skill.foundry365@gmail.com" className="text-blue-600 underline">
-            skill.foundry365@gmail.com
+            <Link href="mailto:support@skill-foundry.in" className="text-blue-600 underline">
+            support@skill-foundry.in
           </Link>
           </li>
         </ul>
