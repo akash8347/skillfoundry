@@ -49,7 +49,7 @@ const Navbar = () => {
             <Link href="/Dashboard" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               My Course
             </Link>
-             <Link href="/contact-us" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+             <Link href="/Contact-us" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               Support
             </Link>
           </motion.nav>
