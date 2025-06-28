@@ -49,6 +49,9 @@ const Navbar = () => {
             <Link href="/download" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               My Course
             </Link>
+            <Link href="/Contact-us" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+              Support
+            </Link>
           </motion.nav>
         )}
       </AnimatePresence>
