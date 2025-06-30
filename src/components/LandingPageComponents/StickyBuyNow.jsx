@@ -177,14 +177,14 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = () => {
-    setCheckoutOpen(true)
-  };
-
-  //   const handleClick = () => {
-  //   setIsLoading(true);
-  //   router.push( "/30-days-of-python/py-checkout");
+  // const handleClick = () => {
+  //   setCheckoutOpen(true)
   // };
+
+    const handleClick = () => {
+    setIsLoading(true);
+    router.push( "/30-days-of-python/py-checkout");
+  };
   return (
     <div className="fixed bottom-0 left-0 w-full md:hidden bg-white border-t border-gray-200 shadow-lg px-4 py-3 flex justify-between items-center z-50">
       <div className="flex items-center gap-3">

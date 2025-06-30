@@ -48,13 +48,14 @@ export default function JavaScriptBookSection() {
         <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
           📘 30 Days of JavaScript Mastery Guide (280+ pages)
         </h3>
+
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/book-0.png"
+            src="/js-book.webp"
             alt="30 Days of JavaScript"
             width={300}
             height={400}
-            className="w-[100%] mx-auto md:w-full h-auto "
+            className="w-[95%] mx-auto md:w-full h-auto "
           />
         </div>
         <div className="max-w-xl">

@@ -8,15 +8,15 @@ export default function Bonus() {
       {/* Interview Questions Book */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
         <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
-          BONUS: 100+ Most Asked JavaScript Interview Questions
+          100+ Most Asked JavaScript Interview Questions
         </h3>
         <div className="flex flex-col items-center justify-center mb-6">
           <Image
-            src="/js-interview.png"
+            src="/js-interview.webp"
             alt="JavaScript Interview Questions"
-            width={220}
+            width={400}
             height={300}
-            className="w-[200px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+            className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
@@ -29,15 +29,15 @@ export default function Bonus() {
       {/* MCQs and Quizzes Book */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
         <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
-          BONUS: 100+ JavaScript MCQs & Quizzes
+          100+ JavaScript MCQs & Quizzes
         </h3>
         <div className="flex flex-col items-center justify-center mb-6">
           <Image
-            src="/js-mcq.png"
+            src="/js-mcq.webp"
             alt="JavaScript MCQs and Quizzes"
-            width={220}
+            width={300}
             height={300}
-            className="w-[200px] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+            className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
@@ -46,6 +46,32 @@ export default function Bonus() {
           <li>Includes answers and explanations to boost learning.</li>
         </ul>
       </div>
+
+         {/* Cheatsheet Book */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
+        <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+          BONUS: JavaScript Cheatsheet
+        </h3>
+        <div className="flex flex-col items-center justify-center mb-6">
+          <Image
+            src="/js-cheatsheet.webp"
+            alt="JavaScript MCQs and Quizzes"
+            width={300}
+            height={300}
+            className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+           <li>JavaScript syntax, data types, loops, functions</li>
+            <li>Advanced Javascript patterns and comprehensions</li>
+            <li>File handling, exception management, and modules</li> 
+            <li>Virtual environments and package management</li>
+            <li>Common developer shortcuts and best practices</li>
+        </ul>
+      </div>
+
+
+
 
     </section>
   );

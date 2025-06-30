@@ -75,7 +75,7 @@ export default function OrderSummary() {
 
   const upsellItem = {
     name: "JavaScript Mastery Course",
-    price: 199,
+    price: 249,
     description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
   };
 
@@ -218,7 +218,7 @@ export default function OrderSummary() {
 
                 <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
                   <Image
-                    src={index === 0 ? "/book-bundle.webp" : "/main-image.webp"}
+                    src={index === 0 ? "/book-bundle.webp" : "/book-bundle-js.webp"}
                     alt={item.name}
                     fill
                     sizes="(max-width: 640px) 128px, 160px"
@@ -260,15 +260,15 @@ export default function OrderSummary() {
           <div className="flex items-baseline gap-2">
             <span className="font-bold text-base sm:text-lg">Total Amount</span>
             <span className="font-bold text-base sm:text-lg text-gray-900">₹{total}</span>
-            {total === 398 && (
+            {total === 498 && (
               <span className="text-gray-400 line-through text-sm">₹4000</span>
             )}
-            {total === 199 && (
+            {total === 249 && (
               <span className="text-gray-400 line-through text-sm">₹2000</span>
             )}
-            {(total === 398 || total === 199) && (
+            {(total === 498 || total === 249) && (
               <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
-                90% OFF
+                87% OFF
               </span>
             )}
           </div>

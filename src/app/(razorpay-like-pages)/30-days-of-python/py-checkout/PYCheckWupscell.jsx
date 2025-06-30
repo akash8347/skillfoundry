@@ -40,9 +40,9 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
 
     if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
     if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
-    if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
-      errors.state = "Please select a state";
-    }
+    // if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
+    //   errors.state = "Please select a state";
+    // }
     return errors;
   };
 
@@ -69,7 +69,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     const selectedItems = [
       {
         name: "Python Mastery Course",
-        price: 199,
+        price: 249,
         description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
       }
     ];
@@ -167,6 +167,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
             className="react-select-container"
             classNamePrefix="react-select"
             placeholder="Select your state"
+            menuPlacement="top"
           />
           {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
         </div>

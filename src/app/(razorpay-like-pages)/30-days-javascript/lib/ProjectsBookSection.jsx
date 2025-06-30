@@ -12,15 +12,15 @@ export default function ProjectsBookSection() {
         </h3>
 
         {/* Book Image */}
-        <div className="w-full flex justify-center mb-6">
-          <Image
-            src="/js-project.png"
-            alt="100+ JavaScript Projects"
-            width={300}
-            height={400}
-            className="w-[200px] md:w-[300px] h-auto mx-auto rounded-md hover:scale-105 transition-transform duration-300 ease-in-out"
-          />
-        </div>
+       <div className="w-full md:w-94 flex-shrink-0">
+                <Image
+                  src="/js-project.webp"
+                  alt="30 Days of JavaScript"
+                  width={300}
+                  height={400}
+                  className="w-[100%] mx-auto md:w-full h-auto "
+                />
+              </div>
 
         {/* Book Description */}
         <div className="text-gray-600 text-base md:text-lg leading-relaxed space-y-4">

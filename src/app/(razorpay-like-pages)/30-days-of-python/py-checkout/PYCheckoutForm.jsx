@@ -211,6 +211,7 @@ const amount=24900;
             className="react-select-container"
             classNamePrefix="react-select"
             placeholder="Select your state"
+            menuPlacement="top"
           />
           {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
         </div>

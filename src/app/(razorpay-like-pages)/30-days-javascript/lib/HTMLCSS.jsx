@@ -14,7 +14,7 @@ export default function HTMLCSS() {
         {/* Image */}
         <div className="w-full justify-center mb-6">
           <Image
-            src="/html+css.png"
+            src="/html_css.webp"
             alt="Free HTML and CSS Guides"
             width={500}
             height={400}
