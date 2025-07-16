@@ -178,6 +178,10 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = () => {
+    window.fbq('track', 'InitiateCheckout', {
+      value: 249,
+      currency: 'INR'
+    });
     setCheckoutOpen(true)
   };
 

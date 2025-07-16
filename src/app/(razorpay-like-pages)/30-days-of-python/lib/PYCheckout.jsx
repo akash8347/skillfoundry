@@ -43,6 +43,10 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
   const handlePayment = async (e) => {
     e.preventDefault();
+     window.fbq('track', 'AddPaymentInfo', {
+      value: 249,
+      currency: 'INR'
+    });
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
