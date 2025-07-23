@@ -5,7 +5,8 @@ import Navbar from "@/components/LandingPageComponents/Navbar";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'react-hot-toast';
-
+import ClarityScript from './ClarityScript'
+  
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -112,6 +113,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Toaster position="top-center" />
+         <ClarityScript />
         {children}
         <Analytics />
         <SpeedInsights />
