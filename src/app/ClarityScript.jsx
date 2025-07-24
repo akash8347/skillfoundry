@@ -12,7 +12,7 @@ export default function ClarityScript() {
         t.src = 'https://www.clarity.ms/tag/' + i
         y = l.getElementsByTagName(r)[0]
         y.parentNode.insertBefore(t, y)
-      })(window, document, 'clarity', 'script', process.env.MICRO_CLARITY )
+      })(window, document, 'clarity', 'script', process.env.NEXT_PUBLIC_MICRO_CLARITY )
     }
   }, [])
 
