@@ -210,7 +210,7 @@ export default function LandingLayout() {
 {/*                 <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
   📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
 </p> */}
-<h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
+{/* <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3> */}
 {/* <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
   📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
 </p> */}  
