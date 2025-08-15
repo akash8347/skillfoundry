@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import DataScience from "./lib/DataScience";
 import Cheatsheet from "./lib/Cheatsheet";
 import { useEffect, useRef } from "react";
+import Reviews from "./lib/Reviews";
 
 export default function LandingLayout() {
 
@@ -223,6 +224,8 @@ export default function LandingLayout() {
                 <WebDevPythonBookSection />
                 <HTMLCSS />
                 <Cheatsheet />
+                {/* this is reviews section */}
+                <Reviews/>
                 <WhyAffordable />
                 <BundleOfferBanner />
                 <FAQSection />
