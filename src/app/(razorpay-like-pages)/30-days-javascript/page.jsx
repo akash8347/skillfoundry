@@ -4,7 +4,7 @@ import JavaScriptBookSection from "./lib/JavaScriptBookSection";
 import ProjectsBookSection from "./lib/ProjectsBookSection";
 import HTMLCSS from "./lib/HTMLCSS";
 import Bonus from "./lib/Bonus";
-import FAQSection from "../30-days-Web/lib/FAQSection";
+import FAQSection from "./lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";

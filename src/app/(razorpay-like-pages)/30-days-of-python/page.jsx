@@ -4,7 +4,7 @@ import PythonBookSection from "./lib/PythonBookSection";
 // import ProjectsBookSection from "./lib/ProjectsBookSection";
 import HTMLCSS from "./lib/HTMLCSS";
 // import Bonus from "./lib/Bonus";
-import FAQSection from "../30-days-Web/lib/FAQSection";
+import FAQSection from "./lib/FAQSection";
 import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
@@ -250,7 +250,7 @@ export default function LandingLayout() {
                   />
                   <h2 className="text-2xl font-semibold mb-2 text-gray-900">Start Learning Today</h2>
                   <p className="text-sm text-gray-600">
-                    Unlock premium Guides and grow your Javascript knowledge.
+                    Unlock premium Guides and grow your Python knowledge.
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
