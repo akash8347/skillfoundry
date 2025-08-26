@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import { generateToken } from "@/lib/jwt";
 import { v4 as uuidv4 } from 'uuid';
+import generateInvoice from "./invoice";
 
 export async function POST(req) {
   await connectDB();
@@ -14,7 +15,8 @@ export async function POST(req) {
       razorpay_signature,
       email,
       mobile,
-      courseIdentifier
+      courseIdentifier,
+      country
     } = await req.json();
 
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
@@ -26,17 +28,41 @@ export async function POST(req) {
     }
     // --------------- course identify-------------------
     let coursesToSave = [];
+
+
+    const priceMap = {
+  INDIA: {
+    python: 24900,
+    javascript: 24900,
+  },
+  USA: {
+    python: 2900,
+    javascript: 2900,
+  },
+  EUROPE: {
+    python: 2700,
+    javascript: 2700,
+  },
+  // ✅ later you can add more countries easily here
+};
+
+const countryKey = (country || "").toUpperCase();
+
+if (!priceMap[countryKey]) {
+  return Response.json({ error: "Unsupported country" }, { status: 400 });
+}
+
     switch (courseIdentifier) {
       case "python_299":
-        coursesToSave = [{ name: "python", amount: 19900 }];
+        coursesToSave = [{ name: "python", amount: priceMap[countryKey].python }];
         break;
       case "javascript_199":
-        coursesToSave = [{ name: "javascript", amount: 19900 }];
+        coursesToSave = [{ name: "javascript", amount: priceMap[countryKey].javascript }];
         break;
       case "python_js_combo_498":
         coursesToSave = [
-          { name: "python", amount: 19900 },
-          { name: "javascript", amount: 19900 },
+          { name: "python", amount: priceMap[countryKey].python },
+          { name: "javascript", amount: priceMap[countryKey].javascript    },
         ];
         break;
 
@@ -93,8 +119,10 @@ export async function POST(req) {
     }
 
 
-
-
+  generateInvoice(email, mobile, country, coursesToSave).catch(err => {
+      console.error("Invoice generation error:", err);
+    });
+   
     const token = generateToken(user);
 
     return new Response(JSON.stringify({ success: true }), {

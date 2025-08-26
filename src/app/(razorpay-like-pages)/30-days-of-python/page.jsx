@@ -9,7 +9,7 @@ import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
 import { useState } from "react";
-import PYCheckout from "./lib/PYCheckout";
+import PYCheckout from "./py-checkout/PYCheckout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star, Check } from "lucide-react";
@@ -23,13 +23,23 @@ import DataScience from "./lib/DataScience";
 import Cheatsheet from "./lib/Cheatsheet";
 import { useEffect, useRef } from "react";
 import Reviews from "./lib/Reviews";
+import { useSearchParams } from "next/navigation";
+
 
 export default function LandingLayout() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
   const hasPushed = useRef(false)
-
+  const searchParams = useSearchParams();
+  const currency = searchParams.get("currency")?.toUpperCase() || "INR"; // default fallback
+   const currencyPrices={
+    INR:249,
+    USD:27,
+    EUR:24
+   }
+  const price = currencyPrices[currency] || 249;
+  
   useEffect(() => {
     const handlePopState = (e) => {
       if (checkoutOpen) {
@@ -60,7 +70,7 @@ export default function LandingLayout() {
       <title>30days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge price={249} />
+      <UrgencyBadge price={price} currency={currency} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -233,7 +243,7 @@ export default function LandingLayout() {
             </div>
 
           </section>
-          <PYCheckout isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} />
+          <PYCheckout  isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} currency={currency} price={price} />
 
           {/* Right Column - Sticky Card */}
           <aside className="lg:w-1/3 hidden lg:block relative">
@@ -265,7 +275,7 @@ export default function LandingLayout() {
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen} />
+        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency}  />
 
       </div>
 

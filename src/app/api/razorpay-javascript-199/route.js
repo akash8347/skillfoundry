@@ -2,7 +2,13 @@ import Razorpay from "razorpay";
 
 export async function POST(req) {
     try {
-        const { name, email, mobile, amount } = await req.json();
+        const { name, email, mobile, amount, currency} = await req.json();
+       const currencyMapper = {
+           INR: "INR",
+           USD: "USD",
+           EUR: "EUR"
+       };
+      const currencyMapped = currencyMapper[currency] || "INR";
 
         const razorpay = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
@@ -11,7 +17,7 @@ export async function POST(req) {
 
         const options = {
             amount: amount, // amount in paise, must be a number (e.g., 50000 for ₹500.00)
-            currency: "INR",
+            currency: currencyMapped,
             receipt: `order_rcptid_${Date.now()}`,
         };
 

@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
-import { X } from "lucide-react";
+import { Import, X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
 import { indianStates } from "@/lib/indianStates";
+import {usaStates} from "@/lib/usaStates";
 import { Lock } from "lucide-react";
 
-export default function PYCheckout({ isOpen, setIsOpen }) {
+export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
   const [form, setForm] = useState({ email: "", mobile: "", state: null });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -18,19 +19,33 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
     setFieldErrors(prev => ({ ...prev, state: "" }));
   };
 
+  const CountryMapper={
+    INR: "India",
+    USD: "usa",
+    EUR: "Europe"
+  }
+
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
+    let phoneRegex;
 
+    if (currency === "INR") {
+      // phoneRegex = /^(\+91[\s]?)?[6-9]\d{9}$/;
+       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
+    } else if (currency === "USD") {
+      console.log("USD selected");
+      // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
+phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    }
 
     if (!emailRegex.test(form.email)) {
       errors.email = "Enter a valid email address";
     }
 
     if (!phoneRegex.test(form.mobile)) {
-      errors.mobile = "Enter a valid 10-digit mobile number";
+      errors.mobile = "Enter a valid  mobile number";
     }
 
     return errors;
@@ -43,7 +58,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-     window.fbq('track', 'AddPaymentInfo', {
+    window.fbq('track', 'AddPaymentInfo', {
       value: 249,
       currency: 'INR'
     });
@@ -55,7 +70,8 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
     setError("");
     setLoading(true);
-    const amount = 24900;
+    const amount = price * 100;
+    console.log(amount);
     try {
 
       const res = await fetch("/api/razorpay-javascript-199", {
@@ -64,11 +80,13 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
         body: JSON.stringify({
           ...form,
           amount,
+          currency
 
         }),
       });
 
       const data = await res.json();
+      console.log(data);
       if (!res.ok) {
         setError(data.error || "Something went wrong!");
         setLoading(false);
@@ -77,8 +95,8 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 24900,
-        currency: "INR",
+        amount: data.order.amount,
+        currency : data.order.currency,
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
         order_id: data.order.id,
@@ -93,7 +111,9 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
               body: JSON.stringify({
                 ...response,
                 ...form,
-                courseIdentifier: "python_299"
+                courseIdentifier: "python_299",
+                country: CountryMapper[currency],
+
               }),
             });
 
@@ -226,12 +246,12 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
             <label className="block text-sm font-medium text-gray-700">State</label>
             <Select
               name="state"
-              options={indianStates}
+              options={currency === "INR" ? indianStates : usaStates}
               onChange={handleSelectChange}
-              value={indianStates.find(s => s.value === form.state) || null}
+              value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
               className="react-select-container"
               classNamePrefix="react-select"
-              placehold er="Select your state"
+              placeholder="Select your state"
               menuPlacement="top"
             />
             {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
@@ -247,17 +267,17 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
           </Button>
 
         </form>
-  <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
-  <div className="bg-green-100 p-1.5 rounded-full shadow-sm">
-    <Lock size={14} className="text-green-600" />
-  </div>
-  <span className="tracking-tight">Secure Checkout</span>
-</div>
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
+          <div className="bg-green-100 p-1.5 rounded-full shadow-sm">
+            <Lock size={14} className="text-green-600" />
+          </div>
+          <span className="tracking-tight">Secure Checkout</span>
+        </div>
 
 
 
       </div>
-   
+
 
     </div>
   );
