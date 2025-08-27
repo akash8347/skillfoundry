@@ -174,22 +174,22 @@ import { Zap, Clock } from 'lucide-react'
 import { useRouter } from "next/navigation";
 import { get } from 'mongoose';
 
-const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price}) => {
+const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, currencyCode}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = () => {
-    window.fbq('track', 'InitiateCheckout', {
-      value: 249,
-      currency: 'INR'
-    });
-    setCheckoutOpen(true)
-  };
-
-  //   const handleClick = () => {
-  //   setIsLoading(true);
-  //   router.push( "/30-days-of-python/py-checkout");
+  // const handleClick = () => {
+  //   window.fbq('track', 'InitiateCheckout', {
+  //     value: 249,
+  //     currency: 'INR'
+  //   });
+  //   setCheckoutOpen(true)
   // };
+
+    const handleClick = () => {
+    setIsLoading(true);
+    router.push(`/30-days-of-python/py-checkout?c=${currencyCode}`);
+  };
 
   const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
   const currencySymbol = currency === "EUR" ? "€" : currency === "USD" ? "$" : "₹";

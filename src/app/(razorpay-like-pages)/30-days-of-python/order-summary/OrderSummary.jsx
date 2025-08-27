@@ -7,30 +7,90 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react"; // Add this at the top
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useSearchParams } from "next/navigation";
 
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [selectedItems, setSelectedItems] = useState([]);
+  const searchParams = useSearchParams();
+  // currency mapper
+  const currencyMapper = {
+    x9f7q: "USD",
+    k3z8p: "EUR",
+    m7r2d: "INR"
+  };
+  const currency = currencyMapper[searchParams.get("c") || "m7r2d"];
+  const currencySymbol = {
+    USD: "$",
+    EUR: "€",
+    INR: "₹"
+  }[currency];
+
+  const realPrice = {
+    USD: { python: 97, js: 97 },
+    EUR: { python: 95, js: 95 },
+    INR: { python: 2000, js: 2000 }
+  };
+
+  // price table by currency
+  const priceTable = {
+    USD: { python: 27, js: 27 },
+    EUR: { python: 25, js: 25 },
+    INR: { python: 249, js: 249 }
+  };
+
+  // initialize state based on currency immediately
+  const [selectedItems, setSelectedItems] = useState(() => [
+    {
+      name: "Python Mastery Course",
+      price: priceTable[currency].python,
+      description:
+        "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
+    }
+  ]);
+  const [upsellItem] = useState({
+    name: "JavaScript Mastery Course",
+    price: priceTable[currency].js,
+    description:
+      "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
+  });
   const [total, setTotal] = useState(0);
   const [customer, setCustomer] = useState({ email: '', mobile: '' });
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const [addUpsell, setAddUpsell] = useState(false);
 
 
+
+  const displayItems = addUpsell
+    ? [...selectedItems, upsellItem]
+    : selectedItems;
+
   useEffect(() => {
-    // Get selected items from localStorage
-    const savedItems = localStorage.getItem("selectedItems");
-    if (savedItems) {
-      const items = JSON.parse(savedItems);
-      setSelectedItems(items);
-      // Calculate total
-      const sum = items.reduce((acc, item) => acc + item.price, 0);
-      setTotal(sum);
-    }
-    setLoadingSkeleton(false);
-  }, []);
+    const sum = displayItems.reduce((acc, item) => acc + item.price, 0);
+    setTotal(sum);
+  }, [displayItems]);
+
+
+  // useEffect(() => {
+  //   // Get selected items from localStorage
+  //   const savedItems = localStorage.getItem("selectedItems");
+  //   if (savedItems) {
+  //     const items = JSON.parse(savedItems);
+  //     setSelectedItems(items);
+  //     // Calculate total
+  //     const sum = items.reduce((acc, item) => acc + item.price, 0);
+  //     setTotal(sum);
+  //   }
+  //   setLoadingSkeleton(false);
+  // }, []);
+
+  const originalTotal = displayItems.reduce((acc, item) => {
+  const key = item.name.toLowerCase().includes("python") ? "python" : "js";
+  return acc + realPrice[currency][key];
+}, 0);
+
+// 👉 calculate discount percent
+const discountPercent =
+  originalTotal > 0 ? Math.round(((originalTotal - total) / originalTotal) * 100) : 0;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -73,21 +133,6 @@ export default function OrderSummary() {
   }, []);
 
 
-  const upsellItem = {
-    name: "JavaScript Mastery Course",
-    price: 249,
-    description: "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
-  };
-
-  const displayItems = addUpsell
-    ? [...selectedItems, upsellItem]
-    : selectedItems;
-
-  useEffect(() => {
-    const sum = displayItems.reduce((acc, item) => acc + item.price, 0);
-    setTotal(sum);
-  }, [displayItems]);
-
 
 
   const handlePayment = async () => {
@@ -98,14 +143,16 @@ export default function OrderSummary() {
 
 
       const courseIdentifier = addUpsell ? "python_js_combo_498" : "python_299";
-
+      const courseId = addUpsell ? "python_js_combo" : "python";
       const response = await fetch("/api/razorpay-javascript-199", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: customer.email,
           mobile: customer.mobile,
-          amount: total * 100, // Convert to paise
+          courseId,
+          currency
+
         }),
       });
 
@@ -178,99 +225,85 @@ export default function OrderSummary() {
       </h2>
 
       <div className="space-y-4 mb-6">
-        {loadingSkeleton ? (
-          <>
-            <div className="flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm animate-pulse">
-              <div className="w-32 h-20 sm:w-40 sm:h-28 rounded-lg bg-gray-200" />
-              <div className="flex-1 min-w-0 space-y-2">
-                <div className="h-5 w-2/3 bg-gray-200 rounded" />
-                <div className="h-4 w-1/2 bg-gray-200 rounded" />
-                <div className="h-6 w-24 bg-gray-300 rounded mt-2" />
+
+
+        <AnimatePresence mode="popLayout">
+          {displayItems.map((item, index) => (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              layout
+              className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
+            >
+              {item.name === "JavaScript Mastery Course" && (
+                <button
+                  className="absolute top-0 right-1 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
+                  title="Remove"
+                  onClick={() => {
+                    setAddUpsell(!addUpsell);
+                    toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
+                  }}
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+
+              <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
+                <Image
+                  src={index === 0 ? "/book-bundle.webp" : "/book-bundle-js.webp"}
+                  alt={item.name}
+                  fill
+                  sizes="(max-width: 640px) 128px, 160px"
+                  className="object-contain"
+                  priority={index === 0}
+                />
               </div>
-            </div>
 
-          </>
-        ) : (
-
-          <AnimatePresence mode="popLayout">
-            {displayItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                layout
-                className="relative flex items-start gap-5 border-b pb-2 px-2 sm:px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
-              >
-                {item.name === "JavaScript Mastery Course" && (
-                  <button
-                    className="absolute top-0 right-1 text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-100"
-                    title="Remove"
-                    onClick={() => {
-                      setAddUpsell(!addUpsell);
-                      toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
-                    }}
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-
-                <div className="w-32 h-20 sm:w-40 sm:h-28 relative rounded-lg overflow-hidden flex-shrink-0 bg-white border-2 border-gray-200">
-                  <Image
-                    src={index === 0 ? "/book-bundle.webp" : "/book-bundle-js.webp"}
-                    alt={item.name}
-                    fill
-                    sizes="(max-width: 640px) 128px, 160px"
-                    className="object-contain"
-                    priority={index === 0}
-                  />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">
-                    {item.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
-                    {item.description}
-                  </p>
-                  <p className="text-green-600   font-bold text-base sm:text-lg flex items-center gap-2">
-                    ₹{item.price}
-                    {item.name === "Python Mastery Course" && (
-                      <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-                    )}
-                    {item.name === "JavaScript Mastery Course" && (
-                      <span className="text-gray-400 line-through text-xs sm:text-sm">₹2000</span>
-                    )}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-gray-900 text-base sm:text-lg line-clamp-2 mb-1">
+                  {item.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
+                  {item.description}
+                </p>
+                <p className="text-green-600   font-bold text-base sm:text-lg flex items-center gap-2">
+                  {currencySymbol}{item.price}
+                  {item.name === "Python Mastery Course" && (
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{realPrice[currency].python}</span>
+                  )}
+                  {item.name === "JavaScript Mastery Course" && (
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{realPrice[currency].js}</span>
+                  )}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
 
-
-
-
-        )}
       </div>
 
       <div className="border-t pt-4">
         <div className="flex flex-row items-center justify-between mb-4 gap-2">
           <div className="flex items-baseline gap-2">
             <span className="font-bold text-base sm:text-lg">Total Amount</span>
-            <span className="font-bold text-base sm:text-lg text-gray-900">₹{total}</span>
-            {total === 498 && (
-              <span className="text-gray-400 line-through text-sm">₹4000</span>
-            )}
-            {total === 249 && (
-              <span className="text-gray-400 line-through text-sm">₹2000</span>
-            )}
-            {(total === 498 || total === 249) && (
-              <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
-                87% OFF
-              </span>
-            )}
+            <span className="font-bold text-base sm:text-lg text-gray-900">
+              {currencySymbol}{total}
+            </span>
+
+           {discountPercent > 0 && (
+    <>
+      <span className="text-gray-400 line-through text-sm">
+        {currencySymbol}{originalTotal}
+      </span>
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
+        {discountPercent}% OFF
+      </span>
+    </>
+  )}
           </div>
         </div>
 
@@ -350,7 +383,7 @@ export default function OrderSummary() {
                 Processing...
               </span>
             ) : (
-              `Pay ₹${total}`
+              `Pay ${currencySymbol}${total}`
             )}
           </Button>
         </div>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Select from "react-select";
 import { indianStates } from "@/lib/indianStates";
-import {usaStates} from "@/lib/usaStates";
+import { usaStates } from "@/lib/usaStates";
 import { Lock } from "lucide-react";
 
 export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
@@ -19,7 +19,7 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
     setFieldErrors(prev => ({ ...prev, state: "" }));
   };
 
-  const CountryMapper={
+  const CountryMapper = {
     INR: "India",
     USD: "usa",
     EUR: "Europe"
@@ -32,12 +32,12 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
 
     if (currency === "INR") {
       // phoneRegex = /^(\+91[\s]?)?[6-9]\d{9}$/;
-       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     } else if (currency === "USD") {
       console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
-phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+      phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
     }
 
     if (!emailRegex.test(form.email)) {
@@ -96,7 +96,7 @@ phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
         amount: data.order.amount,
-        currency : data.order.currency,
+        currency: data.order.currency,
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
         order_id: data.order.id,

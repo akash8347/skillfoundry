@@ -31,15 +31,27 @@ export default function LandingLayout() {
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
   const hasPushed = useRef(false)
+    const currencyMapper = {
+  x9f7q: "USD",
+  k3z8p: "EUR",
+  m7r2d: "INR"
+};
   const searchParams = useSearchParams();
-  const currency = searchParams.get("currency")?.toUpperCase() || "INR"; // default fallback
+
+const currencyCode = searchParams.get("c") || "m7r2d";
+
+
+  
+  const currency = currencyMapper[searchParams.get("c") || "m7r2d"]; // default fallback
    const currencyPrices={
     INR:249,
     USD:27,
     EUR:24
    }
   const price = currencyPrices[currency] || 249;
-  
+
+
+
   useEffect(() => {
     const handlePopState = (e) => {
       if (checkoutOpen) {
@@ -264,8 +276,8 @@ export default function LandingLayout() {
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  // onClick={() => router.push("/30-days-of-python/py-checkout")}
-                  onClick={() => setCheckoutOpen(true)}
+                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${currencyMapper[searchParams.get("c") || "m7r2d"]}`)}
+                  // onClick={() => setCheckoutOpen(true)}
 
                 >
                   Buy Now
@@ -275,7 +287,7 @@ export default function LandingLayout() {
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency}  />
+        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} currencyCode={currencyCode}  />
 
       </div>
 

@@ -9,6 +9,8 @@ import { connectDB } from '@/lib/mongodb'
 export async function POST(req) {
   try {
 
+    console.log("Connecting to DB...");
+
     await connectDB();
 
     const { startDate, endDate } = await req.json();
@@ -23,7 +25,7 @@ export async function POST(req) {
       date: { $gte: start, $lte: end },
     });
     if (!invoices || invoices.length === 0) {
-      return Response.json({ message: "No invoices found" }, { status: 404 });
+      return Response.json({ message: "No invoiffkjhkbhkhces found" }, { status: 404 });
     }
 
     // Load template
@@ -32,7 +34,7 @@ export async function POST(req) {
     //loop
     // const templatePath = path.join(process.cwd(), "src", "app", "api", "getInvoice", "invoice-final-loop.docx");
     //no-loop
-    const templatePath = path.join(process.cwd(), "src", "app", "api", "getInvoice", "invoice-final-no-loop.docx");
+    const templatePath = path.join(process.cwd(), "src", "app", "api", "getinv", "invoice-final-no-loop.docx");
 
 
 
@@ -47,6 +49,8 @@ export async function POST(req) {
         linebreaks: true,
         delimiters: { start: "{{", end: "}}" },
       });
+              console.log("First item:", inv.items[0]?.sr || "");
+
 
 
       // Map placeholders
@@ -70,7 +74,7 @@ export async function POST(req) {
 
         //no-loop --------------------------
         // First item
-        S1: inv.items[0]?.sr || "",
+        SR1: inv.items[0]?.sr || "",
         DESC1: inv.items[0]?.description || "",
         HSN1: inv.items[0]?.hsn || "",
         QTY1: inv.items[0]?.qty || "",
@@ -78,17 +82,12 @@ export async function POST(req) {
         AMT1: inv.items[0]?.amount || "",
 
         // Second item
-        S2: inv.items[1]?.sr || "",
+        SR2: inv.items[1]?.sr || "",
         DESC2: inv.items[1]?.description || "",
         HSN2: inv.items[1]?.hsn || "",
         QTY2: inv.items[1]?.qty || "",
         RATE2: inv.items[1]?.rate || "",
         AMT2: inv.items[1]?.amount || "",
-
-
-
-
-
 
         SUBTOTAL: inv.subTotal,
         TOTAL: inv.total,

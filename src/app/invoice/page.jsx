@@ -51,7 +51,7 @@ export default function InvoiceDatePicker() {
     };
     try{
 
-    const res = await fetch("api/getInvoice", {
+    const res = await fetch("/api/getinv", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -59,7 +59,7 @@ export default function InvoiceDatePicker() {
 
       if (!res.ok) {
         const err = await res.json();
-        alert(err.message || "No invoices found");
+        alert(err.message || "No invoicesdd found");
         return;
       }
 

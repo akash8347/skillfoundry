@@ -7,11 +7,20 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { indianStates } from "@/lib/indianStates";
 import Select from "react-select";
-
+import { useSearchParams } from "next/navigation";
 // import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+   const currencyMapper = {
+  x9f7q: "USD",
+  k3z8p: "EUR",
+  m7r2d: "INR"
+};
+const currencyCode = searchParams.get("c") || "m7r2d";
+const currency = currencyMapper[currencyCode];
+
 
   const [form, setForm] = useState(() => {
     if (typeof window !== "undefined") {
@@ -20,23 +29,37 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     }
     return { email: "", mobile: "", state: null }; // state is null initially
   });
+
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
+  console.log("this is akash" + currency);
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
     }
   }, [form]);
 
+
+ 
+
   const onClose = () => {
-    router.push("/30-days-of-python");
+    router.push(`/30-days-of-python?c=${currencyCode}`);
   };
 
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
+    let phoneRegex;
+
+    if (currency === "INR") {
+
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
+
+    }  else if (currency === "USD") {
+      console.log("USD selected");
+      // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
+      phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    }
 
     if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
     if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
@@ -66,18 +89,18 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       return;
     }
 
-    const selectedItems = [
-      {
-        name: "Python Mastery Course",
-        price: 249,
-        description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
-      }
-    ];
+    // const selectedItems = [
+    //   {
+    //     name: "Python Mastery Course",
+    //     price: 249,
+    //     description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
+    //   }
+    // ];
 
 
 
-    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-    router.push(`/30-days-of-python/order-summary`);
+    localStorage.setItem("c", searchParams.get("c") || "m7r2d");
+    router.push(`/30-days-of-python/order-summary?c=${currencyCode}`);
   };
 
   return (

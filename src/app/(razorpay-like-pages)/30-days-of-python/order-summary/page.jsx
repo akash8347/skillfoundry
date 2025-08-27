@@ -1,6 +1,6 @@
 "use client"
 import Navbar from "@/components/LandingPageComponents/Navbar";
-import OrderSummary from "../lib/OrderSummary";
+import OrderSummary from "./OrderSummary";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import { useState, useEffect } from "react";
 
