@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
-import { X,CheckCircle  } from "lucide-react"; // Add this at the top
+import { X,CheckCircle, Gift  } from "lucide-react"; // Add this at the top
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCurrency } from "@/app/Context/CurrencyContext";
@@ -277,22 +277,27 @@ export default function OrderSummary() {
 
       </div>
 
-    <AnimatePresence>
-        {addUpsell && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="flex items-center space-x-3 bg-green-50 border-l-4 border-green-400 p-3 rounded-md mt-4 shadow-sm"
-          >
-            <CheckCircle className="text-green-500 w-6 h-6" />
-            <span className="text-green-700 font-medium text-sm">
-              🎉 Special combo deal! You unlocked the €44 combo price for both courses!
+<AnimatePresence>
+      {addUpsell && (
+        <motion.div
+          initial={{ opacity: 0, y: -20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -20, scale: 0.95 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3 text-white mb-4"
+        >
+          <div className="bg-white/20 rounded-full p-2">
+            <Gift className="w-6 h-6 text-white" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold"> Special Combo Deal!</span>
+            <span className="text-sm">
+              You unlocked the <span className="font-semibold">{currencySymbol}{currencyMapper[currency].courses.python_js_combo.price} combo price</span> for both courses!
             </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
 
 
 
