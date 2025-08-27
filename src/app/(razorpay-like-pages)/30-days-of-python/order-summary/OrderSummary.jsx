@@ -142,7 +142,8 @@ export default function OrderSummary() {
           email: customer.email,
           mobile: customer.mobile,
           courseId,
-          currency
+          currency,
+          
 
         }),
       });
@@ -156,7 +157,7 @@ export default function OrderSummary() {
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
         amount: data.order.amount,
-        currency: "INR",
+        currency: data.order.currency,
         name: "Skill Foundry",
         description: selectedItems.length > 1 ? "Python + JavaScript Mastery Bundle" : "Python Mastery Pack",
         order_id: data.order.id,
@@ -169,7 +170,8 @@ export default function OrderSummary() {
               ...response,
               email: customer.email,
               mobile: customer.mobile,
-              courseIdentifier
+              courseIdentifier,
+              currency: data.order.currency
             }),
           });
           const verifyData = await verifyRes.json();

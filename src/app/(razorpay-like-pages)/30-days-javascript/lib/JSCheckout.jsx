@@ -3,8 +3,11 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+import { useCurrency } from "@/app/Context/CurrencyContext";
 export default function JSCheckout({ isOpen, setIsOpen }) {
+
+      const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+  
   const [form, setForm] = useState({ email: "", mobile: "" });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -16,7 +19,20 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
+    let phoneRegex;
+
+     if (currency === "INR") {
+      // phoneRegex = /^(\+91[\s]?)?[6-9]\d{9}$/;
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
+
+    } else if (currency === "USD") {
+      console.log("USD selected");
+      // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
+      phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    }else if (currency === "EUR") {
+      console.log("temprary")
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
+    }
 
 
 
@@ -46,7 +62,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
     setError("");
     setLoading(true);
-
+   const courseId="js"
     try {
       const res = await fetch("/api/razorpay-javascript-199", {
         method: "POST",
@@ -54,6 +70,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         body: JSON.stringify({
           ...form,
           amount,
+          courseId,
+          currency
           
         }),
       });
@@ -67,8 +85,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: 24900,
-        currency: "INR",
+        amount: data.order.amount,
+        currency: data.order.currency,
         name: "Javascript Mastery Pack",
         description: "Purchase E-Guide Bundle",
         order_id: data.order.id,
@@ -78,7 +96,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           const verifyRes = await fetch("/api/payment-verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, ...form, courseIdentifier:courseIdentifier }),
+            body: JSON.stringify({ ...response, ...form, courseIdentifier:courseIdentifier, currency: data.order.currency
+ }),
           });
 
           const verifyData = await verifyRes.json();
@@ -152,7 +171,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             <p className="text-sm text-gray-600 text-left">
               Learn HTML, CSS, JavaScript, live coding, premium guides and more.
             </p>
-            <p className="font-bold text-green-700">₹249</p>
+            <p className="font-bold text-green-700">{symbol}{price}</p>
           </div>
         </div>
 
@@ -210,7 +229,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
             onClick={handlePayment}
             disabled={loading}
           >
-            {loading ? "Processing..." : "Buy @ INR 249"}
+            {loading ? "Processing..." : `Buy @ ${symbol}${price}`}
           </Button>
         </form>
       </div>

@@ -7,24 +7,19 @@ import Select from "react-select";
 import { indianStates } from "@/lib/indianStates";
 import { usaStates } from "@/lib/usaStates";
 import { Lock } from "lucide-react";
-
-export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
+import { useCurrency } from "@/app/Context/CurrencyContext";
+export default function PYCheckout({ isOpen, setIsOpen }) {
   const [form, setForm] = useState({ email: "", mobile: "", state: null });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
+      const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
   const handleSelectChange = (selectedOption) => {
     setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
     setFieldErrors(prev => ({ ...prev, state: "" }));
   };
   
-
-  const CountryMapper = {
-    INR: "India",
-    USD: "usa",
-    EUR: "Europe"
-  }
 
   const validateForm = () => {
     const errors = {};
@@ -39,6 +34,9 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
       console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    }else if (currency === "EUR") {
+      console.log("temprary")
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 
     if (!emailRegex.test(form.email)) {
@@ -73,6 +71,7 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
     setLoading(true);
     const amount = price * 100;
     console.log(amount);
+    const courseId="python"
     try {
 
       const res = await fetch("/api/razorpay-javascript-199", {
@@ -81,7 +80,8 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
         body: JSON.stringify({
           ...form,
           amount,
-          currency
+          currency,
+          courseId
 
         }),
       });
@@ -113,7 +113,7 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
                 ...response,
                 ...form,
                 courseIdentifier: "python_299",
-                country: CountryMapper[currency],
+              currency: data.order.currency
 
               }),
             });

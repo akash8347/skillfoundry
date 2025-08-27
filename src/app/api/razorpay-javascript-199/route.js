@@ -4,13 +4,14 @@ export async function POST(req) {
 
 
     const courses = {
-        python: { USD: 2700, EUR: 25, INR: 24900 },
-        js: { USD: 2700, EUR: 25, INR: 24900 },
+        python: { USD: 2700, EUR: 2500, INR: 24900 },
+        js: { USD: 2700, EUR: 2500, INR: 24900 },
         python_js_combo: { USD: 4400, EUR: 3900, INR: 49800 }
     };
 
     try {
         const { name, email, mobile, currency , courseId} = await req.json();
+        console.log("Request data:", { name, email, mobile, currency, courseId });
         const currencyMapper = {
             INR: "INR",
             USD: "USD",
