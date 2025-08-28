@@ -34,9 +34,6 @@ export default function PythonPage() {
   const hasPushed = useRef(false)
     const { currency, pythonPrice:price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
-
- console.log("price"+price+"currency"+currency+"pythonRealPrice"+pythonRealPrice+"jsRealPrice"+jsRealPrice+"symbol"+symbol);
-
   useEffect(() => {
     const handlePopState = (e) => {
       if (checkoutOpen) {
@@ -107,9 +104,9 @@ export default function PythonPage() {
               <Image
                 width={1200}
                 height={700}
-                src="/last.webp"
-                alt="JavaScript Mastery Pack"
-                className="w-full rounded-lg md:mb-6 px-3   mb-3 "
+                src="/main-img.webp"
+                alt="Python Mastery Pack"
+                className="w-full rounded-lg md:mb-6 px-5   mb-3 "
                 priority={true}
               />
 
@@ -272,7 +269,7 @@ export default function PythonPage() {
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} />
+        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} pythonRealPrice={pythonRealPrice} />
 
       </div>
 

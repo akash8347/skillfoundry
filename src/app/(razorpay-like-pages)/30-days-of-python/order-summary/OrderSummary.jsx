@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
-import { X,CheckCircle, Gift  } from "lucide-react"; // Add this at the top
+import { X, CheckCircle, Gift } from "lucide-react"; // Add this at the top
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCurrency } from "@/app/Context/CurrencyContext";
@@ -21,15 +21,15 @@ export default function OrderSummary() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-  setSelectedItems([
-    {
-      name: "Python Mastery Course",
-      price: pythonPrice,
-      description:
-        "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
-    }
-  ]);
-}, [pythonPrice]);
+    setSelectedItems([
+      {
+        name: "Python Mastery Course",
+        price: pythonPrice,
+        description:
+          "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
+      }
+    ]);
+  }, [pythonPrice]);
   const [upsellItem] = useState({
     name: "JavaScript Mastery Course",
     price: jsPrice,
@@ -46,16 +46,16 @@ export default function OrderSummary() {
     ? [...selectedItems, upsellItem]
     : selectedItems;
 
- useEffect(() => {
-  let newTotal = displayItems.reduce((acc, item) => acc + item.price, 0);
+  useEffect(() => {
+    let newTotal = displayItems.reduce((acc, item) => acc + item.price, 0);
 
-  if (addUpsell) {
-    if (currency === "USD") newTotal = currencyMapper[currency].courses.python_js_combo.price;
-    else if (currency === "EUR") newTotal = currencyMapper[currency].courses.python_js_combo.price;
-  }
+    if (addUpsell) {
+      newTotal = currencyMapper[currency].courses.python_js_combo.price;
 
-  setTotal(newTotal);
-}, [displayItems, addUpsell, currency]);
+    }
+
+    setTotal(newTotal);
+  }, [displayItems, addUpsell, currency]);
 
 
 
@@ -71,17 +71,17 @@ export default function OrderSummary() {
   //   }
   //   setLoadingSkeleton(false);
   // }, []); 
-  
-  const originalTotal =  displayItems.reduce((acc, item) => {
+
+  const originalTotal = displayItems.reduce((acc, item) => {
     const key = item.name.toLowerCase().includes("python") ? "python" : "js";
     return acc + currencyMapper[currency].courses[key].realPrice;
   }, 0);
   console.log("originalTotal: ", originalTotal);
   // 👉 calculate discount percent
-  console.log( " total: ", total);
+  console.log(" total: ", total);
   const discountPercent =
     originalTotal > 0 ? Math.round(((originalTotal - total) / originalTotal) * 100) : 0;
-    console.log("discountPercent: ", discountPercent);
+  console.log("discountPercent: ", discountPercent);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -143,7 +143,7 @@ export default function OrderSummary() {
           mobile: customer.mobile,
           courseId,
           currency,
-          
+
 
         }),
       });
@@ -265,10 +265,10 @@ export default function OrderSummary() {
                 <p className="text-green-600   font-bold text-base sm:text-lg flex items-center gap-2">
                   {currencySymbol}{item.price}
                   {item.name === "Python Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{pythonPrice}</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{pythonRealPrice}</span>
                   )}
                   {item.name === "JavaScript Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{jsPrice}</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{jsRealPrice}</span>
                   )}
                 </p>
               </div>
@@ -279,27 +279,27 @@ export default function OrderSummary() {
 
       </div>
 
-<AnimatePresence>
-      {addUpsell && (
-        <motion.div
-          initial={{ opacity: 0, y: -20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.95 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3 text-white mb-4"
-        >
-          <div className="bg-white/20 rounded-full p-2">
-            <Gift className="w-6 h-6 text-white" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold"> Special Combo Deal!</span>
-            <span className="text-sm">
-              You unlocked the <span className="font-semibold">{currencySymbol}{currencyMapper[currency].courses.python_js_combo.price} combo price</span> for both courses!
-            </span>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      <AnimatePresence>
+        {addUpsell && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3 text-white mb-4"
+          >
+            <div className="bg-white/20 rounded-full p-2">
+              <Gift className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-bold"> Special Combo Deal!</span>
+              <span className="text-sm">
+                You unlocked the <span className="font-semibold">{currencySymbol}{currencyMapper[currency].courses.python_js_combo.price} combo price</span> for both courses!
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
 
 

@@ -144,7 +144,7 @@ export default function LandingLayout() {
 
         </main>
         <LandingFooter />
-        <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode}/>
+        <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} jsRealPrice={jsRealPrice} />
 
 
         {/* ------------------------------- */}

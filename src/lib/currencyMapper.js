@@ -8,7 +8,7 @@ const currencyMapper = {
     courses: {
       python: { displayPrice: 249, realPrice: 2000 },
       js: { displayPrice: 249, realPrice: 2000 },
-      python_js_combo :{ price: 498}
+      python_js_combo :{ price: 398}
     }
   },
   USD: { 

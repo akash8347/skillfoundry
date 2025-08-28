@@ -8,7 +8,6 @@ const CurrencyContext = createContext();
 export function CurrencyProvider({ children, initialCurrency, initialEncrypted }) {
   const [currency] = useState(initialCurrency);
   const [encryptedCode] = useState(initialEncrypted);
-   console.log("CurrencyProvider currency: " + currency + " encryptedCode: " + encryptedCode);
   const [pythonPrice] = useState(currencyMapper[currency].courses.python.displayPrice);
   const [pythonRealPrice] = useState(currencyMapper[currency].courses.python.realPrice);
   const [jsPrice] = useState(currencyMapper[currency].courses.js.displayPrice);

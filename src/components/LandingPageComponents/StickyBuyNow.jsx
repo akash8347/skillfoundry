@@ -174,7 +174,7 @@ import { Zap, Clock } from 'lucide-react'
 import { useRouter } from "next/navigation";
 import { get } from 'mongoose';
 
-const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryptedCode}) => {
+const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryptedCode, pythonRealPrice}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -191,7 +191,7 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryp
     router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
   };
 
-  const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
+  // const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
   const getDiscountPercentage = (price, strikeThroughPrice) => {
     return Math.round(((strikeThroughPrice - price) / strikeThroughPrice) * 100);
   }
@@ -201,10 +201,10 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryp
         <div className="flex flex-col">
           <div className="flex items-center">
             <span className="text-xl font-bold text-gray-900">{symbol}{price}</span>
-            <span className="text-sm line-through text-gray-400 ml-2">{symbol}{strikeThroughPrice}</span>
+            <span className="text-sm line-through text-gray-400 ml-2">{symbol}{pythonRealPrice}</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">{getDiscountPercentage(price, strikeThroughPrice)}% OFF</span>
+            <span className="text-xs font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">{getDiscountPercentage(price, pythonRealPrice)}% OFF</span>
             <span className="flex items-center text-xs text-gray-500">
               <Clock className="w-3 h-3 mr-1" />
               <span>Ends soon</span>
