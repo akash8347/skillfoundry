@@ -6,21 +6,15 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { indianStates } from "@/lib/indianStates";
+import { usaStates } from "@/lib/usaStates";
 import Select from "react-select";
-import { useSearchParams } from "next/navigation";
+import { useCurrency } from "@/app/Context/CurrencyContext";
 // import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-   const currencyMapper = {
-  x9f7q: "USD",
-  k3z8p: "EUR",
-  m7r2d: "INR"
-};
-const currencyCode = searchParams.get("c") || "m7r2d";
-const currency = currencyMapper[currencyCode];
 
+  const { currency, encryptedCode } = useCurrency();
 
   const [form, setForm] = useState(() => {
     if (typeof window !== "undefined") {
@@ -43,7 +37,7 @@ const currency = currencyMapper[currencyCode];
  
 
   const onClose = () => {
-    router.push(`/30-days-of-python?c=${currencyCode}`);
+    router.push(`/30-days-of-python?c=${encryptedCode}`);
   };
 
   const validateForm = () => {
@@ -59,6 +53,8 @@ const currency = currencyMapper[currencyCode];
       console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    } else if (currency === "EUR") {
+      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 
     if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
@@ -97,10 +93,7 @@ const currency = currencyMapper[currencyCode];
     //   }
     // ];
 
-
-
-    localStorage.setItem("c", searchParams.get("c") || "m7r2d");
-    router.push(`/30-days-of-python/order-summary?c=${currencyCode}`);
+    router.push(`/30-days-of-python/order-summary?c=${encryptedCode}`);
   };
 
   return (
@@ -184,9 +177,9 @@ const currency = currencyMapper[currencyCode];
           <label className="block text-sm font-medium text-gray-700">State</label>
           <Select
             name="state"
-            options={indianStates}
+              options={currency === "INR" ? indianStates : usaStates}
             onChange={handleSelectChange}
-            value={indianStates.find(s => s.value === form.state) || null}
+              value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
             className="react-select-container"
             classNamePrefix="react-select"
             placeholder="Select your state"

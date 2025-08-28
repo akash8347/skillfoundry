@@ -5,52 +5,34 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
-import { X } from "lucide-react"; // Add this at the top
+import { X,CheckCircle  } from "lucide-react"; // Add this at the top
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
-
+import { useCurrency } from "@/app/Context/CurrencyContext";
+import { currencyMapper } from "@/lib/currencyMapper";
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  // currency mapper
-  const currencyMapper = {
-    x9f7q: "USD",
-    k3z8p: "EUR",
-    m7r2d: "INR"
-  };
-  const currency = currencyMapper[searchParams.get("c") || "m7r2d"];
-  const currencySymbol = {
-    USD: "$",
-    EUR: "€",
-    INR: "₹"
-  }[currency];
 
-  const realPrice = {
-    USD: { python: 97, js: 97 },
-    EUR: { python: 95, js: 95 },
-    INR: { python: 2000, js: 2000 }
-  };
-
-  // price table by currency
-  const priceTable = {
-    USD: { python: 27, js: 27 },
-    EUR: { python: 25, js: 25 },
-    INR: { python: 249, js: 249 }
-  };
+  const { currency, pythonPrice, pythonRealPrice, jsRealPrice, jsPrice, symbol: currencySymbol, encryptedCode } = useCurrency();
+  console.log("this is from order summary: ", currency, pythonPrice, jsPrice, pythonRealPrice, jsRealPrice, currencySymbol, encryptedCode);
 
   // initialize state based on currency immediately
-  const [selectedItems, setSelectedItems] = useState(() => [
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+  setSelectedItems([
     {
       name: "Python Mastery Course",
-      price: priceTable[currency].python,
+      price: pythonPrice,
       description:
         "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
     }
   ]);
+}, [pythonPrice]);
   const [upsellItem] = useState({
     name: "JavaScript Mastery Course",
-    price: priceTable[currency].js,
+    price: jsPrice,
     description:
       "Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more."
   });
@@ -64,10 +46,17 @@ export default function OrderSummary() {
     ? [...selectedItems, upsellItem]
     : selectedItems;
 
-  useEffect(() => {
-    const sum = displayItems.reduce((acc, item) => acc + item.price, 0);
-    setTotal(sum);
-  }, [displayItems]);
+ useEffect(() => {
+  let newTotal = displayItems.reduce((acc, item) => acc + item.price, 0);
+
+  if (addUpsell) {
+    if (currency === "USD") newTotal = currencyMapper[currency].courses.python_js_combo.price;
+    else if (currency === "EUR") newTotal = currencyMapper[currency].courses.python_js_combo.price;
+  }
+
+  setTotal(newTotal);
+}, [displayItems, addUpsell, currency]);
+
 
 
   // useEffect(() => {
@@ -81,16 +70,18 @@ export default function OrderSummary() {
   //     setTotal(sum);
   //   }
   //   setLoadingSkeleton(false);
-  // }, []);
-
-  const originalTotal = displayItems.reduce((acc, item) => {
-  const key = item.name.toLowerCase().includes("python") ? "python" : "js";
-  return acc + realPrice[currency][key];
-}, 0);
-
-// 👉 calculate discount percent
-const discountPercent =
-  originalTotal > 0 ? Math.round(((originalTotal - total) / originalTotal) * 100) : 0;
+  // }, []); 
+  
+  const originalTotal =  displayItems.reduce((acc, item) => {
+    const key = item.name.toLowerCase().includes("python") ? "python" : "js";
+    return acc + currencyMapper[currency].courses[key].realPrice;
+  }, 0);
+  console.log("originalTotal: ", originalTotal);
+  // 👉 calculate discount percent
+  console.log( " total: ", total);
+  const discountPercent =
+    originalTotal > 0 ? Math.round(((originalTotal - total) / originalTotal) * 100) : 0;
+    console.log("discountPercent: ", discountPercent);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -164,7 +155,7 @@ const discountPercent =
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: total * 100,
+        amount: data.order.amount,
         currency: "INR",
         name: "Skill Foundry",
         description: selectedItems.length > 1 ? "Python + JavaScript Mastery Bundle" : "Python Mastery Pack",
@@ -272,10 +263,10 @@ const discountPercent =
                 <p className="text-green-600   font-bold text-base sm:text-lg flex items-center gap-2">
                   {currencySymbol}{item.price}
                   {item.name === "Python Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{realPrice[currency].python}</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{pythonPrice}</span>
                   )}
                   {item.name === "JavaScript Mastery Course" && (
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{realPrice[currency].js}</span>
+                    <span className="text-gray-400 line-through text-xs sm:text-sm">{currencySymbol}{jsPrice}</span>
                   )}
                 </p>
               </div>
@@ -286,6 +277,25 @@ const discountPercent =
 
       </div>
 
+    <AnimatePresence>
+        {addUpsell && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center space-x-3 bg-green-50 border-l-4 border-green-400 p-3 rounded-md mt-4 shadow-sm"
+          >
+            <CheckCircle className="text-green-500 w-6 h-6" />
+            <span className="text-green-700 font-medium text-sm">
+              🎉 Special combo deal! You unlocked the €44 combo price for both courses!
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
+
       <div className="border-t pt-4">
         <div className="flex flex-row items-center justify-between mb-4 gap-2">
           <div className="flex items-baseline gap-2">
@@ -293,17 +303,17 @@ const discountPercent =
             <span className="font-bold text-base sm:text-lg text-gray-900">
               {currencySymbol}{total}
             </span>
-
-           {discountPercent > 0 && (
-    <>
-      <span className="text-gray-400 line-through text-sm">
-        {currencySymbol}{originalTotal}
-      </span>
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
-        {discountPercent}% OFF
-      </span>
-    </>
-  )}
+            {console.log("discountPercent: ", discountPercent)}
+            {discountPercent > 0 && (
+              <>
+                <span className="text-gray-400 line-through text-sm">
+                  {currencySymbol}{originalTotal}
+                </span>
+                <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-200 whitespace-nowrap ml-2">
+                  {discountPercent}% OFF
+                </span>
+              </>
+            )}
           </div>
         </div>
 

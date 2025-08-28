@@ -18,6 +18,7 @@ export default function PYCheckout({ isOpen, setIsOpen, currency, price }) {
     setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
     setFieldErrors(prev => ({ ...prev, state: "" }));
   };
+  
 
   const CountryMapper = {
     INR: "India",

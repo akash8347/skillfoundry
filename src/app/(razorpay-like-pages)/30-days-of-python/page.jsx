@@ -24,33 +24,18 @@ import Cheatsheet from "./lib/Cheatsheet";
 import { useEffect, useRef } from "react";
 import Reviews from "./lib/Reviews";
 import { useSearchParams } from "next/navigation";
+import { useCurrency } from "../../Context/CurrencyContext";
 
 
-export default function LandingLayout() {
+export default function PythonPage() {
 
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
   const hasPushed = useRef(false)
-    const currencyMapper = {
-  x9f7q: "USD",
-  k3z8p: "EUR",
-  m7r2d: "INR"
-};
-  const searchParams = useSearchParams();
-
-const currencyCode = searchParams.get("c") || "m7r2d";
+    const { currency, pythonPrice:price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
 
-  
-  const currency = currencyMapper[searchParams.get("c") || "m7r2d"]; // default fallback
-   const currencyPrices={
-    INR:249,
-    USD:27,
-    EUR:24
-   }
-  const price = currencyPrices[currency] || 249;
-
-
+ console.log("price"+price+"currency"+currency+"pythonRealPrice"+pythonRealPrice+"jsRealPrice"+jsRealPrice+"symbol"+symbol);
 
   useEffect(() => {
     const handlePopState = (e) => {
@@ -82,7 +67,7 @@ const currencyCode = searchParams.get("c") || "m7r2d";
       <title>30days of Python mastery</title>
 
       <Navbar />
-      <UrgencyBadge price={price} currency={currency} />
+      <UrgencyBadge price={price} symbol={symbol} />
 
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
@@ -276,7 +261,7 @@ const currencyCode = searchParams.get("c") || "m7r2d";
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${currencyMapper[searchParams.get("c") || "m7r2d"]}`)}
+                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
                   // onClick={() => setCheckoutOpen(true)}
 
                 >
@@ -287,7 +272,7 @@ const currencyCode = searchParams.get("c") || "m7r2d";
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} currencyCode={currencyCode}  />
+        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} />
 
       </div>
 

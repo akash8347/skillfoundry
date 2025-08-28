@@ -6,7 +6,9 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'react-hot-toast';
 import ClarityScript from './ClarityScript'
-  
+import { CurrencyProvider } from "./Context/CurrencyContext";
+import { getInitialCurrency } from "@/lib/getInitialCurrency";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -17,7 +19,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    const { currency, encryptedCode } =  await getInitialCurrency(); // server call
+
   return (
     <html lang="en">
       <head>
@@ -112,11 +116,15 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Toaster position="top-center" />
-         <ClarityScript />
-        {children}
-        <Analytics />
-        <SpeedInsights />
+        <CurrencyProvider  initialCurrency={currency} initialEncrypted={encryptedCode}>
+
+          <Toaster position="top-center" />
+          <ClarityScript />
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </CurrencyProvider>
+
       </body>
     </html>
   );
