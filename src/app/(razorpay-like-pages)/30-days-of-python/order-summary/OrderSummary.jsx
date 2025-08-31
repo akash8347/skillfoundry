@@ -50,8 +50,7 @@ export default function OrderSummary() {
     let newTotal = displayItems.reduce((acc, item) => acc + item.price, 0);
 
     if (addUpsell) {
-      newTotal = currencyMapper[currency].courses.python_js_combo.price;
-
+      newTotal = currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price;
     }
 
     setTotal(newTotal);
@@ -72,10 +71,11 @@ export default function OrderSummary() {
   //   setLoadingSkeleton(false);
   // }, []); 
 
-  const originalTotal = displayItems.reduce((acc, item) => {
-    const key = item.name.toLowerCase().includes("python") ? "python" : "js";
-    return acc + currencyMapper[currency].courses[key].realPrice;
-  }, 0);
+ const originalTotal = displayItems.reduce((acc, item) => {
+  const key = item.name.toLowerCase().includes("python") ? "python" : "js";
+  return acc + currencyMapper[currency].variants[encryptedCode].courses[key].realPrice;
+}, 0);
+
   console.log("originalTotal: ", originalTotal);
   // 👉 calculate discount percent
   console.log(" total: ", total);
@@ -132,7 +132,7 @@ export default function OrderSummary() {
     try {
       setLoading(true);
 
-
+      const is19 = encryptedCode === "x1f9q" ? true : false;
       const courseIdentifier = addUpsell ? "python_js_combo_498" : "python_299";
       const courseId = addUpsell ? "python_js_combo" : "python";
       const response = await fetch("/api/razorpay-javascript-199", {
@@ -143,6 +143,7 @@ export default function OrderSummary() {
           mobile: customer.mobile,
           courseId,
           currency,
+          is19
 
 
         }),
@@ -294,7 +295,9 @@ export default function OrderSummary() {
             <div className="flex flex-col">
               <span className="text-lg font-bold"> Special Combo Deal!</span>
               <span className="text-sm">
-                You unlocked the <span className="font-semibold">{currencySymbol}{currencyMapper[currency].courses.python_js_combo.price} combo price</span> for both courses!
+You unlocked the <span className="font-semibold">
+  {currencySymbol}{currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price} combo price
+</span> for both courses!
               </span>
             </div>
           </motion.div>

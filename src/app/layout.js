@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export default async function RootLayout({ children }) {
-    const { currency, encryptedCode } =  await getInitialCurrency(); // server call
+  const { currency, encryptedCode, courses, symbol } = await getInitialCurrency(); // server call
 
   return (
     <html lang="en">
@@ -116,8 +116,12 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CurrencyProvider  initialCurrency={currency} initialEncrypted={encryptedCode}>
-
+    <CurrencyProvider 
+      initialCurrency={currency} 
+      initialEncrypted={encryptedCode}
+      courses={courses}
+      symbol={symbol}
+    >
           <Toaster position="top-center" />
           <ClarityScript />
           {children}

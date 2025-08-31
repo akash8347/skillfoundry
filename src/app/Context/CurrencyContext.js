@@ -1,18 +1,16 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { currencyMapper } from "@/lib/currencyMapper";
 
 const CurrencyContext = createContext();
 
-export function CurrencyProvider({ children, initialCurrency, initialEncrypted }) {
+export function CurrencyProvider({ children, initialCurrency, initialEncrypted, courses, symbol }) {
   const [currency] = useState(initialCurrency);
   const [encryptedCode] = useState(initialEncrypted);
-  const [pythonPrice] = useState(currencyMapper[currency].courses.python.displayPrice);
-  const [pythonRealPrice] = useState(currencyMapper[currency].courses.python.realPrice);
-  const [jsPrice] = useState(currencyMapper[currency].courses.js.displayPrice);
-  const [jsRealPrice] = useState(currencyMapper[currency].courses.js.realPrice);
-  const [symbol] = useState(currencyMapper[currency].symbol);
+  const [pythonPrice] = useState(courses.python.displayPrice);
+  const [pythonRealPrice] = useState(courses.python.realPrice);
+  const [jsPrice] = useState(courses.js.displayPrice);
+  const [jsRealPrice] = useState(courses.js.realPrice);
 
   return (
     <CurrencyContext.Provider
