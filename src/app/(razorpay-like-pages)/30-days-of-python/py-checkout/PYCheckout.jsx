@@ -31,11 +31,9 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     } else if (currency === "USD") {
-      console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
     }else if (currency === "EUR") {
-      console.log("temprary")
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 
@@ -58,8 +56,8 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
   const handlePayment = async (e) => {
     e.preventDefault();
     window.fbq('track', 'AddPaymentInfo', {
-      value: 249,
-      currency: 'INR'
+      value: price,
+      currency: currency
     });
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
@@ -70,7 +68,8 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
     setError("");
     setLoading(true);
     const amount = price * 100;
-    console.log(amount);
+    
+    const is19 = encryptedCode === "x1f9q" ? true : false;
     const courseId="python"
     try {
 
@@ -81,13 +80,13 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
           ...form,
           amount,
           currency,
-          courseId
+          courseId,
+          is19
 
         }),
       });
 
       const data = await res.json();
-      console.log(data);
       if (!res.ok) {
         setError(data.error || "Something went wrong!");
         setLoading(false);
@@ -124,8 +123,8 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
               // Step 2: Track with Facebook Pixel
               if (typeof window !== 'undefined' && window.fbq) {
                 window.fbq('track', 'Purchase', {
-                  value: 249.00,
-                  currency: 'INR'
+                  value: price,
+                  currency: currency
                 });
               }
 

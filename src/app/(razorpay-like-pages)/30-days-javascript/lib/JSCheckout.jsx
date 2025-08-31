@@ -26,11 +26,9 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     } else if (currency === "USD") {
-      console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
     }else if (currency === "EUR") {
-      console.log("temprary")
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 
@@ -63,6 +61,9 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
     setError("");
     setLoading(true);
    const courseId="js"
+
+         const is19 = encryptedCode === "x1f9q" ? true : false;
+
     try {
       const res = await fetch("/api/razorpay-javascript-199", {
         method: "POST",
@@ -71,7 +72,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           ...form,
           amount,
           courseId,
-          currency
+          currency,
+          is19
           
         }),
       });
@@ -157,7 +159,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-2">
           <div className="w-[120px]">
             <Image
-              src="/main-image.png"
+              src="/book-bundle-js.webp"
               alt="Book Mockup"
               width={1208}
               height={1251}

@@ -1,12 +1,13 @@
-'use client';
 
+'use client'
 import LandingFooter from '@/components/LandingPageComponents/LandingFooter';
 import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
-
-
+import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
  function Home() {
+     const { currency, encryptedCode } = useCurrencyFromCookies();
+
   <Head>
   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -61,54 +62,69 @@ import Head from 'next/head';
         </div>
       </section>
 
-      {/* Courses Section */}
-<section id="courses" className="px-6 py-20 bg-gradient-to-br from-white via-gray-50 to-white border-t border-gray-200">
-  <div className="max-w-6xl mx-auto">
-    <h2 className="text-4xl sm:text-5xl font-extrabold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-      Our Courses
+{/* 🌟 Premium Light Courses Section */}
+<section className="relative px-6 py-28 bg-gradient-to-br from-white via-gray-50 to-white overflow-hidden" id="courses">
+  {/* Subtle Pastel Glow */}
+  <div className="absolute top-[-15%] left-[-10%] w-[400px] h-[400px] bg-purple-200 rounded-full blur-[200px] opacity-40" />
+  <div className="absolute bottom-[-15%] right-[-10%] w-[400px] h-[400px] bg-blue-200 rounded-full blur-[200px] opacity-40" />
+
+  <div className="max-w-7xl mx-auto relative z-10 text-center">
+    {/* Heading */}
+    <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-20 text-gray-900 tracking-tight">
+      <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        Our Courses
+      </span>
     </h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-      
-      {/* Course Card */}
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
-        <Image
-          src="/last.webp"
-          alt="30 Days Python Pack"
-          width={600}
-          height={400}
-className="w-full h-[250px] object-contain bg-white"
-        />
-        <div className="flex flex-col justify-between p-6 flex-grow">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">30 Days Python Pack</h3>
-          <Link
-            href="/30-days-of-python"
-            className="mt-auto text-center inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Learn More
-          </Link>
+
+    {/* Cards in Center, Fixed Width */}
+    <div className="flex flex-wrap  gap-12">
+      {/* Python Card */}
+      <div className="group relative bg-white/70 rounded-3xl border border-gray-200 p-8 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm w-[320px]">
+        <div className="overflow-hidden rounded-2xl mb-6">
+          <Image
+            src="/last.webp"
+            alt="30 Days Python Pack"
+            width={600}
+            height={400}
+            className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">30 Days Python Pack</h3>
+        <p className="text-gray-600 mb-3 leading-relaxed text-sm">
+          Master Python with real-world projects in just 30 days. Designed for
+          creators, coders, and future engineers.
+        </p>
+        <Link
+          href={`/30-days-of-python?c=${encryptedCode}`}
+          className="mt-auto inline-block w-full text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 shadow-md"
+        >
+          Enroll Now →
+        </Link>
       </div>
 
-      {/* Course Card */}
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
-        <Image
-          src="/main-image.webp"
-          alt="30 Days JavaScript Pack"
-          width={600}
-          height={400}
-className="w-full h-[250px] object-contain bg-white"
-        />
-        <div className="flex flex-col justify-between p-6 flex-grow">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">30 Days JavaScript Pack</h3>
-          <Link
-            href="/30-days-of-javascript"
-            className="mt-auto text-center inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Learn More
-          </Link>
+      {/* JavaScript Card */}
+      <div className="group relative bg-white/70 rounded-3xl border border-gray-200 p-8 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm w-[320px]">
+        <div className="overflow-hidden rounded-2xl mb-6">
+          <Image
+            src="/js-main.webp"
+            alt="30 Days JavaScript Pack"
+            width={600}
+            height={400}
+            className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">30 Days JavaScript Pack</h3>
+        <p className="text-gray-600 mb-3 leading-relaxed text-sm">
+          Build interactive websites, apps, and projects with modern JavaScript
+          in just 30 days.
+        </p>
+        <Link
+          href={`/30-days-javascript?c=${encryptedCode}`}
+          className="mt-auto inline-block w-full text-center bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 shadow-md"
+        >
+          Enroll Now →
+        </Link>
       </div>
-
     </div>
   </div>
 </section>

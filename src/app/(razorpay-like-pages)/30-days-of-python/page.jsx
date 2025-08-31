@@ -70,7 +70,7 @@ export default function PythonPage() {
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-3">
           {/* Left Column - Content */}
-          <section className="lg:w-2/3 w-full flex flex-col justify-center">
+          <section className="lg:w-2/3 w-full flex flex-col justify-center md:mx-18 md:px-18">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 ">
 
@@ -258,11 +258,11 @@ export default function PythonPage() {
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
-                  // onClick={() => setCheckoutOpen(true)}
+                  // onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
+                  onClick={() => setCheckoutOpen(true)}
 
                 >
-                  Buy Now
+                  Buy Now {symbol}{price}
                 </Button>
               </div>
             </div>

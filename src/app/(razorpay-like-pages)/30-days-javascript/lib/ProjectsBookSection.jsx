@@ -12,7 +12,7 @@ export default function ProjectsBookSection() {
         </h3>
 
         {/* Book Image */}
-       <div className="w-full md:w-94 flex-shrink-0">
+       <div className="w-full md:w-94 flex-shrink-0 mx-auto">
                 <Image
                   src="/js-project.webp"
                   alt="30 Days of JavaScript"

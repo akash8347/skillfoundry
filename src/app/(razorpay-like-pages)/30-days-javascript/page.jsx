@@ -28,7 +28,7 @@ export default function LandingLayout() {
   // const searchParams = useSearchParams()
 
   const [showBack, setShowBack] = useState(false)
-    const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+  const { currency, jsPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
 
   useEffect(() => {
@@ -62,13 +62,13 @@ export default function LandingLayout() {
         {/* Main Section */}
         <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-3">
           {/* Left Column - Content */}
-          <section className="lg:w-2/3 w-full flex flex-col justify-center">
+          <section className="lg:w-2/3 w-full flex flex-col justify-center  sm:mx-20 sm:px-20">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+              <h2 className="text-2xl lg:text-4xl font-bold text-gray-800 mb-2">
                 30-Day JavaScript Mastery Pack
               </h2>
-              <div className="w-16 h-1 bg-blue-600 mb-3" />
+              <div className="w-16 h-1 bg-blue-600 mb-3 sm:w-52  sm:mt-2 sm:mb-5" />
 
               <Image
                 width={1200}
@@ -123,7 +123,7 @@ export default function LandingLayout() {
                   <Image
                     width={200}
                     height={300}
-                    src="/main-image.webp"
+                    src="/book-bundle-js.webp"
                     alt="JavaScript Mastery Pack"
                     className="w-full rounded-lg shadow-lg mb-6"
                   />
@@ -144,7 +144,7 @@ export default function LandingLayout() {
 
         </main>
         <LandingFooter />
-        <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} jsRealPrice={jsRealPrice} />
+        <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen} price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} jsRealPrice={jsRealPrice} />
 
 
         {/* ------------------------------- */}

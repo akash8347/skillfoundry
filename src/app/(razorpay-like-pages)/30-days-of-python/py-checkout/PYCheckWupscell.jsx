@@ -26,7 +26,6 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  console.log("this is akash" + currency);
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
@@ -50,11 +49,9 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     }  else if (currency === "USD") {
-      console.log("USD selected");
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
     } else if (currency === "EUR") {
-      console.log("temprary")
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 

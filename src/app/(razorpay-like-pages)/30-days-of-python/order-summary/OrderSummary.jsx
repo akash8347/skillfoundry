@@ -15,7 +15,6 @@ export default function OrderSummary() {
   const router = useRouter();
 
   const { currency, pythonPrice, pythonRealPrice, jsRealPrice, jsPrice, symbol: currencySymbol, encryptedCode } = useCurrency();
-  console.log("this is from order summary: ", currency, pythonPrice, jsPrice, pythonRealPrice, jsRealPrice, currencySymbol, encryptedCode);
 
   // initialize state based on currency immediately
   const [selectedItems, setSelectedItems] = useState([]);
@@ -76,12 +75,9 @@ export default function OrderSummary() {
   return acc + currencyMapper[currency].variants[encryptedCode].courses[key].realPrice;
 }, 0);
 
-  console.log("originalTotal: ", originalTotal);
   // 👉 calculate discount percent
-  console.log(" total: ", total);
   const discountPercent =
     originalTotal > 0 ? Math.round(((originalTotal - total) / originalTotal) * 100) : 0;
-  console.log("discountPercent: ", discountPercent);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -109,7 +105,6 @@ export default function OrderSummary() {
             .then(res => res.json())
             .then(data => {
               if (data.success) {
-                console.log("✅ Email sent successfully");
                 localStorage.setItem('lastEmailSent', now.toString()); // ⏱ Save new timestamp
               } else {
                 console.error("❌ Email sending failed");
@@ -117,7 +112,6 @@ export default function OrderSummary() {
             })
             .catch(err => console.error("❌ Error sending email:", err));
         } else {
-          console.log("⏳ Email already sent in the last 24 hours.");
         }
       }
     }
@@ -180,7 +174,7 @@ export default function OrderSummary() {
             if (typeof window !== 'undefined' && window.fbq) {
               window.fbq('track', 'Purchase', {
                 value: total,
-                currency: 'INR'
+                currency: currency
               });
             }
             toast.success("Payment successful!");
@@ -313,7 +307,6 @@ You unlocked the <span className="font-semibold">
             <span className="font-bold text-base sm:text-lg text-gray-900">
               {currencySymbol}{total}
             </span>
-            {console.log("discountPercent: ", discountPercent)}
             {discountPercent > 0 && (
               <>
                 <span className="text-gray-400 line-through text-sm">
