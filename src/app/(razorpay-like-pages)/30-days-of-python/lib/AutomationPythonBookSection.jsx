@@ -21,7 +21,7 @@ export default function AutomationPythonBookSection() {
   return (
     <section className="mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">
       {/* Heading and Image */}
-      <div className="flex flex-col items-center gap-6 text-center md:text-left">
+      <div className="flex flex-col items-center gap-4 text-center md:text-left">
         <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
           ⚙️ Automation Using Python 
         </h3>
