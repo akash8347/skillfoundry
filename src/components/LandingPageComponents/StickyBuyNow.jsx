@@ -178,18 +178,18 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryp
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = () => {
-    window.fbq('track', 'InitiateCheckout', {
-      value: price,
-      currency
-    });
-    setCheckoutOpen(true)
-  };
-
-  //   const handleClick = () => {
-  //   setIsLoading(true);
-  //   router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
+  // const handleClick = () => {
+  //   window.fbq('track', 'InitiateCheckout', {
+  //     value: price,
+  //     currency: currency,
+  //   });
+  //   setCheckoutOpen(true)
   // };
+
+    const handleClick = () => {
+    setIsLoading(true);
+    router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
+  };
 
   // const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
   const getDiscountPercentage = (price, strikeThroughPrice) => {

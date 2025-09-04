@@ -258,8 +258,8 @@ export default function PythonPage() {
                   </p>
                 </div>
                 <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  // onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
-                  onClick={() => setCheckoutOpen(true)}
+                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
+                  // onClick={() => setCheckoutOpen(true)}
 
                 >
                   Buy Now {symbol}{price}

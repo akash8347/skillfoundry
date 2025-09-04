@@ -146,7 +146,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
               }
 
               // Step 4: Always redirect
-              window.location.href = "/download";
+              window.location.href = "/thank-you";
 
             } else {
               setError("Payment verification failed.");
