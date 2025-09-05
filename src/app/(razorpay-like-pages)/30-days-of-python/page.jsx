@@ -9,7 +9,7 @@ import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
 import { useState } from "react";
-import PYCheckout from "./py-checkout/PYCheckout";
+import PYCheckout from "./py-checkout/PYCheckoutSlider";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star, Check } from "lucide-react";
@@ -25,6 +25,7 @@ import { useEffect, useRef } from "react";
 import Reviews from "./lib/Reviews";
 import { useSearchParams } from "next/navigation";
 import { useCurrency } from "../../Context/CurrencyContext";
+import PYCheckoutSlider from "./py-checkout/PYCheckoutSlider";
 
 
 export default function PythonPage() {
@@ -237,7 +238,7 @@ export default function PythonPage() {
             </div>
 
           </section>
-          <PYCheckout  isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} currency={currency} price={price} />
+          <PYCheckoutSlider  isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} currency={currency} price={price} />
 
           {/* Right Column - Sticky Card */}
           <aside className="lg:w-1/3 hidden lg:block relative">

@@ -180,7 +180,7 @@ export default function OrderSummary() {
             toast.success("Payment successful!");
             localStorage.setItem("firstTime", "true")
             setTimeout(() => {
-              window.location.href = "/thank-you";
+              window.location.href = "/download";
             }, 1000);
           } else {
             toast.error("Payment verification failed.");

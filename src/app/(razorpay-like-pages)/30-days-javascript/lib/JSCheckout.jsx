@@ -113,7 +113,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
               });
             }
 
-            window.location.href = "/thank-you";
+            window.location.href = "/download";
           } else {
             setError("Payment verification failed.");
             setLoading(false); // stop loading if error

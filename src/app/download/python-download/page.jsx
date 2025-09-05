@@ -1,5 +1,5 @@
 import JSnavbar from '@/lib/myComponents/JSnavbar'
-import Materials from '@/lib/myComponents/Materials'
+import Materials from '@/app/download/Download1'
 import React from 'react'
 
 const page = () => {

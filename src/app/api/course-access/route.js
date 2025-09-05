@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import User from "@/models/User";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
-
+import { connectDB } from "@/lib/mongodb";
 export async function GET(req) {
+      await connectDB()
+  
   const cookieStore = await cookies();
   const token = cookieStore.get('authToken')?.value;
 

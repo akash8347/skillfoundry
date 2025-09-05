@@ -8,12 +8,12 @@ import { indianStates } from "@/lib/indianStates";
 import { usaStates } from "@/lib/usaStates";
 import { Lock } from "lucide-react";
 import { useCurrency } from "@/app/Context/CurrencyContext";
-export default function PYCheckout({ isOpen, setIsOpen }) {
+export default function PYCheckoutSlider({ isOpen, setIsOpen }) {
   const [form, setForm] = useState({ email: "", mobile: "", state: null });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-      const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+      const { currency, pythonPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
   const handleSelectChange = (selectedOption) => {
     setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
@@ -146,7 +146,7 @@ export default function PYCheckout({ isOpen, setIsOpen }) {
               }
 
               // Step 4: Always redirect
-              window.location.href = "/thank-you";
+              window.location.href = "/download";
 
             } else {
               setError("Payment verification failed.");
