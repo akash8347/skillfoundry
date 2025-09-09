@@ -18,7 +18,7 @@ const Navbar1 = () => {
         {/* Just the logo wrapped in a Link */}
         <Link href="/Dashboard" className="flex items-center gap-2">
           <Image
-            src="/logo.jpg"
+            src="/logo.webp"
             alt="Skill Foundry Logo"
             width={100}
             height={30}
