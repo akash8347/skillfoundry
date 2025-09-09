@@ -7,7 +7,7 @@ const LandingFooter = () => {
     <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
       <div>
         <Image
-          src="/logo.jpg"
+          src="/logo.webp"
           alt="Skill Foundry Logo"
           width={153}
           height={38}
