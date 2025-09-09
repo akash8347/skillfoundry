@@ -21,7 +21,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/logo.jpg"
+              src="/logo.webp"
               alt="Skill Foundry Logo"
               width={153}
               height={38}
@@ -83,15 +83,15 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
         <div className="overflow-hidden rounded-2xl mb-6">
           <Image
             src="/last.webp"
-            alt="30 Days Python Pack"
+            alt="The Python Mastery Pack"
             width={600}
             height={400}
             className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">30 Days Python Pack</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">The Python Mastery Pack</h3>
         <p className="text-gray-600 mb-3 leading-relaxed text-sm">
-          Master Python with real-world projects in just 30 days. Designed for
+          Master Python with real-world projects and artificial intelligence. Designed for
           creators, coders, and future engineers.
         </p>
         <Link
@@ -107,16 +107,15 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
         <div className="overflow-hidden rounded-2xl mb-6">
           <Image
             src="/js-main.webp"
-            alt="30 Days JavaScript Pack"
+            alt="The JavaScript Mastery Pack"
             width={600}
             height={400}
             className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">30 Days JavaScript Pack</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">The JavaScript Mastery Pack</h3>
         <p className="text-gray-600 mb-3 leading-relaxed text-sm">
-          Build interactive websites, apps, and projects with modern JavaScript
-          in just 30 days.
+          Build interactive websites, apps, and projects with modern JavaScript.
         </p>
         <Link
           href={`/30-days-javascript?c=${encryptedCode}`}
@@ -519,7 +518,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
   "itemListElement": [
     {
       "@type": "Course",
-      "name": "30 Days Python Pack",
+      "name": "The Python Mastery Pack",
       "description": "Master Python step by step with practical examples, perfect for beginners and developers.",
       "provider": {
         "@type": "Organization",
@@ -529,7 +528,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
     },
     {
       "@type": "Course",
-      "name": "30 Days JavaScript Pack",
+      "name": "The JavaScript Mastery Pack",
       "description": "Learn JavaScript fundamentals with 30 days of structured content and projects.",
       "provider": {
         "@type": "Organization",
@@ -576,7 +575,7 @@ const orgSchema = {
   "@type": "Organization",
   "name": "Skill Foundry",
   "url": "https://skill-foundry.in",
-  "logo": "https://skill-foundry.in/logo.jpg",
+  "logo": "https://skill-foundry.in/logo.webp",
   "sameAs": [
     "https://www.facebook.com/company/skillfoundry24"
   ]

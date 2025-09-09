@@ -9,6 +9,7 @@ import { indianStates } from "@/lib/indianStates";
 import { usaStates } from "@/lib/usaStates";
 import Select from "react-select";
 import { useCurrency } from "@/app/Context/CurrencyContext";
+import { genEventId } from "@/lib/eventHelper";
 // import toast from "react-hot-toast";
 
 export default function PYCheckWupscell({ showCloseButton = true }) {
@@ -33,7 +34,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
   }, [form]);
 
 
- 
+
 
   const onClose = () => {
     router.push(`/30-days-of-python?c=${encryptedCode}`);
@@ -48,7 +49,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
 
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
-    }  else if (currency === "USD") {
+    } else if (currency === "USD") {
       // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
     } else if (currency === "EUR") {
@@ -75,6 +76,12 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
     setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
   const handleContinue = (e) => {
     e.preventDefault();
     const errors = validateForm();
@@ -82,6 +89,45 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       setFieldErrors(errors);
       return;
     }
+
+    const eventId = genEventId();
+    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "AddPaymentInfo", {
+        value: price,
+        currency,
+        content_ids: [itemSku],  // <-- ADD THIS
+        content_type: "product"
+      }, { eventID: eventId });
+    }
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc');
+    // CAPI
+    fetch("/api/capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event_name: "AddPaymentInfo",
+        event_id: eventId,
+        event_source_url: window.location.href,
+        test_event_code: 'TEST74443',
+        // ADD THESE TWO LINES
+        fbp: fbp, // Facebook Browser ID
+        fbc: fbc, // Facebook Click ID
+        email: form.email,       // server will hash
+        phone: form.mobile,      // server will hash
+        custom_data: {
+          value: price,
+          currency,
+          content_ids: [itemSku],  // <-- ADD THIS
+          content_type: "product",
+        },
+      }),
+    }).catch(console.error);
+
+
+
 
     // const selectedItems = [
     //   {
@@ -119,12 +165,12 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         </div>
         <div className="sm:flex-1 text-left">
           <h3 className="text-xl font-semibold text-gray-800 leading-tight">
-            30 Days of Python Mastery
+            The Python Mastery Pack
           </h3>
           <p className="text-sm text-gray-600">
             Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-         {/* <p className="font-bold text-green-700">₹199</p> */}
+          {/* <p className="font-bold text-green-700">₹199</p> */}
         </div>
       </div>
 
@@ -175,9 +221,9 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
           <label className="block text-sm font-medium text-gray-700">State</label>
           <Select
             name="state"
-              options={currency === "INR" ? indianStates : usaStates}
+            options={currency === "INR" ? indianStates : usaStates}
             onChange={handleSelectChange}
-              value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
+            value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
             className="react-select-container"
             classNamePrefix="react-select"
             placeholder="Select your state"

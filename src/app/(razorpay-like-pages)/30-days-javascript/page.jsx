@@ -43,7 +43,7 @@ export default function LandingLayout() {
   return (
     <>
 
-      <title>30 days of Javascript mastery</title>
+      <title>The JavaScript Mastery Pack</title>
       {showBack && (
         <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
           <Link
@@ -66,7 +66,7 @@ export default function LandingLayout() {
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 px-6">
               <h2 className="text-2xl lg:text-4xl font-bold text-gray-800 mb-2">
-                30-Day JavaScript Mastery Pack
+                The JavaScript Mastery Pack
               </h2>
               <div className="w-16 h-1 bg-blue-600 mb-3 sm:w-52  sm:mt-2 sm:mb-5" />
 

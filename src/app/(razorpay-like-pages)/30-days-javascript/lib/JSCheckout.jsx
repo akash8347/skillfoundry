@@ -168,7 +168,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           </div>
           <div className="sm:flex-1  sm:text-left">
             <h3 className="text-xl text-left sm:text-left font-semibold text-gray-800 leading-tight">
-              30 Days of Javascript Mastery
+              The JavaScript Mastery Pack
             </h3>
             <p className="text-sm text-gray-600 text-left">
               Learn HTML, CSS, JavaScript, live coding, premium guides and more.

@@ -62,7 +62,7 @@ export default function PythonPage() {
 
   return (
     <>
-      <title>30days of Python mastery</title>
+      <title>The Python Mastery Pack</title>
 
       <Navbar />
       <UrgencyBadge price={price} symbol={symbol} />
@@ -76,14 +76,14 @@ export default function PythonPage() {
             <div className="mb-8 ">
 
               {/* <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                30-days of Python Mastery 6+ Expert Guides Collection
+                The Python Mastery Pack 6+ Expert Guides Collection
                 & 150+ advanced Python projects
               </h2> */}
 
               {/* below is the main original, working title code */}
 
               {/* <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
-               <div className="">30-days of Python Mastery</div> 
+               <div className="">The Python Mastery Pack</div> 
                 <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
                   6+ Expert Guides Collection
                   & 100+ advanced Python projects
@@ -98,7 +98,7 @@ export default function PythonPage() {
 
               <div className="flex justify-center sm:mt-0  text-[1.66rem] lg:text-[2.5rem] font-bold text-gray-800 mb-3">
                 <div className="bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md px-3 py-1 inline-block text-black whitespace-nowrap">
-                  30-days of Python Mastery
+                   The Python Mastery Pack
                 </div>
               </div>
 

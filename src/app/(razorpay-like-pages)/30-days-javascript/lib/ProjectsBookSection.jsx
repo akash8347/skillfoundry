@@ -15,7 +15,7 @@ export default function ProjectsBookSection() {
        <div className="w-full md:w-94 flex-shrink-0 mx-auto">
                 <Image
                   src="/js-project.webp"
-                  alt="30 Days of JavaScript"
+                  alt="The JavaScript Mastery Pack"
                   width={300}
                   height={400}
                   className="w-[100%] mx-auto md:w-full h-auto "

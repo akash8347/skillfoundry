@@ -31,9 +31,11 @@ export async function POST(req) {
       email,
       mobile,
       courseIdentifier,
-      currency
+      currency,
+      courseId,
+      is19
     } = body;
-
+   console.log("currency:", currency);
     // ✅ Verify signature
     let generatedSignature;
     try {
@@ -54,7 +56,7 @@ export async function POST(req) {
     let coursesToSave = [];
     const priceMap = {
       INR: { python: 24900, javascript: 24900 },
-      USD: { python: 2900, javascript: 2900 },
+      USD: { python: 2700, javascript: 2700 },
       EUR: { python: 2500, javascript: 2500 },
     };
 
@@ -73,7 +75,7 @@ export async function POST(req) {
     try {
       switch (courseIdentifier) {
         case "python_299":
-          coursesToSave = [{ name: "python", amount: priceMap[currencyKey].python }];
+          coursesToSave = [{ name: "python", amount: is19 ? courseId =="python_js_combo" ? 2900 : 1900 : priceMap[currencyKey].python }];
           break;
         case "javascript_199":
           coursesToSave = [{ name: "javascript", amount: priceMap[currencyKey].javascript }];
@@ -102,7 +104,7 @@ export async function POST(req) {
     // ✅ User handling
     let user;
     try {
-      user = await User.findOne({ email });
+      user = await User.findOne({ email,mobile  });
     } catch (findErr) {
       console.error("User lookup error:", findErr);
       return Response.json({ error: "User lookup failed" }, { status: 500 });
@@ -145,7 +147,9 @@ export async function POST(req) {
     try {
           const country=currencyToCountry[currency]
 
-      generateInvoice(email, mobile, country, coursesToSave).catch((err) => {
+      generateInvoice(email, mobile, country,currency, coursesToSave).then((invoice) => {
+        console.log("Invoice generated successfully: ", invoice.invoiceNumber);
+      }).catch((err) => {
         console.error("Invoice generation error:", err);
       });
     } catch (invErr) {

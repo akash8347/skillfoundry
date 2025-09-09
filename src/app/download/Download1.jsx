@@ -154,7 +154,7 @@ export default function Download1() {
           {/* Brand Logo */}
           <div className="flex justify-center mb-6">
             <img
-              src="/logo.jpg"
+              src="/logo.webp"
               alt="Skill Foundry Logo"
               className="h-8"
             />

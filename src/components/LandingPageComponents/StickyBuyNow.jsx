@@ -40,7 +40,7 @@
 //         <span>Buy Now</span>
 //       </button>
 //       )}
-      
+
 //     </div>
 //   )
 // }
@@ -173,8 +173,8 @@ import React, { useState } from 'react'
 import { Zap, Clock } from 'lucide-react'
 import { useRouter } from "next/navigation";
 import { get } from 'mongoose';
-
-const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryptedCode, pythonRealPrice}) => {
+import { genEventId } from "@/lib/eventHelper";
+const StickyBuyNow = ({ setCheckoutOpen, upsell, currency, price, symbol, encryptedCode, pythonRealPrice }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -186,11 +186,58 @@ const StickyBuyNow = ({ setCheckoutOpen, upsell ,currency, price, symbol, encryp
   //   setCheckoutOpen(true)
   // };
 
-    const handleClick = () => {
+  // Helper function to get a cookie by name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  const itemSku = "PYTHON_GUIDES_BUNDLE_01";
+  const handleClick = async () => {
+    const eventId = genEventId();
+
+    // 1. Pixel (no change here)
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "InitiateCheckout", {
+        value: price,
+        currency,
+        content_ids: [itemSku],
+        content_type: "product",
+      }, { eventID: eventId });
+    }
+
+    // 2. Server CAPI (Updated part)
+
+    // Get Facebook browser and click ID cookies
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc');
+
+    fetch("/api/capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event_name: "InitiateCheckout",
+        event_id: eventId,
+        event_source_url: window.location.href,
+        test_event_code: 'TEST74443',
+
+        // ADD THESE TWO LINES
+        fbp: fbp, // Facebook Browser ID
+        fbc: fbc, // Facebook Click ID
+
+        custom_data: {
+          value: price,
+          currency,
+          content_ids: [itemSku],
+          content_type: "product",
+        },
+      }),
+    }).catch(console.error);
+
     setIsLoading(true);
     router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
   };
-
   // const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
   const getDiscountPercentage = (price, strikeThroughPrice) => {
     return Math.round(((strikeThroughPrice - price) / strikeThroughPrice) * 100);

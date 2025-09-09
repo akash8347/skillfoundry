@@ -10,7 +10,7 @@ const currencyMap = {
   UnitedStates: "USD",
   UK: "EUR",
   UnitedKingdom: "EUR",
-  India: "INR",
+  INDIA: "INR",
 };
 
 // Helper: convert number to words (basic for 3 currencies)
@@ -49,8 +49,44 @@ async function getNextInvoiceNumber() {
   return `INV${year}-${nextNumber}`;
 }
 
+
+//fetchRBIReferenceRate
+async function fetchRBIReferenceRate(currencyCode, date) {
+  try {
+    let url = `https://api.frankfurter.app/${date}?from=${currencyCode}&to=INR`;
+    console.log("🔗 Fetching exchange rate from:", url);
+
+    let response = await fetch(url);
+    let data = await response.json();
+
+    if (!data || !data.rates || !data.rates.INR) {
+      console.warn(`No rate found for ${date}, falling back to latest`);
+      url = `https://api.frankfurter.app/latest?from=${currencyCode}&to=INR`;
+      response = await fetch(url);
+      data = await response.json();
+    }
+
+    if (!data || !data.rates || !data.rates.INR) {
+      console.error("Unexpected API response:", data);
+      throw new Error("Exchange rate for INR not found in API response");
+    }
+
+    return data.rates.INR;
+  } catch (err) {
+    console.error("fetchRBIReferenceRate failed:", err);
+    throw err;
+  }
+}
+
+// Helper to convert any currency to INR as of given date
+ async function convertToINR(total, currencyCode, date) {
+
+   if (currencyCode === "INR") return total;
+    const rate = await fetchRBIReferenceRate(currencyCode, date); return total * rate;
+   }
 // Main function
-async function generateInvoice(email, mobile, country, coursesToSave) {
+async function generateInvoice(email, mobile, country, currency, coursesToSave) {
+  console.log("Generating invoice for:", email, mobile, country, coursesToSave);
   await connectDB();
 
   // 1. Find user
@@ -58,10 +94,10 @@ async function generateInvoice(email, mobile, country, coursesToSave) {
   if (!user) throw new Error("User not found");
 
   // 2. Determine currency
-  let currency = "USD"; // default
-  if (currencyMap[country]) {
-    currency = currencyMap[country];
-  }
+  // let currency = "USD"; // default
+  // if (currencyMap[country]) {
+  //   currency = currencyMap[country];
+  // }
 
   // 3. Generate invoice number
   const invoiceNumber = await getNextInvoiceNumber();
@@ -82,8 +118,13 @@ async function generateInvoice(email, mobile, country, coursesToSave) {
   // 5. Calculate totals
   const subTotal = items.reduce((sum, item) => sum + item.amount, 0);
   const total = subTotal;
+  
+  // 6. Calculate converted INR amount (if not INR)
+   const transactionDate = new Date().toISOString().split("T")[0]; 
+   const convertedINRAmount = await convertToINR(total, currency, transactionDate);
+  
   const totalText = numberToWords(total, currency);
-const customerName = user.name && user.name.trim().length > 0 
+  const customerName = user.name && user.name.trim().length > 0 
   ? user.name 
   : user.email.split("@")[0]; // fallback to email prefix
 
@@ -100,6 +141,7 @@ const customerName = user.name && user.name.trim().length > 0
     subTotal,
     total,
     totalText,
+    convertedINRAmount
   });
 
   await invoice.save();

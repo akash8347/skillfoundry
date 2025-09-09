@@ -23,7 +23,7 @@ export default function ThankYouPage() {
           {/* Brand Logo */}
           <div className="flex justify-center mb-6">
             <img
-              src="/logo.jpg"
+              src="/logo.webp"
               alt="Skill Foundry Logo"
               className="h-8"
             />

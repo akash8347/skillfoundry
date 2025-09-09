@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { X, Check,Lock } from "lucide-react";
+import { X, Check, Lock } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // <-- add this
@@ -9,6 +9,9 @@ import Select from "react-select";
 import { useCurrency } from "@/app/Context/CurrencyContext";
 import { is } from "date-fns/locale";
 import { usaStates } from "@/lib/usaStates";
+import { genEventId } from "@/lib/eventHelper";
+
+
 export default function PYCheckoutForm({ showCloseButton = true }) {
   const router = useRouter(); // <-- initialize router
 
@@ -16,7 +19,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const { currency, pythonPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+  const { currency, pythonPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -69,13 +72,55 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
   const handlePayment = async (e) => {
     e.preventDefault();
-     window.fbq('track', 'AddPaymentInfo', {
-      value: price,
-      currency: currency
-    });
+  
     const errors = validateForm();
+    const eventId = genEventId();
+    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "AddPaymentInfo", {
+        value: price,
+        currency,
+        content_ids: [itemSku],  // <-- ADD THIS
+        content_type: "product"
+      }, { eventID: eventId });
+    }
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc');
+    // CAPI
+    fetch("/api/capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event_name: "AddPaymentInfo",
+        event_id: eventId,
+        event_source_url: window.location.href,
+        test_event_code: 'TEST74443',
+        // ADD THESE TWO LINES
+        fbp: fbp, // Facebook Browser ID
+        fbc: fbc, // Facebook Click ID
+        email: form.email,       // server will hash
+        phone: form.mobile,      // server will hash
+        custom_data: {
+          value: price,
+          currency,
+          content_ids: [itemSku],  // <-- ADD THIS
+          content_type: "product",
+        },
+      }),
+    }).catch(console.error);
+
+
+
+
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -84,10 +129,10 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     setError("");
     setLoading(true);
 
-        const amount = price * 100;
-    
+    const amount = price * 100;
+
     const is19 = encryptedCode === "x1f9q" ? true : false;
-    const courseId="python"
+    const courseId = "python"
 
     try {
       const res = await fetch("/api/razorpay-javascript-199", {
@@ -112,7 +157,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-         amount: data.order.amount,
+        amount: data.order.amount,
         currency: data.order.currency,
         name: "Python Mastery Pack",
         description: "Purchase E-Guide Bundle",
@@ -122,21 +167,68 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
           const verifyRes = await fetch("/api/payment-verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response,
-               ...form,
-                courseIdentifier: courseIdentifier,
-                 currency : data.order.currency
-                 }
-                ),
+            body: JSON.stringify({
+              ...response,
+              ...form,
+              courseIdentifier: courseIdentifier,
+              currency: data.order.currency,
+              courseId,
+              is19
+            }
+            ),
           });
           const verifyData = await verifyRes.json();
           if (verifyData.success) {
-            if (typeof window !== 'undefined' && window.fbq) {
-              window.fbq('track', 'Purchase', {
+            const eventId = genEventId();
+
+            // Pixel (No changes here, it's already correct)
+            if (typeof window !== "undefined" && window.fbq) {
+              window.fbq("track", "Purchase", {
                 value: price,
-                currency
-              });
+                currency,
+                order_id: data.order.id, // Correctly at top level for Pixel
+                content_ids: [itemSku],
+                content_type: "product",
+                contents: [{ id: courseId, quantity: 1 }],
+              }, { eventID: eventId });
             }
+
+            // It's best practice to get fresh cookie values right before you send them
+            const fbp = getCookie('_fbp');
+            const fbc = getCookie('_fbc');
+
+            // Server CAPI (await before redirect)
+            try {
+              await fetch("/api/capi", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  event_name: "Purchase",
+                  event_id: eventId,
+                  event_source_url: window.location.href,
+                  email: form.email,
+                  phone: form.mobile,
+                  test_event_code: 'TEST74443',
+                  fbp: fbp,
+                  fbc: fbc,
+
+                  // --- THE FIX IS HERE ---
+                  order_id: data.order.id, // 2. ADD order_id here, at the top level
+
+                  custom_data: {
+                    value: price,
+                    currency,
+                    // 1. REMOVE order_id from custom_data
+                    content_ids: [itemSku],
+                    content_type: "product",
+                    contents: [{ id: courseId, quantity: 1 }],
+                  },
+                }),
+              });
+            } catch (err) {
+              console.error("CAPI Purchase failed", err);
+            }
+
             window.location.href = "/download";
           } else {
             setError("Payment verification failed.");
@@ -157,7 +249,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   };
 
   return (
-<div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
+    <div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
       {showCloseButton && (
         <button
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors"
@@ -181,12 +273,12 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
         </div>
         <div className="sm:flex-1 text-left">
           <h3 className="text-xl font-semibold text-gray-800 leading-tight">
-            30 Days of Python Mastery
+            The Python Mastery Pack
           </h3>
           <p className="text-sm text-gray-600">
             Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
           </p>
-         {/* <p className="font-bold text-green-700">₹199</p> */}
+          {/* <p className="font-bold text-green-700">₹199</p> */}
         </div>
       </div>
 
@@ -237,9 +329,9 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
           <label className="block text-sm font-medium text-gray-700">State</label>
           <Select
             name="state"
-              options={currency === "INR" ? indianStates : usaStates}
+            options={currency === "INR" ? indianStates : usaStates}
             onChange={handleSelectChange}
-              value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
+            value={currency === "INR" ? indianStates.find(s => s.value === form.state) || null : usaStates.find(s => s.value === form.state) || null}
             className="react-select-container"
             classNamePrefix="react-select"
             placeholder="Select your state"
@@ -271,7 +363,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
           <span className="tracking-tight">Secure Checkout</span>
         </div>
       </form>
-         
+
     </div>
   );
 }

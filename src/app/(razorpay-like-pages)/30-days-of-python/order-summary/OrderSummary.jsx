@@ -10,6 +10,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCurrency } from "@/app/Context/CurrencyContext";
 import { currencyMapper } from "@/lib/currencyMapper";
+import { genEventId } from "@/lib/eventHelper";
+
+
 export default function OrderSummary() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -70,10 +73,10 @@ export default function OrderSummary() {
   //   setLoadingSkeleton(false);
   // }, []); 
 
- const originalTotal = displayItems.reduce((acc, item) => {
-  const key = item.name.toLowerCase().includes("python") ? "python" : "js";
-  return acc + currencyMapper[currency].variants[encryptedCode].courses[key].realPrice;
-}, 0);
+  const originalTotal = displayItems.reduce((acc, item) => {
+    const key = item.name.toLowerCase().includes("python") ? "python" : "js";
+    return acc + currencyMapper[currency].variants[encryptedCode].courses[key].realPrice;
+  }, 0);
 
   // 👉 calculate discount percent
   const discountPercent =
@@ -118,11 +121,17 @@ export default function OrderSummary() {
   }, []);
 
 
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
 
 
   const handlePayment = async () => {
 
-
+const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
+  const UPSELL_PRODUCT_SKU = "JAVASCRIPT_COURSE_UPSELL";
     try {
       setLoading(true);
 
@@ -149,6 +158,9 @@ export default function OrderSummary() {
         return;
       }
 
+      const eventId = genEventId();
+
+
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
         amount: data.order.amount,
@@ -166,17 +178,96 @@ export default function OrderSummary() {
               email: customer.email,
               mobile: customer.mobile,
               courseIdentifier,
+              courseId,
+              is19,
               currency: data.order.currency
             }),
           });
           const verifyData = await verifyRes.json();
+
           if (verifyData.success) {
-            if (typeof window !== 'undefined' && window.fbq) {
-              window.fbq('track', 'Purchase', {
-                value: total,
-                currency: currency
-              });
-            }
+            // if (typeof window !== 'undefined' && window.fbq) {
+            //   window.fbq('track', 'Purchase', {
+            //     value: total,
+            //     currency: currency
+            //   });
+            // }
+            const currency = data.order.currency; // e.g., 'INR', 'USD'
+            let value;
+
+            // Default to 2 decimal places
+            const currencyDecimalPlaces = {
+              JPY: 0,
+              KWD: 3,
+              // add other exceptions if needed
+            };
+
+            const decimals = currencyDecimalPlaces[currency] || 2;
+            value = data.order.amount / Math.pow(10, decimals);
+
+             let content_ids;
+          let contents;
+
+ if (addUpsell) {
+            content_ids = [BASE_PRODUCT_SKU, UPSELL_PRODUCT_SKU];
+            contents = [
+              { id: BASE_PRODUCT_SKU, quantity: 1 },
+              { id: UPSELL_PRODUCT_SKU, quantity: 1 }
+            ];
+          } else {
+            content_ids = [BASE_PRODUCT_SKU];
+            contents = [
+              { id: BASE_PRODUCT_SKU, quantity: 1 }
+            ];
+          }
+          
+          const num_items = contents.length;
+
+             // 3. Use the dynamic lists in your events
+          if (typeof window !== "undefined" && window.fbq) {
+            window.fbq("track", "Purchase", {
+              value: value,
+              currency,
+              order_id: data.order.id,
+              content_ids: content_ids, // Use dynamic array
+              content_type: "product",
+              contents: contents,       // Use dynamic array
+              num_items: num_items,     // Add number of items
+            }, { eventID: eventId });
+          }
+              // It's best practice to get fresh cookie values right before you send them
+            const fbp = getCookie('_fbp');
+            const fbc = getCookie('_fbc');
+
+            // Server CAPI (await before redirect)
+               try {
+            await fetch("/api/capi", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                event_name: "Purchase",
+                event_id: eventId,
+                event_source_url: window.location.href,
+                email: customer.email, // Assuming 'customer' is in scope
+                phone: customer.mobile,
+                test_event_code: 'TEST74443',
+                fbp: fbp,
+                fbc: fbc,
+                order_id: data.order.id,
+                custom_data: {
+                  value: value,
+                  currency,
+                  content_ids: content_ids, // Use dynamic array
+                  content_type: "product",
+                  contents: contents,       // Use dynamic array
+                  num_items: num_items,     // Add number of items
+                },
+              }),
+            });
+          } catch (err) {
+            console.error("CAPI Purchase failed", err);
+          }
+
             toast.success("Payment successful!");
             localStorage.setItem("firstTime", "true")
             setTimeout(() => {
@@ -289,9 +380,9 @@ export default function OrderSummary() {
             <div className="flex flex-col">
               <span className="text-lg font-bold"> Special Combo Deal!</span>
               <span className="text-sm">
-You unlocked the <span className="font-semibold">
-  {currencySymbol}{currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price} combo price
-</span> for both courses!
+                You unlocked the <span className="font-semibold">
+                  {currencySymbol}{currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price} combo price
+                </span> for both courses!
               </span>
             </div>
           </motion.div>

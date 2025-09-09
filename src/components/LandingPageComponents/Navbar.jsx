@@ -15,7 +15,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link href="/30-days-of-python" className="flex items-center gap-2">
           <Image
-            src="/logo.jpg"
+            src="/logo.webp"
             alt="Skill Foundry Logo"
             width={100}
             height={30}

@@ -200,10 +200,10 @@ export default function PYCheckoutSlider({ isOpen, setIsOpen }) {
 
           <div className="sm:flex-1  sm:text-left">
             <h3 className="text-xl text-left sm:text-left font-semibold text-gray-800 leading-tight">
-              30 Days of Python Mastery
+              The Python Mastery Pack
             </h3>
             <p className="text-sm text-gray-600 text-left">
-              Learn Core python, Artificial Intellegece, Web Development, Automation in Python and Make Projects.
+              Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
             </p>
             {/* <p className="font-bold text-green-700">₹249</p> */}
           </div>

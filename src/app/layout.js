@@ -44,14 +44,14 @@ export default async function RootLayout({ children }) {
         <meta property="og:url" content="https://skillfoundry.in/" />
         <meta property="og:title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
         <meta property="og:description" content="Join SkillFoundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
-        <meta property="og:image" content="https://skillfoundry.in/logo.jpg" />
+        <meta property="og:image" content="https://skillfoundry.in/logo.webp" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://skillfoundry.in/" />
         <meta property="twitter:title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
         <meta property="twitter:description" content="Join SkillFoundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
-        <meta property="twitter:image" content="https://skillfoundry.in/logo.jpg" />
+        <meta property="twitter:image" content="https://skillfoundry.in/logo.webp" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
@@ -65,7 +65,7 @@ export default async function RootLayout({ children }) {
               "@type": "Organization",
               name: "SkillFoundry",
               url: "https://skillfoundry.in",
-              logo: "https://skillfoundry.in/logo.jpg",
+              logo: "https://skillfoundry.in/logo.webp",
               sameAs: [
                 "https://www.instagram.com/skillfoundry",
                 "https://www.linkedin.com/company/skillfoundry",

@@ -31,7 +31,7 @@ const InvoiceSchema = new mongoose.Schema(
     subTotal: Number,
     total: Number,
     totalText: String, // e.g. "USD NINETEEN ONLY"
-
+    convertedINRAmount: Number, // Total amount converted to INR (for our records)
     // For later storing file path (if you decide to save PDF)
     pdfUrl: { type: String },
   },

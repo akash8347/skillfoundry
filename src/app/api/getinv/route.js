@@ -92,7 +92,7 @@ export async function POST(req) {
         SUBTOTAL: inv.subTotal,
         TOTAL: inv.total,
         TOTAL_TEXT: inv.totalText,
-        CRNCY: inv.currency,
+        CRNC: inv.currency,
       };
 
 
