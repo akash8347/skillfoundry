@@ -103,7 +103,6 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
         event_name: "AddPaymentInfo",
         event_id: eventId,
         event_source_url: window.location.href,
-        test_event_code: 'TEST74443',
         // ADD THESE TWO LINES
         fbp: fbp, // Facebook Browser ID
         fbc: fbc, // Facebook Click ID
@@ -208,7 +207,6 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
                   event_source_url: window.location.href,
                   email: form.email,
                   phone: form.mobile,
-                  test_event_code: 'TEST74443',
                   fbp: fbp,
                   fbc: fbc,
 

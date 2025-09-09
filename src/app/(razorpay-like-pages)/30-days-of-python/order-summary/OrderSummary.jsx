@@ -250,7 +250,6 @@ const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
                 event_source_url: window.location.href,
                 email: customer.email, // Assuming 'customer' is in scope
                 phone: customer.mobile,
-                test_event_code: 'TEST74443',
                 fbp: fbp,
                 fbc: fbc,
                 order_id: data.order.id,
