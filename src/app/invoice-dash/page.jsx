@@ -95,8 +95,8 @@ const InvoiceDetailSheet = ({ invoice, onOpenChange }) => {
     if (!invoice) return null;
 
     return (
-        <Sheet open={!!invoice} onOpenChange={onOpenChange}>
-            <SheetContent className="sm:max-w-lg w-[90vw] overflow-y-auto">
+        <Sheet  open={!!invoice} onOpenChange={onOpenChange}>
+            <SheetContent className="sm:max-w-lg w-[90vw] overflow-y-auto  px-10 py-4 border border-black">
                 <SheetHeader className="text-left">
                     <SheetTitle>Invoice Details</SheetTitle>
                     <SheetDescription>

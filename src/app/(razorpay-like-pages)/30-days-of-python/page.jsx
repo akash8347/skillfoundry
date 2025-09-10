@@ -26,113 +26,163 @@ import Reviews from "./lib/Reviews";
 import { useSearchParams } from "next/navigation";
 import { useCurrency } from "../../Context/CurrencyContext";
 import PYCheckoutSlider from "./py-checkout/PYCheckoutSlider";
+import { genEventId } from "@/lib/eventHelper";
 
 
 export default function PythonPage() {
-
   const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
   const router = useRouter();
-  const hasPushed = useRef(false)
-    const { currency, pythonPrice:price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+  const hasPushed = useRef(false);
+  const {
+    currency,
+    pythonPrice: price,
+    symbol,
+    encryptedCode,
+    pythonRealPrice,
+    jsRealPrice,
+  } = useCurrency(); // 👈 ab teeno mil rahe
 
   useEffect(() => {
     const handlePopState = (e) => {
       if (checkoutOpen) {
-        setCheckoutOpen(false)
-        e.preventDefault()
+        setCheckoutOpen(false);
+        e.preventDefault();
       }
-    }
+    };
 
     if (checkoutOpen && !hasPushed.current) {
-      window.history.pushState({ checkout: true }, '') // create a new entry
-      hasPushed.current = true
+      window.history.pushState({ checkout: true }, ""); // create a new entry
+      hasPushed.current = true;
 
-      window.addEventListener('popstate', handlePopState)
+      window.addEventListener("popstate", handlePopState);
     }
 
     if (!checkoutOpen) {
-      hasPushed.current = false
-      window.removeEventListener('popstate', handlePopState)
+      hasPushed.current = false;
+      window.removeEventListener("popstate", handlePopState);
     }
 
     return () => {
-      window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [checkoutOpen]);
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
+  const itemSku = "PYTHON_GUIDES_BUNDLE_01";
+  const handleClick = async () => {
+    const eventId = genEventId();
+
+    // 1. Pixel (no change here)
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq(
+        "track",
+        "InitiateCheckout",
+        {
+          value: price,
+          currency,
+          content_ids: [itemSku],
+          content_type: "product",
+        },
+        { eventID: eventId }
+      );
     }
-  }, [checkoutOpen])
+
+    // 2. Server CAPI (using sendBeacon for reliability)
+    const fbp = getCookie("_fbp");
+    const fbc = getCookie("_fbc");
+
+    const payload = {
+      event_name: "InitiateCheckout",
+      event_id: eventId,
+      event_source_url: window.location.href,
+      fbp,
+      fbc,
+      custom_data: {
+        value: price,
+        currency,
+        content_ids: [itemSku],
+        content_type: "product",
+      },
+    };
+
+    navigator.sendBeacon(
+      "/api/capi",
+      new Blob([JSON.stringify(payload)], { type: "application/json" })
+    );
+
+    // setIsLoading(true);
+    router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
+  };
 
   return (
     <>
       <title>The Python Mastery Pack</title>
-
       <Navbar />
       <UrgencyBadge price={price} symbol={symbol} />
-
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
         {/* Main Section */}
-        <main className="flex-1 w-full max-w-7xl mx-auto  lg:flex lg:space-x-12 lg:py-20 py-3">
+        <main className="flex-1 w-full    max-w-7xl mx-auto sm:flex lg:space-x-12 lg:px-12 lg:py-20 py-3">
           {/* Left Column - Content */}
-          <section className="lg:w-2/3 w-full flex flex-col justify-center md:mx-18 md:px-18">
+          <section className="w-full bgGreen  sm:w-2/3 md:w-[60%] sm:mx-auto lg:px-14 xl:px-44 lg:w-1/3  lg:flex-1 flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 ">
-
               {/* <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                The Python Mastery Pack 6+ Expert Guides Collection
-                & 150+ advanced Python projects
-              </h2> */}
-
+                The Python Mastery Pack 6+ Expert Guides Collection
+                & 150+ advanced Python projects
+              </h2> */}
               {/* below is the main original, working title code */}
-
               {/* <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
-               <div className="">The Python Mastery Pack</div> 
-                <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
-                  6+ Expert Guides Collection
-                  & 100+ advanced Python projects
-                </div>
-              </h2> */}
-
+               <div className="">The Python Mastery Pack</div> 
+                <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
+                  6+ Expert Guides Collection
+                  & 100+ advanced Python projects
+                </div>
+              </h2> */}
               {/* this is just for test */}
               {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
 
-
-
-
-              <div className="flex justify-center sm:mt-0  text-[1.66rem] lg:text-[2.5rem] font-bold text-gray-800 mb-3">
+              <div className="flex justify-center sm:mt-0 text-[1.66rem] sm:text-[1.8rem] md:text-[2.1rem] lg:text-[2rem] font-bold text-gray-800 mb-3">
                 <div className="bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md px-3 py-1 inline-block text-black whitespace-nowrap">
-                   The Python Mastery Pack
+                  The Python Mastery Pack
                 </div>
               </div>
 
-              <Image
-                width={1200}
-                height={700}
-                src="/main-img.webp"
-                alt="Python Mastery Pack"
-                className="w-full rounded-lg md:mb-6 px-5   mb-3 "
-                priority={true}
-              />
+              <div className="px-2 sm:px-0">
+                <Image
+                  width={1200}
+                  height={700}
+                  src="/main-img.webp"
+                  alt="Python Mastery Pack"
+                  className="w-full   h-auto max-w-full rounded-lg md:mb-6 mb-3"
+                  priority={true}
+                />
+              </div>
 
               {/* <MobileOfferCard/> */}
-
               <h2 className="sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2 text-center">
-
-
-
                 <div className="mt-2 text-[1.2rem] lg:text-xl font-normal text-gray-600 px-6">
                   6+ Expert Guides Collection & 100+ advanced Python projects
                 </div>
-
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>
-
               <p className="text-gray-700 text-base leading-relaxed mb-4 px-6">
-                Boost Your Career, Deepen Your Knowledge, and Build Job-Ready Skills in Automation, AI, Web Development, Data Science, and Project Development.
-
+                Boost Your Career, Deepen Your Knowledge, and Build Job-Ready
+                Skills in Automation, AI, Web Development, Data Science, and
+                Project Development.
               </p>
               {/* ⭐ Rating Section - moved below image */}
               <div className="flex items-center flex-wrap gap-2 mb-4 px-6">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                    />
                   ))}
                 </div>
                 <div className="flex items-center gap-1 text-sm">
@@ -141,36 +191,35 @@ export default function PythonPage() {
                   <span className="text-gray-500">1,200+ students</span>
                 </div>
               </div>
-
               {/* <div className="md:hidden mb-8 pt-5 pb-6 px-4 bg-white rounded-xl border border-gray-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.05)] relative">
-               
-                <div className="absolute -top-3 left-4 bg-white px-2 py-1 border border-gray-200 rounded-md shadow-sm">
-                  <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Guides Include</span>
-                </div>
+               
+                <div className="absolute -top-3 left-4 bg-white px-2 py-1 border border-gray-200 rounded-md shadow-sm">
+                  <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Guides Include</span>
+                </div>
 
-                <ul className="space-y-3 mt-2">
-                  {[
-                    "Day-by-Day structured Python learning",
-                    "Artificial Intelligence in Python",
-                    "Data Science with Python",
-                    "Automation using Python",
-                    "Web development using Python",
-                    "150+ Total (core + game) Projects",
-                    "Python code cheatsheet",
-                  ].map((benefit, idx) => (
-                    <li key={idx} className="flex items-start group">
-                      <div className="relative mr-3 mt-0.5 flex-shrink-0">
-                        <div className="w-4 h-4 rounded-full bg-emerald-100 group-hover:bg-emerald-200 transition-colors flex items-center justify-center">
-                          <Check className="w-2.5 h-2.5 text-emerald-600" />
-                        </div>
-                      </div>
-                      <span className="text-gray-800 text-[0.92rem] font-medium leading-tight group-hover:text-gray-900 transition-colors">
-                        {benefit}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
+                <ul className="space-y-3 mt-2">
+                  {[
+                    "Day-by-Day structured Python learning",
+                    "Artificial Intelligence in Python",
+                    "Data Science with Python",
+                    "Automation using Python",
+                    "Web development using Python",
+                    "150+ Total (core + game) Projects",
+                    "Python code cheatsheet",
+                  ].map((benefit, idx) => (
+                    <li key={idx} className="flex items-start group">
+                      <div className="relative mr-3 mt-0.5 flex-shrink-0">
+                        <div className="w-4 h-4 rounded-full bg-emerald-100 group-hover:bg-emerald-200 transition-colors flex items-center justify-center">
+                          <Check className="w-2.5 h-2.5 text-emerald-600" />
+                        </div>
+                      </div>
+                      <span className="text-gray-800 text-[0.92rem] font-medium leading-tight group-hover:text-gray-900 transition-colors">
+                        {benefit}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+        _       </div> */}
               <div className="px-6">
                 <div className="md:hidden mb-6 mt-8 bg-white rounded-lg border border-gray-200 relative">
                   {/* Colored badge title */}
@@ -179,7 +228,6 @@ export default function PythonPage() {
                       COMPLETE COLLECTION
                     </div>
                   </div>
-
                   <ul className="p-4 pt-5 space-y-2.5">
                     {[
                       "Day-by-Day structured Python learning",
@@ -198,7 +246,12 @@ export default function PythonPage() {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
                         </svg>
                         <span className="text-gray-800 text-sm">
                           {benefit}
@@ -208,20 +261,17 @@ export default function PythonPage() {
                   </ul>
                 </div>
               </div>
-
               <div className="px-6">
-
-
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3>
-{/*                 <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
-  📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">
+                  What You’ll Get:
+                </h3>
+                {/*                 <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
+  📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
 </p> */}
-{/* <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3> */}
-{/* <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
-  📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
-</p> */}  
-
-
+                {/* <h3 className="font-semibold text-lg text-gray-900 mb-2">What You’ll Get:</h3> */}
+                {/* <p className="text-sm text-gray-800 italic bg-gray-50 px-4 py-2 rounded-lg border border-gray-200 shadow-sm mb-4">
+  📘 This is a digital product (PDF). Get instant access and start learning right after purchase.
+</p> */}
                 <PythonBookSection />
                 <AIBookSection />
                 <DataScience></DataScience>
@@ -230,18 +280,21 @@ export default function PythonPage() {
                 <HTMLCSS />
                 <Cheatsheet />
                 {/* this is reviews section */}
-                <Reviews/>
+                <Reviews />
                 <WhyAffordable />
                 <BundleOfferBanner />
                 <FAQSection />
               </div>
             </div>
-
           </section>
-          <PYCheckoutSlider  isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} currency={currency} price={price} />
-
+          <PYCheckoutSlider
+            isOpen={checkoutOpen}
+            setIsOpen={setCheckoutOpen}
+            currency={currency}
+            price={price}
+          />
           {/* Right Column - Sticky Card */}
-          <aside className="lg:w-1/3 hidden lg:block relative">
+          <aside className="hidden lg:block  lg:w-[350px] relative">
             <div className="sticky top-22">
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 p-6 rounded-2xl shadow-xl flex flex-col">
                 <div className="mb-6">
@@ -253,27 +306,36 @@ export default function PythonPage() {
                     alt="JavaScript Mastery Pack"
                     className="w-full rounded-lg shadow-lg mb-6"
                   />
-                  <h2 className="text-2xl font-semibold mb-2 text-gray-900">Start Learning Today</h2>
+                  <h2 className="text-2xl font-semibold mb-2 text-gray-900">
+                    Start Learning Today
+                  </h2>
                   <p className="text-sm text-gray-600">
                     Unlock premium Guides and grow your Python knowledge.
                   </p>
                 </div>
-                <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-                  onClick={() => router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`)}
+                <Button
+                  className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
+                  onClick={handleClick}
                   // onClick={() => setCheckoutOpen(true)}
-
                 >
-                  Buy Now {symbol}{price}
+                  Buy Now {symbol}
+                  {price}
                 </Button>
               </div>
             </div>
           </aside>
         </main>
         <LandingFooter />
-        <StickyBuyNow upsell={true} setCheckoutOpen={setCheckoutOpen}  price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} pythonRealPrice={pythonRealPrice} />
-
+        <StickyBuyNow
+          upsell={true}
+          setCheckoutOpen={setCheckoutOpen}
+          price={price}
+          currency={currency}
+          symbol={symbol}
+          encryptedCode={encryptedCode}
+          pythonRealPrice={pythonRealPrice}
+        />
       </div>
-
     </>
   );
 }

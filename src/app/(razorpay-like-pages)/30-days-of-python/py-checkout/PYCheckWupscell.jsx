@@ -15,7 +15,7 @@ import { genEventId } from "@/lib/eventHelper";
 export default function PYCheckWupscell({ showCloseButton = true }) {
   const router = useRouter();
 
-  const { currency, encryptedCode } = useCurrency();
+  const { currency, encryptedCode, pythonPrice } = useCurrency();
 
   const [form, setForm] = useState(() => {
     if (typeof window !== "undefined") {
@@ -32,7 +32,6 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
     }
   }, [form]);
-
 
 
 
@@ -92,10 +91,10 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
 
     const eventId = genEventId();
     const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
-
+    
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "AddPaymentInfo", {
-        value: price,
+        value: pythonPrice,
         currency,
         content_ids: [itemSku],  // <-- ADD THIS
         content_type: "product"
@@ -117,7 +116,7 @@ export default function PYCheckWupscell({ showCloseButton = true }) {
         email: form.email,       // server will hash
         phone: form.mobile,      // server will hash
         custom_data: {
-          value: price,
+          value: pythonPrice,
           currency,
           content_ids: [itemSku],  // <-- ADD THIS
           content_type: "product",

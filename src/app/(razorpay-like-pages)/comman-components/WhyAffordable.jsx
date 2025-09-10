@@ -3,7 +3,8 @@ import { CheckCircle } from "lucide-react";
 
 export default function WhyAffordable() {
   return (
-    <section className="bg-white text-gray-800 p-6 md:p-12 mt-8 rounded-xl border border-gray-200">
+    // CHANGE 1: Added max-w-3xl and mx-auto to constrain the width on large screens and center it.
+    <section className="bg-white text-gray-800 p-6 md:p-12 mt-8 rounded-xl border border-gray-200 max-w-3xl mx-auto">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
         <h2 className="text-xl md:text-3xl font-bold">
           Why Is This Bundle So Affordable?
@@ -19,7 +20,10 @@ export default function WhyAffordable() {
         Our mission is to democratize tech education in India.
       </p>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* CHANGE 2: Removed "lg:grid-cols-2" to force a single-column layout on all screen sizes.
+          A "gap-y-6" is added for spacing between the sections when stacked.
+      */}
+      <div className="grid gap-y-6">
         {/* Left side */}
         <div>
           <div className="flex items-center bg-gray-100 p-4 rounded-lg mb-4">

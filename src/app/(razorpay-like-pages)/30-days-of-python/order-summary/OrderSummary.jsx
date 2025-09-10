@@ -130,8 +130,8 @@ export default function OrderSummary() {
 
   const handlePayment = async () => {
 
-const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
-  const UPSELL_PRODUCT_SKU = "JAVASCRIPT_COURSE_UPSELL";
+    const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
+    const UPSELL_PRODUCT_SKU = "JAVASCRIPT_COURSE_UPSELL";
     try {
       setLoading(true);
 
@@ -180,95 +180,96 @@ const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
               courseIdentifier,
               courseId,
               is19,
-              currency: data.order.currency
+              currency: data.order.currency,
             }),
           });
           const verifyData = await verifyRes.json();
 
           if (verifyData.success) {
-            // if (typeof window !== 'undefined' && window.fbq) {
-            //   window.fbq('track', 'Purchase', {
-            //     value: total,
-            //     currency: currency
-            //   });
-            // }
-            const currency = data.order.currency; // e.g., 'INR', 'USD'
+            const currency = data.order.currency;
             let value;
 
-            // Default to 2 decimal places
-            const currencyDecimalPlaces = {
-              JPY: 0,
-              KWD: 3,
-              // add other exceptions if needed
-            };
-
+            const currencyDecimalPlaces = { JPY: 0, KWD: 3 };
             const decimals = currencyDecimalPlaces[currency] || 2;
             value = data.order.amount / Math.pow(10, decimals);
 
-             let content_ids;
-          let contents;
+            let content_ids, contents;
+            if (addUpsell) {
+              content_ids = [BASE_PRODUCT_SKU, UPSELL_PRODUCT_SKU];
+              contents = [
+                { id: BASE_PRODUCT_SKU, quantity: 1 },
+                { id: UPSELL_PRODUCT_SKU, quantity: 1 },
+              ];
+            } else {
+              content_ids = [BASE_PRODUCT_SKU];
+              contents = [{ id: BASE_PRODUCT_SKU, quantity: 1 }];
+            }
 
- if (addUpsell) {
-            content_ids = [BASE_PRODUCT_SKU, UPSELL_PRODUCT_SKU];
-            contents = [
-              { id: BASE_PRODUCT_SKU, quantity: 1 },
-              { id: UPSELL_PRODUCT_SKU, quantity: 1 }
-            ];
-          } else {
-            content_ids = [BASE_PRODUCT_SKU];
-            contents = [
-              { id: BASE_PRODUCT_SKU, quantity: 1 }
-            ];
-          }
-          
-          const num_items = contents.length;
+            const num_items = contents.length;
+            const eventId = genEventId();
 
-             // 3. Use the dynamic lists in your events
-          if (typeof window !== "undefined" && window.fbq) {
-            window.fbq("track", "Purchase", {
-              value: value,
-              currency,
-              order_id: data.order.id,
-              content_ids: content_ids, // Use dynamic array
-              content_type: "product",
-              contents: contents,       // Use dynamic array
-              num_items: num_items,     // Add number of items
-            }, { eventID: eventId });
-          }
-              // It's best practice to get fresh cookie values right before you send them
-            const fbp = getCookie('_fbp');
-            const fbc = getCookie('_fbc');
-
-            // Server CAPI (await before redirect)
-               try {
-            await fetch("/api/capi", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                event_name: "Purchase",
-                event_id: eventId,
-                event_source_url: window.location.href,
-                email: customer.email, // Assuming 'customer' is in scope
-                phone: customer.mobile,
-                fbp: fbp,
-                fbc: fbc,
-                order_id: data.order.id,
-                custom_data: {
-                  value: value,
+            // Pixel
+            if (typeof window !== "undefined" && window.fbq) {
+              window.fbq(
+                "track",
+                "Purchase",
+                {
+                  value,
                   currency,
-                  content_ids: content_ids, // Use dynamic array
+                  order_id: data.order.id,
+                  content_ids,
                   content_type: "product",
-                  contents: contents,       // Use dynamic array
-                  num_items: num_items,     // Add number of items
+                  contents,
+                  num_items,
                 },
-              }),
-            });
-          } catch (err) {
-            console.error("CAPI Purchase failed", err);
-          }
+                { eventID: eventId }
+              );
+            }
+
+            // Get fresh cookies
+            const fbp = getCookie("_fbp");
+            const fbc = getCookie("_fbc");
+
+            // CAPI payload
+            const payload = {
+              event_name: "Purchase",
+              event_id: eventId,
+              event_source_url: window.location.href,
+              email: customer.email,
+              phone: customer.mobile,
+              fbp,
+              fbc,
+              order_id: data.order.id,
+              custom_data: {
+                value,
+                currency,
+                order_id: data.order.id,
+                content_ids,
+                content_type: "product",
+                contents,
+                num_items,
+              },
+            };
+
+            // Send via sendBeacon (fallback to fetch)
+            try {
+              const blob = new Blob([JSON.stringify(payload)], {
+                type: "application/json",
+              });
+              if (!navigator.sendBeacon("/api/capi", blob)) {
+                // Fallback if sendBeacon returns false
+                await fetch("/api/capi", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+              }
+            } catch (err) {
+              console.error("CAPI Purchase failed", err);
+            }
 
             toast.success("Payment successful!");
-            localStorage.setItem("firstTime", "true")
+            localStorage.setItem("firstTime", "true");
             setTimeout(() => {
               window.location.href = "/download";
             }, 1000);
@@ -276,6 +277,7 @@ const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
             toast.error("Payment verification failed.");
           }
         },
+
         prefill: {
           email: customer.email,
           contact: customer.mobile,
