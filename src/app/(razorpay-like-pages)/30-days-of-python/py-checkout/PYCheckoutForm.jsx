@@ -78,173 +78,173 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  const handlePayment = async (e) => {
-    e.preventDefault();
-  
-    const errors = validateForm();
-    const eventId = genEventId();
-    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+const handlePayment = async (e) => {
+  e.preventDefault();
 
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "AddPaymentInfo", {
+  const errors = validateForm();
+  const eventId = genEventId();
+  const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq(
+      "track",
+      "AddPaymentInfo",
+      {
         value: price,
         currency,
-        content_ids: [itemSku],  // <-- ADD THIS
-        content_type: "product"
-      }, { eventID: eventId });
-    }
-    const fbp = getCookie('_fbp');
-    const fbc = getCookie('_fbc');
-    // CAPI
-    fetch("/api/capi", {
+        content_ids: [itemSku], // <-- ADD THIS
+        content_type: "product",
+      },
+      { eventID: eventId }
+    );
+  }
+  const fbp = getCookie("_fbp");
+  const fbc = getCookie("_fbc");
+
+  // CAPI - still fine with fetch here
+  fetch("/api/capi", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      event_name: "AddPaymentInfo",
+      event_id: eventId,
+      event_source_url: window.location.href,
+      fbp: fbp,
+      fbc: fbc,
+      email: form.email,
+      phone: form.mobile,
+      custom_data: {
+        value: price,
+        currency,
+        content_ids: [itemSku],
+        content_type: "product",
+      },
+    }),
+  }).catch(console.error);
+
+  if (Object.keys(errors).length > 0) {
+    setFieldErrors(errors);
+    return;
+  }
+
+  setError("");
+  setLoading(true);
+
+  const amount = price * 100;
+  const is19 = encryptedCode === "x1f9q" ? true : false;
+  const courseId = "python";
+
+  try {
+    const res = await fetch("/api/razorpay-javascript-199", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        event_name: "AddPaymentInfo",
-        event_id: eventId,
-        event_source_url: window.location.href,
-        // ADD THESE TWO LINES
-        fbp: fbp, // Facebook Browser ID
-        fbc: fbc, // Facebook Click ID
-        email: form.email,       // server will hash
-        phone: form.mobile,      // server will hash
-        custom_data: {
-          value: price,
-          currency,
-          content_ids: [itemSku],  // <-- ADD THIS
-          content_type: "product",
-        },
+        ...form,
+        amount,
+        currency,
+        courseId,
+        is19,
       }),
-    }).catch(console.error);
+    });
 
-
-
-
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Something went wrong!");
+      setLoading(false);
       return;
     }
 
-    setError("");
-    setLoading(true);
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
+      amount: data.order.amount,
+      currency: data.order.currency,
+      name: "Python Mastery Pack",
+      description: "Purchase E-Guide Bundle",
+      order_id: data.order.id,
+      handler: async (response) => {
+        setLoading(true);
 
-    const amount = price * 100;
+        const verifyRes = await fetch("/api/payment-verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...response,
+            ...form,
+            courseIdentifier: courseIdentifier,
+            currency: data.order.currency,
+            courseId,
+            is19,
+          }),
+        });
 
-    const is19 = encryptedCode === "x1f9q" ? true : false;
-    const courseId = "python"
+        const verifyData = await verifyRes.json();
+        if (verifyData.success) {
+          const eventId = genEventId();
 
-    try {
-      const res = await fetch("/api/razorpay-javascript-199", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          amount,
-          currency,
-          courseId,
-          is19
-
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Something went wrong!");
-        setLoading(false);
-        return;
-      }
-
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: data.order.amount,
-        currency: data.order.currency,
-        name: "Python Mastery Pack",
-        description: "Purchase E-Guide Bundle",
-        order_id: data.order.id,
-        handler: async (response) => {
-          setLoading(true);
-          const verifyRes = await fetch("/api/payment-verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              ...response,
-              ...form,
-              courseIdentifier: courseIdentifier,
-              currency: data.order.currency,
-              courseId,
-              is19
-            }
-            ),
-          });
-          const verifyData = await verifyRes.json();
-          if (verifyData.success) {
-            const eventId = genEventId();
-
-            // Pixel (No changes here, it's already correct)
-            if (typeof window !== "undefined" && window.fbq) {
-              window.fbq("track", "Purchase", {
+          // Pixel (unchanged)
+          if (typeof window !== "undefined" && window.fbq) {
+            window.fbq(
+              "track",
+              "Purchase",
+              {
                 value: price,
                 currency,
-                order_id: data.order.id, // Correctly at top level for Pixel
+                order_id: data.order.id,
                 content_ids: [itemSku],
                 content_type: "product",
                 contents: [{ id: courseId, quantity: 1 }],
-              }, { eventID: eventId });
-            }
-
-            // It's best practice to get fresh cookie values right before you send them
-            const fbp = getCookie('_fbp');
-            const fbc = getCookie('_fbc');
-
-            // Server CAPI (await before redirect)
-            try {
-              await fetch("/api/capi", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  event_name: "Purchase",
-                  event_id: eventId,
-                  event_source_url: window.location.href,
-                  email: form.email,
-                  phone: form.mobile,
-                  fbp: fbp,
-                  fbc: fbc,
-
-                  // --- THE FIX IS HERE ---
-                  order_id: data.order.id, // 2. ADD order_id here, at the top level
-
-                  custom_data: {
-                    value: price,
-                    currency,
-                    // 1. REMOVE order_id from custom_data
-                    content_ids: [itemSku],
-                    content_type: "product",
-                    contents: [{ id: courseId, quantity: 1 }],
-                  },
-                }),
-              });
-            } catch (err) {
-              console.error("CAPI Purchase failed", err);
-            }
-
-            window.location.href = "/download";
-          } else {
-            setError("Payment verification failed.");
-            setLoading(false);
+              },
+              { eventID: eventId }
+            );
           }
-        },
-        prefill: { email: form.email, contact: form.mobile },
-        theme: { color: "#528FF0" },
-      };
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+          // Fresh cookies
+          const fbp = getCookie("_fbp");
+          const fbc = getCookie("_fbc");
+
+          // CAPI (use sendBeacon for reliability)
+          const payload = {
+            event_name: "Purchase",
+            event_id: eventId,
+            event_source_url: window.location.href,
+            email: form.email,
+            phone: form.mobile,
+            fbp,
+            fbc,
+            order_id: data.order.id,
+            custom_data: {
+              value: price,
+              currency: data.order.currency,
+              content_ids: [itemSku],
+              content_type: "product",
+              contents: [{ id: courseId, quantity: 1 }],
+            },
+          };
+
+          navigator.sendBeacon(
+            "/api/capi",
+            new Blob([JSON.stringify(payload)], { type: "application/json" })
+          );
+
+          window.location.href = "/download";
+        } else {
+          setError("Payment verification failed.");
+          setLoading(false);
+        }
+      },
+      prefill: { email: form.email, contact: form.mobile },
+      theme: { color: "#528FF0" },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  } catch (err) {
+    setError("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
