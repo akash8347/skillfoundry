@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
         <title>Skill Foundry — Learn Programming & Upgrade Your Skills</title>
         <meta name="title" content="Skill Foundry — Learn Programming & Upgrade Your Skills" />
         <meta name="description" content="Skill Foundry is a leading platform offering high-quality programming and tech courses to help you level up your career." />
-        <meta name="keywords" content="SkillFoundry, programming courses, web development, learn coding, JavaScript, HTML, CSS, Next.js, tech courses, online learning" />
+        <meta name="keywords" content="Skill Foundry, programming courses, web development, learn coding, JavaScript, HTML, CSS, Next.js, tech courses, online learning" />
         <meta name="author" content="Skill Foundry" />
         <link rel="canonical" href="https://skillfoundry.in/" />
 
