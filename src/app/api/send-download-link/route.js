@@ -106,7 +106,7 @@ export async function POST(req) {
               : `<p style="margin-top: 24px;">It looks like you don't currently have any active course access. If this seems incorrect, please contact support.</p>`
           }
           <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280;">
-            <p>This email was sent by Skill Foundry, Surat, IN.</p>
+            <p>This email was sent by Skill Foundry.</p>
             <p>If you have any issues accessing your materials, simply reply to this email or reach out to our support team.</p>
           </div>
         </div>
