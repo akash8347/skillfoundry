@@ -32,25 +32,25 @@ export default async function RootLayout({ children }) {
         <meta name="theme-color" content="#0f172a" />
 
         {/* SEO Meta Tags */}
-        <title>SkillFoundry — Learn Programming & Upgrade Your Skills</title>
-        <meta name="title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
-        <meta name="description" content="SkillFoundry is a leading platform offering high-quality programming and tech courses to help you level up your career." />
+        <title>Skill Foundry — Learn Programming & Upgrade Your Skills</title>
+        <meta name="title" content="Skill Foundry — Learn Programming & Upgrade Your Skills" />
+        <meta name="description" content="Skill Foundry is a leading platform offering high-quality programming and tech courses to help you level up your career." />
         <meta name="keywords" content="SkillFoundry, programming courses, web development, learn coding, JavaScript, HTML, CSS, Next.js, tech courses, online learning" />
-        <meta name="author" content="SkillFoundry" />
+        <meta name="author" content="Skill Foundry" />
         <link rel="canonical" href="https://skillfoundry.in/" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://skillfoundry.in/" />
-        <meta property="og:title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
-        <meta property="og:description" content="Join SkillFoundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
+        <meta property="og:title" content="Skill Foundry — Learn Programming & Upgrade Your Skills" />
+        <meta property="og:description" content="Join Skill Foundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
         <meta property="og:image" content="https://skillfoundry.in/logo.webp" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://skillfoundry.in/" />
-        <meta property="twitter:title" content="SkillFoundry — Learn Programming & Upgrade Your Skills" />
-        <meta property="twitter:description" content="Join SkillFoundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
+        <meta property="twitter:title" content="Skill Foundry — Learn Programming & Upgrade Your Skills" />
+        <meta property="twitter:description" content="Join Skill Foundry and master programming with expert-led courses on JavaScript, Web Design, and more." />
         <meta property="twitter:image" content="https://skillfoundry.in/logo.webp" />
 
         {/* Favicon */}
@@ -63,7 +63,7 @@ export default async function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "SkillFoundry",
+              name: "Skill Foundry",
               url: "https://skillfoundry.in",
               logo: "https://skillfoundry.in/logo.webp",
               sameAs: [

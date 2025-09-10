@@ -133,10 +133,10 @@
 
 @keyframes gentle-vibrate {
   0% { transform: translateX(0); }
-  2% { transform: translateX(-2px); }
-  4% { transform: translateX(2px); }
-  6% { transform: translateX(-2px); }
-  8% { transform: translateX(2px); }
+  2% { transform: translateX(-1.5px); }
+  4% { transform: translateX(1.5px); }
+  6% { transform: translateX(-1.5px); }
+  8% { transform: translateX(1.5px); }
   10% { transform: translateX(0); }
   100% { transform: translateX(0); }
 }
