@@ -132,6 +132,8 @@ export default function OrderSummary() {
 
     const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
     const UPSELL_PRODUCT_SKU = "JAVASCRIPT_COURSE_UPSELL";
+    const BASE_PRODUCT_SKU = "PYTHON_MASTERY_PACK_01";
+    const UPSELL_PRODUCT_SKU = "JAVASCRIPT_COURSE_UPSELL";
     try {
       setLoading(true);
 
