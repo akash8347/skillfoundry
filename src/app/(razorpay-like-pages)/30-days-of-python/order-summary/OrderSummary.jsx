@@ -135,7 +135,7 @@ export default function OrderSummary() {
     try {
       setLoading(true);
 
-      const is19 = encryptedCode === "x1f9q" ? true : false;
+      const is39 = encryptedCode === "x3f9q" ? true : false;
       const courseIdentifier = addUpsell ? "python_js_combo_498" : "python_299";
       const courseId = addUpsell ? "python_js_combo" : "python";
       const response = await fetch("/api/razorpay-javascript-199", {
@@ -146,7 +146,7 @@ export default function OrderSummary() {
           mobile: customer.mobile,
           courseId,
           currency,
-          is19
+          is39
 
 
         }),
@@ -179,7 +179,7 @@ export default function OrderSummary() {
               mobile: customer.mobile,
               courseIdentifier,
               courseId,
-              is19,
+              is39,
               currency: data.order.currency,
             }),
           });

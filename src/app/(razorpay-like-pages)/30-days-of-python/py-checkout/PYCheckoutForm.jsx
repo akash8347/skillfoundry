@@ -131,7 +131,7 @@ const handlePayment = async (e) => {
   setLoading(true);
 
   const amount = price * 100;
-  const is19 = encryptedCode === "x1f9q" ? true : false;
+  const is39 = encryptedCode === "x3f9q" ? true : false;
   const courseId = "python";
 
   try {
@@ -143,7 +143,7 @@ const handlePayment = async (e) => {
         amount,
         currency,
         courseId,
-        is19,
+        is39,
       }),
     });
 
@@ -173,7 +173,7 @@ const handlePayment = async (e) => {
             courseIdentifier: courseIdentifier,
             currency: data.order.currency,
             courseId,
-            is19,
+            is39,
           }),
         });
 

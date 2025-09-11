@@ -17,20 +17,20 @@ const currencyMapper = {
   },
   USD: {
     variants: {
-      x2f7q: { // Tier 1
+      x2f9q: { // Tier 1
         symbol: "$",
         courses: {
-          python: { displayPrice: 27, realPrice: 97 },
-          js: { displayPrice: 27, realPrice: 97 },
-          python_js_combo: { price: 44 },
+          python: { displayPrice: 29, realPrice: 79 },
+          js: { displayPrice: 29, realPrice: 79 },
+          python_js_combo: { price: 48 },
         },
       },
-      x1f9q: { // Tier 2 (new)
+      x3f9q: { // Tier 2 (new)
         symbol: "$",
         courses: {
-          python: { displayPrice: 19, realPrice: 79 },
-          js: { displayPrice: 19, realPrice: 79 },
-          python_js_combo: { price: 29 },
+          python: { displayPrice: 39, realPrice: 97 },
+          js: { displayPrice: 39, realPrice: 97 },
+          python_js_combo: { price: 58 },
         },
       },
     },
