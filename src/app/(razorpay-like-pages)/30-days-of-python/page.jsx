@@ -170,7 +170,7 @@ export default function PythonPage() {
                 </div>
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>
-              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6">
+              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6"> 
                 Boost Your Career, Deepen Your Knowledge, and Build Job-Ready
                 Skills in Automation, AI, Web Development, Data Science, and
                 Project Development.
