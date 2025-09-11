@@ -56,19 +56,23 @@ export async function middleware(request) {
 
   // (c) Else → use geo to pick default variant
   const euroCountries = [
-    "AT","BE","CY","EE","FI","FR","DE","GR","IE",
-    "IT","LV","LT","LU","MT","NL","PT","SK","SI","ES"
+    "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE",
+    "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES"
   ];
 
-  let geoCurrency = "INR"; // default
+  let geoCurrency = "USD"; // Default currency is now USD
   try {
     const ip = request.headers.get("x-forwarded-for") || request.ip || "8.8.8.8";
     const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
     const geoData = await geoRes.json();
 
     if (geoData?.country_code) {
-      if (geoData.country_code === "US") geoCurrency = "USD";
-      else if (euroCountries.includes(geoData.country_code)) geoCurrency = "EUR";
+      if (geoData.country_code === "IN") { // Check if the country is India
+        geoCurrency = "INR";
+      } else if (euroCountries.includes(geoData.country_code)) { // Keep Eurozone logic
+        geoCurrency = "EUR";
+      }
+      // For all other countries (including the US), the currency will remain the default "USD".
     }
   } catch (err) {
     console.error("ipapi.co fetch failed:", err);
@@ -98,8 +102,8 @@ export const config = {
     "/download",
     "/30-days-of-python",
     "/30-days-of-python/:path*",
-    "/30-days-of-javascript",
-    "/30-days-of-javascript/:path*",
+    "/30-days-javascript",
+    "/30-days-javascript/:path*",
     "/checkout",
     "/order-summary",
   ],

@@ -17,14 +17,7 @@ const currencyMapper = {
   },
   USD: {
     variants: {
-      x2f9q: { // Tier 1
-        symbol: "$",
-        courses: {
-          python: { displayPrice: 29, realPrice: 79 },
-          js: { displayPrice: 29, realPrice: 79 },
-          python_js_combo: { price: 48 },
-        },
-      },
+      
       x3f9q: { // Tier 2 (new)
         symbol: "$",
         courses: {
@@ -34,6 +27,14 @@ const currencyMapper = {
         },
       },
     },
+    x2f9q: { // Tier 1
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 29, realPrice: 79 },
+          js: { displayPrice: 29, realPrice: 79 },
+          python_js_combo: { price: 48 },
+        },
+      },
   },
   EUR: {
     variants: {

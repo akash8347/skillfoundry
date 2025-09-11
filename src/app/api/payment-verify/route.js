@@ -33,7 +33,7 @@ export async function POST(req) {
       courseIdentifier,
       currency,
       courseId,
-      is19
+      is39
     } = body;
    console.log("currency:", currency);
     // ✅ Verify signature
@@ -56,7 +56,7 @@ export async function POST(req) {
     let coursesToSave = [];
     const priceMap = {
       INR: { python: 24900, javascript: 24900 },
-      USD: { python: 2700, javascript: 2700 },
+      USD: { python: 2900, javascript: 2900 },
       EUR: { python: 2500, javascript: 2500 },
     };
 
@@ -75,7 +75,7 @@ export async function POST(req) {
     try {
       switch (courseIdentifier) {
         case "python_299":
-          coursesToSave = [{ name: "python", amount: is19 ? courseId =="python_js_combo" ? 2900 : 1900 : priceMap[currencyKey].python }];
+          coursesToSave = [{ name: "python", amount: is39 ? courseId =="python_js_combo" ? 5800 : 3900 : priceMap[currencyKey].python }];
           break;
         case "javascript_199":
           coursesToSave = [{ name: "javascript", amount: priceMap[currencyKey].javascript }];
