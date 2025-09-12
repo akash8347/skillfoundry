@@ -106,5 +106,7 @@ export const config = {
     "/30-days-javascript/:path*",
     "/checkout",
     "/order-summary",
+    "/"
+    
   ],
 };
