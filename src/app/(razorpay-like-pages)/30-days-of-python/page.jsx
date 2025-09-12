@@ -146,11 +146,24 @@ export default function PythonPage() {
               {/* this is just for test */}
               {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
 
-              <div className="flex justify-center sm:mt-0 text-[1.66rem] sm:text-[1.8rem] md:text-[2.1rem] lg:text-[2rem] font-bold text-gray-800 mb-3">
+              {/* <div className="flex justify-center sm:mt-0 text-[1.66rem] sm:text-[1.8rem] md:text-[2.1rem] lg:text-[2rem] font-bold text-gray-800 mb-3">
                 <div className="bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md px-3 py-1 inline-block text-black whitespace-nowrap">
                   The Python Mastery Pack
                 </div>
+              </div> */}
+
+              <div className="text-center mb-2">
+                {/* <!-- Line 1 --> */}
+                <h1 className="text-3xl font-extrabold text-gray-900 leading-tight">
+                  Master <span className="text-blue-600">Python & AI</span>
+                </h1>
+
+                {/* <!-- Line 2 --> */}
+                <p className="mt-1 text-lg font-semibold text-gray-700 leading-snug">
+                  The Ultimate Skill Pack for Modern Careers
+                </p>
               </div>
+
 
               <div className="px-2 sm:px-0">
                 <Image
@@ -170,7 +183,7 @@ export default function PythonPage() {
                 </div>
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>
-              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6"> 
+              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6">
                 Boost Your Career, Deepen Your Knowledge, and Build Job-Ready
                 Skills in Automation, AI, Web Development, Data Science, and
                 Project Development.
@@ -316,7 +329,7 @@ export default function PythonPage() {
                 <Button
                   className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
                   onClick={handleClick}
-                  // onClick={() => setCheckoutOpen(true)}
+                // onClick={() => setCheckoutOpen(true)}
                 >
                   Buy Now {symbol}
                   {price}

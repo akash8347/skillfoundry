@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import ClarityScript from './ClarityScript'
 import { CurrencyProvider } from "./Context/CurrencyContext";
 import { getInitialCurrency } from "@/lib/getInitialCurrency";
+import { Saira } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +20,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const saira = Saira({
+  subsets: ["latin"],
+  display: "swap",
+});
 export default async function RootLayout({ children }) {
   const { currency, encryptedCode, courses, symbol } = await getInitialCurrency(); // server call
 
@@ -115,7 +120,7 @@ export default async function RootLayout({ children }) {
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${saira.className} antialiased`}>
     <CurrencyProvider 
       initialCurrency={currency} 
       initialEncrypted={encryptedCode}
