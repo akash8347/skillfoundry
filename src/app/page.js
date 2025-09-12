@@ -95,7 +95,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
           creators, coders, and future engineers.
         </p>
         <Link
-          href={`/30-days-of-python?c=${encryptedCode}`}
+          href={`/python-mastery-pack?c=${encryptedCode}`}
           className="mt-auto inline-block w-full text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 shadow-md"
         >
           Enroll Now →

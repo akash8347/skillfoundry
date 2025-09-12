@@ -27,14 +27,14 @@
 //       </div>
 // {upsell ?( <button
 //         className="vibrate-btn bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2.5 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
-//         onClick={() => router.push("/30-days-of-python/py-checkout")}
+//         onClick={() => router.push("/python-mastery-pack/py-checkout")}
 //         >
 //         <Zap className="w-4 h-4" />
 //         <span>Buy Now</span>
 //       </button>):(
 //         <button
 //         className="vibrate-btn bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold py-2.5 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
-//         onClick={() => router.push("/30-days-python/py-checkout")}
+//         onClick={() => router.push("/python-mastery-pack/py-checkout")}
 //         >
 //         <Zap className="w-4 h-4" />
 //         <span>Buy Now</span>
@@ -59,7 +59,7 @@
 
 //   const handleClick = () => {
 //     setIsLoading(true);
-//     router.push(upsell ? "/30-days-of-python/py-checkout" : "/30-days-python/py-checkout");
+//     router.push(upsell ? "/python-mastery-pack/py-checkout" : "/python-mastery-pack/py-checkout");
 //   };
 
 //   return (
@@ -117,7 +117,7 @@
 
 //   const handleClick = () => {
 //     setIsLoading(true);
-//     router.push(upsell ? "/30-days-of-python/py-checkout" : "/30-days-python/py-checkout");
+//     router.push(upsell ? "/python-mastery-pack/py-checkout" : "/python-mastery-pack/py-checkout");
 //   };
 
 //   return (
@@ -236,7 +236,7 @@ const handleClick = async () => {
   );
 
   setIsLoading(true);
-  router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
+  router.push(`/python-mastery-pack/py-checkout?c=${encryptedCode}`);
 };
 
   // const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;

@@ -116,7 +116,7 @@ export default function PythonPage() {
     );
 
     // setIsLoading(true);
-    router.push(`/30-days-of-python/py-checkout?c=${encryptedCode}`);
+    router.push(`/python-mastery-pack/py-checkout?c=${encryptedCode}`);
   };
 
   return (
@@ -128,28 +128,33 @@ export default function PythonPage() {
         {/* Main Section */}
         <main className="flex-1 w-full    max-w-7xl mx-auto sm:flex lg:space-x-12 lg:px-12 lg:py-20 py-3">
           {/* Left Column - Content */}
-          <section className="w-full bgGreen  sm:w-2/3 md:w-[60%] sm:mx-auto lg:px-14 xl:px-44 lg:w-1/3  lg:flex-1 flex flex-col justify-center">
+          <section className="w-full bgGreen  sm:w-2/3 md:w-[60%] sm:mx-auto lg:px-24 xl:px-44 lg:w-1/3  lg:flex-1 flex flex-col justify-center">
             {/* ✅ JavaScript Pack Section */}
             <div className="mb-8 ">
-              {/* <h2 className="font-sans text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
-                The Python Mastery Pack 6+ Expert Guides Collection
-                & 150+ advanced Python projects
-              </h2> */}
-              {/* below is the main original, working title code */}
-              {/* <h2 className=" sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2">
-               <div className="">The Python Mastery Pack</div> 
-                <div className="pl-[0.1rem] text-[1.2rem] lg:text-xl  font-normal text-gray-600">
-                  6+ Expert Guides Collection
-                  & 100+ advanced Python projects
-                </div>
-              </h2> */}
-              {/* this is just for test */}
-              {/* font removed like font-sans removed and instead of text-2xl set text-[1.6rem] */}
 
-              <div className="flex justify-center sm:mt-0 text-[1.66rem] sm:text-[1.8rem] md:text-[2.1rem] lg:text-[2rem] font-bold text-gray-800 mb-3">
-                <div className="bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md px-3 py-1 inline-block text-black whitespace-nowrap">
-                  The Python Mastery Pack
-                </div>
+              {/* final title----------------------------------------------- */}
+              {/* <div className="text-center mb-2"> */}
+              {/* line 1 */}
+              {/* <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-gray-900 leading-tight"> */}
+              {/* Master <span className="text-blue-600">Python & AI</span> */}
+              {/* </h1> */}
+
+              {/* line 2 */}
+
+              {/* <p className="mt-1 text-lg font-semibold text-gray-700 leading-snug"> */}
+              {/* The Ultimate Skill Pack for Modern Careers */}
+              {/* </p> */}
+              {/* </div> */}
+
+              <div className="text-center mb-2">
+                <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
+                  Master <span className="text- -600">Python & AI</span>
+                </h1>
+
+                <p className="mt-1 text-lg font-semibold text-gray-600 leading-snug">
+                  The Ultimate Skill Pack for Modern Careers
+                </p>
+
               </div>
 
               <div className="px-2 sm:px-0">
@@ -170,7 +175,7 @@ export default function PythonPage() {
                 </div>
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>
-              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6"> 
+              <p className="text-gray-700 text-base leading-relaxed mb-4 px-6">
                 Boost Your Career, Deepen Your Knowledge, and Build Job-Ready
                 Skills in Automation, AI, Web Development, Data Science, and
                 Project Development.
@@ -316,7 +321,7 @@ export default function PythonPage() {
                 <Button
                   className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
                   onClick={handleClick}
-                  // onClick={() => setCheckoutOpen(true)}
+                // onClick={() => setCheckoutOpen(true)}
                 >
                   Buy Now {symbol}
                   {price}

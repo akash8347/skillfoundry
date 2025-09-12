@@ -3,39 +3,45 @@
 import { useEffect, useState } from "react";
 
 export default function BundleOfferBanner() {
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 23,
-    minutes: 59,
-    seconds: 59,
-  });
+  const EXPIRY_KEY = "bundleOfferExpiry";
 
+  const [expiryTime, setExpiryTime] = useState(null);
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [viewerCount, setViewerCount] = useState(30);
 
+  // Initialize expiryTime on client
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        let { hours, minutes, seconds } = prevTime;
+    let saved = localStorage.getItem(EXPIRY_KEY);
+    if (!saved) {
+      const newExpiry = Date.now() + 24 * 60 * 60 * 1000;
+      localStorage.setItem(EXPIRY_KEY, newExpiry.toString());
+      saved = newExpiry.toString();
+    }
+    setExpiryTime(parseInt(saved, 10));
+  }, []);
 
-        if (seconds > 0) seconds--;
-        else {
-          seconds = 59;
-          if (minutes > 0) minutes--;
-          else {
-            minutes = 59;
-            if (hours > 0) hours--;
-            else {
-              hours = 23;
-              minutes = 59;
-              seconds = 59;
-            }
-          }
-        }
-        return { hours, minutes, seconds };
-      });
+  // Countdown updater
+  useEffect(() => {
+    if (!expiryTime) return;
+
+    const timer = setInterval(() => {
+      const diff = expiryTime - Date.now();
+
+      if (diff <= 0) {
+        // reset another 24h
+        const newExpiry = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem(EXPIRY_KEY, newExpiry.toString());
+        setExpiryTime(newExpiry);
+      } else {
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        setTimeLeft({ hours, minutes, seconds });
+      }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [expiryTime]);
 
   // Simulate random live viewers count
   useEffect(() => {
@@ -46,6 +52,11 @@ export default function BundleOfferBanner() {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (!expiryTime) {
+    // prevent SSR mismatch flash
+    return null;
+  }
 
   return (
     <div className="w-full flex flex-col gap-4 my-6">

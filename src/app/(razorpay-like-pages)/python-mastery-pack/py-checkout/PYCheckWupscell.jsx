@@ -1,26 +1,32 @@
 "use client";
 import { useState, useEffect } from "react";
-import { X, Check, Lock } from "lucide-react";
+import { X, Check } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation"; // <-- add this
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { indianStates } from "@/lib/indianStates";
+import { usaStates } from "@/lib/usaStates";
 import Select from "react-select";
 import { useCurrency } from "@/app/Context/CurrencyContext";
-import { is } from "date-fns/locale";
-import { usaStates } from "@/lib/usaStates";
 import { genEventId } from "@/lib/eventHelper";
+// import toast from "react-hot-toast";
 
+export default function PYCheckWupscell({ showCloseButton = true }) {
+  const router = useRouter();
 
-export default function PYCheckoutForm({ showCloseButton = true }) {
-  const router = useRouter(); // <-- initialize router
+  const { currency, encryptedCode, pythonPrice } = useCurrency();
 
-  const [form, setForm] = useState({ email: "", mobile: "", state: null });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedForm = localStorage.getItem("checkoutForm");
+      if (savedForm) return JSON.parse(savedForm);
+    }
+    return { email: "", mobile: "", state: null }; // state is null initially
+  });
+
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const { currency, pythonPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
@@ -28,27 +34,18 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   }, [form]);
 
 
-  const handleSelectChange = (selectedOption) => {
-    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
-    setFieldErrors(prev => ({ ...prev, state: "" }));
-  };
 
-
-
-
-  const courseIdentifier = "python_299";
-  const amount = 24900;
   const onClose = () => {
-    router.push(`/30-days-of-python?c=${encryptedCode}`);
-  }
-
+    router.push(`/python-mastery-pack?c=${encryptedCode}`);
+  };
 
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let phoneRegex;
+
     if (currency === "INR") {
-      // phoneRegex = /^(\+91[\s]?)?[6-9]\d{9}$/;
+
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     } else if (currency === "USD") {
@@ -58,14 +55,20 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
     }
 
-    if (!emailRegex.test(form.email)) {
-      errors.email = "Enter a valid email address";
-    }
-
-    if (!phoneRegex.test(form.mobile)) {
-      errors.mobile = "Enter a valid  mobile number";
-    } return errors;
+    if (!emailRegex.test(form.email)) errors.email = "Enter a valid email address";
+    if (!phoneRegex.test(form.mobile)) errors.mobile = "Enter a valid 10-digit mobile number";
+    // if (!form.state || (typeof form.state === "string" && form.state.trim() === "")) {
+    //   errors.state = "Please select a state";
+    // }
+    return errors;
   };
+
+  // Modify handleChange for react-select only
+  const handleSelectChange = (selectedOption) => {
+    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
+    setFieldErrors(prev => ({ ...prev, state: "" }));
+  };
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -78,176 +81,65 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-const handlePayment = async (e) => {
-  e.preventDefault();
-
-  const errors = validateForm();
-  const eventId = genEventId();
-  const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
-
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq(
-      "track",
-      "AddPaymentInfo",
-      {
-        value: price,
-        currency,
-        content_ids: [itemSku], // <-- ADD THIS
-        content_type: "product",
-      },
-      { eventID: eventId }
-    );
-  }
-  const fbp = getCookie("_fbp");
-  const fbc = getCookie("_fbc");
-
-  // CAPI - still fine with fetch here
-  fetch("/api/capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      event_name: "AddPaymentInfo",
-      event_id: eventId,
-      event_source_url: window.location.href,
-      fbp: fbp,
-      fbc: fbc,
-      email: form.email,
-      phone: form.mobile,
-      custom_data: {
-        value: price,
-        currency,
-        content_ids: [itemSku],
-        content_type: "product",
-      },
-    }),
-  }).catch(console.error);
-
-  if (Object.keys(errors).length > 0) {
-    setFieldErrors(errors);
-    return;
-  }
-
-  setError("");
-  setLoading(true);
-
-  const amount = price * 100;
-  const is39 = encryptedCode === "x3f9q" ? true : false;
-  const courseId = "python";
-
-  try {
-    const res = await fetch("/api/razorpay-javascript-199", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        amount,
-        currency,
-        courseId,
-        is39,
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.error || "Something went wrong!");
-      setLoading(false);
+  const handleContinue = (e) => {
+    e.preventDefault();
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-      amount: data.order.amount,
-      currency: data.order.currency,
-      name: "Python Mastery Pack",
-      description: "Purchase E-Guide Bundle",
-      order_id: data.order.id,
-      handler: async (response) => {
-        setLoading(true);
+    const eventId = genEventId();
+    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+    
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "AddPaymentInfo", {
+        value: pythonPrice,
+        currency,
+        content_ids: [itemSku],  // <-- ADD THIS
+        content_type: "product"
+      }, { eventID: eventId });
+    }
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc');
+    // CAPI
+    fetch("/api/capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event_name: "AddPaymentInfo",
+        event_id: eventId,
+        event_source_url: window.location.href,
+        // ADD THESE TWO LINES
+        fbp: fbp, // Facebook Browser ID
+        fbc: fbc, // Facebook Click ID
+        email: form.email,       // server will hash
+        phone: form.mobile,      // server will hash
+        custom_data: {
+          value: pythonPrice,
+          currency,
+          content_ids: [itemSku],  // <-- ADD THIS
+          content_type: "product",
+        },
+      }),
+    }).catch(console.error);
 
-        const verifyRes = await fetch("/api/payment-verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...response,
-            ...form,
-            courseIdentifier: courseIdentifier,
-            currency: data.order.currency,
-            courseId,
-            is39,
-          }),
-        });
 
-        const verifyData = await verifyRes.json();
-        if (verifyData.success) {
-          const eventId = genEventId();
 
-          // Pixel (unchanged)
-          if (typeof window !== "undefined" && window.fbq) {
-            window.fbq(
-              "track",
-              "Purchase",
-              {
-                value: price,
-                currency,
-                order_id: data.order.id,
-                content_ids: [itemSku],
-                content_type: "product",
-                contents: [{ id: courseId, quantity: 1 }],
-              },
-              { eventID: eventId }
-            );
-          }
 
-          // Fresh cookies
-          const fbp = getCookie("_fbp");
-          const fbc = getCookie("_fbc");
+    // const selectedItems = [
+    //   {
+    //     name: "Python Mastery Course",
+    //     price: 249,
+    //     description: "Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects."
+    //   }
+    // ];
 
-          // CAPI (use sendBeacon for reliability)
-          const payload = {
-            event_name: "Purchase",
-            event_id: eventId,
-            event_source_url: window.location.href,
-            email: form.email,
-            phone: form.mobile,
-            fbp,
-            fbc,
-            order_id: data.order.id,
-            custom_data: {
-              value: price,
-              currency: data.order.currency,
-              content_ids: [itemSku],
-              content_type: "product",
-              contents: [{ id: courseId, quantity: 1 }],
-            },
-          };
-
-          navigator.sendBeacon(
-            "/api/capi",
-            new Blob([JSON.stringify(payload)], { type: "application/json" })
-          );
-
-          window.location.href = "/download";
-        } else {
-          setError("Payment verification failed.");
-          setLoading(false);
-        }
-      },
-      prefill: { email: form.email, contact: form.mobile },
-      theme: { color: "#528FF0" },
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
-  } catch (err) {
-    setError("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
+    router.push(`/python-mastery-pack/order-summary?c=${encryptedCode}`);
+  };
 
   return (
-    <div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
+    <div className="h-full w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-auto">
       {showCloseButton && (
         <button
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors"
@@ -340,7 +232,7 @@ const handlePayment = async (e) => {
 
         <Button
           type="submit"
-          onClick={handlePayment}
+          onClick={handleContinue}
           className="w-full mt-4 bg-black text-white py-3 rounded-lg font-medium transition-colors"
           disabled={loading}
         >
@@ -352,16 +244,9 @@ const handlePayment = async (e) => {
               </svg>
               Processing...
             </span>
-          ) : "Buy Now"}
+          ) : "Review Your Order"}
         </Button>
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
-          <div className="bg-green-100 p-1.5 rounded-full shadow-sm">
-            <Lock size={14} className="text-green-600" />
-          </div>
-          <span className="tracking-tight">Secure Checkout</span>
-        </div>
       </form>
-
     </div>
   );
 }
