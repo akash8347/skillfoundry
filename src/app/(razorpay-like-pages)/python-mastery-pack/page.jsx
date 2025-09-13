@@ -148,7 +148,7 @@ export default function PythonPage() {
 
               <div className="text-center mb-2">
                 <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
-                  Master <span className="text- -600">Python & AI</span>
+                  Master <span className="text-indigo-600">Python & AI</span>
                 </h1>
 
                 <p className="mt-1 text-lg font-semibold text-gray-600 leading-snug">
