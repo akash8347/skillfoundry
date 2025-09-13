@@ -85,7 +85,7 @@ async function fetchRBIReferenceRate(currencyCode, date) {
     const rate = await fetchRBIReferenceRate(currencyCode, date); return total * rate;
    }
 // Main function
-async function generateInvoice(email, mobile, country, currency, coursesToSave) {
+async function generateInvoice(email, mobile, country, currency, coursesToSave, razorpay_order_id, razorpay_payment_id) {
   console.log("Generating invoice for:", email, mobile, country, coursesToSave);
   await connectDB();
 
@@ -141,7 +141,9 @@ async function generateInvoice(email, mobile, country, currency, coursesToSave) 
     subTotal,
     total,
     totalText,
-    convertedINRAmount
+    convertedINRAmount,
+    razorpay_order_id,
+    razorpay_payment_id,
   });
 
   await invoice.save();

@@ -7,7 +7,7 @@ import { useCurrency } from "@/app/Context/CurrencyContext";
 export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
-  
+   console.log("currency in checkout:", price);
   const [form, setForm] = useState({ email: "", mobile: "" });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -62,7 +62,9 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
     setLoading(true);
    const courseId="js"
 
-         const is19 = encryptedCode === "x1f9q" ? true : false;
+        //  const is19 = encryptedCode === "x1f9q" ? true : false;
+           const is39 = encryptedCode === "x3f9q" ? true : false;
+
 
     try {
       const res = await fetch("/api/razorpay-javascript-199", {
@@ -73,7 +75,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           amount,
           courseId,
           currency,
-          is19
+          is39
           
         }),
       });

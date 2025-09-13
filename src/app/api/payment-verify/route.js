@@ -147,7 +147,7 @@ export async function POST(req) {
     try {
           const country=currencyToCountry[currency]
 
-      generateInvoice(email, mobile, country,currency, coursesToSave).then((invoice) => {
+      generateInvoice(email, mobile, country,currency, coursesToSave, razorpay_order_id, razorpay_payment_id).then((invoice) => {
         console.log("Invoice generated successfully: ", invoice.invoiceNumber);
       }).catch((err) => {
         console.error("Invoice generation error:", err);

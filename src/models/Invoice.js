@@ -32,6 +32,8 @@ const InvoiceSchema = new mongoose.Schema(
     total: Number,
     totalText: String, // e.g. "USD NINETEEN ONLY"
     convertedINRAmount: Number, // Total amount converted to INR (for our records)
+    razorpay_order_id: String,
+    razorpay_payment_id: String,
     // For later storing file path (if you decide to save PDF)
     pdfUrl: { type: String },
   },

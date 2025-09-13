@@ -15,27 +15,27 @@ const currencyMapper = {
       },
     },
   },
-  USD: {
-    variants: {
-      
-      x3f9q: { // Tier 2 (new)
-        symbol: "$",
-        courses: {
-          python: { displayPrice: 39, realPrice: 97 },
-          js: { displayPrice: 39, realPrice: 97 },
-          python_js_combo: { price: 58 },
-        },
+ USD: {
+  variants: {
+    x3f9q: { // Tier 2
+      symbol: "$",
+      courses: {
+        python: { displayPrice: 39, realPrice: 97 },
+        js: { displayPrice: 39, realPrice: 97 },
+        python_js_combo: { price: 58 },
       },
     },
     x2f9q: { // Tier 1
-        symbol: "$",
-        courses: {
-          python: { displayPrice: 29, realPrice: 79 },
-          js: { displayPrice: 29, realPrice: 79 },
-          python_js_combo: { price: 48 },
-        },
+      symbol: "$",
+      courses: {
+        python: { displayPrice: 29, realPrice: 79 },
+        js: { displayPrice: 29, realPrice: 79 },
+        python_js_combo: { price: 48 },
       },
+    },
   },
+},
+
   EUR: {
     variants: {
       k3z8p: {
