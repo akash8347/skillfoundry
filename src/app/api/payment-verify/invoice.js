@@ -79,11 +79,24 @@ async function fetchRBIReferenceRate(currencyCode, date) {
 }
 
 // Helper to convert any currency to INR as of given date
- async function convertToINR(total, currencyCode, date) {
+//  async function convertToINR(total, currencyCode, date) {
 
-   if (currencyCode === "INR") return total;
-    const rate = await fetchRBIReferenceRate(currencyCode, date); return total * rate;
-   }
+//    if (currencyCode === "INR") return total;
+//     const rate = await fetchRBIReferenceRate(currencyCode, date); return total * rate;
+//    }
+// Helper to convert any currency to INR as of given date
+async function convertToINR(total, currencyCode, date) {
+  // If currency is already INR, the rate is 1
+  if (currencyCode === "INR") {
+    return { convertedAmount: total, rate: 1 };
+  }
+  
+  const rate = await fetchRBIReferenceRate(currencyCode, date);
+  const convertedAmount = total * rate;
+  
+  // Return an object with both values
+  return { convertedAmount, rate };
+}
 // Main function
 async function generateInvoice(email, mobile, country, currency, coursesToSave, razorpay_order_id, razorpay_payment_id) {
   console.log("Generating invoice for:", email, mobile, country, coursesToSave);
@@ -121,7 +134,7 @@ async function generateInvoice(email, mobile, country, currency, coursesToSave, 
   
   // 6. Calculate converted INR amount (if not INR)
    const transactionDate = new Date().toISOString().split("T")[0]; 
-   const convertedINRAmount = await convertToINR(total, currency, transactionDate);
+  const { convertedAmount, rate } = await convertToINR(total, currency, transactionDate);
   
   const totalText = numberToWords(total, currency);
   const customerName = user.name && user.name.trim().length > 0 
@@ -141,7 +154,8 @@ async function generateInvoice(email, mobile, country, currency, coursesToSave, 
     subTotal,
     total,
     totalText,
-    convertedINRAmount,
+     convertedINRAmount: convertedAmount, // Use the converted amount here
+    exchangeRate: rate,                 // And save the exchange rate here
     razorpay_order_id,
     razorpay_payment_id,
   });
