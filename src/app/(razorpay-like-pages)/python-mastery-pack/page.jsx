@@ -157,6 +157,7 @@ export default function PythonPage() {
 
               </div>
 
+
               <div className="px-2 sm:px-0">
                 <Image
                   width={1200}
