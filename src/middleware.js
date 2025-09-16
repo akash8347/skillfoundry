@@ -83,11 +83,11 @@ export async function middleware(request) {
   const res = NextResponse.next();
   res.cookies.set("currency", geoCurrency, {
     path: "/",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 365 * 10,
   });
   res.cookies.set("encryptedCode", firstCode, {
     path: "/",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 365 * 10,
   });
   return res;
 }

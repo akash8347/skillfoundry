@@ -20,7 +20,6 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const { currency, pythonPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("checkoutForm", JSON.stringify(form));
@@ -144,6 +143,7 @@ const handlePayment = async (e) => {
         currency,
         courseId,
         is39,
+        encryptedCode
       }),
     });
 
@@ -171,9 +171,10 @@ const handlePayment = async (e) => {
             ...response,
             ...form,
             courseIdentifier: courseIdentifier,
-            currency: data.order.currency,
+            // currency: data.order.currency,
             courseId,
-            is39,
+            // is39,
+            encryptedCode
           }),
         });
 

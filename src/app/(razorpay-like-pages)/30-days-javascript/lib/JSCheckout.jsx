@@ -75,7 +75,8 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           amount,
           courseId,
           currency,
-          is39
+          is39,
+          encryptedCode
           
         }),
       });
@@ -100,7 +101,7 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
           const verifyRes = await fetch("/api/payment-verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, ...form, courseIdentifier:courseIdentifier, currency: data.order.currency
+            body: JSON.stringify({ ...response, ...form, courseIdentifier:courseIdentifier, currency: data.order.currency,encryptedCode
  }),
           });
 

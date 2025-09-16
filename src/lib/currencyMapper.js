@@ -1,6 +1,3 @@
-// lib/currencyMapper.js
-
-// 🔹 Single source of truth
 const currencyMapper = {
   INR: {
     default: true,
@@ -15,26 +12,26 @@ const currencyMapper = {
       },
     },
   },
- USD: {
-  variants: {
-    x3f9q: { // Tier 2
-      symbol: "$",
-      courses: {
-        python: { displayPrice: 39, realPrice: 97 },
-        js: { displayPrice: 39, realPrice: 97 },
-        python_js_combo: { price: 58 },
+  USD: {
+    variants: {
+      x3f9q: { // Tier 2
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 39, realPrice: 97 },
+          js: { displayPrice: 39, realPrice: 97 },
+          python_js_combo: { price: 58 },
+        },
       },
-    },
-    x2f9q: { // Tier 1
-      symbol: "$",
-      courses: {
-        python: { displayPrice: 29, realPrice: 79 },
-        js: { displayPrice: 29, realPrice: 79 },
-        python_js_combo: { price: 48 },
+      x2f9q: { // Tier 1
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 29, realPrice: 79 },
+          js: { displayPrice: 29, realPrice: 79 },
+          python_js_combo: { price: 48 },
+        },
       },
     },
   },
-},
 
   EUR: {
     variants: {
@@ -57,5 +54,21 @@ for (const [currency, { variants }] of Object.entries(currencyMapper)) {
     codeToCurrency[code] = { currency, code, ...details };
   }
 }
+// 🔹 Helper function
+function getCoursePricesByCode(code) {
+  const details = codeToCurrency[code];
+  if (!details) {
+    throw new Error(`Invalid currency code: ${code}`);
+  }
 
-export { currencyMapper, codeToCurrency };
+  const { courses, symbol } = details;
+
+  return {
+    symbol,
+    python: courses.python.displayPrice,
+    js: courses.js.displayPrice,
+    python_js_combo: courses.python_js_combo.price,
+  };
+}
+
+export { currencyMapper, codeToCurrency, getCoursePricesByCode };
