@@ -80,7 +80,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
     <div className="flex flex-wrap  gap-12">
       {/* Python Card */}
       <div className="group relative bg-white/70 rounded-3xl border border-gray-200 p-8 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm w-[320px]">
-        <div className="overflow-hidden rounded-2xl mb-6">
+        {/* <div className="overflow-hidden rounded-2xl mb-6">
           <Image
             src="/last.webp"
             alt="The Python Mastery Pack"
@@ -88,7 +88,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
             height={400}
             className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
           />
-        </div>
+        </div> */}
         <h3 className="text-2xl font-bold text-gray-900 mb-2">The Python Mastery Pack</h3>
         <p className="text-gray-600 mb-3 leading-relaxed text-sm">
           Master Python with real-world projects and artificial intelligence. Designed for
@@ -104,7 +104,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
 
       {/* JavaScript Card */}
       <div className="group relative bg-white/70 rounded-3xl border border-gray-200 p-8 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm w-[320px]">
-        <div className="overflow-hidden rounded-2xl mb-6">
+        {/* <div className="overflow-hidden rounded-2xl mb-6">
           <Image
             src="/js-main.webp"
             alt="The JavaScript Mastery Pack"
@@ -112,7 +112,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
             height={400}
             className="w-full h-[220px] object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105"
           />
-        </div>
+        </div> */}
         <h3 className="text-2xl font-bold text-gray-900 mb-2">The JavaScript Mastery Pack</h3>
         <p className="text-gray-600 mb-3 leading-relaxed text-sm">
           Build interactive websites, apps, and projects with modern JavaScript.
