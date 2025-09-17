@@ -7,7 +7,7 @@ import { useCurrency } from "@/app/Context/CurrencyContext";
 export default function JSCheckout({ isOpen, setIsOpen }) {
 
       const { currency, jsPrice :price , symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
-   console.log("currency in checkout:", price);
+  //  console.log("currency in checkout:", price);
   const [form, setForm] = useState({ email: "", mobile: "" });
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});

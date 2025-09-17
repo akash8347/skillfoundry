@@ -5,9 +5,17 @@ const currencyMapper = {
       m7r2d: {
         symbol: "₹",
         courses: {
-          python: { displayPrice: 249, realPrice: 2000 },
-          js: { displayPrice: 249, realPrice: 2000 },
-          python_js_combo: { price: 398 },
+          python: { displayPrice: 499, realPrice: 3000 },
+          js: { displayPrice: 499, realPrice: 3000 },
+          python_js_combo: { price: 899 },
+        },
+      },
+       m7r3d: {
+        symbol: "₹",
+        courses: {
+          python: { displayPrice: 699, realPrice: 3000 },
+          js: { displayPrice: 699, realPrice: 3000 },
+          python_js_combo: { price: 1199},
         },
       },
     },
