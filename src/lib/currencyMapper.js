@@ -1,5 +1,6 @@
 const currencyMapper = {
   INR: {
+    pixelId: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID_INDIA,
     default: true,
     variants: {
       m7r2d: {
@@ -21,6 +22,7 @@ const currencyMapper = {
     },
   },
   USD: {
+    pixelId: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID,
     variants: {
       x3f9q: { // Tier 2
         symbol: "$",

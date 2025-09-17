@@ -9,6 +9,7 @@ import ClarityScript from './ClarityScript'
 import { CurrencyProvider } from "./Context/CurrencyContext";
 import { getInitialCurrency } from "@/lib/getInitialCurrency";
 import { Saira } from "next/font/google";
+import { codeToCurrency,currencyMapper } from "@/lib/currencyMapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,11 @@ const saira = Saira({
 });
 export default async function RootLayout({ children }) {
   const { currency, encryptedCode, courses, symbol } = await getInitialCurrency(); // server call
+  console.log("currency encryptedCode in layout:", encryptedCode);
+// const details = currencyMapper[encryptedCode];
+const pixelId = currencyMapper[currency].pixelId;
+console.log("pixelId", pixelId);
+
 
   return (
     <html lang="en">
@@ -94,7 +100,7 @@ export default async function RootLayout({ children }) {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', ${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID});
+              fbq('init', ${pixelId});
               fbq('track', 'PageView');
             `,
           }}

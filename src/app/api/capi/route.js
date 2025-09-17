@@ -176,11 +176,16 @@
 // app/api/capi/route.js
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { datasetMapper } from "@/lib/datasetMapper";
+import { codeToCurrency } from "@/lib/currencyMapper";
+import { getInitialCurrency } from "@/lib/getInitialCurrency";
 
 // ... (sha256 function and constants are the same)
 const API_VERSION = process.env.META_GRAPH_API_VERSION || "v20.0";
-const DATASET_ID = process.env.META_DATASET_ID;
-const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
+
+
+// const DATASET_ID = process.env.META_DATASET_ID;
+// const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
 
 function sha256(value) {
   if (!value) return undefined;
@@ -189,6 +194,17 @@ function sha256(value) {
 
 
 export async function POST(request) {
+  const { currency } = await getInitialCurrency(); // server call
+  const datasetConfig = datasetMapper[currency];
+  if (!datasetConfig) {
+    return NextResponse.json({ error: "Invalid currency" }, { status: 400 });
+  }
+
+  const { datasetId:DATASET_ID,accessToken: ACCESS_TOKEN } = datasetConfig;
+  console.log("CAPI using datasetConfig:", datasetConfig);
+  // return NextResponse.json({ msg: datasetConfig }, { status: 500 });
+
+
   try {
     const body = await request.json();
 
@@ -212,7 +228,7 @@ export async function POST(request) {
 
     const user_data = {
       client_user_agent: request.headers.get('user-agent') || undefined,
-      ...(fbp && { fbp: fbp }), 
+      ...(fbp && { fbp: fbp }),
       ...(fbc && { fbc: fbc }),
     };
 
@@ -239,9 +255,9 @@ export async function POST(request) {
     };
 
     // 2. ADD test_event_code to this top-level payload object
-    const payload = { 
-        data: [eventPayload],
-        ...(test_event_code ? { test_event_code } : {})
+    const payload = {
+      data: [eventPayload],
+      ...(test_event_code ? { test_event_code } : {})
     };
 
     const url = `https://graph.facebook.com/${API_VERSION}/${DATASET_ID}/events?access_token=${ACCESS_TOKEN}`;
@@ -258,7 +274,7 @@ export async function POST(request) {
     const metaJson = await resp.json();
 
     if (!resp.ok) {
-        console.error("Meta CAPI Error Response:", metaJson);
+      console.error("Meta CAPI Error Response:", metaJson);
     }
 
     return NextResponse.json({ ok: resp.ok, metaResponse: metaJson });
