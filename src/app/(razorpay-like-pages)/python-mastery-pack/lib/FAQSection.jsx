@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -18,15 +19,14 @@ const faqs = [
   {
     question: "3. What if I don’t get redirected?",
     answer:
-      "If you're not redirected after payment, try clicking the back button. If the download link still doesn't appear, please email us at skill.foundry365@gmail.com. We'll verify your payment and send you the access link directly.",
+      "If you're not redirected after payment, try clicking the back button. If the download link still doesn't appear, please visit the contact us page where you can put your email ID. Our system will verify your payment and send you the access link directly.",
   },
   {
     question: "4. What if I lose access to the course?",
     answer:
-      "No worries! You can always log in to your dashboard to regain access to your course materials. If you still can't find the link, email us at skill.foundry365@gmail.com, and we'll resend it after verifying your payment.",
+      "No worries! Just visit Contact Us page and put your email ID. Our system will verify your payment and send you the access link directly.",
   },
 ];
-
 
 export default function FAQSection() {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -35,10 +35,27 @@ export default function FAQSection() {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // Helper to replace "Contact Us" text with link
+  const renderAnswer = (answer) => {
+    return answer.split(/(Contact Us|contact us)/gi).map((part, i) =>
+      part.toLowerCase() === "contact us" ? (
+        <Link
+          key={i}
+          href="/Contact-us"
+          className="text-blue-600 underline hover:text-blue-800"
+        >
+          Contact Us
+        </Link>
+      ) : (
+        <span key={i}>{part}</span>
+      )
+    );
+  };
+
   return (
     <section className="px-4 pt-10 mb-0 md:py-10 bg-gray-50">
       <h2 className="text-xl font-bold text-center mb-8">
-        Frequently Asked Questions 
+        Frequently Asked Questions
       </h2>
 
       <div className="max-w-2xl pb-5 mx-auto space-y-4">
@@ -70,7 +87,7 @@ export default function FAQSection() {
                   transition={{ duration: 0.3 }}
                   className="px-4 py-3 bg-white text-gray-700 text-sm leading-relaxed"
                 >
-                  {faq.answer}
+                  {renderAnswer(faq.answer)}
                 </motion.div>
               )}
             </AnimatePresence>

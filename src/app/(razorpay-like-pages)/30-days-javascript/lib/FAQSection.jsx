@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "3. What if I don’t get redirected?",
     answer:
-      "If you're not redirected after payment, try clicking the back button. If the download link still doesn't appear, please email us at skill.foundry365@gmail.com. We'll verify your payment and send you the access link directly.",
+      "If you're not redirected after payment, try clicking the back button. If the download link still doesn't appear, please visit the contact us page where you can put your email ID. Our system will verify your payment and send you the access link directly.",
   },
   {
     question: "4. What if I lose access to the course?",

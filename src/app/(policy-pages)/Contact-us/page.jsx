@@ -6,12 +6,16 @@ import Link from "next/link";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 
 const faqs = [
+   {
+    question: "I did not got an email after payment",
+  },
   {
     question: "How can I access my already purchased course which I am unable to find?",
   },
   {
     question: "I am facing login issues",
   },
+  
 ];
 
 export default function Support() {
