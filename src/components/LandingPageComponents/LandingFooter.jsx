@@ -23,6 +23,7 @@ const LandingFooter = () => {
           <li><Link href="/">Home</Link></li>
           <li><Link href="/download/js-download">Dashboard</Link></li>
           <li><Link href="#courses">Courses</Link></li>
+          <li><Link href="/Contact-us">Contact us</Link></li>
         </ul>
       </div>
       <div>
