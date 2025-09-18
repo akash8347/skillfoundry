@@ -8,104 +8,102 @@ import { FaCheckCircle } from "react-icons/fa";
 import Navbar from "@/components/LandingPageComponents/Navbar";
 import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
 
-const PYTHON_DRIVE_LINK = "https://drive.google.com/drive/folders/18hG0Omuwj8Se1xJQuDYtvPdhEEY44qt3?usp=sharing";
-const JS_DRIVE_LINK = "https://drive.google.com/drive/folders/1veiv54vM5rqb-YSgSZXw-YMBuOYIIGyV?usp=sharing";
-
+  
 export default function Download1() {
-  const [hasPythonAccess, setHasPythonAccess] = useState(false);
-  const [hasJavaScriptAccess, setHasJavaScriptAccess] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [hasPythonAccess, setHasPythonAccess] = useState(false);
+  // const [hasJavaScriptAccess, setHasJavaScriptAccess] = useState(false);
+  // const [loading, setLoading] = useState(true);
 
-  const [customer, setCustomer] = useState({ email: "", mobile: "" });
+  // const [customer, setCustomer] = useState({ email: "", mobile: "" });
 
 
-   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedForm = localStorage.getItem("checkoutForm");
-      if (savedForm) {
-        setCustomer(JSON.parse(savedForm));
-      }
-    }
-  }, []);
+  //  useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const savedForm = localStorage.getItem("checkoutForm");
+  //     if (savedForm) {
+  //       setCustomer(JSON.parse(savedForm));
+  //     }
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const fetchAccess = async () => {
-      try {
-        console.log("Fetching course access...");
-        const res = await fetch("/api/course-access");
-        const data = await res.json();
-        setHasPythonAccess(data.hasPythonAccess);
-        setHasJavaScriptAccess(data.hasJavaScriptAccess);
-      } catch (error) {
-        console.error("Error fetching access:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAccess = async () => {
+  //     try {
+  //       console.log("Fetching course access...");
+  //       const res = await fetch("/api/course-access");
+  //       const data = await res.json();
+  //       setHasPythonAccess(data.hasPythonAccess);
+  //       setHasJavaScriptAccess(data.hasJavaScriptAccess);
+  //     } catch (error) {
+  //       console.error("Error fetching access:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchAccess();
-  }, []);
+  //   fetchAccess();
+  // }, []);
 
-  useEffect(() => {
-    console.log("Customer:", customer);
-    console.log("Python Access:", hasPythonAccess);
-    console.log("JavaScript Access:", hasJavaScriptAccess);
-    console.log("First Time:", localStorage.getItem("firstTime"));
-  if (
-    // localStorage.getItem("firstTime") ==null && // ✅ Check if first time
-    customer.email &&  // ✅ Make sure customer is loaded
-    (hasPythonAccess || hasJavaScriptAccess) // ✅ Ensure access is loaded too
-  ) {
-    const sendEmail = async () => {
-      try {
-        console.log("Sending download link email to:", customer.email);
-        const res = await fetch("/api/send-download-link", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: customer.email,
-            hasPythonAccess,
-            hasJavaScriptAccess,
-          }),
-        });
+//   useEffect(() => {
+//     console.log("Customer:", customer);
+//     console.log("Python Access:", hasPythonAccess);
+//     console.log("JavaScript Access:", hasJavaScriptAccess);
+//     console.log("First Time:", localStorage.getItem("firstTime"));
+//   if (
+//     // localStorage.getItem("firstTime") ==null && // ✅ Check if first time
+//     customer.email &&  // ✅ Make sure customer is loaded
+//     (hasPythonAccess || hasJavaScriptAccess) // ✅ Ensure access is loaded too
+//   ) {
+//     const sendEmail = async () => {
+//       try {
+//         console.log("Sending download link email to:", customer.email);
+//         const res = await fetch("/api/send-download-link", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             email: customer.email,
+//             hasPythonAccess,
+//             hasJavaScriptAccess,
+//           }),
+//         });
 
-        const result = await res.json();
-        if (result.success) {
-          localStorage.setItem("firstTime", "false");
-        } else {
-        }
-      } catch (error) {
-        console.error("Email send error:", error);
-        alert("An error occurred while sending email.");
-      }
-    };
+//         const result = await res.json();
+//         if (result.success) {
+//           localStorage.setItem("firstTime", "false");
+//         } else {
+//         }
+//       } catch (error) {
+//         console.error("Email send error:", error);
+//         alert("An error occurred while sending email.");
+//       }
+//     };
 
   
-    sendEmail();
-  }
-}, [customer, hasPythonAccess, hasJavaScriptAccess]);
+//     sendEmail();
+//   }
+// }, [customer, hasPythonAccess, hasJavaScriptAccess]);
 
 
 
 
-  const renderDownloadButton = (title, link) => (
-    <div className="bg-white border rounded-2xl shadow hover:shadow-md transition p-4 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <Download className="w-6 h-6 text-blue-600" />
-        <span className="font-medium text-gray-800">{title}</span>
-      </div>
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700"
-      >
-        Download
-      </a>
-    </div>
-  );
+  // const renderDownloadButton = (title, link) => (
+  //   <div className="bg-white border rounded-2xl shadow hover:shadow-md transition p-4 flex items-center justify-between">
+  //     <div className="flex items-center gap-3">
+  //       <Download className="w-6 h-6 text-blue-600" />
+  //       <span className="font-medium text-gray-800">{title}</span>
+  //     </div>
+  //     <a
+  //       href={link}
+  //       target="_blank"
+  //       rel="noopener noreferrer"
+  //       className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700"
+  //     >
+  //       Download
+  //     </a>
+  //   </div>
+  // );
 
   return (
     // <div className="p-6 max-w-3xl mx-auto space-y-10">

@@ -27,10 +27,8 @@ const saira = Saira({
 });
 export default async function RootLayout({ children }) {
   const { currency, encryptedCode, courses, symbol } = await getInitialCurrency(); // server call
-  console.log("currency encryptedCode in layout:", encryptedCode);
 // const details = currencyMapper[encryptedCode];
 const pixelId = currencyMapper[currency].pixelId;
-console.log("pixelId", pixelId);
 
 
   return (

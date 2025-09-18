@@ -187,6 +187,8 @@ import { generateToken } from "@/lib/jwt";
 import { v4 as uuidv4 } from "uuid";
 import generateInvoice from "./invoice";
 import { getCoursePricesByCode, codeToCurrency } from "@/lib/currencyMapper";
+import nodemailer from "nodemailer";
+
 
 export async function POST(req) {
   try {
@@ -332,16 +334,88 @@ export async function POST(req) {
       };
       const country = currencyToCountry[currency] || "GLOBAL";
 
-      generateInvoice(email, mobile, country, currency, coursesToSave, razorpay_order_id, razorpay_payment_id)
-        .then((invoice) => {
-          console.log("Invoice generated successfully: ", invoice.invoiceNumber);
-        })
-        .catch((err) => {
-          console.error("Invoice generation error:", err);
-        });
+      const invoice = await generateInvoice(
+        email,
+        mobile,
+        country,
+        currency,
+        coursesToSave,
+        razorpay_order_id,
+        razorpay_payment_id
+      );
+
+      console.log("Invoice generated successfully: ", invoice.invoiceNumber);
     } catch (invErr) {
       console.error("Invoice trigger error:", invErr);
     }
+    //<--email sending code START---------------->
+
+
+    try {
+      const hasPythonAccess = coursesToSave.some((c) => c.name === "python");
+      const hasJavaScriptAccess = coursesToSave.some((c) => c.name === "javascript");
+
+      const pythonLink =
+        "https://drive.google.com/drive/folders/18hG0Omuwj8Se1xJQuDYtvPdhEEY44qt3?usp=sharing";
+      const jsLink =
+        "https://drive.google.com/drive/folders/1veiv54vM5rqb-YSgSZXw-YMBuOYIIGyV?usp=sharing";
+
+      let contentParts = [];
+      if (hasPythonAccess) {
+        contentParts.push(
+          `<li><a href="${pythonLink}">Download Python Course Materials</a></li>`
+        );
+      }
+      if (hasJavaScriptAccess) {
+        contentParts.push(
+          `<li><a href="${jsLink}">Download JavaScript Course Materials</a></li>`
+        );
+      }
+
+      const htmlContent = `
+        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 32px; background-color: #f9fafb; color: #333;">
+          <div style="max-width: 600px; margin: 0 auto; background-color: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 32px;">
+            <h2 style="color: #1f2937;">👋 Hello ${user.name || "there"},</h2>
+            <p style="font-size: 16px; line-height: 1.6;">
+              Thank you for purchasing from <strong>Skill Foundry</strong>! Below you'll find your download links:
+            </p>
+            ${
+              contentParts.length > 0
+                ? `<ul style="padding-left: 20px; margin-top: 24px; font-size: 16px; line-height: 1.6;">${contentParts.join(
+                    ""
+                  )}</ul>`
+                : `<p style="margin-top: 24px;">No active course access found. Contact support if this seems wrong.</p>`
+            }
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280;">
+              <p>This email was sent by Skill Foundry.</p>
+              <p>If you have any issues accessing your materials, simply reply to this email.</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      await transporter.sendMail({
+        from: `"Skill Foundry" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: "Your Skill Foundry Course Download Links",
+        html: htmlContent,
+      });
+
+      console.log("✅ Download email FROM PAYMENT VERIFY", email);
+    } catch (mailErr) {
+      console.error("Email sending failed:", mailErr);
+    }
+
+
+    //<--email sending code END---------------->
 
     // ✅ Token generation
     let token;

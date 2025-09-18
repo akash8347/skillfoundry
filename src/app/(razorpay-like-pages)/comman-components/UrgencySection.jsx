@@ -13,12 +13,10 @@ export const UrgencySection = () => {
     let startTime = parseInt(localStorage.getItem(STORAGE_KEY) || "0", 10);
 
     // Debug check
-    console.log("Before:", { saved: startTime, now });
 
     if (!startTime || now - startTime >= 24 * 60 * 60 * 1000) {
       startTime = now; // reset to new cycle
       localStorage.setItem(STORAGE_KEY, String(startTime));
-      console.log("Resetting timer, new start:", startTime);
     }
 
     const deadline = startTime + 24 * 60 * 60 * 1000;

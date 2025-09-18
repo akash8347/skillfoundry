@@ -201,7 +201,7 @@ export async function POST(request) {
   }
 
   const { datasetId:DATASET_ID,accessToken: ACCESS_TOKEN } = datasetConfig;
-  console.log("CAPI using datasetConfig:", datasetConfig);
+  // console.log("CAPI using datasetConfig:", datasetConfig);
   // return NextResponse.json({ msg: datasetConfig }, { status: 500 });
 
 
@@ -262,7 +262,7 @@ export async function POST(request) {
 
     const url = `https://graph.facebook.com/${API_VERSION}/${DATASET_ID}/events?access_token=${ACCESS_TOKEN}`;
 
-    console.log("CAPI payload:", JSON.stringify(payload, null, 2));
+    // console.log("CAPI payload:", JSON.stringify(payload, null, 2));
 
     const resp = await fetch(url, {
       method: 'POST',
@@ -270,7 +270,7 @@ export async function POST(request) {
       body: JSON.stringify(payload)
     });
 
-    console.log("CAPI response status:", resp.status);
+    // console.log("CAPI response status:", resp.status);
     const metaJson = await resp.json();
 
     if (!resp.ok) {
