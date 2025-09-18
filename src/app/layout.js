@@ -28,7 +28,7 @@ const saira = Saira({
 export default async function RootLayout({ children }) {
   const { currency, encryptedCode, courses, symbol } = await getInitialCurrency(); // server call
 // const details = currencyMapper[encryptedCode];
-const pixelId = currencyMapper[currency].pixelId;
+// const pixelId = currencyMapper[currency].pixelId;
 
 
   return (
@@ -98,7 +98,7 @@ const pixelId = currencyMapper[currency].pixelId;
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', ${pixelId});
+              fbq('init', ${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID});
               fbq('track', 'PageView');
             `,
           }}

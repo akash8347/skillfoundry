@@ -199,8 +199,9 @@ export async function POST(request) {
   if (!datasetConfig) {
     return NextResponse.json({ error: "Invalid currency" }, { status: 400 });
   }
-
-  const { datasetId:DATASET_ID,accessToken: ACCESS_TOKEN } = datasetConfig;
+  const DATASET_ID=process.env.META_DATASET_ID;
+  const ACCESS_TOKEN=process.env.META_ACCESS_TOKEN;
+  // const { datasetId:DATASET_ID,accessToken: ACCESS_TOKEN } = datasetConfig;
   // console.log("CAPI using datasetConfig:", datasetConfig);
   // return NextResponse.json({ msg: datasetConfig }, { status: 500 });
 
