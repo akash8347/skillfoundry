@@ -4,13 +4,17 @@ import { X, Check, Lock } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // <-- add this
-import { indianStates } from "@/lib/indianStates";
+// import { indianStates } from "@/lib/indianStates";
 import Select from "react-select";
 import { useCurrency } from "@/app/Context/CurrencyContext";
 import { is } from "date-fns/locale";
-import { usaStates } from "@/lib/usaStates";
+// import { usaStates } from "@/lib/usaStates";
 import { genEventId } from "@/lib/eventHelper";
-
+// import { australiaStates } from "@/lib/australiaStates";
+// import { ukStates } from "@/lib/ukStates";
+// import { newZealandStates } from "@/lib/newZealandStates";
+import {optionsForCurrency} from "@/lib/optionsForCurrency "
+import { canadaStates } from "@/lib/canadaStates";
 
 export default function PYCheckoutForm({ showCloseButton = true }) {
   const router = useRouter(); // <-- initialize router
@@ -45,17 +49,37 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    let phoneRegex;
+   let phoneRegex;
+
     if (currency === "INR") {
-      // phoneRegex = /^(\+91[\s]?)?[6-9]\d{9}$/;
+      // India: +91XXXXXXXXXX or variations
       phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
 
     } else if (currency === "USD") {
-      // USA: allow formats like 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
+      // USA: 1234567890, (123) 456-7890, 123-456-7890, +1XXXXXXXXXX
       phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+
+    } else if (currency === "CAD") {
+      // Canada: same as USA (North American Numbering Plan)
+      phoneRegex = /^(?:\+1\s*|1\s*[-.]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+
+    } else if (currency === "AUD") {
+      // Australia: starts with +61 or 0, followed by 9 digits
+      phoneRegex = /^(?:\+61|0)[2-478]\d{8}$/;
+
+    } else if (currency === "NZD") {
+      // New Zealand: starts with +64 or 0, usually 8–10 digits
+      phoneRegex = /^(?:\+64|0)[2-9]\d{7,9}$/;
+
+    } else if (currency === "GBP") {
+      // UK: starts with +44 or 0, usually 10 digits after prefix
+      phoneRegex = /^(?:\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
+
     } else if (currency === "EUR") {
-      phoneRegex = /^(?:\+91[\s-]?|91[\s-]?|0)?[6-9]\d{9}$/;
+      // Placeholder: (you might want to add specific patterns per country later)
+      phoneRegex = /^\+?\d{6,15}$/;
     }
+
 
     if (!emailRegex.test(form.email)) {
       errors.email = "Enter a valid email address";
@@ -246,6 +270,21 @@ const handlePayment = async (e) => {
   }
 };
 
+const getSubdivisionLabel = (currency) => {
+  switch (currency) {
+    case "INR": return "Select your State";
+    case "USD": return "Select your State";
+    case "AUD": return "Select your State / Territory";
+    case "GBP": return "Select your Region";
+    case "NZD": return "Select your Region";
+    case "CAD": return "Select your Province / Territory";
+    default: return "Select your State/Region";
+  }
+};
+
+
+
+
 
   return (
     <div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
@@ -326,7 +365,7 @@ const handlePayment = async (e) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">State</label>
-          <Select
+          {/* <Select
             name="state"
             options={currency === "INR" ? indianStates : usaStates}
             onChange={handleSelectChange}
@@ -335,7 +374,20 @@ const handlePayment = async (e) => {
             classNamePrefix="react-select"
             placeholder="Select your state"
             menuPlacement="top"
-          />
+          /> */}
+
+
+          <Select
+  name="state"
+  options={optionsForCurrency[currency]} // you map currency → list
+  onChange={handleSelectChange}
+  value={optionsForCurrency[currency]?.find(s => s.value === form.state) || null}
+  className="react-select-container"
+  classNamePrefix="react-select"
+  placeholder={getSubdivisionLabel(currency)}
+  menuPlacement="top"
+/>
+
           {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
         </div>
 

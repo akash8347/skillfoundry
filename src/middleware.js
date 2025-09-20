@@ -54,33 +54,56 @@ export async function middleware(request) {
     return NextResponse.next(); // already valid
   }
 
-  // (c) Else → use geo to pick default variant
-  const euroCountries = [
-    "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE",
-    "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES"
-  ];
+const euroCountries = [
+  "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR", "IE",
+  "IT", "LV", "LT", "LU", "MT", "NL", "PT", "SK", "SI", "ES"
+];
 
-  let geoCurrency = "USD"; // Default currency is now USD
-  try {
-    const ip = request.headers.get("x-forwarded-for") || request.ip || "8.8.8.8";
-    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-    const geoData = await geoRes.json();
+let geoCurrency = "USD"; // Default currency
 
-    if (geoData?.country_code) {
-      if (geoData.country_code === "IN") { // Check if the country is India
+try {
+  const ip =
+    request.headers.get("x-forwarded-for") || request.ip || "8.8.8.8";
+  const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+  const geoData = await geoRes.json();
+
+  if (geoData?.country_code) {
+    switch (geoData.country_code) {
+      case "IN": // India
         geoCurrency = "INR";
-      } else if (euroCountries.includes(geoData.country_code)) { // Keep Eurozone logic
-        geoCurrency = "EUR";
-      }
-      // For all other countries (including the US), the currency will remain the default "USD".
+        break;
+      case "US": // USA
+        geoCurrency = "USD";
+        break;
+      case "AU": // Australia
+        geoCurrency = "AUD";
+        break;
+      case "CA": // Canada
+        geoCurrency = "CAD";
+        break;
+      case "NZ": // New Zealand
+        geoCurrency = "NZD";
+        break;
+      case "GB": // United Kingdom
+        geoCurrency = "GBP";
+        break;
+      default:
+        // Fallback for eurozone
+        if (euroCountries.includes(geoData.country_code)) {
+          geoCurrency = "EUR";
+        }
+        // Otherwise stays USD
+        break;
     }
-  } catch (err) {
-    console.error("ipapi.co fetch failed:", err);
   }
+} catch (err) {
+  console.error("ipapi.co fetch failed:", err);
+}
 
-  // pick first available variant for that currency
-  const firstCode = Object.keys(currencyMapper[geoCurrency].variants)[0];
-  const res = NextResponse.next();
+// pick first available variant for that currency
+const firstCode = Object.keys(currencyMapper[geoCurrency].variants)[0];
+const res = NextResponse.next();
+
   res.cookies.set("currency", geoCurrency, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365 * 10,

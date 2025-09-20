@@ -11,12 +11,12 @@ const currencyMapper = {
           python_js_combo: { price: 899 },
         },
       },
-       m7r3d: {
+      m7r3d: {
         symbol: "₹",
         courses: {
           python: { displayPrice: 699, realPrice: 3000 },
           js: { displayPrice: 699, realPrice: 3000 },
-          python_js_combo: { price: 1199},
+          python_js_combo: { price: 1199 },
         },
       },
     },
@@ -55,7 +55,60 @@ const currencyMapper = {
       },
     },
   },
-};
+
+  GBP: {
+    variants: {
+      g7b4n: {
+        symbol: "£",
+        courses: {
+          python: { displayPrice: 24.99, realPrice: 90 },
+          js: { displayPrice: 24.99, realPrice: 90 },
+          python_js_combo: { price: 42 },
+        },
+      },
+    },
+  },
+
+  CAD: {
+    variants: {
+      c4d2s: {
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 39.99, realPrice: 97 },
+          js: { displayPrice: 39.99, realPrice: 97 },
+          python_js_combo: { price: 68 },
+        },
+      },
+    },
+  },
+
+  AUD: {
+    variants: {
+      a9u5t: {
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 44.99, realPrice: 97 },
+          js: { displayPrice: 44.99, realPrice: 97 },
+          python_js_combo: { price: 78 },
+        },
+      },
+    },
+  },
+
+  NZD: {
+    variants: {
+      n3z6d: {
+        symbol: "$",
+        courses: {
+          python: { displayPrice: 47.99, realPrice: 97 },
+          js: { displayPrice: 47.99, realPrice: 97 },
+          python_js_combo: { price: 78 },
+        },
+      },
+    },
+  }
+}
+
 
 // 🔹 Reverse lookup
 const codeToCurrency = {};
