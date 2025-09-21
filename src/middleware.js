@@ -20,21 +20,21 @@ export async function middleware(request) {
   const token = cookies.get("authToken")?.value;
   const pathname = url.pathname;
 
-  if (pathname === "/login" && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // if (pathname === "/login" && token) {
+  //   return NextResponse.redirect(new URL("/dashboard", request.url));
+  // }
 
-  const isProtected =
-    pathname.startsWith("/Dashboard") ||
-    pathname.startsWith("/certification") ||
-    pathname.startsWith("/download");
+  // const isProtected =
+  //   pathname.startsWith("/Dashboard") ||
+  //   pathname.startsWith("/certification") ||
+  //   pathname.startsWith("/download");
 
-  if (isProtected) {
-    const verified = token ? await verifyTokenEdge(token) : null;
-    if (!verified) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-  }
+  // if (isProtected) {
+  //   const verified = token ? await verifyTokenEdge(token) : null;
+  //   if (!verified) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
+  // }
 
   // 🔹 2. CURRENCY HANDLING
   let currencyCode = url.searchParams.get("c");
@@ -123,20 +123,6 @@ const firstCode = Object.keys(currencyMapper[geoCurrency].variants)[0];
 }
 
 export const config = {
-  matcher: [
-    "/Dashboard/:path*",
-    "/Dashboard",
-    "/certification",
-    "/certification/:path*",
-    "/download/:path*",
-    "/download",
-    "/python-mastery-pack",
-    "/python-mastery-pack/:path*",
-    "/30-days-javascript",
-    "/30-days-javascript/:path*",
-    "/checkout",
-    "/order-summary",
-    "/"
-    
-  ],
+  matcher: "/:path*",
 };
+
