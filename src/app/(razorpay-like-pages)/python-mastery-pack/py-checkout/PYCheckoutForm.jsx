@@ -13,7 +13,7 @@ import { genEventId } from "@/lib/eventHelper";
 // import { australiaStates } from "@/lib/australiaStates";
 // import { ukStates } from "@/lib/ukStates";
 // import { newZealandStates } from "@/lib/newZealandStates";
-import {optionsForCurrency} from "@/lib/optionsForCurrency "
+import { optionsForCurrency } from "@/lib/optionsForCurrency "
 import { canadaStates } from "@/lib/canadaStates";
 
 export default function PYCheckoutForm({ showCloseButton = true }) {
@@ -49,7 +49,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-   let phoneRegex;
+    let phoneRegex;
 
     if (currency === "INR") {
       // India: +91XXXXXXXXXX or variations
@@ -100,195 +100,195 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
+  
+  const handlePayment = async (e) => {
+    e.preventDefault();
 
-const handlePayment = async (e) => {
-  e.preventDefault();
+    const errors = validateForm();
+    const eventId = genEventId();
+    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
 
-  const errors = validateForm();
-  const eventId = genEventId();
-  const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq(
+        "track",
+        "AddPaymentInfo",
+        {
+          value: price,
+          currency,
+          content_ids: [itemSku], // <-- ADD THIS
+          content_type: "product",
+        },
+        { eventID: eventId }
+      );
+    }
+    const fbp = getCookie("_fbp");
+    const fbc = getCookie("_fbc");
 
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq(
-      "track",
-      "AddPaymentInfo",
-      {
-        value: price,
-        currency,
-        content_ids: [itemSku], // <-- ADD THIS
-        content_type: "product",
-      },
-      { eventID: eventId }
-    );
-  }
-  const fbp = getCookie("_fbp");
-  const fbc = getCookie("_fbc");
-
-  // CAPI - still fine with fetch here
-  fetch("/api/capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      event_name: "AddPaymentInfo",
-      event_id: eventId,
-      event_source_url: window.location.href,
-      fbp: fbp,
-      fbc: fbc,
-      email: form.email,
-      phone: form.mobile,
-      custom_data: {
-        value: price,
-        currency,
-        content_ids: [itemSku],
-        content_type: "product",
-      },
-    }),
-  }).catch(console.error);
-
-  if (Object.keys(errors).length > 0) {
-    setFieldErrors(errors);
-    return;
-  }
-
-  setError("");
-  setLoading(true);
-
-  const amount = price * 100;
-  const is39 = encryptedCode === "x3f9q" ? true : false;
-  const courseId = "python";
-
-  try {
-    const res = await fetch("/api/razorpay-javascript-199", {
+    // CAPI - still fine with fetch here
+    fetch("/api/capi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        ...form,
-        amount,
-        currency,
-        courseId,
-        is39,
-        encryptedCode
+        event_name: "AddPaymentInfo",
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbp: fbp,
+        fbc: fbc,
+        email: form.email,
+        phone: form.mobile,
+        custom_data: {
+          value: price,
+          currency,
+          content_ids: [itemSku],
+          content_type: "product",
+        },
       }),
-    });
+    }).catch(console.error);
 
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.error || "Something went wrong!");
-      setLoading(false);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-      amount: data.order.amount,
-      currency: data.order.currency,
-      name: "Python Mastery Pack",
-      description: "Purchase E-Guide Bundle",
- notes: {
-    email: form.email,
-    mobile: form.mobile,
-    courseIdentifier: courseIdentifier,
-    encryptedCode: encryptedCode,
-    courseId: courseId
-  },
+    setError("");
+    setLoading(true);
 
-      order_id: data.order.id,
-      handler: async (response) => {
-        setLoading(true);
+    const amount = price * 100;
+    const is39 = encryptedCode === "x3f9q" ? true : false;
+    const courseId = "python";
 
-        const verifyRes = await fetch("/api/payment-verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...response,
-            ...form,
-            courseIdentifier: courseIdentifier,
-            // currency: data.order.currency,
-            courseId,
-            // is39,
-            encryptedCode
-          }),
-        });
+    try {
+      const res = await fetch("/api/razorpay-javascript-199", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          amount,
+          currency,
+          courseId,
+          is39,
+          encryptedCode
+        }),
+      });
 
-        const verifyData = await verifyRes.json();
-        if (verifyData.success) {
-          const eventId = genEventId();
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Something went wrong!");
+        setLoading(false);
+        return;
+      }
 
-          // Pixel (unchanged)
-          if (typeof window !== "undefined" && window.fbq) {
-            window.fbq(
-              "track",
-              "Purchase",
-              {
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Python Mastery Pack",
+        description: "Purchase E-Guide Bundle",
+        notes: {
+          email: form.email,
+          mobile: form.mobile,
+          courseIdentifier: courseIdentifier,
+          encryptedCode: encryptedCode,
+          courseId: courseId
+        },
+
+        order_id: data.order.id,
+        handler: async (response) => {
+          setLoading(true);
+
+          const verifyRes = await fetch("/api/payment-verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              ...response,
+              ...form,
+              courseIdentifier: courseIdentifier,
+              // currency: data.order.currency,
+              courseId,
+              // is39,
+              encryptedCode
+            }),
+          });
+
+          const verifyData = await verifyRes.json();
+          if (verifyData.success) {
+            const eventId = genEventId();
+
+            // Pixel (unchanged)
+            if (typeof window !== "undefined" && window.fbq) {
+              window.fbq(
+                "track",
+                "Purchase",
+                {
+                  value: price,
+                  currency,
+                  order_id: data.order.id,
+                  content_ids: [itemSku],
+                  content_type: "product",
+                  contents: [{ id: courseId, quantity: 1 }],
+                },
+                { eventID: eventId }
+              );
+            }
+
+            // Fresh cookies
+            const fbp = getCookie("_fbp");
+            const fbc = getCookie("_fbc");
+
+            // CAPI (use sendBeacon for reliability)
+            const payload = {
+              event_name: "Purchase",
+              event_id: eventId,
+              event_source_url: window.location.href,
+              email: form.email,
+              phone: form.mobile,
+              fbp,
+              fbc,
+              order_id: data.order.id,
+              custom_data: {
                 value: price,
-                currency,
-                order_id: data.order.id,
+                currency: data.order.currency,
                 content_ids: [itemSku],
                 content_type: "product",
                 contents: [{ id: courseId, quantity: 1 }],
               },
-              { eventID: eventId }
+            };
+
+            navigator.sendBeacon(
+              "/api/capi",
+              new Blob([JSON.stringify(payload)], { type: "application/json" })
             );
+
+            window.location.href = "/download";
+          } else {
+            setError("Payment verification failed.");
+            setLoading(false);
           }
+        },
+        prefill: { email: form.email, contact: form.mobile },
+        theme: { color: "#528FF0" },
+      };
 
-          // Fresh cookies
-          const fbp = getCookie("_fbp");
-          const fbc = getCookie("_fbc");
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-          // CAPI (use sendBeacon for reliability)
-          const payload = {
-            event_name: "Purchase",
-            event_id: eventId,
-            event_source_url: window.location.href,
-            email: form.email,
-            phone: form.mobile,
-            fbp,
-            fbc,
-            order_id: data.order.id,
-            custom_data: {
-              value: price,
-              currency: data.order.currency,
-              content_ids: [itemSku],
-              content_type: "product",
-              contents: [{ id: courseId, quantity: 1 }],
-            },
-          };
-
-          navigator.sendBeacon(
-            "/api/capi",
-            new Blob([JSON.stringify(payload)], { type: "application/json" })
-          );
-
-          window.location.href = "/download";
-        } else {
-          setError("Payment verification failed.");
-          setLoading(false);
-        }
-      },
-      prefill: { email: form.email, contact: form.mobile },
-      theme: { color: "#528FF0" },
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
-  } catch (err) {
-    setError("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
-const getSubdivisionLabel = (currency) => {
-  switch (currency) {
-    case "INR": return "Select your State";
-    case "USD": return "Select your State";
-    case "AUD": return "Select your State / Territory";
-    case "GBP": return "Select your Region";
-    case "NZD": return "Select your Region";
-    case "CAD": return "Select your Province / Territory";
-    default: return "Select your State/Region";
-  }
-};
+  const getSubdivisionLabel = (currency) => {
+    switch (currency) {
+      case "INR": return "Select your State";
+      case "USD": return "Select your State";
+      case "AUD": return "Select your State / Territory";
+      case "GBP": return "Select your Region";
+      case "NZD": return "Select your Region";
+      case "CAD": return "Select your Province / Territory";
+      default: return "Select your State/Region";
+    }
+  };
 
 
 
@@ -386,15 +386,15 @@ const getSubdivisionLabel = (currency) => {
 
 
           <Select
-  name="state"
-  options={optionsForCurrency[currency]} // you map currency → list
-  onChange={handleSelectChange}
-  value={optionsForCurrency[currency]?.find(s => s.value === form.state) || null}
-  className="react-select-container"
-  classNamePrefix="react-select"
-  placeholder={getSubdivisionLabel(currency)}
-  menuPlacement="top"
-/>
+            name="state"
+            options={optionsForCurrency[currency]} // you map currency → list
+            onChange={handleSelectChange}
+            value={optionsForCurrency[currency]?.find(s => s.value === form.state) || null}
+            className="react-select-container"
+            classNamePrefix="react-select"
+            placeholder={getSubdivisionLabel(currency)}
+            menuPlacement="top"
+          />
 
           {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
         </div>

@@ -61,9 +61,17 @@ const currencyMapper = {
       g7b4n: {
         symbol: "£",
         courses: {
-          python: { displayPrice: 24.99, realPrice: 90 },
-          js: { displayPrice: 24.99, realPrice: 90 },
-          python_js_combo: { price: 42 },
+          python: { displayPrice: 14, realPrice: 70 },
+          js: { displayPrice: 14, realPrice: 70 },
+          python_js_combo: { price: 29 },
+        },
+      },
+      g7b9n: {
+        symbol: "£",
+        courses: {
+          python: { displayPrice: 19, realPrice: 70 },
+          js: { displayPrice: 19, realPrice: 70 },
+          python_js_combo: { price: 29 },
         },
       },
     },
