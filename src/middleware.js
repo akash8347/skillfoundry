@@ -2,7 +2,6 @@
 import { NextResponse } from "next/server";
 import { verifyTokenEdge } from "@/lib/verifyTokenEdge";
 import { v4 as uuidv4 } from "uuid";  // npm i uuid
-import { connectDB } from "@/lib/mongodb";
 // 🔹 Single source of truth
 import { currencyMapper, codeToCurrency } from "@/lib/currencyMapper";
 
