@@ -72,10 +72,10 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
       phoneRegex = /^(?:\+64|0)[2-9]\d{7,9}$/;
 
     } else if (currency === "GBP") {
-      // UK: starts with +44 or 0, usually 10 digits after prefix
-      phoneRegex = /^(?:\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
-
-    } else if (currency === "EUR") {
+  // UK mobile validation (flexible, common formats)
+  phoneRegex = /^(?:\+44\s?7\d{3}|\(?(?:\+44)?0?7\d{3}\)?)[\s-]?\d{3}[\s-]?\d{3}$/;
+}
+ else if (currency === "EUR") {
       // Placeholder: (you might want to add specific patterns per country later)
       phoneRegex = /^\+?\d{6,15}$/;
     }
