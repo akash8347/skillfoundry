@@ -1,13 +1,21 @@
 // middleware.js (root level, not in src/)
 import { NextResponse } from "next/server";
 import { verifyTokenEdge } from "@/lib/verifyTokenEdge";
-
+import { v4 as uuidv4 } from "uuid";  // npm i uuid
+import { connectDB } from "@/lib/mongodb";
 // 🔹 Single source of truth
 import { currencyMapper, codeToCurrency } from "@/lib/currencyMapper";
 
 export async function middleware(request) {
   const { nextUrl, cookies } = request;
   const url = nextUrl.clone();
+  const url1= new URL(request.url)
+  const requestId = uuidv4(); // unique per request
+
+ // RequestId header set karte hain taki API routes me mile
+  let res = NextResponse.next();
+  res.headers.set("x-request-id", requestId);
+
 
   // 🔹 1. AUTH LOGIC
   const token = cookies.get("authToken")?.value;
@@ -35,7 +43,7 @@ export async function middleware(request) {
   // (a) If param present → map to variant & save cookies
   if (currencyCode && codeToCurrency[currencyCode]) {
     const data = codeToCurrency[currencyCode]; // contains { currency, code, symbol, courses }
-    const res = NextResponse.next();
+    // const res = NextResponse.next();
     res.cookies.set("currency", data.currency, {
       path: "/",
       maxAge: 60 * 60 * 24 * 30,
@@ -102,7 +110,7 @@ try {
 
 // pick first available variant for that currency
 const firstCode = Object.keys(currencyMapper[geoCurrency].variants)[0];
-const res = NextResponse.next();
+// const res = NextResponse.next();
 
   res.cookies.set("currency", geoCurrency, {
     path: "/",

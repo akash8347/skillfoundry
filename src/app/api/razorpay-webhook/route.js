@@ -5,11 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import generateInvoice from "../payment-verify/invoice";
 import { getCoursePricesByCode, codeToCurrency } from "@/lib/currencyMapper";
 import nodemailer from "nodemailer";
+import Processed from "@/models/Processed"; // new model
 
 export async function POST(req) {
   try {
     const rawBody = await req.text();
     const razorpaySignature = req.headers.get("x-razorpay-signature");
+    const eventId = req.headers.get("x-razorpay-event-id");
 
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
@@ -36,11 +38,26 @@ export async function POST(req) {
 
     await connectDB();
 
-    const email = notes?.email;
-    const mobile = notes?.mobile;
-    const courseIdentifier = notes?.courseIdentifier;
-    const encryptedCode = notes?.encryptedCode;
-    const courseId = notes?.courseId;
+
+     const already = await Processed.findOne({ eventId });
+    if (already) {
+      console.log("⚠️ Duplicate webhook ignored:", eventId);
+      return new Response("Duplicate ignored", { status: 200 });
+    }
+
+const email = notes?.email || "";
+const mobile = notes?.mobile || "";
+const courseIdentifier = notes?.courseIdentifier || "";
+const encryptedCode = notes?.encryptedCode || "";
+const courseId = notes?.courseId || "";
+
+console.log("✅ Webhook received:", {
+  eventId,
+  order_id,
+  paymentId,
+  email,
+  courseIdentifier
+});
 
     // ✅ Pricing logic
     const currencyDetails = codeToCurrency[encryptedCode];
@@ -103,6 +120,9 @@ export async function POST(req) {
         INR: "INDIA",
         USD: "USA",
         EUR: "EUROPE",
+        CAD: "CANADA",
+        NZD : "NEW ZEALAND",
+        AUD : "AUSTRALIA"
       };
       const country = currencyToCountry[currency] || "GLOBAL";
 
@@ -180,6 +200,11 @@ export async function POST(req) {
     } catch (mailErr) {
       console.error("Email sending failed:", mailErr);
     }
+await Processed.findOneAndUpdate(
+  { eventId },
+  { eventId, processedAt: new Date() },
+  { upsert: true, new: true }
+);
 
     return new Response("Webhook processed", { status: 200 });
   } catch (err) {

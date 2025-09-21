@@ -3,8 +3,12 @@ import { connectDB } from "@/lib/mongodb";
 import Invoice from "@/models/Invoice";
 import User from "@/models/User";
 import { startOfDay, endOfDay } from "date-fns";
+import { logMessage , withLogger} from "@/lib/withLogger";
+async function handler(request,context,requestId) {
 
-export async function GET(request) {
+    // const requestId = req.headers.get("x-request-id"); // middleware ne bheja tha
+  await logMessage(requestId,{key:"myvalue"});
+  await logMessage(requestId, "Another debug log here...");
   try {
     await connectDB();
     // Sanity check to ensure the User model is loaded, preventing populate errors.
@@ -110,3 +114,5 @@ export async function GET(request) {
     );
   }
 }
+
+export const GET = withLogger(handler);
