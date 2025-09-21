@@ -196,7 +196,7 @@ console.log("✅ Webhook received:", {
         html: htmlContent,
       });
 
-      console.log("✅ Download email FROM WEBHOOK", email);
+      console.log("✅ Download email FROM WEBHOOKk", email);
     } catch (mailErr) {
       console.error("Email sending failed:", mailErr);
     }
