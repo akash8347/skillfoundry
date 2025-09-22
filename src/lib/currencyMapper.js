@@ -3,20 +3,20 @@ const currencyMapper = {
     pixelId: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID_INDIA,
     default: true,
     variants: {
-      m7r2d: {
-        symbol: "₹",
-        courses: {
-          python: { displayPrice: 499, realPrice: 3000 },
-          js: { displayPrice: 499, realPrice: 3000 },
-          python_js_combo: { price: 899 },
-        },
-      },
       m7r3d: {
         symbol: "₹",
         courses: {
-          python: { displayPrice: 699, realPrice: 3000 },
-          js: { displayPrice: 699, realPrice: 3000 },
-          python_js_combo: { price: 1199 },
+          python: { displayPrice: 299, realPrice: 2000 },
+          js: { displayPrice: 299, realPrice: 2000 },
+          python_js_combo: { price: 499 },
+        },
+      },
+      m7r2d: {
+        symbol: "₹",
+        courses: {
+          python: { displayPrice: 249, realPrice: 2000 },
+          js: { displayPrice: 249, realPrice: 2000 },
+          python_js_combo: { price: 399 },
         },
       },
     },
