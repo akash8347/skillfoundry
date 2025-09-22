@@ -14,11 +14,12 @@ export default function WhyAffordable() {
         </span>
       </div>
 
-      <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed">
-        We believe that quality technical education should be accessible to{" "}
-        <span className="font-semibold text-gray-900">every Indian</span>, regardless of financial background.
-        Our mission is to democratize tech education in India.
-      </p>
+     <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed">
+  We believe that quality technical education should be accessible to{" "}
+  <span className="font-semibold text-gray-900">everyone</span>, regardless of financial background.
+  Our mission is to democratize tech education worldwide.
+</p>
+
 
       {/* CHANGE 2: Removed "lg:grid-cols-2" to force a single-column layout on all screen sizes.
           A "gap-y-6" is added for spacing between the sections when stacked.
