@@ -172,7 +172,7 @@ export default function PythonPage() {
               {/* <MobileOfferCard/> */}
               <h2 className="sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2 text-center">
                 <div className="mt-2 text-[1.2rem] lg:text-xl font-normal text-gray-600 px-6">
-                  6+ Expert Guides Collection & 100+ advanced Python projects
+                  6+ Expert Guides Collection With Projects Pack
                 </div>
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>
@@ -241,7 +241,7 @@ export default function PythonPage() {
                       "Data Science with Python",
                       "Automation using Python",
                       "Web development using Python",
-                      "150+ Total (core + game) Projects",
+                      // "150+ Total (core + game) Projects",
                       "Python code cheatsheet",
                     ].map((benefit, idx) => (
                       <li key={idx} className="flex items-start">
