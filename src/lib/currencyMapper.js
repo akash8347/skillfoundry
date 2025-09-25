@@ -3,7 +3,7 @@ const currencyMapper = {
     pixelId: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID_INDIA,
     default: true,
     variants: {
-      m7r4d: {
+      m7r7d: {
         symbol: "₹",
         courses: {
           python: { displayPrice: 397, realPrice: 2000 },
