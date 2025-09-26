@@ -27,6 +27,14 @@ const currencyMapper = {
           python_js_combo: { price: 399 },
         },
       },
+      temp2242: {
+        symbol: "₹",
+        courses: {
+          python: { displayPrice: 1, realPrice: 2000 },
+          js: { displayPrice: 1, realPrice: 2000 },
+          python_js_combo: { price: 399 },
+        },
+      },
     },
   },
   USD: {
