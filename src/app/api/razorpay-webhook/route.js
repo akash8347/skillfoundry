@@ -242,7 +242,7 @@ export async function POST(req) {
     }
 
     const event = JSON.parse(rawBody);
-
+  console.log("Webhook event:", event);
     if (event.event !== "payment.captured") {
       return new Response("Event ignored", { status: 200 });
     }
