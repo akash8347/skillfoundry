@@ -158,13 +158,14 @@ export default function PythonPage() {
               </div>
 
 
-              <div className="px-2 sm:px-0">
+              <div className="px-3 sm:px-0">
                 <Image
                   width={1200}
                   height={700}
-                  src="/main-img.webp"
+                  // src="/main-img.webp"
+                  src="/main-img-i.webp"
                   alt="Python Mastery Pack"
-                  className="w-full   h-auto max-w-full rounded-lg md:mb-6 mb-3"
+                  className="w-ful l   h-auto max-w-full rounded-lg md:mb-6 mb-3"
                   priority={true}
                 />
               </div>
