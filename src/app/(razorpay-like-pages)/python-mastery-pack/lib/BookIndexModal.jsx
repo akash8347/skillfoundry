@@ -140,7 +140,7 @@ export default function BookIndexModal({ isOpen, onClose, indexData, title = "Bo
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 20, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="relative w-full max-w-2xl max-h-[90vh] bg-slate-50 rounded-2xl shadow-xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-2xl max-h-[70vh] sm:max-h-[80vh] bg-slate-50 rounded-2xl shadow-xl overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-200">
