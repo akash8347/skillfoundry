@@ -129,22 +129,98 @@ export default function AIBookSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const indexData = [
-    ['01', 'Introduction'],
-    ['02', 'Setting Up AI Development Environment with Python'],
-    ['03', 'Understanding Machine Learning — The Heart of AI'],
-    ['04', 'Supervised Learning — Regression and Classification Models'],
-    ['05', 'Unsupervised Learning — Discovering Hidden Patterns'],
-    ['06', 'Neural Networks — Building Brains for AI'],
-    ['07', 'Project: Build a Neural Network to Classify Handwritten Digits'],
-    ['08', 'CNNs — Deep Learning for Image Classification'],
-    ['09', 'Advanced Image Classification — Transfer Learning'],
-    ['10', 'NLP Basics with Python'],
-    ['11', 'Spam Detection Using Machine Learning'],
-    ['12', 'Text Classification with Deep Learning (NLP)'],
-    ['13', 'Computer Vision & Image Classification Basics'],
-    ['14', 'AI for Automation: Files, Web, and Emails'],
-    ['15', 'AI Chatbots and Virtual Assistants'],
-  ];
+  ['01', 'Introduction', [
+    "What is Artificial Intelligence (AI)?",
+    "Applications of AI in real life",
+    "AI vs Machine Learning vs Deep Learning",
+    "How Python powers AI development"
+  ]],
+  ['02', 'Setting Up AI Development Environment with Python', [
+    "Installing Python and pip",
+    "Setting up Virtual Environments",
+    "Installing essential libraries (NumPy, Pandas, Matplotlib)",
+    "Installing ML/AI libraries (scikit-learn, TensorFlow, PyTorch)"
+  ]],
+  ['03', 'Understanding Machine Learning — The Heart of AI', [
+    "What is Machine Learning?",
+    "Types of learning (Supervised, Unsupervised, Reinforcement)",
+    "Basic workflow of ML projects",
+    "Real-world use cases of ML"
+  ]],
+  ['04', 'Supervised Learning — Regression and Classification Models', [
+    "What is supervised learning?",
+    "Regression models (Linear, Polynomial)",
+    "Classification models (Logistic Regression, Decision Trees, KNN)",
+    "Evaluating model accuracy"
+  ]],
+  ['05', 'Unsupervised Learning — Discovering Hidden Patterns', [
+    "What is unsupervised learning?",
+    "Clustering algorithms (K-Means, Hierarchical)",
+    "Dimensionality reduction (PCA)",
+    "Applications of unsupervised learning"
+  ]],
+  ['06', 'Neural Networks — Building Brains for AI', [
+    "What is a neural network?",
+    "Perceptrons and activation functions",
+    "Forward and backward propagation",
+    "Training a simple neural network"
+  ]],
+  ['07', 'Project: Build a Neural Network to Classify Handwritten Digits', [
+    "Using MNIST dataset",
+    "Preprocessing image data",
+    "Building a simple neural network model",
+    "Training, testing, and evaluating accuracy"
+  ]],
+  ['08', 'CNNs — Deep Learning for Image Classification', [
+    "What are Convolutional Neural Networks?",
+    "Convolution, pooling, and fully connected layers",
+    "Building a CNN with Keras/TensorFlow",
+    "Image classification examples"
+  ]],
+  ['09', 'Advanced Image Classification — Transfer Learning', [
+    "What is transfer learning?",
+    "Using pre-trained models (VGG, ResNet, MobileNet)",
+    "Fine-tuning models for custom datasets",
+    "Improving accuracy with transfer learning"
+  ]],
+  ['10', 'NLP Basics with Python', [
+    "What is Natural Language Processing (NLP)?",
+    "Text preprocessing (tokenization, stemming, lemmatization)",
+    "Bag of Words and TF-IDF",
+    "Introduction to NLP libraries (NLTK, spaCy)"
+  ]],
+  ['11', 'Spam Detection Using Machine Learning', [
+    "Understanding spam vs ham datasets",
+    "Feature extraction from text",
+    "Training a classification model",
+    "Evaluating accuracy with real-world examples"
+  ]],
+  ['12', 'Text Classification with Deep Learning (NLP)', [
+    "Word embeddings (Word2Vec, GloVe, fastText)",
+    "Using Recurrent Neural Networks (RNNs, LSTMs)",
+    "Building a deep learning text classifier",
+    "Case study: sentiment analysis"
+  ]],
+  ['13', 'Computer Vision & Image Classification Basics', [
+    "What is computer vision?",
+    "Image preprocessing and augmentation",
+    "Basic image classification pipeline",
+    "Real-world applications (face detection, object recognition)"
+  ]],
+  ['14', 'AI for Automation: Files, Web, and Emails', [
+    "Using Python for file automation",
+    "Web scraping and automated browsing",
+    "Automating email sending and responses",
+    "Real-world productivity automation with AI"
+  ]],
+  ['15', 'AI Chatbots and Virtual Assistants', [
+    "What are chatbots and virtual assistants?",
+    "Building a rule-based chatbot",
+    "Using NLP for conversational AI",
+    "Integrating chatbot into real-world applications"
+  ]],
+];
+
 
   return (
     <section className="mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">

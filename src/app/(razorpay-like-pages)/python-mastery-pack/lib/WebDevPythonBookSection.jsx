@@ -11,16 +11,61 @@ export default function WebDevPythonBookSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const indexData = [
-    ['01', 'Introduction'],
-    ['02', 'Setting Up Your Development Environment'],
-    ['03', 'Understanding HTTP, HTML & APIs'],
-    ['04', 'Introduction to Flask'],
-    ['05', 'Building a Mini Website with Flask'],
-    ['06', 'Introduction to Django (Fast Overview)'],
-    ['07', 'Creating a Simple Blog App with Django'],
-    ['08', 'Hosting Your Web App'],
-    ['09', 'Bonus Projects (Mini Real World Projects)'],
-  ];
+  ['01', 'Introduction', [
+    "Why learn Web Development with Python?",
+    "Overview of Python web frameworks",
+    "What you’ll build in this book"
+  ]],
+  ['02', 'Setting Up Your Development Environment', [
+    "Installing Python & pip",
+    "Setting up Virtual Environments",
+    "Installing Flask & Django",
+    "Choosing an IDE (VS Code, PyCharm)"
+  ]],
+  ['03', 'Understanding HTTP, HTML & APIs', [
+    "How the Web Works (Client/Server)",
+    "Basics of HTTP methods (GET, POST, etc.)",
+    "Introduction to HTML structure",
+    "What are APIs and JSON?"
+  ]],
+  ['04', 'Introduction to Flask', [
+    "What is Flask?",
+    "Setting up your first Flask app",
+    "Routing basics",
+    "Running a local server"
+  ]],
+  ['05', 'Building a Mini Website with Flask', [
+    "Creating routes & templates",
+    "Using Jinja2 for dynamic content",
+    "Handling forms & user input",
+    "Serving static files"
+  ]],
+  ['06', 'Introduction to Django (Fast Overview)', [
+    "What is Django?",
+    "Django project vs app structure",
+    "Django ORM basics",
+    "Admin panel overview"
+  ]],
+  ['07', 'Creating a Simple Blog App with Django', [
+    "Setting up models & migrations",
+    "Creating views & templates",
+    "Handling CRUD (Create, Read, Update, Delete)",
+    "Adding user authentication"
+  ]],
+  ['08', 'Hosting Your Web App', [
+    "Choosing hosting (Heroku, Vercel, PythonAnywhere)",
+    "Setting up Git & deployment",
+    "Configuring environment variables",
+    "Basic security best practices"
+  ]],
+  ['09', 'Bonus Projects (Mini Real World Projects)', [
+    "Building a To-do app with Flask",
+    "Simple REST API with FastAPI",
+    "Portfolio website with Django",
+    "Weather app with API integration"
+  ]],
+];
+
 
   return (
     <section className="mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">

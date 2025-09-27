@@ -10,15 +10,51 @@ import BookIndexModal from './BookIndexModal'; // import reusable modal
 export default function AutomationPythonBookSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const indexData = [
-    ['01', 'Introduction'],
-    ['02', 'Your First Python Automation Script'],
-    ['03', 'WhatsApp Message Automation'],
-    ['04', 'Automating Instagram'],
-    ['05', 'Telegram Bot Creation'],
-    ['06', 'Email Automation with Python'],
-    ['07', 'PDF and Document Automation'],
-  ];
+ const indexData = [
+  ['01', 'Introduction', [
+    "What is automation and why use Python?",
+    "Popular use cases of automation",
+    "Libraries and tools for automation",
+    "Setting up Python environment for automation"
+  ]],
+  ['02', 'Your First Python Automation Script', [
+    "Writing a simple script",
+    "Automating repetitive tasks",
+    "Scheduling scripts with cron/Task Scheduler",
+    "Best practices for automation scripts"
+  ]],
+  ['03', 'WhatsApp Message Automation', [
+    "Installing and using pywhatkit library",
+    "Sending scheduled WhatsApp messages",
+    "Handling message formatting",
+    "Limitations and safety considerations"
+  ]],
+  ['04', 'Automating Instagram', [
+    "Introduction to Selenium for automation",
+    "Logging in automatically",
+    "Liking and commenting on posts",
+    "Automating follow/unfollow tasks responsibly"
+  ]],
+  ['05', 'Telegram Bot Creation', [
+    "Setting up a Telegram bot with BotFather",
+    "Using python-telegram-bot library",
+    "Handling user commands",
+    "Sending automated responses and media"
+  ]],
+  ['06', 'Email Automation with Python', [
+    "Setting up SMTP with Python",
+    "Sending automated emails with attachments",
+    "Reading and filtering incoming emails",
+    "Using automation for reminders and alerts"
+  ]],
+  ['07', 'PDF and Document Automation', [
+    "Extracting text from PDFs",
+    "Merging and splitting PDF files",
+    "Generating PDF reports with Python",
+    "Working with Word/Excel files"
+  ]],
+];
+
 
   return (
     <section className="mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">

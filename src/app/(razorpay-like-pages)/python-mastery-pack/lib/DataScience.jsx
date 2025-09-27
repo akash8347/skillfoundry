@@ -11,23 +11,93 @@ export default function DataScience() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-  const indexData = [
-    ['01', 'Introduction to Data Science'],
-    ['02', 'Setting Up the Python Environment'],
-    ['03', 'Python Programming Essentials for Data Science'],
-    ['04', 'Data Cleaning and Preprocessing'],
-    ['05', 'Exploratory Data Analysis (EDA)'],
-    ['06', 'Feature Engineering'],
-    ['07', 'Exploratory Data Analysis (EDA)'],
-    ['08', 'Model Evaluation and Validation'],
-    ['09', 'Model Deployment and Pipelines'],
-    ['10', 'Model Evaluation and Metrics'],
-    ['11', 'Time Series Analysis'],
-    ['12', 'Natural Language Processing (NLP) in Data Science'],
-    ['13', 'Time Series Analysis in Python'],
-    ['14', 'Natural Language Processing in Python'],
-    ['15', 'Advanced Topics and Real-World Applications in Data Science'],
-  ];
+const indexData = [
+  ['01', 'Introduction to Data Science', [
+    "What is Data Science?",
+    "Applications of Data Science in real-world",
+    "Data Science workflow: Collect → Clean → Analyze → Model → Deploy",
+    "Role of Python in Data Science"
+  ]],
+  ['02', 'Setting Up the Python Environment', [
+    "Installing Python & Jupyter Notebook",
+    "Setting up Anaconda / virtual environments",
+    "Installing essential libraries (NumPy, Pandas, Matplotlib, Scikit-learn)",
+    "Using notebooks for interactive coding"
+  ]],
+  ['03', 'Python Programming Essentials for Data Science', [
+    "Python basics (variables, functions, loops)",
+    "Working with data structures (lists, dictionaries, sets)",
+    "Numpy arrays and vectorized operations",
+    "Pandas basics for handling tabular data"
+  ]],
+  ['04', 'Data Cleaning and Preprocessing', [
+    "Handling missing values",
+    "Dealing with duplicates",
+    "Outlier detection and treatment",
+    "Data normalization and standardization"
+  ]],
+  ['05', 'Exploratory Data Analysis (EDA)', [
+    "Understanding your dataset",
+    "Descriptive statistics (mean, median, variance)",
+    "Visualizations with Matplotlib & Seaborn",
+    "Finding patterns and relationships"
+  ]],
+  ['06', 'Feature Engineering', [
+    "Feature extraction and transformation",
+    "Encoding categorical variables",
+    "Scaling numerical features",
+    "Creating new features from existing data"
+  ]],
+  ['07', 'Model Evaluation and Validation', [
+    "Train-test split",
+    "Cross-validation techniques",
+    "Avoiding overfitting & underfitting",
+    "Bias-variance tradeoff"
+  ]],
+  ['08', 'Model Deployment and Pipelines', [
+    "Introduction to pipelines",
+    "Automating preprocessing + modeling",
+    "Exporting models (Pickle/Joblib)",
+    "Deployment basics (Flask/FastAPI, Streamlit)"
+  ]],
+  ['09', 'Model Evaluation and Metrics', [
+    "Classification metrics (accuracy, precision, recall, F1-score)",
+    "Regression metrics (MSE, RMSE, R²)",
+    "ROC curve and AUC",
+    "Confusion matrix interpretation"
+  ]],
+  ['10', 'Time Series Analysis', [
+    "Introduction to time series data",
+    "Resampling and frequency conversion",
+    "Decomposition of time series (trend, seasonality)",
+    "Forecasting basics with ARIMA"
+  ]],
+  ['11', 'Natural Language Processing (NLP) in Data Science', [
+    "Text preprocessing (tokenization, stopwords, stemming)",
+    "Vectorization (Bag of Words, TF-IDF)",
+    "Sentiment analysis basics",
+    "Applications of NLP in data science"
+  ]],
+  ['12', 'Advanced Time Series Analysis in Python', [
+    "Stationarity and differencing",
+    "Autocorrelation and PACF plots",
+    "ARIMA, SARIMA, and Prophet models",
+    "Practical forecasting examples"
+  ]],
+  ['13', 'Advanced NLP in Python', [
+    "Word embeddings (Word2Vec, GloVe)",
+    "Deep learning for NLP (RNN, LSTM)",
+    "Transformers and BERT basics",
+    "Real-world text classification"
+  ]],
+  ['14', 'Advanced Topics and Real-World Applications in Data Science', [
+    "Ensemble methods (Random Forest, XGBoost)",
+    "Unsupervised learning (clustering, PCA)",
+    "Big data & cloud integration",
+    "End-to-end case study project"
+  ]],
+];
+
 
   return (
     <section className="mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">

@@ -10,38 +10,189 @@ import BookIndexModal from './BookIndexModal'; // import reusable modal
 export default function PythonBookSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const indexData = [
-    ['01', 'Introduction and Setup'],
-    ['02', 'Variables and Functions'],
-    ['03', 'Operators'],
-    ['04', 'Strings'],
-    ['05', 'Lists'],
-    ['06', 'Tuples'],
-    ['07', 'Sets'],
-    ['08', 'Dictionaries'],
-    ['09', 'Conditionals'],
-    ['10', 'Loops'],
-    ['11', 'Functions'],
-    ['12', 'Modules'],
-    ['13', 'List Comprehension'],
-    ['14', 'Higher Order Functions'],
-    ['15', 'Python Type Errors'],
-    ['16', 'Python Date Time'],
-    ['17', 'Exception Handling'],
-    ['18', 'Regular Expressions'],
-    ['19', 'File Handling'],
-    ['20', 'PIP'],
-    ['21', 'Classes and Objects'],
-    ['22', 'Python Web Scraping'],
-    ['23', 'Virtual Environment'],
-    ['24', 'Statistics'],
-    ['25', 'Pandas'],
-    ['26', 'Python for Web'],
-    ['27', 'Python with MongoDB'],
-    ['28', 'API'],
-    ['29', 'Building API'],
-    ['30', 'Conclusions'],
-  ];
+const indexData = [
+  ['01', 'Introduction and Setup', [
+    "Overview of Python and its applications",
+    "Installing Python on your system",
+    "Setting up IDE (VS Code, PyCharm, or IDLE)",
+    "Running your first Python program"
+  ]],
+  ['02', 'Variables and Functions', [
+    "Declaring and assigning variables",
+    "Understanding data types",
+    "Defining and calling functions",
+    "Function parameters and return values"
+  ]],
+  ['03', 'Operators', [
+    "Arithmetic operators (+, -, *, /, %)",
+    "Comparison operators (==, !=, >, <)",
+    "Logical operators (and, or, not)",
+    "Assignment operators (+=, -=, *=)"
+  ]],
+  ['04', 'Strings', [
+    "Creating and printing strings",
+    "String slicing and indexing",
+    "Common string methods (upper, lower, strip, split)",
+    "String formatting (f-strings)"
+  ]],
+  ['05', 'Lists', [
+    "Creating and accessing lists",
+    "Adding and removing elements",
+    "List slicing and indexing",
+    "Common list methods (append, pop, sort)"
+  ]],
+  ['06', 'Tuples', [
+    "What are tuples?",
+    "Difference between lists and tuples",
+    "Accessing tuple elements",
+    "Tuple methods and immutability"
+  ]],
+  ['07', 'Sets', [
+    "Defining sets",
+    "Set operations (union, intersection, difference)",
+    "Adding and removing elements",
+    "Use cases of sets"
+  ]],
+  ['08', 'Dictionaries', [
+    "Creating dictionaries",
+    "Accessing values with keys",
+    "Adding, updating, and deleting items",
+    "Dictionary methods (keys, values, items)"
+  ]],
+  ['09', 'Conditionals', [
+    "if, elif, else statements",
+    "Nested conditionals",
+    "Boolean expressions",
+    "Practical examples of decision making"
+  ]],
+  ['10', 'Loops', [
+    "for loops",
+    "while loops",
+    "Break and continue statements",
+    "Iterating over lists, strings, and dictionaries"
+  ]],
+  ['11', 'Functions', [
+    "Defining functions properly",
+    "Default parameters",
+    "Return values",
+    "Scope of variables (local vs global)"
+  ]],
+  ['12', 'Modules', [
+    "Importing built-in modules",
+    "Using math and random modules",
+    "Creating your own modules",
+    "Import styles (import vs from-import)"
+  ]],
+  ['13', 'List Comprehension', [
+    "Introduction to list comprehensions",
+    "Syntax and use cases",
+    "Nested list comprehensions",
+    "Practical examples"
+  ]],
+  ['14', 'Higher Order Functions', [
+    "What are higher order functions?",
+    "map(), filter(), and reduce()",
+    "Lambda functions",
+    "Practical examples in Python"
+  ]],
+  ['15', 'Python Type Errors', [
+    "Common error types (TypeError, ValueError, NameError)",
+    "Debugging basics",
+    "Tracebacks explained",
+    "Preventing common mistakes"
+  ]],
+  ['16', 'Python Date Time', [
+    "Working with datetime module",
+    "Getting current date and time",
+    "Formatting dates",
+    "Date arithmetic"
+  ]],
+  ['17', 'Exception Handling', [
+    "What are exceptions?",
+    "try, except blocks",
+    "finally and else usage",
+    "Raising exceptions manually"
+  ]],
+  ['18', 'Regular Expressions', [
+    "What are regex patterns?",
+    "Using re module",
+    "Searching and matching strings",
+    "Practical regex examples"
+  ]],
+  ['19', 'File Handling', [
+    "Opening and closing files",
+    "Reading and writing text files",
+    "Working with CSV files",
+    "Using context managers (with open)"
+  ]],
+  ['20', 'PIP', [
+    "What is pip?",
+    "Installing packages",
+    "Upgrading and uninstalling packages",
+    "Exploring PyPI"
+  ]],
+  ['21', 'Classes and Objects', [
+    "Introduction to OOP",
+    "Defining a class",
+    "Creating objects",
+    "Methods and attributes"
+  ]],
+  ['22', 'Python Web Scraping', [
+    "What is web scraping?",
+    "Using requests module",
+    "Introduction to BeautifulSoup",
+    "Extracting useful data"
+  ]],
+  ['23', 'Virtual Environment', [
+    "Why use virtual environments?",
+    "Creating and activating venv",
+    "Installing dependencies in venv",
+    "Managing multiple projects"
+  ]],
+  ['24', 'Statistics', [
+    "Mean, Median, and Mode",
+    "Standard deviation",
+    "Basic probability",
+    "Using statistics module"
+  ]],
+  ['25', 'Pandas', [
+    "Introduction to Pandas library",
+    "Creating Series and DataFrames",
+    "Data selection and filtering",
+    "Basic data analysis methods"
+  ]],
+  ['26', 'Python for Web', [
+    "Introduction to Flask/Django",
+    "Building simple routes",
+    "Handling requests",
+    "Returning responses"
+  ]],
+  ['27', 'Python with MongoDB', [
+    "What is MongoDB?",
+    "Connecting Python with MongoDB",
+    "CRUD operations",
+    "Basic queries"
+  ]],
+  ['28', 'API', [
+    "What is an API?",
+    "REST APIs explained",
+    "Consuming APIs with requests",
+    "Working with JSON data"
+  ]],
+  ['29', 'Building API', [
+    "Using Flask/Django for APIs",
+    "Creating endpoints",
+    "Returning JSON responses",
+    "Testing APIs with Postman"
+  ]],
+  ['30', 'Conclusions', [
+    "Recap of what you’ve learned",
+    "Next steps in Python journey",
+    "Recommended practice projects",
+    "Where to go from here"
+  ]],
+];
+
 
   return (
     <section className="mt-5 md:mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">
