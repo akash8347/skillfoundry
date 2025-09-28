@@ -197,6 +197,10 @@
   animation: spin 1s linear infinite;
   color: white;
 }
+html {
+  scroll-behavior: smooth;
+}
+
 
 /* Keyframes */
 @keyframes spin {

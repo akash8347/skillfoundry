@@ -235,7 +235,7 @@ export default function PythonPage() {
                   ))}
                 </ul>
         _       </div> */}
-              <div className="px-6">
+              <div className="px-6" id="book">
                 <div className="md:hidden mb-6 mt-8 bg-white rounded-lg border border-gray-200 relative">
                   {/* Colored badge title */}
                   <div className="absolute -top-3 left-3">

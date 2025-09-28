@@ -66,7 +66,7 @@ const reviews = [
 
 export default function Reviews() {
   return (
-    <section className="py-10">
+    <section className="py-10" id="reviews">
       <h2 className="text-2xl font-bold mb-8">What Readers Say</h2>
       <div className="grid gap-6">
         {reviews.map((review, index) => (

@@ -322,7 +322,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
             The Python Mastery Pack
           </h3>
           <p className="text-sm text-gray-600">
-            Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects.
+            Learn Core Python, Artificial Intelligence, Web Development, Automation in Python and Make Projects for <span className="font-bold">{symbol}{price}{currency=="INR"?"/":""}</span> only.
           </p>
           {/* <p className="font-bold text-green-700">₹199</p> */}
         </div>
