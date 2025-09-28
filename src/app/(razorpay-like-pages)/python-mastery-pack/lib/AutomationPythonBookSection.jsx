@@ -65,7 +65,7 @@ export default function AutomationPythonBookSection() {
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/automation.webp"
+            src="/polished/auto-poli.webp"
             alt="Automation Using Python"
             width={300}
             height={400}

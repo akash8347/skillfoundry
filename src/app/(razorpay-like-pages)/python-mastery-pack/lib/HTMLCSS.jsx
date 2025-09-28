@@ -22,7 +22,7 @@ export default function CoreProjects() {
           </h3>
           <div className="w-full md:w-92 flex-shrink-0">
             <Image
-              src="/project-core-py.webp"
+              src="/polished/project-poli.webp"
               alt="100+ python projects"
               width={300}
               height={400}
@@ -54,7 +54,7 @@ export default function CoreProjects() {
           </h3>
           <div className="w-full md:w-92 flex-shrink-0">
             <Image
-              src="/project-game-py.webp"
+              src="/polished/game-poli.webp"
               alt="AI with Python"
               width={300}
               height={400}

@@ -12,7 +12,7 @@ export default function Cheatsheet() {
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/py-cheat-sheet.webp"
+            src="/polished/cheatsheet-poli.webp"
             alt="Python Cheatsheet"
             width={300}
             height={400}

@@ -76,7 +76,7 @@ export default function WebDevPythonBookSection() {
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/web-python.webp"
+            src="/polished/web-poli.webp"
             alt="Web Development Using Python"
             width={300}
             height={400}

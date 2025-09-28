@@ -203,11 +203,13 @@ const indexData = [
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/main-python.webp"
+            // src="/main-python.webp"
+                        src="/polished/python-poli.webp"
+
             alt="30 Days of Python"
             width={300}
             height={400}
-            className="w-[88%] my-5 md:my-0 mx-auto md:w-full h-auto"
+            className="w-[88%] my-2 md:my-0 mx-auto md:w-full h-auto"
           />
         </div>
         <div className="max-w-xl">

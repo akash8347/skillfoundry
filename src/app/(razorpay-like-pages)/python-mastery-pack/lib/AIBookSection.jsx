@@ -232,7 +232,7 @@ export default function AIBookSection() {
 
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/ai-python.webp"
+            src="/polished/ai-poli.webp"
             alt="AI with Python"
             width={300}
             height={400}

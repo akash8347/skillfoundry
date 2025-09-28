@@ -163,9 +163,17 @@ export default function PythonPage() {
                   width={1200}
                   height={700}
                   // src="/main-img.webp"
-                  src="/main-img-i.webp"
+                  // src="/main-img-polished.webp"
+                  // src="/main-img-i.webp"
+                  // src="/main-img-designed-polished.webp"
+                 
+                  // src="/1180x960.png"  //JUST GARBAGE
+                  // src="/main-to-use.webp"
+                                    src="/TEST-main-to-use.webp"
+
+ 
                   alt="Python Mastery Pack"
-                  className="w-ful l   h-auto max-w-full rounded-lg md:mb-6 mb-3"
+                  className="w-full h-auto max-w-full rounded-lg md:mb-6 mb-3"
                   priority={true}
                 />
               </div>

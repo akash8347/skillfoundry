@@ -108,7 +108,7 @@ const indexData = [
         </h3>
         <div className="w-full md:w-92 flex-shrink-0">
           <Image
-            src="/py-data-science.webp"
+            src="/polished/datascience-poli.webp"
             alt="Data Science with Python"
             width={300}
             height={400}
