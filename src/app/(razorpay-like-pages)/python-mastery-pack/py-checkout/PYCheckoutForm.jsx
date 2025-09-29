@@ -415,12 +415,12 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
             </span>
           ) : "Buy Now"}
         </Button>
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
+        {/* <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-[0.875rem] font-semibold rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 border border-gray-200 whitespace-nowrap max-w-[95%] overflow-hidden">
           <div className="bg-green-100 p-1.5 rounded-full shadow-sm">
             <Lock size={14} className="text-green-600" />
           </div>
           <span className="tracking-tight">Secure Checkout</span>
-        </div>
+        </div> */}
       </form>
 
     </div>
