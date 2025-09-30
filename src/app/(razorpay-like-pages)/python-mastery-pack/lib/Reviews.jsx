@@ -8,7 +8,7 @@ const reviews = [
   },
    {
     text: "This Python books is packed with practical tips that would’ve saved my clients a lot of money. Every dev should read it!",
-    name: "muzammil on LinkedIn",
+    name: "—muzammil on LinkedIn",
   },
   {
     text: 'These books is my most-read #python and AI books. A must-have for coding lovers like me.',
