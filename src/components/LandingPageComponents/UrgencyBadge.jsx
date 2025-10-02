@@ -19,18 +19,40 @@
 // export default UrgencyBadge;
 
 
-// Variant: Emerald Green
+// Variant: recent original
+// 'use client';
+// import React from 'react';
+
+// const UrgencyBadge = ({ price, symbol }) => {
+//   return (
+//     <div className="sm:hidden flex justify-center mt-4">
+//       <div className="relative bg-emerald-100 text-emerald-700 font-semibold text-sm px-4 py-1 rounded-full flex items-center shadow-sm">
+//         Now {symbol}{price} – Limited Time Offer!
+//         <span className="pl-1">
+//           <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
+//           <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full" />
+//         </span>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default UrgencyBadge;
+
+
+
+
 'use client';
 import React from 'react';
 
 const UrgencyBadge = ({ price, symbol }) => {
   return (
-    <div className="sm:hidden flex justify-center mt-4">
-      <div className="relative bg-emerald-100 text-emerald-700 font-semibold text-sm px-4 py-1 rounded-full flex items-center shadow-sm">
+    <div className="sm:hidden flex justify-center mt-4 ">
+      <div className="relative w-full bg-emerald-100 text-emerald-700  flex justify-center font-semibold text-sm px-4 py-1 flex items-center shadow-sm">
         Now {symbol}{price} – Limited Time Offer!
         <span className="pl-1">
-          <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
-          <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full" />
+          {/* <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" /> */}
+          {/* <span className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-emerald-500 rounded-full" /> */}
         </span>
       </div>
     </div>
@@ -38,5 +60,6 @@ const UrgencyBadge = ({ price, symbol }) => {
 };
 
 export default UrgencyBadge;
+
 
 
