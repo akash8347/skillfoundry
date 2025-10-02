@@ -93,7 +93,19 @@ export default function JSCheckout({ isOpen, setIsOpen }) {
         currency: data.order.currency,
         name: "Javascript Mastery Pack",
         description: "Purchase E-Guide Bundle",
+
+           notes: {
+          email: form.email,
+          mobile: form.mobile,
+          courseIdentifier: courseIdentifier,
+          encryptedCode: encryptedCode,
+          courseId: courseId
+        },
+        
         order_id: data.order.id,
+
+
+
         handler: async (response) => {
           setLoading(true); // show loading while verifying and redirecting
 
