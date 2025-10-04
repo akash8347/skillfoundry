@@ -169,7 +169,9 @@ export default function PythonPage() {
                  
                   // src="/1180x960.png"  //JUST GARBAGE
                   // src="/main-to-use.webp"
-                                    src="/TEST-main-to-use.webp"
+                  // src="/TEST-main-to-use.webp"  //last good
+                     src="/MAIN-PREMIUM-SHADOW.webp"
+
 
  
                   alt="Python Mastery Pack"
