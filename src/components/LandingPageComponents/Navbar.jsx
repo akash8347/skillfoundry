@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from 'next/link';
 import Image from 'next/image';
+import PremiumBadge from '@/lib/myComponents/PremiumBadge ';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,17 +13,23 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-2">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/logo.webp"
-            alt="Skill Foundry Logo"
-            width={100}
-            height={30}
-            className="object-contain h-8 sm:h-10 w-auto"
-            priority
-          />
-        </Link>
+        
+        {/* Left Section — Logo + Badge */}
+        <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/logo.webp"
+              alt="Skill Foundry Logo"
+              width={100}
+              height={30}
+              className="object-contain h-8 sm:h-10 w-auto"
+              priority
+            />
+          </Link>
+
+          {/* Badge stays inline */}
+          <PremiumBadge text="UPDATED CONTENT" color="purple" />
+        </div>
 
         {/* Menu Button */}
         <button
@@ -33,7 +40,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation Menu - overlay, no layout shift */}
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav

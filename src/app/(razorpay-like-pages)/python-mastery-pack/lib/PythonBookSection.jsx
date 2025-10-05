@@ -6,6 +6,7 @@ import { FaEye } from 'react-icons/fa'; // import eye icon
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import BookIndexModal from './BookIndexModal'; // import reusable modal
+import PremiumBadge from '@/lib/myComponents/PremiumBadge ';
 
 export default function PythonBookSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -195,9 +196,13 @@ const indexData = [
 
 
   return (
-    <section className="mt-5 md:mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border">
+    <section className="mt-5 md:mt-12 bg-white rounded-2xl shadow-xl p-6 md:p-8 border relative">
       {/* Heading and Image */}
-      <div className="flex flex-col items-center gap-0 md:gap-6 text-center md:text-left">
+      <div className="flex flex-col mt-3 items-center gap-0 md:gap-6 text-center md:text-left">
+        <div className="absolute top-2 right-4">
+        <PremiumBadge text="UPDATED" color="" className="mb-2" />
+
+        </div>
         <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
           📘 30 Days of Python with AI Guide (280+ pages)
         </h3>

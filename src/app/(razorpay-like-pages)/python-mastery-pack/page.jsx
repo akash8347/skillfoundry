@@ -27,6 +27,7 @@ import { useSearchParams } from "next/navigation";
 import { useCurrency } from "../../Context/CurrencyContext";
 import PYCheckoutSlider from "./py-checkout/PYCheckoutSlider";
 import { genEventId } from "@/lib/eventHelper";
+import PremiumBadge from "@/lib/myComponents/PremiumBadge ";
 
 
 export default function PythonPage() {
@@ -183,7 +184,8 @@ export default function PythonPage() {
               {/* <MobileOfferCard/> */}
               <h2 className="sm:mt-0 text-[1.6rem] lg:text-3xl font-bold text-gray-800 mb-2 text-center">
                 <div className="mt-2 text-[1.2rem] lg:text-xl font-normal text-gray-600 px-6">
-                  6+ Expert Guides Collection With Projects Pack
+                  6+ Expert Guides Collection With Projects Pack        
+
                 </div>
                 <div className="mx-auto w-16 h-1 bg-blue-600 mt-2 mb-3 md:mb-6" />
               </h2>

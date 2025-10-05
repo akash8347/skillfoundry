@@ -11,22 +11,15 @@ const currencyMapper = {
           python_js_combo: { price: 599 },
         },
       },
-      m7r3d: {
+      m7r4d: {
         symbol: "₹",
         courses: {
-          python: { displayPrice: 299, realPrice: 2000 },
-          js: { displayPrice: 299, realPrice: 2000 },
-          python_js_combo: { price: 499 },
+          python: { displayPrice: 497, realPrice: 2000 },
+          js: { displayPrice: 497, realPrice: 2000 },
+          python_js_combo: { price: 799 },
         },
       },
-      m7r2d: {
-        symbol: "₹",
-        courses: {
-          python: { displayPrice: 249, realPrice: 2000 },
-          js: { displayPrice: 249, realPrice: 2000 },
-          python_js_combo: { price: 399 },
-        },
-      },
+     
       temp2242: {
         symbol: "₹",
         courses: {
