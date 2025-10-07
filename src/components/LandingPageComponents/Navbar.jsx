@@ -53,7 +53,7 @@ const Navbar = () => {
             <Link href="/" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               Home
             </Link>
-            <Link href="/download" className="block text-gray-800 font-medium hover:text-blue-600 transition">
+            <Link href="/login" className="block text-gray-800 font-medium hover:text-blue-600 transition">
               My Course
             </Link>
             <Link href="/Contact-us" className="block text-gray-800 font-medium hover:text-blue-600 transition">

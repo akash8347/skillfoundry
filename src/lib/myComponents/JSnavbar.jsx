@@ -17,7 +17,7 @@ const JSnavbar = () => {
     <div>
       <nav className="flex items-center justify-between px-4 py-3 bg-[#0F172A] text-white shadow-md">
         {/* Just the logo wrapped in a Link */}
-        <Link href="/download" className="flex items-center gap-2">
+        <Link href="/login" className="flex items-center gap-2">
           <Image
             src="/logo.webp"
             alt="Skill Foundry Logo"

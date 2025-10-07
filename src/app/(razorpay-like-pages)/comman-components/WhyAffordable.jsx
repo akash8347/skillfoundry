@@ -50,7 +50,7 @@ export default function WhyAffordable() {
             </li>
             <li className="flex items-center text-gray-700 text-sm md:text-base">
               <CheckCircle className="text-green-500 mr-2" size={16} />
-              Made for Indians by Indians – lower production costs
+              Made for Techies by Techies – lower production costs
             </li>
           </ul>
         </div>
@@ -79,7 +79,7 @@ export default function WhyAffordable() {
 
           <div className="bg-white border border-gray-300 p-3 rounded-lg text-gray-600 text-xs md:text-sm leading-relaxed">
             "We could charge 10x more, but our mission is to make tech education
-            accessible to every Indian who wants to learn, not just those who can
+            accessible to every Programmer who wants to learn, not just those who can
             afford it."
           </div>
         </div>
