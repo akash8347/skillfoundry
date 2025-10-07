@@ -200,7 +200,7 @@ const indexData = [
       {/* Heading and Image */}
       <div className="flex flex-col mt-3 items-center gap-0 md:gap-6 text-center md:text-left">
         <div className="absolute top-2 right-4">
-        <PremiumBadge text="UPDATED" color="" className="mb-2" />
+        {/* <PremiumBadge text="UPDATED" color="" className="mb-2" /> */}
 
         </div>
         <h3 className="text-xl md:text-2xl font-semibold text-gray-800">

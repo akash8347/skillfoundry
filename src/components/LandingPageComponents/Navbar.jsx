@@ -28,7 +28,7 @@ const Navbar = () => {
           </Link>
 
           {/* Badge stays inline */}
-          <PremiumBadge text="UPDATED CONTENT" color="purple" />
+          {/* <PremiumBadge text="UPDATED CONTENT" color="purple" /> */}
         </div>
 
         {/* Menu Button */}
