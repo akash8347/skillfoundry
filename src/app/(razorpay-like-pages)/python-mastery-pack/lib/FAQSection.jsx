@@ -6,23 +6,23 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 const faqs = [
+   {
+    question: "1. What is the Format of the Guides?",
+    answer:
+    "The guides are provided in Digital format, making them easy to download and access on various devices.",
+  },
   {
-    question: "1. What happens after I make the payment?",
+    question: "2. What happens after I make the payment?",
     answer:
       "After a successful payment, please do not refresh the page. You will receive an email with access to your purchased materials.",
   },
   {
-    question: "2. How can I access the product?",
+    question: "3. How can I access the product?",
     answer:
       "You will receive an email with all the course materials. You can also log in to your dashboard anytime to access your content.",
   },
   {
-    question: "3. What if I don’t get redirected?",
-    answer:
-      "If you're not redirected after payment, try clicking the back button. If the download link still doesn't appear, please visit the contact us page where you can put your email ID. Our system will verify your payment and send you the access link directly.",
-  },
-  {
-    question: "4. What if I lose access to the course?",
+    question: "5. What if I lose access to the course?",
     answer:
       "No worries! Just visit Contact Us page and put your email ID. Our system will verify your payment and send you the access link directly.",
   },
