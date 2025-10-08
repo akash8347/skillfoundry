@@ -22,7 +22,7 @@ const faqs = [
       "You will receive an email with all the course materials. You can also log in to your dashboard anytime to access your content.",
   },
   {
-    question: "5. What if I lose access to the course?",
+    question: "4. What if I lose access to the course?",
     answer:
       "No worries! Just visit Contact Us page and put your email ID. Our system will verify your payment and send you the access link directly.",
   },
