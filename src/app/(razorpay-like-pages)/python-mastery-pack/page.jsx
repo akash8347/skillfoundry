@@ -117,7 +117,10 @@ export default function PythonPage() {
     );
 
     // setIsLoading(true);
-    router.push(`/python-mastery-pack/py-checkout?c=${encryptedCode}`);
+    // router.push(`/python-mastery-pack/py-checkout?c=${encryptedCode}`);
+        router.push(`/python-mastery-pack/checkout?c=${encryptedCode}`);
+
+    
   };
 
   return (

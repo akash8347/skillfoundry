@@ -196,6 +196,7 @@ function getCookie(name) {
 }
 
 const itemSku = "PYTHON_GUIDES_BUNDLE_01";
+
 const handleClick = async () => {
   const eventId = genEventId();
 
@@ -238,7 +239,11 @@ const handleClick = async () => {
   );
 
   setIsLoading(true);
-  router.push(`/python-mastery-pack/py-checkout?c=${encryptedCode}`);
+  router.push(`/python-mastery-pack/checkout?c=${encryptedCode}`);
+ setTimeout(() => {
+        setIsLoading(false);
+    }, 300); 
+
 };
 
   // const strikeThroughPrice = currency === "EUR" ? 94 : currency === "USD" ? 97 : 2000;
@@ -411,7 +416,7 @@ const handleClick = async () => {
               3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <span>Redirecting...</span>
+          <span>Loading...</span>
         </div>
       ) : (
         <>
