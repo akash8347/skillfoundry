@@ -56,7 +56,7 @@ export default function BookIndexModal({ isOpen, onClose, indexData, title = "Bo
                 {totalChapters > 0 && (
                  <div className="flex items-center mt-1 sm:mt-0 text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full w-fit">
   <BookOpen className="w-4 h-4 mr-1" />
-  {totalChapters} {totalChapters === 1 ? "Chapter" : "Total Chapters"}
+  {totalChapters} {totalChapters === 1 ? "Chapter" : "Chapters"}
 </div>
 
                 )}
