@@ -33,7 +33,7 @@ import useCurrencyFromCookies from '@/lib/useCurrencyFromCookies';
             <Link href="#courses" className="text-sm font-medium hover:text-blue-600 transition">
               Courses
             </Link>
-            <Link href="/download" className="text-sm font-medium hover:text-blue-600 transition">
+            <Link href="/login" className="text-sm font-medium hover:text-blue-600 transition">
               Dashboard
             </Link>
           </nav>

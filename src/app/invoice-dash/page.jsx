@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Calendar as CalendarIcon, IndianRupee, Search } from "lucide-react";
 import { DateRange } from "react-day-picker";
+import GSTCalculator from "./components/GSTCalculator";
 import {
   addDays, format, startOfMonth, endOfMonth,
   startOfYear, endOfYear, getMonth, getYear
@@ -359,6 +360,13 @@ export default function InvoiceDashboard() {
             </Card>
             <InvoiceDetailSheet invoice={selectedInvoice} onOpenChange={(isOpen) => !isOpen && setSelectedInvoice(null)} />
         </main>
+         <div className="w-full border-t border-muted-foreground/20 px-4 py-2 text-center text-sm text-muted-foreground">
+          <GSTCalculator />
+        </div>
+        <div className="w-full border-t border-muted-foreground/20 px-4 py-2 text-center text-sm text-muted-foreground">
+          &copy; {new Date().getFullYear()} Skillfoundry. All rights reserved.
+        </div>
+       
     </div>
   );
 }
