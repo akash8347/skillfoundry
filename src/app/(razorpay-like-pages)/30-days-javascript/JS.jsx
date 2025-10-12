@@ -1,0 +1,168 @@
+"use client"
+import Navbar from "@/components/LandingPageComponents/Navbar";
+import JavaScriptBookSection from "./lib/JavaScriptBookSection";
+import ProjectsBookSection from "./lib/ProjectsBookSection";
+import HTMLCSS from "./lib/HTMLCSS";
+import Bonus from "./lib/Bonus";
+import FAQSection from "./lib/FAQSection";
+import UrgencyBadge from "@/components/LandingPageComponents/UrgencyBadge";
+import LandingFooter from "@/components/LandingPageComponents/LandingFooter";
+import StickyBuyNow from "@/components/LandingPageComponents/StickyBuyNow";
+import { Suspense, useEffect, useState } from "react";
+import JSCheckout from "./lib/JSCheckout";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { Star } from "lucide-react";
+import { UrgencySection } from "../comman-components/UrgencySection";
+import JSWhyAffordable from "./lib/JSWhyAffordable";
+import BundleOfferBanner from "../comman-components/BundleOfferBanner";
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
+import JsStickyBuyNow from "@/components/LandingPageComponents/JsStickyBuyNow";
+
+
+import { useCurrency } from "../../Context/CurrencyContext";
+
+export default function JS({fromModal}) {
+  // const searchParams = useSearchParams()
+
+  const [showBack, setShowBack] = useState(false)
+  const { currency, jsPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('from') === 'checkout') {
+      setShowBack(true)
+    }
+  }, [])
+
+  const [checkoutOpen, setCheckoutOpen] = useState(false); // Control Checkout Form
+
+  return (
+    <>
+
+      {!fromModal && <title>The JavaScript Mastery Pack</title>}
+      {!fromModal &&showBack && (
+        <div className="fixed bottom-25 left-4 lg:left-6 z-50 transition-all duration-300 hover:scale-105">
+          <Link
+            href={`/python-mastery-pack/order-summary?c=${encryptedCode}`}
+            className="bg-gray-800 border border-gray-700 shadow-lg shadow-gray-900/30 px-4 py-2 rounded-lg text-gray-100 text-sm hover:bg-gray-700 flex items-center space-x-2 transition-colors duration-200"
+          >
+            <ArrowLeft size={18} className="text-blue-400" />
+            <span className="font-medium">Back to Python Checkout</span>
+          </Link>
+        </div>
+      )}
+
+      {!fromModal && <Navbar />}
+     {!fromModal && <UrgencyBadge price={price} symbol={symbol} />}
+      <div className="min-h-screen flex flex-col bg-white text-gray-900 font-inter">
+        {/* Main Section */}
+        <main className={`flex-1   w-full max-w-7xl mx-auto  md:flex ${fromModal?"justify-center md:py-5":" md:py-20"}  md:space-x-12  py-3`}>
+          {/* Left Column - Content */}
+          <section className={`${fromModal?"sm:mx-10 sm:px-10":"md:w-2/3 sm:mx-20 sm:px-20"}   w-full flex flex-col justify-center `}>
+            {/* ✅ JavaScript Pack Section */}
+            <div className="mb-8 px-6">
+              <h2 className={`${fromModal?"text-xl md:text-3xl":"text-2xl md:text-4xl"}  font-bold text-gray-800 mb-2`}>
+                The JavaScript Mastery Pack
+              </h2>
+              <div className="w-16 h-1 bg-blue-600 mb-3 sm:w-52  sm:mt-2 sm:mb-5" />
+
+              <Image
+                width={1200}
+                height={700}
+                src="/JS-MAIN-PREMIUM-SHADOW.webp"
+                alt="JavaScript Mastery Pack"
+                className="w-full rounded-lg md:mb-6  mb-3"
+                priority={true}
+              />
+              {/* ⭐ Rating Section - moved below image */}
+              <div className="flex items-center flex-wrap gap-2 mb-4">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <div className="flex items-center gap-1 text-sm">
+                  <span className="font-medium text-gray-700">4.8/5</span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-gray-500">800+ students</span>
+                </div>
+              </div>
+              {/* <MobileOfferCard/> */}
+
+            <p className={`${fromModal ? "text-sm" : ""} text-gray-700 text-base leading-relaxed mb-4`}>
+  These structured, hands-on JavaScript guides take you from beginner to advanced with real-world projects to make you job-ready. Whether you're starting from scratch or sharpening your skills, this pack has everything you need
+  {fromModal ? (
+    currency === "INR" ? (
+      <b>{` for ${symbol}${price}/- only`}</b>
+    ) : (
+      <b>{` for ${symbol}${price} only.`}</b>
+    )
+  ) : (
+    "."
+  )}
+</p>
+
+
+
+
+
+              <h3 className={`${fromModal ? "text-sm":"text-lg"} font-semibold  text-gray-900 mb-2`}>What You’ll Get:</h3>
+
+              <JavaScriptBookSection fromModal={fromModal} />
+              <ProjectsBookSection fromModal={fromModal} />
+              <HTMLCSS fromModal={fromModal} />
+              <Bonus fromModal={fromModal} />
+              <JSWhyAffordable fromModal={fromModal} />
+              <BundleOfferBanner fromModal={fromModal} />
+              <FAQSection />
+            </div>
+
+          </section>
+          {!fromModal &&  <JSCheckout isOpen={checkoutOpen} setIsOpen={setCheckoutOpen} />}
+
+          {/* Right Column - Sticky Card */}
+          {!fromModal &&  <aside className="lg:w-1/3 hidden lg:block relative">
+            <div className="sticky top-22">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 p-6 rounded-2xl shadow-xl flex flex-col">
+                <div className="mb-6">
+                  {/* <div className="bg-gray-200 h-40 rounded-lg mb-6" /> */}
+                  <Image
+                    width={200}
+                    height={300}
+                    src="/book-bundle-js.webp"
+                    alt="JavaScript Mastery Pack"
+                    className="w-full rounded-lg shadow-lg mb-6"
+                  />
+                  <h2 className="text-2xl font-semibold mb-2 text-gray-900">Start Learning Today</h2>
+                  <p className="text-sm text-gray-600">
+                    Unlock premium Guides and grow your Javascript knowledge.
+                  </p>
+                </div>
+                <Button className="w-full  text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200"
+                  onClick={() => setCheckoutOpen(true)}
+
+                >
+                  Buy Now
+                </Button>
+              </div>
+            </div>
+          </aside>
+}
+         
+        </main>
+       {!fromModal && <LandingFooter />}
+       {!fromModal && <JsStickyBuyNow setCheckoutOpen={setCheckoutOpen} price={price} currency={currency} symbol={symbol} encryptedCode={encryptedCode} jsRealPrice={jsRealPrice} />}
+
+
+        {/* ------------------------------- */}
+
+
+
+      </div>
+    </>
+  );
+}

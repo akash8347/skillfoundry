@@ -6,8 +6,10 @@ import PYCheckoutForm from "../py-checkout/PYCheckoutForm";
 
 export default function CheckoutStandalone() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <PYCheckoutForm />
+    <div className="w-full flex items-center justify-center ">
+      <div className=" sm:max-w-xl  ">
+        <PYCheckoutForm />
+      </div>
     </div>
   );
 }

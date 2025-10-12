@@ -1,11 +1,12 @@
 "use client";
 import { CheckCircle } from "lucide-react";
 
-export default function JSWhyAffordable() {
+export default function JSWhyAffordable({fromModal}) {
   return (
-    <section className="bg-white text-gray-800 p-6 md:p-12 mt-8 rounded-xl border border-gray-200">
+    // CHANGE 1: Added max-w-3xl and mx-auto to constrain the width on large screens and center it.
+    <section className="bg-white text-gray-800 p-6 md:p-12 mt-8 rounded-xl border border-gray-200 max-w-3xl mx-auto">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
-        <h2 className="text-xl md:text-3xl font-bold">
+        <h2 className={`text-xl ${fromModal?" md:text-2xl":" md:text-3xl"} font-bold`}>
           Why Is This Bundle So Affordable?
         </h2>
         <span className="bg-green-600 text-white text-xs md:text-sm font-semibold px-3 py-1 rounded-full">
@@ -13,13 +14,17 @@ export default function JSWhyAffordable() {
         </span>
       </div>
 
-      <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed">
-        We believe that quality technical education should be accessible to{" "}
-        <span className="font-semibold text-gray-900">every Indian</span>, regardless of financial background.
-        Our mission is to democratize tech education in India.
-      </p>
+     <p className="text-gray-600 mb-6 text-sm md:text-base leading-relaxed">
+  We believe that quality technical education should be accessible to{" "}
+  <span className="font-semibold text-gray-900">everyone</span>, regardless of financial background.
+  Our mission is to democratize tech education worldwide.
+</p>
 
-      <div className="grid md:grid-cols-2 gap-6">
+
+      {/* CHANGE 2: Removed "lg:grid-cols-2" to force a single-column layout on all screen sizes.
+          A "gap-y-6" is added for spacing between the sections when stacked.
+      */}
+      <div className="grid gap-y-6">
         {/* Left side */}
         <div>
           <div className="flex items-center bg-gray-100 p-4 rounded-lg mb-4">
@@ -30,7 +35,7 @@ export default function JSWhyAffordable() {
               <h3 className="font-semibold text-gray-900 text-sm md:text-base">
                 Massive Content Library
               </h3>
-              <p className="text-gray-600 text-xs md:text-sm">1000+ pages of premium guide content</p>
+              <p className="text-gray-600 text-xs md:text-sm">800+ pages of premium guide content</p>
             </div>
           </div>
 
@@ -45,7 +50,7 @@ export default function JSWhyAffordable() {
             </li>
             <li className="flex items-center text-gray-700 text-sm md:text-base">
               <CheckCircle className="text-green-500 mr-2" size={16} />
-              Made for Indians by Indians – lower production costs
+              Made for Techies by Techies – lower production costs
             </li>
           </ul>
         </div>
@@ -74,7 +79,7 @@ export default function JSWhyAffordable() {
 
           <div className="bg-white border border-gray-300 p-3 rounded-lg text-gray-600 text-xs md:text-sm leading-relaxed">
             "We could charge 10x more, but our mission is to make tech education
-            accessible to every Indian who wants to learn, not just those who can
+            accessible to every Programmer who wants to learn, not just those who can
             afford it."
           </div>
         </div>

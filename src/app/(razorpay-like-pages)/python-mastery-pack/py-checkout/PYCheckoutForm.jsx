@@ -295,7 +295,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
 
 
   return (
-    <div className="h-screen w-full bg-white p-6 sm:rounded-l-lg relative overflow-y-hidden">
+    <div className="h-screen w-full  p-6 sm:rounded-l-lg relative overflow-y-hidden">
       {showCloseButton && (
         <button
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors"

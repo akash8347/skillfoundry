@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function JavaScriptBookSection() {
+export default function JavaScriptBookSection({fromModal}) {
   const [showIndex, setShowIndex] = useState(false);
 
   const indexData = [
@@ -44,12 +44,13 @@ export default function JavaScriptBookSection() {
   return (
     <section className="mt-5 md:mt-12">
       {/* Heading and Image */}
-      <div className="flex flex-col items-center gap-6 text-center md:text-left">
-        <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
+      <div className="flex flex-col  items-center gap-6 text-center md:text-left   border border-gray-200 rounded-xl shadow-md  p-6 ">
+            
+         <h3 className={`${fromModal ? "text-sm md:text-lg" : "text-xl md:text-3xl"} font-semibold text-gray-900 mb-0`}>
           📘 30 Days of JavaScript Mastery Guide (280+ pages)
         </h3>
 
-        <div className="w-full md:w-92 flex-shrink-0">
+        {/* <div className="w-full md:w-92 flex-shrink-0">
           <Image
             src="/js-book.webp"
             alt="30 Days of JavaScript"
@@ -57,28 +58,41 @@ export default function JavaScriptBookSection() {
             height={400}
             className="w-[95%] mx-auto md:w-full h-auto "
           />
-        </div>
-        <div className="max-w-xl">
+        </div> */}
+
+          <div className="flex flex-col items-center justify-center mb-0">
+                  <Image
+                    src="/js-book.webp"
+                    alt="JavaScript Project"
+                    width={400}
+                    height={300}
+                    className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+        {/* <div className=""> */}
+                  <div className={`${fromModal ? "text-sm":""} max-w-xl`}>
+
           <p className="text-gray-700 mt-2 mb-4">
             Covering ES6+ concepts like <strong>Data Types</strong>, <strong>Loops</strong>, <strong>Functions</strong>,
             <strong> Objects</strong>, <strong>Closures</strong>, <strong>Promises</strong>, and more.
           </p>
-          <ul className="list-disc ml-5 space-y-1 text-gray-700 text-sm text-left">
+          <ul className="list-disc ml-5 space-y-1 text-gray-700 text-xs text-left">
             <li>Covers ALL modern JavaScript (ES6+) concepts:</li>
             <li>Data Types, Loops, Functions, Objects</li>
             <li>Higher-Order Functions, Closures, Promises, Classes</li>
             <li>DOM Manipulation, Event Listeners, Web Storage & more</li>
           </ul>
         </div>
-      </div>
 
-      {/* Toggle Button stays fixed in flow */}
-      <div className="flex justify-center mt-6">
+          {/* Toggle Button stays fixed in flow */}
+      {/* <div className="flex justify-center mt-6"> */}
+      <div className={`${fromModal ? "mt-2":"mt-6"}flex justify-center `}>
+
         <motion.button
           onClick={() => setShowIndex(!showIndex)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold shadow-md hover:from-yellow-500 hover:to-yellow-600 transition"
+          className={`${fromModal ? "px-2 py-2 text-sm":"px-4 py-2"} inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold shadow-md hover:from-yellow-500 hover:to-yellow-600 transition`}
         >
           {showIndex ? (
             <>
@@ -123,6 +137,9 @@ export default function JavaScriptBookSection() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
+
+    
     </section>
   );
 }

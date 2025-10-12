@@ -8,7 +8,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 397, realPrice: 2000 },
           js: { displayPrice: 397, realPrice: 2000 },
-          python_js_combo: { price: 599 },
+          python_js_combo: { price: 794 },
         },
       },
       m7r4d: {
@@ -16,7 +16,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 497, realPrice: 2000 },
           js: { displayPrice: 497, realPrice: 2000 },
-          python_js_combo: { price: 799 },
+          python_js_combo: { price: 994 },
         },
       },
      
@@ -25,7 +25,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 1, realPrice: 2000 },
           js: { displayPrice: 1, realPrice: 2000 },
-          python_js_combo: { price: 399 },
+          python_js_combo: { price: 1 },
         },
       },
     },
@@ -38,7 +38,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 39, realPrice: 97 },
           js: { displayPrice: 39, realPrice: 97 },
-          python_js_combo: { price: 58 },
+          python_js_combo: { price: 78 },
         },
       },
       x2f9q: { // Tier 1
@@ -46,7 +46,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 29, realPrice: 79 },
           js: { displayPrice: 29, realPrice: 79 },
-          python_js_combo: { price: 48 },
+          python_js_combo: { price: 58 },
         },
       },
       x1f9q: { // Tier 2
@@ -54,7 +54,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 19, realPrice: 97 },
           js: { displayPrice: 19, realPrice: 78 },
-          python_js_combo: { price: 29 },
+          python_js_combo: { price: 38 },
         },
       },
       x2f7q: { // Tier 1
@@ -62,7 +62,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 27, realPrice: 97 },
           js: { displayPrice: 27, realPrice: 78 },
-          python_js_combo: { price: 44 },
+          python_js_combo: { price: 54 },
         },
       },
 
@@ -78,7 +78,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 25, realPrice: 95 },
           js: { displayPrice: 25, realPrice: 95 },
-          python_js_combo: { price: 40 },
+          python_js_combo: { price: 50 },
         },
       },
     },
@@ -91,7 +91,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 14, realPrice: 70 },
           js: { displayPrice: 14, realPrice: 70 },
-          python_js_combo: { price: 29 },
+          python_js_combo: { price: 28 },
         },
       },
       g7b9n: {
@@ -99,7 +99,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 19, realPrice: 70 },
           js: { displayPrice: 19, realPrice: 70 },
-          python_js_combo: { price: 29 },
+          python_js_combo: { price: 38 },
         },
       },
     },
@@ -112,7 +112,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 39.99, realPrice: 97 },
           js: { displayPrice: 39.99, realPrice: 97 },
-          python_js_combo: { price: 68 },
+          python_js_combo: { price: 79.98 },
         },
       },
     },
@@ -125,7 +125,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 44.99, realPrice: 97 },
           js: { displayPrice: 44.99, realPrice: 97 },
-          python_js_combo: { price: 78 },
+          python_js_combo: { price: 89.98 },
         },
       },
     },
@@ -138,7 +138,7 @@ const currencyMapper = {
         courses: {
           python: { displayPrice: 47.99, realPrice: 97 },
           js: { displayPrice: 47.99, realPrice: 97 },
-          python_js_combo: { price: 78 },
+          python_js_combo: { price: 94.98 },
         },
       },
     },

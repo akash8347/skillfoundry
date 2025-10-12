@@ -1,13 +1,93 @@
+// 'use client';
+// import Image from 'next/image';
+
+// export default function Bonus() {
+//   return (
+//     <section className="mt-9 md:mt-20  px-4 md:space-y-20 space-y-10">
+
+//       {/* Interview Questions Book */}
+//       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
+//         <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+//           100+ Most Asked JavaScript Interview Questions
+//         </h3>
+//         <div className="flex flex-col items-center justify-center mb-6">
+//           <Image
+//             src="/js-interview.webp"
+//             alt="JavaScript Interview Questions"
+//             width={400}
+//             height={300}
+//             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+//           />
+//         </div>
+//         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+//           <li>Master the most commonly asked JavaScript interview questions.</li>
+//           <li>Learn how to frame your answers like a pro.</li>
+//           <li>Boost your confidence and land your dream role.</li>
+//         </ul>
+//       </div>
+
+//       {/* MCQs and Quizzes Book */}
+//       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
+//         <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+//           100+ JavaScript MCQs & Quizzes
+//         </h3>
+//         <div className="flex flex-col items-center justify-center mb-6">
+//           <Image
+//             src="/js-mcq.webp"
+//             alt="JavaScript MCQs and Quizzes"
+//             width={300}
+//             height={300}
+//             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+//           />
+//         </div>
+//         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+//           <li>Sharpen your JavaScript concepts with real MCQs.</li>
+//           <li>Test your understanding and identify weak spots.</li>
+//           <li>Includes answers and explanations to boost learning.</li>
+//         </ul>
+//       </div>
+
+//          {/* Cheatsheet Book */}
+//       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
+//         <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+//           BONUS: JavaScript Cheatsheet
+//         </h3>
+//         <div className="flex flex-col items-center justify-center mb-6">
+//           <Image
+//             src="/js-cheatsheet.webp"
+//             alt="JavaScript MCQs and Quizzes"
+//             width={300}
+//             height={300}
+//             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
+//           />
+//         </div>
+//         <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+//            <li>JavaScript syntax, data types, loops, functions</li>
+//             <li>Advanced Javascript patterns and comprehensions</li>
+//             <li>File handling, exception management, and modules</li> 
+//             <li>Virtual environments and package management</li>
+//             <li>Common developer shortcuts and best practices</li>
+//         </ul>
+//       </div>
+
+
+
+
+//     </section>
+//   );
+// }
+
+
 'use client';
 import Image from 'next/image';
 
-export default function Bonus() {
+export default function Bonus({ fromModal }) {
   return (
-    <section className="mt-9 md:mt-20  px-4 md:space-y-20 space-y-10">
+    <section className="mt-9 md:mt-20 px-4 md:space-y-20 space-y-10">
 
       {/* Interview Questions Book */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
-        <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+        <h3 className={`${fromModal ? "text-sm md:text-lg" : "text-xl md:text-3xl"} font-semibold text-gray-900 mb-3`}>
           100+ Most Asked JavaScript Interview Questions
         </h3>
         <div className="flex flex-col items-center justify-center mb-6">
@@ -19,7 +99,7 @@ export default function Bonus() {
             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
-        <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+        <ul className={`${fromModal ? "text-xs md:text-sm" : "text-base md:text-lg"} text-gray-600 list-disc list-inside text-left space-y-2 max-w-md mx-auto`}>
           <li>Master the most commonly asked JavaScript interview questions.</li>
           <li>Learn how to frame your answers like a pro.</li>
           <li>Boost your confidence and land your dream role.</li>
@@ -28,10 +108,10 @@ export default function Bonus() {
 
       {/* MCQs and Quizzes Book */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
-        <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+        <h3 className={`${fromModal ? "text-sm md:text-lg" : "text-xl md:text-3xl"} font-semibold text-gray-900 mb-3`}>
           100+ JavaScript MCQs & Quizzes
         </h3>
-        <div className="flex flex-col items-center justify-center mb-6">
+        <div className="flex flex-col items-center justify-center mb-5">
           <Image
             src="/js-mcq.webp"
             alt="JavaScript MCQs and Quizzes"
@@ -40,38 +120,35 @@ export default function Bonus() {
             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
-        <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
+        <ul className={`${fromModal ? "text-xs md:text-sm" : "text-base md:text-lg"} text-gray-600 list-disc list-inside text-left space-y-2 max-w-md mx-auto`}>
           <li>Sharpen your JavaScript concepts with real MCQs.</li>
           <li>Test your understanding and identify weak spots.</li>
           <li>Includes answers and explanations to boost learning.</li>
         </ul>
       </div>
 
-         {/* Cheatsheet Book */}
+      {/* Cheatsheet Book */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-10 text-center shadow-md max-w-4xl mx-auto">
-        <h3 className="text-xl md:text-3xl font-semibold text-gray-900 mb-6">
+        <h3 className={`${fromModal ? "text-sm md:text-lg" : "text-xl md:text-3xl"} font-semibold text-gray-900 mb-6`}>
           BONUS: JavaScript Cheatsheet
         </h3>
         <div className="flex flex-col items-center justify-center mb-6">
           <Image
             src="/js-cheatsheet.webp"
-            alt="JavaScript MCQs and Quizzes"
+            alt="JavaScript Cheatsheet"
             width={300}
             height={300}
             className="w-[full] md:w-[300px] h-auto rounded-md hover:scale-105 transition-transform duration-300"
           />
         </div>
-        <ul className="text-gray-600 text-base md:text-lg list-disc list-inside text-left space-y-2 max-w-md mx-auto">
-           <li>JavaScript syntax, data types, loops, functions</li>
-            <li>Advanced Javascript patterns and comprehensions</li>
-            <li>File handling, exception management, and modules</li> 
-            <li>Virtual environments and package management</li>
-            <li>Common developer shortcuts and best practices</li>
+        <ul className={`${fromModal ? "text-xs md:text-sm" : "text-base md:text-lg"} text-gray-600 list-disc list-inside text-left space-y-2 max-w-md mx-auto`}>
+          <li>JavaScript syntax, data types, loops, functions</li>
+          <li>Advanced JavaScript patterns and comprehensions</li>
+          <li>File handling, exception management, and modules</li>
+          <li>Virtual environments and package management</li>
+          <li>Common developer shortcuts and best practices</li>
         </ul>
       </div>
-
-
-
 
     </section>
   );
