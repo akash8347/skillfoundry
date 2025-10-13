@@ -239,7 +239,7 @@ const handleClick = async () => {
   );
 
   setIsLoading(true);
-  router.push(`/python-mastery-pack/checkout?c=${encryptedCode}`);
+  router.push(`/python-mastery-pack/checkout`);
  setTimeout(() => {
         setIsLoading(false);
     }, 300); 

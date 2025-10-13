@@ -131,9 +131,14 @@ const modalVariants = {
 export default function JavascriptUpsellModal() {
   const router = useRouter();
 
+  // const closeModal = () => {
+  //   router.replace("/python-mastery-pack/checkout?fromUpsell=true");
+  // };
+
   const closeModal = () => {
-    router.replace("/python-mastery-pack/checkout?fromUpsell=true");
-  };
+  sessionStorage.setItem("returningFromUpsell", "true");
+  router.back();
+};
 
   return (
     // Backdrop
