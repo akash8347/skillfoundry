@@ -25,8 +25,15 @@ import { add } from "date-fns";
 export default function PYCheckoutForm({ showCloseButton = true }) {
   const router = useRouter(); // <-- initialize router
 
-  const [form, setForm] = useState({ email: "", mobile: "", state: null });
-  const [error, setError] = useState("");
+const [form, setForm] = useState(() => {
+  // Load from localStorage initially
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("checkoutForm");
+    return saved ? JSON.parse(saved) : { email: "", mobile: "", state: null };
+  }
+  return { email: "", mobile: "", state: null };
+}); 
+ const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [addUpsell, setAddUpsell] = useState(false);
@@ -63,10 +70,14 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
 
 
 
-  const handleSelectChange = (selectedOption) => {
-    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
-    setFieldErrors(prev => ({ ...prev, state: "" }));
-  };
+ const handleSelectChange = (selectedOption) => {
+  setForm(prev => {
+    const updated = { ...prev, state: selectedOption ? selectedOption.value : null };
+    localStorage.setItem("checkoutForm", JSON.stringify(updated));
+    return updated;
+  });
+  setFieldErrors(prev => ({ ...prev, state: "" }));
+};
 
 
 
@@ -124,9 +135,12 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
-  };
+  const updated = { ...form, [e.target.name]: e.target.value };
+  setForm(updated);
+  localStorage.setItem("checkoutForm", JSON.stringify(updated));
+  setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
+};
+  
 
   function getCookie(name) {
     const value = `; ${document.cookie}`;
