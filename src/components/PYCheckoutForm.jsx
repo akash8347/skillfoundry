@@ -558,34 +558,29 @@ const [form, setForm] = useState(() => {
           </motion.button>
 
           {/* The Expandable Panel */}
-        <AnimatePresence>
+       <AnimatePresence>
   {isExpanded && (
     <motion.div
-      initial="collapsed"
-      animate="expanded"
-      exit="collapsed"
-      variants={panelVariants}
-      className="absolute bottom-full left-0 right-0 z-50 p-5 bg-white border border-gray-200 rounded-t-xl shadow-2xl overflow-hidden"
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="absolute bottom-full left-0 right-0 z-50 p-5 bg-white border border-gray-200 rounded-t-xl shadow-2xl overflow-hidden origin-bottom"
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        exit={{ opacity: 0, transition: { duration: 0.1 } }}
+        layout
+        transition={{ duration: 0.3 }}
         className="text-sm space-y-4"
       >
         <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-100 pb-2">
           Order Summary
         </h3>
 
-        {/* Items List */}
         <ul className="space-y-2">
           {finalItems.map((item, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between text-gray-700"
-            >
+            <li key={index} className="flex items-center justify-between text-gray-700">
               <div className="flex-1 flex items-center justify-between">
-                {/* Dashed Line Between name and price */}
                 <span className="truncate pr-2">
                   {item.name === "Tax" ? (
                     <span className="font-medium text-gray-600">{item.name}</span>
@@ -597,19 +592,16 @@ const [form, setForm] = useState(() => {
                   )}
                 </span>
                 <span className="flex-grow border-t border-dashed border-gray-500 mx-2"></span>
-                <span className="font-semibold text-gray-900">
-                  {symbol}{item.price}
-                </span>
+                <span className="font-semibold text-gray-900">{symbol}{item.price}</span>
               </div>
             </li>
           ))}
         </ul>
 
-        {/* Total Separator and final amount */}
         <div className="pt-3 border-t border-gray-300 mt-2">
           <div className="flex justify-between items-center">
             <span className="font-semibold text-gray-800 text-base">Grand Total</span>
-            <span className="text-lg font-extrabold ">
+            <span className="text-lg font-extrabold">
               {symbol}
               {addUpsell
                 ? currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price
@@ -621,6 +613,7 @@ const [form, setForm] = useState(() => {
     </motion.div>
   )}
 </AnimatePresence>
+
 
         </div>
 
