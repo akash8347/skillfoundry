@@ -15,6 +15,9 @@ import { genEventId } from "@/lib/eventHelper";
 // import { newZealandStates } from "@/lib/newZealandStates";
 import { optionsForCurrency } from "@/lib/optionsForCurrency "
 import { canadaStates } from "@/lib/canadaStates";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { currencyMapper } from "@/lib/currencyMapper";
 
 export default function PYCheckoutForm({ showCloseButton = true }) {
   const router = useRouter(); // <-- initialize router
@@ -23,6 +26,12 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
+    const [addUpsell, setAddUpsell] = useState(false);
+  const [amount, setAmount] = useState(0);
+
+
+      console.log("addUpsell checkout form", addUpsell);
+
   const { currency, pythonPrice: price, symbol, encryptedCode, pythonRealPrice, jsRealPrice } = useCurrency(); // 👈 ab teeno mil rahe
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -30,17 +39,25 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     }
   }, [form]);
 
+   if (addUpsell) {
+      () => setAmount(currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price);
+    }
 
-  const handleSelectChange = (selectedOption) => {
-    setForm(prev => ({ ...prev, state: selectedOption ? selectedOption.value : null }));
-    setFieldErrors(prev => ({ ...prev, state: "" }));
-  };
+
+
+ const handleSelectChange = (selectedOption) => {
+  setForm(prev => {
+    const updated = { ...prev, state: selectedOption ? selectedOption.value : null };
+    localStorage.setItem("checkoutForm", JSON.stringify(updated));
+    return updated;
+  });
+  setFieldErrors(prev => ({ ...prev, state: "" }));
+};
 
 
 
 
   const courseIdentifier = "python_299";
-  const amount = 24900;
   const onClose = () => {
     router.push(`/python-mastery-pack?c=${encryptedCode}`);
   }
@@ -91,9 +108,11 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
-  };
+  const updated = { ...form, [e.target.name]: e.target.value };
+  setForm(updated);
+  localStorage.setItem("checkoutForm", JSON.stringify(updated));
+  setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
+};
 
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -106,16 +125,24 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
 
     const errors = validateForm();
     const eventId = genEventId();
-    const itemSku = "PYTHON_MASTERY_PACK_01"; // Or whatever your product SKU is
+   const PYTHON_SKU = "PYTHON_MASTERY_PACK_01";
+    const JAVASCRIPT_SKU = "JAVASCRIPT_MASTERY_PACK";
+
+ let content_ids = [PYTHON_SKU]; // Always include the base product (Python)
+    if (addUpsell) {
+      content_ids.push(JAVASCRIPT_SKU); // Add the upsell product if purchased
+    }
+    const courseIdentifier = addUpsell ? "python_js_combo_498" : "python_299";
+
 
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq(
         "track",
         "AddPaymentInfo",
         {
-          value: price,
+          value: addUpsell ? currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price : price,
           currency,
-          content_ids: [itemSku], // <-- ADD THIS
+          content_ids: content_ids, // <-- ADD THIS
           content_type: "product",
         },
         { eventID: eventId }
@@ -137,9 +164,9 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
         email: form.email,
         phone: form.mobile,
         custom_data: {
-          value: price,
+          value: addUpsell ? currencyMapper[currency].variants[encryptedCode].courses.python_js_combo.price : price,
           currency,
-          content_ids: [itemSku],
+          content_ids: content_ids,
           content_type: "product",
         },
       }),
@@ -153,9 +180,9 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
     setError("");
     setLoading(true);
 
-    const amount = price * 100;
-    const is39 = encryptedCode === "x3f9q" ? true : false;
-    const courseId = "python";
+    const amount1 = addUpsell ? amount : price * 100;
+    console.log("amount: ", amount1);
+    const courseId = addUpsell ? "python_js_combo" : "python";
 
     try {
       const res = await fetch("/api/razorpay-javascript-199", {
@@ -166,7 +193,7 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
           amount,
           currency,
           courseId,
-          is39,
+          // is39,
           encryptedCode
         }),
       });
@@ -223,9 +250,9 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
                   value: price,
                   currency,
                   order_id: data.order.id,
-                  content_ids: [itemSku],
+                  content_ids:content_ids ,
                   content_type: "product",
-                  contents: [{ id: courseId, quantity: 1 }],
+                  contents: [{ id: courseId, quantity: addUpsell ? 2 : 1 }],
                 },
                 { eventID: eventId }
               );
@@ -248,9 +275,9 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
               custom_data: {
                 value: price,
                 currency: data.order.currency,
-                content_ids: [itemSku],
+                content_ids: content_ids,
                 content_type: "product",
-                contents: [{ id: courseId, quantity: 1 }],
+                contents: [{ id: courseId, quantity: addUpsell ? 2 : 1 }],
               },
             };
 
@@ -398,6 +425,34 @@ export default function PYCheckoutForm({ showCloseButton = true }) {
 
           {fieldErrors.state && <p className="text-xs text-red-500 mt-1">{fieldErrors.state}</p>}
         </div>
+
+         <div className="bg-blue-50 border border-blue-200 rounded-lg p-2">
+                  {/* <h3 className="text-sm font-semibold text-blue-800 mb-2">
+                    🎁 Special Offer: Upgrade Your Learning!
+                  </h3> */}
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={addUpsell}
+                      onChange={() => {
+                        setAddUpsell(!addUpsell);
+                        toast.success(addUpsell ? "JavaScript course removed" : "JavaScript course added");
+                      }}
+                      className="mt-1 accent-blue-600 w-4 h-4"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        Add the <Link href="/python-mastery-pack/javascript-upsell" className="underline text-blue-600">JavaScript Mastery Course</Link> to your order.
+                      </p>
+                      {/* <p className="text-xs text-gray-700 mt-1">
+                        Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
+                      </p> */}
+                      {/* <p className="text-green-600 font-semibold text-sm mt-2">
+                        Add for just ₹149 extra
+                      </p> */}
+                    </div>
+                  </label>
+                </div>
 
         <Button
           type="submit"
