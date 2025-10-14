@@ -505,10 +505,8 @@ const [form, setForm] = useState(() => {
         </div>
 
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-2">
-          {/* <h3 className="text-sm font-semibold text-blue-800 mb-2">
-            🎁 Special Offer: Upgrade Your Learning!
-          </h3> */}
+        {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-2">
+        
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -523,15 +521,10 @@ const [form, setForm] = useState(() => {
               <p className="text-sm font-medium text-gray-800">
                 Add the <Link href="/python-mastery-pack/javascript-upsell" className="underline text-blue-600">JavaScript Mastery Course</Link> to your order.
               </p>
-              {/* <p className="text-xs text-gray-700 mt-1">
-                Learn JavaScript from basics to advanced with HTML, CSS, 100+ JS projects, and more.
-              </p> */}
-              {/* <p className="text-green-600 font-semibold text-sm mt-2">
-                Add for just ₹149 extra
-              </p> */}
+             
             </div>
           </label>
-        </div>
+        </div> */}
 
         {/* checkout summary Start----------------------------------- */}
 
