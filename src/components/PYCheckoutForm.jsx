@@ -341,6 +341,8 @@ const [form, setForm] = useState(() => {
       case "GBP": return "Select your Region";
       case "NZD": return "Select your Region";
       case "CAD": return "Select your Province / Territory";
+      case "EUR": return "Select your County";
+
       default: return "Select your State/Region";
     }
   };
