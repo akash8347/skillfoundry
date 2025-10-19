@@ -73,14 +73,22 @@ const currencyMapper = {
 
   EUR: {
     variants: {
-      k3z8p: {
+      k1z9p: {
         symbol: "€",
         courses: {
-          python: { displayPrice: 25, realPrice: 95 },
-          js: { displayPrice: 25, realPrice: 95 },
-          python_js_combo: { price: 50 },
+          python: { displayPrice: 19, realPrice: 79 },
+          js: { displayPrice: 19, realPrice: 79 },
+          python_js_combo: { price: 29 },
         },
       },
+       k2z7p: {
+        symbol: "€",
+        courses: {
+          python: { displayPrice: 27, realPrice: 79 },
+          js: { displayPrice: 27, realPrice: 79 },
+          python_js_combo: { price: 47 },
+        },
+      }
     },
   },
 
