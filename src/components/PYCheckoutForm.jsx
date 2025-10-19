@@ -121,7 +121,7 @@ const [form, setForm] = useState(() => {
     }
     else if (currency === "EUR") {
       // Placeholder: (you might want to add specific patterns per country later)
-      phoneRegex = /^\+?\d{6,15}$/;
+      phoneRegex = /^(?:\+353|0)(?:[1-9]\d{0,2})\d{6}$/;
     }
 
 
@@ -479,7 +479,7 @@ const [form, setForm] = useState(() => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">State</label>
+          <label className="block text-sm font-medium text-gray-700">{currency === "EUR" ? "County" : "State"}</label>
           {/* <Select
             name="state"
             options={currency === "INR" ? indianStates : usaStates}
