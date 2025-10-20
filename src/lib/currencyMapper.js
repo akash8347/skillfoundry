@@ -84,8 +84,8 @@ const currencyMapper = {
        k2z7p: {
         symbol: "€",
         courses: {
-          python: { displayPrice: 27, realPrice: 79 },
-          js: { displayPrice: 27, realPrice: 79 },
+          python: { displayPrice: 17, realPrice: 79 },
+          js: { displayPrice: 17, realPrice: 79 },
           python_js_combo: { price: 47 },
         },
       }
