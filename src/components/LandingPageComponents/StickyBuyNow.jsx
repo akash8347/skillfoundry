@@ -421,7 +421,8 @@ const handleClick = async () => {
       ) : (
         <>
           <Zap className="w-4 h-4" />
-          <span>Get It Now</span>
+          {/* <span>Get It Now</span> */}
+          <span>Buy Now</span>
         </>
       )}
     </button>
