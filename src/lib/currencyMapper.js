@@ -57,14 +57,6 @@ const currencyMapper = {
           python_js_combo: { price: 38 },
         },
       },
-      x2f7q: { // Tier 1
-        symbol: "$",
-        courses: {
-          python: { displayPrice: 27, realPrice: 97 },
-          js: { displayPrice: 27, realPrice: 78 },
-          python_js_combo: { price: 54 },
-        },
-      },
 
 
 
